@@ -71,6 +71,7 @@
   --ease-out: cubic-bezier(.2, .7, .2, 1);
   --ease-inout: cubic-bezier(.65, 0, .35, 1);
   --ease-expo: cubic-bezier(.16, 1, .3, 1);   /* long, soft landing */
+  --ease-nav: cubic-bezier(.45, 0, .2, 1);     /* navbar: soft start AND soft stop, no overshoot */
   --dur-btn: .5s;
   --dur-nav: .9s;
 
@@ -209,12 +210,12 @@ p { margin: 0; }
   will-change: max-width, transform;
   transition-property: max-width, padding, transform, border-radius, background-color, border-color, box-shadow;
   transition-duration: var(--dur-nav);
-  transition-timing-function: var(--ease-expo);
+  transition-timing-function: var(--ease-nav);
 }
 .nav__row {
   height: var(--nav-h);
   display: flex; align-items: center; justify-content: space-between; gap: var(--s-6);
-  transition: height var(--dur-nav) var(--ease-expo);
+  transition: height var(--dur-nav) var(--ease-nav), gap var(--dur-nav) var(--ease-nav);
 }
 
 .nav.is-compact .nav__bar {
@@ -227,7 +228,7 @@ p { margin: 0; }
   border-color: var(--nav-edge);
   box-shadow: 0 10px 30px -10px rgba(13, 18, 28, .18), 0 2px 6px rgba(13, 18, 28, .05), inset 0 1px 0 var(--nav-hi), inset 0 -1px 0 var(--nav-lo);
 }
-.nav .nav__menu, .nav .nav__link, .nav .nav__row { transition: gap var(--dur-nav) var(--ease-expo), padding var(--dur-nav) var(--ease-expo), height var(--dur-nav) var(--ease-expo); }
+.nav .nav__menu, .nav .nav__link { transition: gap var(--dur-nav) var(--ease-nav), padding var(--dur-nav) var(--ease-nav), background-color .2s ease; }
 .nav.is-compact .nav__row { gap: var(--s-4); }
 .nav.is-compact .nav__menu { gap: 0; }
 .nav.is-compact .nav__link { padding-inline: var(--s-2); }
@@ -316,18 +317,18 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 .has-ring { isolation: isolate; }
 .has-ring > .ring-glow {          /* warm glow that follows the head of the comet — kept to a band around the edge */
-  position: absolute; inset: -4px; z-index: -1; pointer-events: none; border-radius: calc(var(--r-xl) + 4px);
-  padding: 6px;                    /* a thin band hugging the edge: 4px outside + 2px inside */
+  position: absolute; inset: -5px; z-index: 2; pointer-events: none; border-radius: calc(var(--r-xl) + 5px);
+  padding: 10px;                   /* band centred on the stroke: 5px outside + 5px inside, drawn above the content */
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
   background: conic-gradient(from var(--sweep),
     transparent 0deg 250deg,
-    rgba(229, 56, 15, .12) 310deg,
-    rgba(255, 140, 40, .3) 336deg,
-    rgba(255, 220, 170, .4) 347deg,
+    rgba(229, 56, 15, .10) 310deg,
+    rgba(255, 140, 40, .26) 336deg,
+    rgba(255, 220, 170, .34) 347deg,
     transparent 353deg 360deg);
-  filter: blur(3px);
+  filter: blur(5px);
   animation: sweep var(--ring-speed, 8s) linear infinite;
   animation-delay: var(--ring-delay, 0s);
 }
@@ -544,11 +545,10 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   background: var(--bg); box-shadow: 0 0 0 1px var(--tint-line);
 }
 .fmedia__frame {
-  position: absolute; inset: 0; display: grid; place-items: center;
-  opacity: 0; transform: scale(1.02);
-  transition: opacity .6s ease, transform .9s var(--ease-expo);
+  position: absolute; inset: 0; display: grid; place-items: center; z-index: 0;
+  opacity: 0; transition: opacity 0s linear .7s;              /* leaves only after the new one has covered it */
 }
-.fmedia__frame.is-active { opacity: 1; transform: none; }
+.fmedia__frame.is-active { opacity: 1; z-index: 1; transition: opacity .7s ease; }
 .fmedia__frame img { width: 100%; height: 100%; object-fit: cover; }
 
 .ph {
@@ -646,7 +646,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .icard__ph svg { width: 40px; height: 40px; }
 .icard__ph span { font-size: 12px; line-height: 16px; color: #A08572; }
 .icard__body { padding: var(--s-4) var(--s-1) 0; display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
-.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); }
+.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.icard__media img.is-wide { width: 72%; height: 72%; }   /* wide products (handbag) read larger at the same box size */
 .icard__text { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
 .icard__link {
   margin-top: auto; padding-top: var(--s-3);
@@ -1138,14 +1139,14 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .why__media { grid-column: 1 / span 6; position: relative; aspect-ratio: 1 / 1; max-height: 520px; width: 100%; }
 .wframe {
   position: absolute; inset: 0; border-radius: var(--r-xl); overflow: hidden;
-  opacity: 0; transform: scale(1.02); transition: opacity .6s ease, transform .9s var(--ease-expo);
+  z-index: 0; opacity: 0; transition: opacity 0s linear .7s;   /* see .fmedia__frame: crossfade without a blink */
   background:
     radial-gradient(circle at 1px 1px, var(--tint-line) 1px, transparent 1.5px) 0 0 / 18px 18px,
     var(--bg);
   box-shadow: inset 0 0 0 1px var(--tint-line);
   display: grid; place-items: center;
 }
-.wframe.is-active { opacity: 1; transform: none; }
+.wframe.is-active { opacity: 1; z-index: 1; transition: opacity .7s ease; }
 .wframe__ph { display: grid; justify-items: center; gap: var(--s-3); color: var(--ink-muted); text-align: center; padding: var(--s-6); }
 .wframe__ph svg { width: 44px; height: 44px; color: var(--brand-500); }
 
@@ -1251,11 +1252,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .story__where { color: var(--ink-muted); }
 .story__link {
   display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 500; color: var(--ink);
-  padding-block: var(--s-1); border-bottom: 1px solid transparent;
-  transition: border-color .2s ease, color .2s ease;
+  padding-block: var(--s-1);
+  background: linear-gradient(var(--brand-500), var(--brand-500)) no-repeat left bottom / 0% 1.5px;   /* the underline */
+  transition: background-size .8s var(--ease-inout), color .2s ease;   /* draws left to right, slow in and out */
 }
 .story__link svg { width: 18px; height: 18px; transition: transform .45s var(--ease-expo); }
-.story__link:hover { color: var(--brand-600); border-color: var(--brand-500); }
+.story__link:hover, .story__link:focus-visible { color: var(--brand-600); background-size: 100% 1.5px; }
 .story__link:hover svg { transform: translateX(3px); }
 .stats { grid-column: 9 / span 4; display: grid; grid-template-rows: repeat(3, 1fr); gap: var(--gutter); }
 .stat {
@@ -1377,7 +1379,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   :root { --nav-h: 64px; --nav-h-compact: 60px; --logo-h: 40px; --t-btn: 16px; }
   .nav__menu, .nav__cta-wrap { display: none; }
   .nav__toggle { display: grid; }
-  .nav.is-compact .nav__bar { max-width: calc(100% - var(--s-4) * 2); padding-right: calc((var(--nav-h-compact) - 44px) / 2 - 1px); }
+  .nav.is-compact .nav__bar { max-width: calc(100% - var(--margin) * 2); padding-right: calc((var(--nav-h-compact) - 44px) / 2 - 1px); }
   .nav__sheet[data-open="true"] {
     display: block; border-top: 1px solid var(--line);
     padding-block: var(--s-3) var(--s-4);
@@ -1593,9 +1595,9 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           </li>
           <li class="wheel__card">
             <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/handbag.webp}}" alt="Custom fashion accessories example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__media"><img src="{{IMG:products/handbag.webp}}" class="is-wide" alt="Custom accessories example" width="440" height="440" loading="lazy" decoding="async"></div>
               <div class="icard__body">
-                <h3 class="icard__title">Fashion accessories</h3>
+                <h3 class="icard__title">Accessories</h3>
               </div>
             </a>
           </li>
@@ -1674,7 +1676,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <section class="rail" aria-labelledby="rail-title">
     <div class="rail__stick">
       <div class="container rail__head">
-        <h2 class="rail__title" id="rail-title">Built for every custom order</h2>
+        <h2 class="rail__title" id="rail-title">Customize without limits</h2>
         <span class="rail__bar" aria-hidden="true"><i></i></span>
       </div>
       <div class="container rail__body">
@@ -1972,17 +1974,63 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   (function () {
     /* Compact navbar on scroll (hysteresis avoids flicker at the threshold) */
     var nav = document.getElementById('nav');
+    var mqNav = window.matchMedia('(max-width: 960px)');
     var compact = false, ticking = false;
+    mqNav.addEventListener && mqNav.addEventListener('change', function () { update(); });
     function update() {
       var y = window.scrollY || window.pageYOffset;
-      if (!compact && y > 40) { compact = true; nav.classList.add('is-compact'); }
-      else if (compact && y < 12) { compact = false; nav.classList.remove('is-compact'); }
+      var always = mqNav.matches;                 /* phones/tablets: always the compact pill */
+      if (always || (!compact && y > 60)) { if (!compact) { compact = true; nav.classList.add('is-compact'); } }
+      else if (compact && y <= 4) { compact = false; nav.classList.remove('is-compact'); }   /* only at the very top: ignores overscroll bounce */
       ticking = false;
     }
     window.addEventListener('scroll', function () {
       if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
     }, { passive: true });
     update();
+
+    /* Smooth scroll: wheel input eases toward its target (lerp). Native for touch, keyboard, scrollbar,
+       pinch-zoom, horizontal gestures and reduced motion. Scroll events still fire, so every
+       scroll-linked effect on the page keeps working. */
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var fine = window.matchMedia('(pointer: fine)').matches;
+      if (reduce || !fine) return;
+      var target = window.scrollY, current = window.scrollY, running = false, ours = false;
+      var EASE = 0.085;                                  /* lower = longer glide */
+      function maxY() { return document.documentElement.scrollHeight - window.innerHeight; }
+      function frame() {
+        current += (target - current) * EASE;
+        if (Math.abs(target - current) < 0.4) { current = target; running = false; }
+        ours = true; window.scrollTo(0, current); ours = false;
+        if (running) requestAnimationFrame(frame);
+      }
+      function go(y) {
+        target = Math.max(0, Math.min(maxY(), y));
+        if (!running) { running = true; current = window.scrollY; requestAnimationFrame(frame); }
+      }
+      window.addEventListener('wheel', function (e) {
+        if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;     /* pinch zoom / sideways swipe */
+        var d = e.deltaY * (e.deltaMode === 1 ? 36 : e.deltaMode === 2 ? window.innerHeight : 1);
+        e.preventDefault();
+        go((running ? target : window.scrollY) + d);
+      }, { passive: false });
+      /* anything else that scrolls (keys, scrollbar, find-in-page) wins and resets the glide */
+      window.addEventListener('scroll', function () {
+        if (ours) return;
+        /* someone else moved the page (scrollbar, keys, a script): stop gliding and adopt their position */
+        if (!running || Math.abs(window.scrollY - current) > 2) { running = false; target = current = window.scrollY; }
+      }, { passive: true });
+      ['keydown', 'pointerdown'].forEach(function (ev) { window.addEventListener(ev, function () { running = false; target = current = window.scrollY; }, { passive: true }); });
+      /* in-page links glide too, stopping below the floating navbar */
+      document.addEventListener('click', function (e) {
+        var a = e.target.closest && e.target.closest('a[href^="#"]'); if (!a) return;
+        var id = a.getAttribute('href').slice(1); if (!id) return;
+        var el = document.getElementById(id); if (!el) return;
+        e.preventDefault(); go(el.getBoundingClientRect().top + window.scrollY - 110);
+      });
+      window.addEventListener('resize', function () { target = Math.min(target, maxY()); });
+    })();
 
     /* Marquee: clone the logo set once so the loop is seamless */
     document.querySelectorAll('.marquee__track').forEach(function (track) {

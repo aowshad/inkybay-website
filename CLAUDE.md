@@ -31,7 +31,13 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 - **Button** (`.btn--primary`, `.btn--secondary`): 44px, radius 12. Hover: label rolls up, arrow exits right and re-enters left (0.5s).
 - **Navbar**: full width at top; on scroll becomes a glass pill. Sizes never change (68px, logo 48, CTA 44); only spacing and
   width shrink (940px). Insets are formula-based: logo 10px on left/top/bottom, CTA 12px. Dark mode has top and bottom hairlines.
-- **Comet ring** (`.has-ring` + `.ring` + `.ring-glow`): 1px light travelling the border, 8s per lap, tight glow masked to an edge band.
+  All parts move on one ease-in-out (`--ease-nav`, 0.9s) so expanding never bounces; it compacts past 60px and only expands at
+  scrollY <= 4 (ignores trackpad overscroll). At <= 960px it is always the compact pill, as wide as the container.
+- **Smooth scroll**: dependency-free wheel glide (lerp 0.085). Touch, keyboard, scrollbar, pinch-zoom, sideways swipes and
+  reduced motion stay native; any outside scroll cancels the glide; in-page anchors glide and stop below the navbar.
+- **Image swaps** (features, why): the new frame fades in on top while the old stays fully opaque until covered. No scale, no blink.
+- **Comet ring** (`.has-ring` + `.ring` + `.ring-glow`): 1px light travelling the border, 8s per lap; the glow is a band centred on
+  the stroke (5px out, 5px in, blur 5px) drawn above the card content.
   Used on the hero editor, the rating card and the CTA card. Content that should sit above the light gets `z-index: 4`.
 - **Mini UI** (`.mui-stage > .mui`): em-based product snippets used as section visuals; scale with the host via container
   queries; one quiet loop each; animate only while on screen (`.mui-live`).
@@ -42,10 +48,11 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, editor screenshot with comet ring.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
 3. **Features**: "customization" is always a selected layer; swatches auto-cycle every 2s and are clickable; ring is the active swatch's own box-shadow (always concentric). Left list auto-advances (7s progress line). Mobile heading: "Everything you need / for product / customization + swatches".
-4. **Industries** (always dark): 14 product cards on an arc. Radius is computed at the card's bottom edge so neighbours never touch (32.8px gap). 1.6 deg/s. Pause/play plus prev/next steps. Flat track on phones.
+4. **Industries** (always dark): 14 product cards on an arc; titles never wrap (wide products use `.is-wide`). Radius is computed at the card's bottom edge so neighbours never touch (32.8px gap). 1.6 deg/s. Pause/play plus prev/next steps. Flat track on phones.
 5. **Reveal**: in-flow statement; words sharpen with a 5-word soft edge as it passes through the viewport.
-6. **Feature rail**: pinned; vertical scroll drives the horizontal track 1:1; cards always 16:10, one full plus half the next; progress bar, no numbers. Native swipe rail under 960px.
-7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once.
+6. **Feature rail** ("Customize without limits"): pinned; vertical scroll drives the horizontal track 1:1; cards always 16:10, one full plus half the next; progress bar, no numbers. Native swipe rail under 960px.
+7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The "See full case study"
+   underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card widens 8px and gets a glow stroke; progress hairline sits on the image; click or 6s auto-advance.
