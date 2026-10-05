@@ -1145,9 +1145,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .wframe {
   position: absolute; inset: 0; border-radius: var(--r-xl); overflow: hidden;
   z-index: 0; opacity: 0; transition: opacity 0s linear .7s;   /* see .fmedia__frame: crossfade without a blink */
-  background:
-    radial-gradient(circle at 1px 1px, var(--tint-line) 1px, transparent 1.5px) 0 0 / 18px 18px,
-    var(--bg);
+  background: var(--ph) center / cover no-repeat, var(--surface);   /* photo set per frame via --ph */
   box-shadow: inset 0 0 0 1px var(--tint-line);
   display: grid; place-items: center;
 }
@@ -1195,7 +1193,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .wcard__body { padding: 0 var(--s-8) var(--s-6) calc(var(--s-8) + 40px + var(--s-4)); opacity: 0; transition: opacity .3s ease; }
 .wcard.is-active .wcard__body { opacity: 1; transition-delay: .12s; }
 .wcard__text { color: var(--ink-muted); max-width: 48ch; }
-.why__progress { position: absolute; left: var(--s-6); right: var(--s-6); bottom: var(--s-6); z-index: 2; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
+.why__progress { position: absolute; left: var(--s-6); right: var(--s-6); bottom: var(--s-6); z-index: 2; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .45); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
 .why__progress i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform-origin: left; transform: scaleX(var(--p, 0)); }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1348,6 +1346,21 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mui__chart i:last-child { background: var(--brand-grad); }
 .mui__total { display: flex; justify-content: space-between; font-weight: 600; padding-top: .5em; border-top: 1px dashed var(--line); }
 
+/* glass variant: frosted card on top of a photo */
+.wframe .mui {
+  --surface: rgba(255, 255, 255, .42); --line: rgba(255, 255, 255, .6);
+  background: rgba(255, 255, 255, .5);
+  -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), inset 0 1px 0 rgba(255, 255, 255, .9), 0 24px 48px -24px rgba(13, 30, 20, .45);
+}
+.wframe .mui__muted, .wframe .mui__h span { color: color-mix(in srgb, var(--ink) 62%, transparent); }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .wframe .mui { --surface: rgba(255,255,255,.08); --line: rgba(255,255,255,.16); background: rgba(16, 18, 22, .5);
+    box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.22), 0 24px 48px -24px rgba(0,0,0,.6); }
+}
+:root[data-theme="dark"] .wframe .mui { --surface: rgba(255,255,255,.08); --line: rgba(255,255,255,.16); background: rgba(16, 18, 22, .5); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .wframe .mui { background: rgba(255,255,255,.9); } }
+
 /* ---- one quiet loop per snippet (only while on screen) */
 @media (prefers-reduced-motion: no-preference) {
   .mui-live .a-seq > * { animation: mui-in 6s var(--ease-expo) infinite both; animation-delay: calc(var(--k, 0) * 350ms); }
@@ -1383,12 +1396,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .crowd__track { display: flex; width: max-content; animation: crowd 48s linear infinite; }
 .crowd:hover .crowd__track { animation-play-state: paused; }
 .crowd__set {
-  display: flex; align-items: center; flex: none; gap: .32em; padding-right: .5em;
+  display: flex; align-items: center; flex: none; gap: .32em; padding-right: .32em;   /* = gap, so the star sits evenly between sets */
   font-family: var(--font-head); font-weight: 600; letter-spacing: -0.04em; line-height: 1.15; white-space: nowrap;
   font-size: clamp(44px, 1.5rem + 6vw, 120px); color: #fff;
 }
 .crowd__word--soft { color: rgba(255, 255, 255, .42); }
-.crowd__sep { width: .22em; height: .22em; flex: none; margin-inline: .2em; color: var(--brand-500); }
+.crowd__sep { width: .22em; height: .22em; flex: none; color: var(--brand-500); }
 .ava-stack { display: inline-flex; align-items: center; padding-inline: .06em; }
 .ava {
   position: relative; flex: none; width: .86em; height: .86em; overflow: hidden;
@@ -1904,10 +1917,10 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <div class="why__body">
         <div class="why__media" aria-hidden="true">
           <span class="why__progress"><i></i></span>
-          <div class="wframe is-active"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Live design editor<span>Front</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel a-recolor">Make it yours</span></div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div></div></div></div>
-          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Product sides<span>4 print areas</span></div><div class="mui__tabs a-cycle" style="--n4:8s;--step:2s"><span style="--k:0">Front</span><span style="--k:1">Back</span><span style="--k:2">Left</span><span style="--k:3">Right</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel" style="color:transparent;width:30%;height:38%;border-style:dashed">.</span></div></div></div></div>
-          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Order #1042<span>Print-ready</span></div><div class="a-seq" style="display:grid;gap:.45em"><div class="mui__row" style="--k:0"><span>front.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:1"><span>back.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:2"><span>proof.pdf <span class="mui__muted">· preview</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div></div><span class="mui__btn">Download all</span></div></div></div>
-          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Custom orders<span>This month</span></div><div class="mui__chart a-grow"><i style="--h:30%;--k:0"></i><i style="--h:42%;--k:1"></i><i style="--h:38%;--k:2"></i><i style="--h:58%;--k:3"></i><i style="--h:66%;--k:4"></i><i style="--h:92%;--k:5"></i></div><div class="mui__row"><span>Orders</span><span>+24%</span></div></div></div></div>
+          <div style="--ph:url({{IMG:photos/why-1.webp}})" class="wframe is-active"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Live design editor<span>Front</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel a-recolor">Make it yours</span></div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div></div></div></div>
+          <div style="--ph:url({{IMG:photos/why-2.webp}})" class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Product sides<span>4 print areas</span></div><div class="mui__tabs a-cycle" style="--n4:8s;--step:2s"><span style="--k:0">Front</span><span style="--k:1">Back</span><span style="--k:2">Left</span><span style="--k:3">Right</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel" style="color:transparent;width:30%;height:38%;border-style:dashed">.</span></div></div></div></div>
+          <div style="--ph:url({{IMG:photos/why-3.webp}})" class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Order #1042<span>Print-ready</span></div><div class="a-seq" style="display:grid;gap:.45em"><div class="mui__row" style="--k:0"><span>front.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:1"><span>back.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:2"><span>proof.pdf <span class="mui__muted">· preview</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div></div><span class="mui__btn">Download all</span></div></div></div>
+          <div style="--ph:url({{IMG:photos/why-4.webp}})" class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Custom orders<span>This month</span></div><div class="mui__chart a-grow"><i style="--h:30%;--k:0"></i><i style="--h:42%;--k:1"></i><i style="--h:38%;--k:2"></i><i style="--h:58%;--k:3"></i><i style="--h:66%;--k:4"></i><i style="--h:92%;--k:5"></i></div><div class="mui__row"><span>Orders</span><span>+24%</span></div></div></div></div>
         </div>
         <ul class="why__list">
           <li class="wcard is-active">

@@ -9,7 +9,7 @@ stack until it matches the reference, and only then create new pages. Do not rei
 ```
 reference/homepage.html   single-file build of the locked homepage (open in a browser)
 src/template.html         the same page with {{TOKENS}} for buttons, brand SVGs and images
-src/assets/               logos/, products/, people/, brand/ (SVG), hero-editor.webp, cta-products.webp
+src/assets/               logos/, products/, people/, photos/, brand/ (SVG), hero-editor.webp, cta-products.webp
 build.py                  python3 build.py  ->  regenerates reference/homepage.html
 ```
 
@@ -55,11 +55,11 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
    underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
-10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); progress hairline sits on the image; click or 6s auto-advance.
+10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); each frame has its own nature photo (`photos/why-1..4`) with a frosted-glass mini UI on top (light and dark variants); progress hairline sits on the image; click or 6s auto-advance.
 11. **FAQ**: sticky intro left, single-open accordion right; white cards, orange only on the open one.
 12. **Crowd marquee** (dark zone, between CTA and footer): "Built for merchants [4 round faces] and shoppers [4 soft-square faces]",
    Geist 120px, 48s loop, edge fades, pauses on hover. Faces sit on colour chips (warm for merchants, cool for shoppers) with a
-   dark stroke so stacked avatars separate; a hovered face lifts. JS repeats the set until it overfills, then duplicates it for a gap-free -50% loop.
+   dark stroke so stacked avatars separate; crops are centred on the detected head; the star separator has equal word-sized space each side; a hovered face lifts. JS repeats the set until it overfills, then duplicates it for a gap-free -50% loop.
 13. **CTA + footer** (one dark zone): static product collage above the ring; footer wordmark from Figma with a cursor spotlight (auto sweep on touch).
 
 ## Rules that must survive the rebuild
