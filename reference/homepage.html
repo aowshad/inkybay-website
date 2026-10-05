@@ -1141,7 +1141,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .why__lead { margin-top: var(--s-2); color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 60ch; }
 .why__body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
 
-.why__media { grid-column: 1 / span 6; position: relative; aspect-ratio: 1 / 1; max-height: 520px; width: 100%; }
+.why__media { grid-column: 1 / span 6; position: relative; aspect-ratio: 1 / 1; max-height: 520px; width: 100%; container-type: size; }
 .wframe {
   position: absolute; inset: 0; border-radius: var(--r-xl); overflow: hidden;
   z-index: 0; opacity: 0; transition: opacity 0s linear .7s;   /* see .fmedia__frame: crossfade without a blink */
@@ -1193,7 +1193,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .wcard__body { padding: 0 var(--s-8) var(--s-6) calc(var(--s-8) + 40px + var(--s-4)); opacity: 0; transition: opacity .3s ease; }
 .wcard.is-active .wcard__body { opacity: 1; transition-delay: .12s; }
 .wcard__text { color: var(--ink-muted); max-width: 48ch; }
-.why__progress { position: absolute; left: var(--s-6); right: var(--s-6); bottom: var(--s-6); z-index: 2; height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .45); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
+.why__progress { position: absolute; left: 6cqmin; right: 6cqmin; bottom: calc(3cqmin - 1.5px); z-index: 2;   /* aligned to the card's edges, centred in its bottom margin */ height: 3px; border-radius: 3px; background: rgba(255, 255, 255, .45); overflow: hidden; box-shadow: 0 1px 4px rgba(0,0,0,.12); }
 .why__progress i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform-origin: left; transform: scaleX(var(--p, 0)); }
 
 @media (prefers-reduced-motion: reduce) {
@@ -1346,20 +1346,40 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mui__chart i:last-child { background: var(--brand-grad); }
 .mui__total { display: flex; justify-content: space-between; font-weight: 600; padding-top: .5em; border-top: 1px dashed var(--line); }
 
-/* glass variant: frosted card on top of a photo */
+/* glass variant: frosted card on top of a photo, filling the frame with an equal margin on every side */
+.wframe .mui-stage { --pad: 6cqmin; }   /* ~78% of the frame's area */                                  /* same px on all four sides, even if the frame isn't square */
 .wframe .mui {
-  --surface: rgba(255, 255, 255, .42); --line: rgba(255, 255, 255, .6);
-  background: rgba(255, 255, 255, .5);
-  -webkit-backdrop-filter: blur(18px) saturate(170%); backdrop-filter: blur(18px) saturate(170%);
-  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .7), inset 0 1px 0 rgba(255, 255, 255, .9), 0 24px 48px -24px rgba(13, 30, 20, .45);
+  --surface: rgba(255, 255, 255, .62); --line: rgba(255, 255, 255, .75);
+  width: calc(100% - var(--pad) * 2); height: calc(100% - var(--pad) * 2); max-width: none;
+  grid-template-rows: auto 1fr auto; align-content: stretch; gap: .8em; padding: 1.2em;
+  background: rgba(255, 255, 255, .66);
+  -webkit-backdrop-filter: blur(24px) saturate(150%); backdrop-filter: blur(24px) saturate(150%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8), inset 0 1px 0 rgba(255, 255, 255, .95), 0 24px 48px -24px rgba(13, 30, 20, .45);
 }
-.wframe .mui__muted, .wframe .mui__h span { color: color-mix(in srgb, var(--ink) 62%, transparent); }
+.wframe .mui:has(> .mui__tabs) { grid-template-rows: auto auto 1fr; }   /* sides: header, tabs, canvas grows */
+.wframe .mui__canvas { height: auto; min-height: 0; background: rgba(255, 255, 255, .55); box-shadow: inset 0 0 0 1px rgba(255,255,255,.8); }
+.wframe .mui__canvas img { padding: .6em; }
+.wframe .mui__chart { height: auto; min-height: 0; padding: .9em .9em .7em; border-radius: .7em; background: rgba(255, 255, 255, .45); }
+.wframe .mui__chart i { background: rgba(255, 255, 255, .92); box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .06); }
+.wframe .mui__chart i:last-child { background: var(--brand-grad); box-shadow: none; }
+.wframe .a-seq { align-content: center; gap: .6em !important; }
+.wframe .a-seq .mui__row { padding: .8em .9em; }
+.wframe .mui__row { background: rgba(255, 255, 255, .7); }
+.wframe .mui__muted, .wframe .mui__h span { color: color-mix(in srgb, var(--ink) 66%, transparent); }
+.wframe .mui__tabs { background: rgba(255, 255, 255, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8); }
+.wframe .mui__tabs span { color: color-mix(in srgb, var(--ink) 72%, transparent); font-weight: 500; }
+.wframe .mui__tabs span.is-on { background: var(--brand-600); color: #fff; box-shadow: 0 2px 6px -2px rgba(229, 56, 15, .55); }
 @media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .wframe .mui { --surface: rgba(255,255,255,.08); --line: rgba(255,255,255,.16); background: rgba(16, 18, 22, .5);
+  :root:not([data-theme="light"]) .wframe .mui { --surface: rgba(255,255,255,.1); --line: rgba(255,255,255,.18); background: rgba(16, 18, 22, .66);
     box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.22), 0 24px 48px -24px rgba(0,0,0,.6); }
+  :root:not([data-theme="light"]) .wframe .mui__canvas, :root:not([data-theme="light"]) .wframe .mui__chart,
+  :root:not([data-theme="light"]) .wframe .mui__row, :root:not([data-theme="light"]) .wframe .mui__tabs { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
+  :root:not([data-theme="light"]) .wframe .mui__chart i { background: rgba(255,255,255,.5); }
+  :root:not([data-theme="light"]) .wframe .mui__chart i:last-child { background: var(--brand-grad); }
+  :root:not([data-theme="light"]) .wframe .mui__tabs span { color: rgba(255,255,255,.72); }
 }
-:root[data-theme="dark"] .wframe .mui { --surface: rgba(255,255,255,.08); --line: rgba(255,255,255,.16); background: rgba(16, 18, 22, .5); }
-@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .wframe .mui { background: rgba(255,255,255,.9); } }
+:root[data-theme="dark"] .wframe .mui { --surface: rgba(255,255,255,.1); --line: rgba(255,255,255,.18); background: rgba(16, 18, 22, .66); }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .wframe .mui { background: rgba(255,255,255,.92); } }
 
 /* ---- one quiet loop per snippet (only while on screen) */
 @media (prefers-reduced-motion: no-preference) {
@@ -1372,6 +1392,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   .mui-live .a-dots i { animation: mui-dot 1.2s ease-in-out infinite; } .mui-live .a-dots i:nth-child(2) { animation-delay: .15s; } .mui-live .a-dots i:nth-child(3) { animation-delay: .3s; }
   .mui-live .a-recolor { animation: mui-recolor 6s steps(1) infinite; }
   .mui-live .a-cycle > * { animation: mui-cycle var(--n4, 6s) infinite; animation-delay: calc(var(--k, 0) * var(--step, 1.5s)); }
+  .mui-live .mui__tabs.a-cycle > * { animation-name: mui-tab; }
 }
 @keyframes mui-in { 0% { opacity: 0; transform: translateY(.5em); } 8%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
 @keyframes mui-tg { 0%, 20% { background: color-mix(in srgb, var(--ink) 18%, var(--surface)); } 28%, 100% { background: var(--brand-600); } }
@@ -1382,6 +1403,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 @keyframes mui-dot { 0%, 100% { opacity: .3; transform: none; } 50% { opacity: 1; transform: translateY(-.15em); } }
 @keyframes mui-recolor { 0% { --art: #FF7500; } 33% { --art: #1C8CF0; } 66% { --art: #2F2F2F; } }
 @keyframes mui-cycle { 0%, 24% { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-700); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, transparent); } 25%, 100% { background: var(--surface); color: var(--ink-muted); box-shadow: inset 0 0 0 1px var(--line); } }
+@keyframes mui-tab { 0%, 24% { background: var(--brand-600); color: #fff; box-shadow: 0 2px 6px -2px rgba(229, 56, 15, .55); } 25%, 100% { background: transparent; color: color-mix(in srgb, var(--ink) 72%, transparent); box-shadow: none; } }
 @property --art { syntax: "<color>"; inherits: true; initial-value: #FF7500; }
 
 /* =========================================================
