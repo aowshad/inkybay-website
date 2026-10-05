@@ -1349,6 +1349,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 /* glass variant: frosted card on top of a photo, filling the frame with an equal margin on every side */
 .wframe .mui-stage { --pad: 6cqmin; }   /* ~78% of the frame's area */                                  /* same px on all four sides, even if the frame isn't square */
 .wframe .mui {
+  /* the glass keeps its light look in both themes, so its text tokens are fixed too */
+  --ink: #2F2F2F; --ink-muted: #707070; --bg: #FFFFFF; color: var(--ink);
   --surface: rgba(255, 255, 255, .62); --line: rgba(255, 255, 255, .75);
   width: calc(100% - var(--pad) * 2); height: calc(100% - var(--pad) * 2); max-width: none;
   grid-template-rows: auto 1fr auto; align-content: stretch; gap: .8em; padding: 1.2em;
@@ -1369,16 +1371,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .wframe .mui__tabs { background: rgba(255, 255, 255, .5); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .8); }
 .wframe .mui__tabs span { color: color-mix(in srgb, var(--ink) 72%, transparent); font-weight: 500; }
 .wframe .mui__tabs span.is-on { background: var(--brand-600); color: #fff; box-shadow: 0 2px 6px -2px rgba(229, 56, 15, .55); }
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme="light"]) .wframe .mui { --surface: rgba(255,255,255,.1); --line: rgba(255,255,255,.18); background: rgba(16, 18, 22, .66);
-    box-shadow: inset 0 0 0 1px rgba(255,255,255,.16), inset 0 1px 0 rgba(255,255,255,.22), 0 24px 48px -24px rgba(0,0,0,.6); }
-  :root:not([data-theme="light"]) .wframe .mui__canvas, :root:not([data-theme="light"]) .wframe .mui__chart,
-  :root:not([data-theme="light"]) .wframe .mui__row, :root:not([data-theme="light"]) .wframe .mui__tabs { background: rgba(255,255,255,.08); box-shadow: inset 0 0 0 1px rgba(255,255,255,.12); }
-  :root:not([data-theme="light"]) .wframe .mui__chart i { background: rgba(255,255,255,.5); }
-  :root:not([data-theme="light"]) .wframe .mui__chart i:last-child { background: var(--brand-grad); }
-  :root:not([data-theme="light"]) .wframe .mui__tabs span { color: rgba(255,255,255,.72); }
-}
-:root[data-theme="dark"] .wframe .mui { --surface: rgba(255,255,255,.1); --line: rgba(255,255,255,.18); background: rgba(16, 18, 22, .66); }
 @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .wframe .mui { background: rgba(255,255,255,.92); } }
 
 /* ---- one quiet loop per snippet (only while on screen) */
