@@ -1,0 +1,2505 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>InkyBay — Product Customizer for Shopify</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* =========================================================
+   LOCKED KIT — every future section reuses these. No new values.
+   ========================================================= */
+:root {
+  /* Layout: 1440 frame → 96 margin + 1248 container, 12 cols, 32 gutter */
+  --container: 1248px;
+  --margin: clamp(20px, 6.6667vw, 96px);
+  --gutter: clamp(16px, 2.2222vw, 32px);
+  --cols: 12;
+
+  /* Section rhythm: every section's top/bottom space comes from here */
+  --section-y: clamp(80px, 3.2rem + 4.8vw, 120px);   /* 120 @1440, 80 on phones */
+  --head-gap: clamp(40px, 2rem + 2.25vw, 64px);       /* section heading block -> content: 64 @1440, 40 on phones */
+
+  /* Spacing (4px base) */
+  --s-1: 4px;  --s-2: 8px;  --s-3: 12px; --s-4: 16px; --s-5: 20px;
+  --s-6: 24px; --s-8: 32px; --s-10: 40px; --s-12: 48px; --s-16: 64px;
+  --s-20: 80px; --s-24: 96px; --s-30: 120px;
+
+  /* Type */
+  --font-head: "Geist", "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --font-body: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --t-display: clamp(36px, 1.6rem + 3.4vw, 64px);   /* 64 on desktop (>=1130px), ~39 on phones */
+  --t-display-lh: 1.125;
+  --t-display-track: -0.03125em;
+  --t-h2: clamp(32px, 1.6rem + 2vw, 56px);
+  --t-h3: clamp(22px, 1.2rem + .5vw, 28px);
+  --t-lead: 18px;  --t-lead-lh: 24px;
+  --t-body: 16px;  --t-body-lh: 24px;
+  --t-btn: 18px;   --t-btn-lh: 1.4;
+  --t-nav: 18px;
+
+  /* Brand */
+  --brand-500: #F58220;
+  --brand-600: #FF7500;
+  --brand-700: #E5380F;
+  --brand-red: #D42427;
+  --brand-grad: linear-gradient(178.4deg, #F58220 6%, #FF7500 49.7%, #F58220 94%);
+  --frame-grad: linear-gradient(178.7deg, #FF2F2F 0%, #EF7B16 35.9%, #FF6207 69.9%, #FF2F2F 100%);
+
+  /* Neutral (light) */
+  --bg: #FFFFFF;
+  --bg-rgb: 255, 255, 255;
+  --surface: #F6F6F7;
+  --ink: #2F2F2F;
+  --ink-nav: #0D121C;
+  --ink-muted: #707070;
+  --line: #E7E7EA;
+  --on-brand: #FFFFFF;
+  --btn-2-bg: #FFFFFF;
+
+  /* Radius */
+  --r-sm: 8px; --r-md: 12px; --r-lg: 16px; --r-xl: 20px;
+
+  /* Elevation */
+  --sh-brand: 0 1px 3px rgba(143, 39, 9, .25);
+  --sh-brand-inset: inset 0 -1px 0 #E3370B, inset 0 1px 0 rgba(255,255,255,.25), inset 0 5px 5px -3.75px rgba(255,255,255,.25);
+  --sh-float: 0 10px 30px -10px rgba(13, 18, 28, .18), 0 2px 6px rgba(13, 18, 28, .05);
+
+  /* Motion */
+  --ease-out: cubic-bezier(.2, .7, .2, 1);
+  --ease-inout: cubic-bezier(.65, 0, .35, 1);
+  --ease-expo: cubic-bezier(.16, 1, .3, 1);   /* long, soft landing */
+  --dur-btn: .5s;
+  --dur-nav: .9s;
+
+  /* Component sizes */
+  --nav-h: 76px;
+  --nav-h-compact: 68px;            /* logo 48 + 10 top + 10 bottom (sizes never change) */
+  --nav-hi: rgba(255, 255, 255, .5);
+  --nav-lo: rgba(255, 255, 255, 0);
+  --nav-edge: rgba(255, 255, 255, .7);
+  --logo-h: 48px;
+  --nav-compact-w: 940px;           /* compact = tighter spacing, narrower pill */
+  --btn-h: 44px;
+  --btn-icon-w: 46px;
+  --btn-icon-h: 36px;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --nav-hi: rgba(255,255,255,.13); --nav-lo: rgba(255,255,255,.09); --nav-edge: rgba(255,255,255,.07); --bg: #0F1013; --bg-rgb: 15, 16, 19; --surface: #17191E; --ink: #F2F2F3; --ink-nav: #ECEDEF;
+    --ink-muted: #A3A5AB; --line: #2A2D33; --btn-2-bg: #15171B;
+  }
+}
+:root[data-theme="dark"] {
+  --nav-hi: rgba(255,255,255,.13); --nav-lo: rgba(255,255,255,.09); --nav-edge: rgba(255,255,255,.07); --bg: #0F1013; --bg-rgb: 15, 16, 19; --surface: #17191E; --ink: #F2F2F3; --ink-nav: #ECEDEF;
+  --ink-muted: #A3A5AB; --line: #2A2D33; --btn-2-bg: #15171B;
+}
+
+/* ===== Base ===== */
+*, *::before, *::after { box-sizing: border-box; }
+:root {
+  padding-top: env(safe-area-inset-top, 0px);
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+}
+html { scroll-padding-top: calc(var(--nav-h) + 24px + env(safe-area-inset-top, 0px)); -webkit-text-size-adjust: 100%; }
+body {
+  margin: 0; background: var(--bg); color: var(--ink);
+  font-family: var(--font-body); font-size: var(--t-body); line-height: var(--t-body-lh);
+  -webkit-font-smoothing: antialiased; text-rendering: optimizeLegibility;
+}
+img, svg { max-width: 100%; display: block; }
+a { color: inherit; text-decoration: none; }
+button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
+:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 3px; border-radius: 6px; }
+h1, h2, h3 { font-family: var(--font-head); margin: 0; font-weight: 600; color: var(--ink); }
+p { margin: 0; }
+
+.container {
+  width: 100%;
+  max-width: calc(var(--container) + var(--margin) * 2);
+  margin-inline: auto;
+  padding-inline: var(--margin);
+}
+.grid { display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); column-gap: var(--gutter); }
+
+/* =========================================================
+   BUTTON — text rolls up, arrow exits right & re-enters left
+   ========================================================= */
+.btn {
+  position: relative; display: inline-flex; align-items: center; justify-content: center; gap: var(--s-2);
+  height: var(--btn-h); padding-inline: var(--s-3); border-radius: var(--r-md);
+  font-family: var(--font-body); font-weight: 500; font-size: var(--t-btn); line-height: var(--t-btn-lh);
+  white-space: nowrap; overflow: hidden; isolation: isolate;
+  transition: box-shadow .25s ease, background-color .25s ease, transform .15s ease;
+}
+.btn:active { transform: translateY(1px); }
+
+/* Rolling label: one visible line, a copy waits underneath */
+.btn__label {
+  position: relative; display: inline-block; overflow: hidden;
+  height: calc(1em * var(--t-btn-lh)); line-height: var(--t-btn-lh);
+}
+.btn__label > span {
+  display: block; position: relative;
+  transition: transform var(--dur-btn) var(--ease-inout);
+}
+.btn__label > span::after {
+  content: attr(data-text); position: absolute; left: 0; top: 100%; width: 100%;
+}
+.btn:hover .btn__label > span,
+.btn:focus-visible .btn__label > span { transform: translateY(-100%); }
+
+/* Arrow: two copies, one leaves right while the other slides in from left */
+.btn__icon {
+  position: relative; display: grid; place-items: center; overflow: hidden;
+  width: var(--btn-icon-w); height: var(--btn-icon-h);
+  background: #fff; border-radius: var(--r-sm);
+}
+.btn__icon svg {
+  grid-area: 1 / 1; width: 24px; height: 24px;
+  transition: transform var(--dur-btn) var(--ease-inout);
+}
+.btn__icon svg + svg { transform: translateX(-160%); }
+.btn:hover .btn__icon svg:first-child,
+.btn:focus-visible .btn__icon svg:first-child { transform: translateX(160%); }
+.btn:hover .btn__icon svg + svg,
+.btn:focus-visible .btn__icon svg + svg { transform: translateX(0); }
+
+.btn--primary {
+  background: var(--brand-grad); color: var(--on-brand);
+  box-shadow: var(--sh-brand), 0 0 0 1px var(--brand-700);
+  padding-right: var(--s-1);
+}
+.btn--primary::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: var(--sh-brand-inset);
+}
+.btn--primary:hover { box-shadow: 0 6px 18px -4px rgba(229, 56, 15, .45), 0 0 0 1px var(--brand-700); }
+
+.btn--secondary {
+  background: var(--btn-2-bg); color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--brand-500);
+}
+.btn--secondary:hover { background: color-mix(in srgb, var(--brand-500) 7%, var(--btn-2-bg)); }
+
+/* =========================================================
+   NAVBAR — full width at top, floats into a compact glass pill on scroll
+   ========================================================= */
+.nav {
+  position: fixed; inset: 0 0 auto 0; z-index: 50;
+  padding-top: env(safe-area-inset-top, 0px);
+  pointer-events: none;
+}
+.nav__bar {
+  pointer-events: auto;
+  margin-inline: auto;
+  width: 100%;
+  max-width: calc(var(--container) + var(--margin) * 2);
+  padding-inline: var(--margin);
+  background: rgba(var(--bg-rgb), 1);
+  -webkit-backdrop-filter: blur(20px) saturate(180%);
+  backdrop-filter: blur(20px) saturate(180%);
+  border: 1px solid rgba(var(--bg-rgb), 0);
+  border-radius: 0;
+  box-shadow: 0 10px 30px -10px rgba(13, 18, 28, 0), 0 2px 6px rgba(13, 18, 28, 0), inset 0 1px 0 rgba(255, 255, 255, 0);
+  transform: translate3d(0, 0, 0);
+  will-change: max-width, transform;
+  transition-property: max-width, padding, transform, border-radius, background-color, border-color, box-shadow;
+  transition-duration: var(--dur-nav);
+  transition-timing-function: var(--ease-expo);
+}
+.nav__row {
+  height: var(--nav-h);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--s-6);
+  transition: height var(--dur-nav) var(--ease-expo);
+}
+
+.nav.is-compact .nav__bar {
+  max-width: min(var(--nav-compact-w), calc(100% - var(--margin) * 2));
+  padding-left: calc((var(--nav-h-compact) - var(--logo-h)) / 2 - 1px);   /* minus 1px border */
+  padding-right: calc((var(--nav-h-compact) - var(--btn-h)) / 2 - 1px);
+  transform: translate3d(0, var(--s-3), 0);
+  border-radius: var(--r-xl);
+  background: rgba(var(--bg-rgb), .66);
+  border-color: var(--nav-edge);
+  box-shadow: 0 10px 30px -10px rgba(13, 18, 28, .18), 0 2px 6px rgba(13, 18, 28, .05), inset 0 1px 0 var(--nav-hi), inset 0 -1px 0 var(--nav-lo);
+}
+.nav .nav__menu, .nav .nav__link, .nav .nav__row { transition: gap var(--dur-nav) var(--ease-expo), padding var(--dur-nav) var(--ease-expo), height var(--dur-nav) var(--ease-expo); }
+.nav.is-compact .nav__row { gap: var(--s-4); }
+.nav.is-compact .nav__menu { gap: 0; }
+.nav.is-compact .nav__link { padding-inline: var(--s-2); }
+.nav.is-compact .nav__row { height: calc(var(--nav-h-compact) - 2px); }
+
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .nav.is-compact .nav__bar { background: rgba(var(--bg-rgb), .96); }
+}
+
+.logo { display: flex; align-items: center; gap: var(--s-3); height: var(--logo-h); flex-shrink: 0; }
+.logo__mark { width: var(--logo-h); height: var(--logo-h); }
+.logo__type { width: calc(var(--logo-h) * 121 / 48); height: calc(var(--logo-h) * 40 / 48); }
+
+.nav__menu { display: flex; align-items: center; gap: var(--s-2); margin: 0; padding: 0; list-style: none; }
+.nav__link {
+  display: inline-flex; align-items: center; gap: 10px; padding: 6px var(--s-3);
+  font-size: var(--t-nav); line-height: 1.4; color: var(--ink-nav); border-radius: var(--r-sm);
+  transition: background-color .2s ease;
+}
+.nav__link:hover { background: rgba(13, 18, 28, .05); }
+.nav__link svg { width: 20px; height: 20px; }
+.nav__link svg path { stroke: currentColor; }
+.nav__toggle { display: none; width: 44px; height: 44px; border-radius: var(--r-md); place-items: center; color: var(--ink-nav); }
+.nav__toggle:hover { background: rgba(13, 18, 28, .05); }
+.nav__sheet { display: none; }
+
+main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
+
+/* =========================================================
+   HERO
+   ========================================================= */
+.hero { padding-top: var(--s-12); padding-bottom: var(--s-24); }
+.hero__inner { display: flex; flex-direction: column; align-items: center; gap: var(--s-12); }
+.hero__copy { display: flex; flex-direction: column; align-items: center; gap: var(--s-6); text-align: center; width: 100%; max-width: 907px; }
+.hero__text { display: flex; flex-direction: column; align-items: center; gap: var(--s-3); }
+.hero__title {
+  font-size: var(--t-display); line-height: var(--t-display-lh); letter-spacing: var(--t-display-track);
+  font-weight: 600; text-wrap: balance;
+}
+.hero__lead {
+  max-width: 594px; color: var(--ink-muted);
+  font-size: var(--t-lead); line-height: var(--t-lead-lh); text-wrap: pretty;
+}
+.hero__actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--s-3); }
+.proof {
+  display: inline-flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 4px 10px;
+  padding: 6px 14px 6px 10px; border-radius: 999px;
+  background: color-mix(in srgb, var(--brand-500) 7%, var(--bg)); box-shadow: inset 0 0 0 1px var(--tint-line, #F6E6D8);
+  color: var(--ink-muted); font-size: var(--t-body); line-height: 24px;
+  transition: box-shadow .2s ease;
+}
+.proof:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, transparent); }
+.proof svg { width: 18px; height: 18px; flex: none; color: var(--brand-600); }
+.proof b { color: var(--ink); font-weight: 600; }
+.proof__rate { display: inline-flex; align-items: center; gap: 6px; }
+.proof__sep { width: 1px; height: 14px; background: var(--line); }
+@media (max-width: 480px) { .proof__long { display: none; } }
+
+/* =========================================================
+   COMET RING — a sharp light that travels the rounded border, with a soft bloom behind it.
+   Usage: a positioned, rounded parent with <span class="ring"></span> as a child.
+   The ring is masked to exactly the border band, so the light stays crisp.
+   ========================================================= */
+@property --sweep {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+.ring {
+  --ring-w: 1px;
+  position: absolute; inset: 0; z-index: 3; pointer-events: none;
+  border-radius: inherit; padding: var(--ring-w);
+  background: conic-gradient(from var(--sweep),
+    transparent 0deg 190deg,
+    rgba(212, 36, 39, .7) 262deg,
+    #FF7500 300deg,
+    #FFB04D 326deg,
+    #FFFFFF 344deg,
+    #FFFFFF 349deg,
+    transparent 353deg 360deg);
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: sweep var(--ring-speed, 8s) linear infinite;
+  animation-delay: var(--ring-delay, 0s);
+}
+.has-ring { isolation: isolate; }
+.has-ring > .ring-glow {          /* warm glow that follows the head of the comet — kept to a band around the edge */
+  position: absolute; inset: -4px; z-index: -1; pointer-events: none; border-radius: calc(var(--r-xl) + 4px);
+  padding: 6px;                    /* a thin band hugging the edge: 4px outside + 2px inside */
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite: xor;
+          mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  background: conic-gradient(from var(--sweep),
+    transparent 0deg 250deg,
+    rgba(229, 56, 15, .12) 310deg,
+    rgba(255, 140, 40, .3) 336deg,
+    rgba(255, 220, 170, .4) 347deg,
+    transparent 353deg 360deg);
+  filter: blur(3px);
+  animation: sweep var(--ring-speed, 8s) linear infinite;
+  animation-delay: var(--ring-delay, 0s);
+}
+@keyframes sweep { to { --sweep: 360deg; } }
+
+/* Editor frame: brand hairline + comet ring */
+.hero__media {
+  --bw: 1.5px;
+  position: relative; width: 100%;
+  padding: var(--bw);
+  border-radius: calc(var(--r-lg) + var(--bw));
+  background: var(--frame-grad);
+}
+.hero__media > .ring { --ring-w: 1px; }
+
+.hero__screen {
+  position: relative;
+  aspect-ratio: 2240 / 1836; border-radius: var(--r-lg); overflow: hidden;
+  background: var(--surface);
+}
+.hero__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+
+/* One page-load moment */
+.hero__title .w { display: inline-block; transform-origin: 0 100%; }
+@media (prefers-reduced-motion: no-preference) {
+  .hero__title .w {
+    animation: word-land 1.1s var(--ease-expo) both;
+    animation-delay: calc(var(--i) * 70ms + 80ms);
+  }
+  .proof         { animation: settle .8s var(--ease-expo) .02s both; }
+  .hero__lead    { animation: settle .9s var(--ease-expo) .65s both; }
+  .hero__actions { animation: settle .9s var(--ease-expo) .78s both; }
+  .hero__stage   { animation: rise 1.2s var(--ease-expo) .9s both; }
+  @keyframes word-land {
+    from { opacity: 0; transform: translate3d(0, .45em, 0) rotate(2deg); filter: blur(10px); }
+    60%  { filter: blur(0); }
+    to   { opacity: 1; transform: none; filter: blur(0); }
+  }
+  @keyframes settle { from { opacity: 0; transform: translate3d(0, 10px, 0); } to { opacity: 1; transform: none; } }
+  @keyframes rise { from { opacity: 0; transform: translate3d(0, 40px, 0) scale(.98); } to { opacity: 1; transform: none; } }
+}
+.hero__stage { width: 100%; }
+
+@media (prefers-reduced-motion: reduce) {
+  .ring, .ring-glow { animation: none; opacity: 0; }
+  .btn__label > span, .btn__icon svg, .nav__bar, .nav__row { transition: none !important; }
+}
+
+/* =========================================================
+   LOGOS — "Trusted by" marquee, inside the container, soft edge fades
+   ========================================================= */
+.logos { padding-bottom: var(--section-y); }     /* top spacing comes from the hero (logos belong to it) */
+.logos__title {
+  text-align: center; color: var(--ink);
+  font-family: var(--font-body); font-weight: 500;
+  font-size: var(--t-lead); line-height: var(--t-lead-lh);
+  margin-bottom: var(--s-8);
+}
+.marquee {
+  --card-w: clamp(140px, 13.2vw, 190px);
+  --gap: clamp(20px, 3.3333vw, 48px);
+  --fade: clamp(40px, 8vw, 120px);
+  --speed: 32s;
+  position: relative; overflow: hidden;
+  -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+          mask-image: linear-gradient(90deg, transparent 0, #000 var(--fade), #000 calc(100% - var(--fade)), transparent 100%);
+}
+.marquee__track { display: flex; width: max-content; animation: marquee var(--speed) linear infinite; }
+.marquee__set { display: flex; gap: var(--gap); padding: 0 var(--gap) 0 0; margin: 0; list-style: none; }
+.logo-card {
+  flex: none; width: var(--card-w); aspect-ratio: 19 / 10;
+  border: 1px solid var(--line); border-radius: var(--r-xl);
+  background: var(--bg); overflow: hidden;
+}
+.logo-card img { width: 100%; height: 100%; object-fit: contain; }
+.marquee:hover .marquee__track { animation-play-state: paused; }
+@keyframes marquee { to { transform: translate3d(-50%, 0, 0); } }
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .logo-card img { filter: brightness(1.35); }
+}
+:root[data-theme="dark"] .logo-card img { filter: brightness(1.35); }
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee { overflow-x: auto; }
+  .marquee__track { animation: none; }
+  .marquee__set[aria-hidden="true"] { display: none; }
+}
+@media (max-width: 960px) {
+  .logos__title { margin-bottom: var(--s-6); }
+  .marquee { --speed: 26s; }
+}
+
+/* =========================================================
+   FEATURES — "Everything you need for product customization"
+   ========================================================= */
+:root {
+  --tint: #FFF7F0;                 /* faint brand wash for alternating sections */
+  --tint-line: #F6E6D8;
+  --editor-blue: #1C8CF0;          /* selection blue, taken from the editor UI */
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) { --tint: #17130F; --tint-line: #2E261F; }
+}
+:root[data-theme="dark"] { --tint: #17130F; --tint-line: #2E261F; }
+
+.features {
+  background: var(--tint);
+  padding-block: var(--section-y);
+}
+.features__title {
+  text-align: center;
+  font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em;
+  margin-bottom: var(--head-gap);
+}
+.features__title .line { display: block; }
+
+/* --- "customization" is always a selected layer; swatches recolour it --- */
+.features__title .fx {
+  --space: .27em;
+  display: flex; justify-content: center; align-items: center;
+}
+.fx__word { position: relative; }
+.fx__word--product { margin-right: calc(var(--space) + .2em); }   /* room for the selection box */
+.fx__word--custom { color: var(--fx-color, var(--brand-600)); transition: color .5s var(--ease-expo); }
+
+.fx__select {
+  position: absolute; inset: .06em -.14em -.02em -.14em; pointer-events: none;
+  border: 1.5px solid var(--editor-blue); border-radius: 3px;
+}
+.fx__select i {
+  position: absolute; width: 9px; height: 9px; border-radius: 50%;
+  background: #fff; border: 1.5px solid var(--editor-blue);
+}
+.fx__select i:nth-child(1) { left: -5px;  top: -5px; }
+.fx__select i:nth-child(2) { right: -5px; top: -5px; }
+.fx__select i:nth-child(3) { left: -5px;  bottom: -5px; }
+.fx__select i:nth-child(4) { right: -5px; bottom: -5px; }
+
+.fx__group { display: inline-flex; align-items: center; }
+.fx__for-m { display: none; }
+
+.fx__tools {
+  --sw: max(18px, .46em);
+  --ring-gap: 3px;
+  --ring-w: 2px;
+  position: relative; flex: none; margin-left: calc(var(--space) + .2em);
+  height: calc(var(--sw) + 2 * (var(--ring-gap) + var(--ring-w)) + 12px);
+  padding-inline: calc(var(--ring-gap) + var(--ring-w) + 8px);
+  --pill-bg: var(--bg);
+  border-radius: 999px; background: var(--pill-bg);
+  box-shadow: 0 0 0 1px var(--tint-line), 0 6px 16px -10px rgba(13,18,28,.25);
+  display: flex; align-items: center; gap: calc(var(--ring-gap) * 2 + var(--ring-w) * 2 + 6px);
+}
+.fx__sw {
+  flex: none; width: var(--sw); height: var(--sw); border-radius: 50%;
+  background: var(--c); cursor: pointer; padding: 0;
+  box-shadow: 0 0 0 var(--ring-gap) var(--pill-bg), 0 0 0 var(--ring-gap) transparent;
+  transition: box-shadow .45s var(--ease-expo);
+}
+.fx__sw.is-active {
+  box-shadow: 0 0 0 var(--ring-gap) var(--pill-bg), 0 0 0 calc(var(--ring-gap) + var(--ring-w)) var(--c);
+}
+.fx__sw:not(.is-active):hover {
+  box-shadow: 0 0 0 var(--ring-gap) var(--pill-bg), 0 0 0 calc(var(--ring-gap) + var(--ring-w)) color-mix(in srgb, var(--c) 30%, transparent);
+}
+
+/* --- body: auto-advancing list + media --- */
+.features__body { align-items: stretch; }
+.flist {
+  grid-column: 1 / span 4;
+  display: flex; flex-direction: column; justify-content: space-between; gap: var(--s-10);
+}
+.flist__items { list-style: none; margin: 0; padding: 0; }
+.fitem { position: relative; border-top: 1px solid var(--tint-line); }
+.fitem:last-child { border-bottom: 1px solid var(--tint-line); }
+.fitem__bar {
+  position: absolute; left: 0; top: -1px; height: 2px; width: 100%;
+  background: var(--brand-grad); transform-origin: left center; transform: scaleX(0);
+  border-radius: 2px;
+}
+.fitem.is-active .fitem__bar { animation: progress var(--dwell, 7s) linear forwards; }
+.flist:hover .fitem.is-active .fitem__bar,
+.features.is-paused .fitem.is-active .fitem__bar { animation-play-state: paused; }
+@keyframes progress { to { transform: scaleX(1); } }
+
+.fitem__btn {
+  display: block; width: 100%; text-align: left;
+  padding: var(--s-5) 0;
+  font-family: var(--font-head); font-weight: 500;
+  font-size: var(--t-h3); line-height: 1.2; letter-spacing: -0.015em;
+  color: var(--ink-muted);
+  transition: color .4s ease;
+}
+.fitem__btn:hover { color: var(--ink); }
+.fitem.is-active .fitem__btn { color: var(--ink); padding-bottom: var(--s-2); }
+.fitem__panel {
+  display: grid; grid-template-rows: 0fr;
+  transition: grid-template-rows .6s var(--ease-expo);
+}
+.fitem.is-active .fitem__panel { grid-template-rows: 1fr; }
+.fitem__panel > div { overflow: hidden; }
+.fitem__panel p {
+  color: var(--ink-muted); max-width: 36ch; padding-bottom: var(--s-5);
+  opacity: 0; transform: translate3d(0, 6px, 0);
+  transition: opacity .4s ease, transform .6s var(--ease-expo);
+}
+.fitem.is-active .fitem__panel p { opacity: 1; transform: none; transition-delay: .12s; }
+
+.fmedia {
+  grid-column: 7 / span 6;
+  position: relative; aspect-ratio: 608 / 443;
+  border-radius: var(--r-lg); overflow: hidden;
+  background: var(--bg); box-shadow: 0 0 0 1px var(--tint-line);
+}
+.fmedia__frame {
+  position: absolute; inset: 0; display: grid; place-items: center;
+  opacity: 0; transform: scale(1.02);
+  transition: opacity .6s ease, transform .9s var(--ease-expo);
+}
+.fmedia__frame.is-active { opacity: 1; transform: none; }
+.fmedia__frame img { width: 100%; height: 100%; object-fit: cover; }
+
+.ph {
+  width: 100%; height: 100%; display: grid; place-items: center; text-align: center;
+  color: var(--ink-muted);
+  background:
+    radial-gradient(circle at 1px 1px, var(--tint-line) 1px, transparent 1.5px) 0 0 / 20px 20px,
+    var(--bg);
+}
+.ph__card {
+  display: grid; justify-items: center; gap: var(--s-2);
+  padding: var(--s-6) var(--s-8); border-radius: var(--r-md);
+  background: var(--bg); box-shadow: 0 0 0 1px var(--tint-line);
+}
+.ph__card svg { width: 28px; height: 28px; color: var(--brand-500); }
+.ph__card strong { font-family: var(--font-head); font-weight: 500; color: var(--ink); font-size: var(--t-body); }
+.ph__card span { font-size: var(--t-body); line-height: var(--t-body-lh); }
+
+@media (prefers-reduced-motion: reduce) {
+  .fitem.is-active .fitem__bar { animation: none; transform: scaleX(1); }
+  .fx__word--custom, .fx__sw, .fmedia__frame, .fitem__panel { transition: none !important; }
+}
+@media (max-width: 960px) {
+  .flist, .fmedia { grid-column: 1 / -1; }
+  .flist { order: 2; }
+  .fmedia { order: 1; margin-bottom: var(--s-8); }
+
+}
+
+/* =========================================================
+   INDUSTRIES — cards ride a slow-turning arc; pause/play
+   Always dark (independent of theme): warm near-black + brand glow
+   ========================================================= */
+.industries {
+  --ind-bg: #150E09;
+  --ind-ink: #FFFFFF;
+  --ind-muted: rgba(255, 255, 255, .68);
+  --card-w: 232px;
+  position: relative; overflow: hidden; isolation: isolate;
+  padding-block: var(--section-y);
+  background:
+    radial-gradient(70% 55% at 50% 108%, rgba(255, 117, 0, .34), transparent 70%),
+    radial-gradient(40% 35% at 50% 100%, rgba(212, 36, 39, .22), transparent 70%),
+    radial-gradient(60% 40% at 50% -10%, rgba(245, 130, 32, .08), transparent 70%),
+    var(--ind-bg);
+  color: var(--ind-ink);
+}
+.industries::before {             /* faint grain so the gradient never bands */
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px);
+  background-size: 3px 3px;
+}
+.industries__head { text-align: center; margin-bottom: var(--head-gap); }
+.industries__title {
+  color: var(--ind-ink);
+  font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em;
+  margin-bottom: var(--s-3); text-wrap: balance;
+}
+.industries__lead {
+  color: var(--ind-muted); max-width: 560px; margin-inline: auto;
+  font-size: var(--t-lead); line-height: var(--t-lead-lh); text-wrap: pretty;
+}
+
+/* the stage: cards are absolutely placed by JS along a circle */
+.wheel {
+  position: relative; height: calc(var(--card-w) + 150px);   /* JS refines this */
+  list-style: none; margin: 0; padding: 0;
+  touch-action: pan-y;
+}
+.wheel__card {
+  position: absolute; left: 50%; top: 0;
+  width: var(--card-w); margin-left: calc(var(--card-w) / -2);
+  transform-origin: 50% 50%;
+  will-change: transform;
+}
+.icard {
+  --ink: #2F2F2F; --ink-muted: #707070;   /* card is always light, so its text stays dark in both themes */
+  display: flex; flex-direction: column; height: 100%;
+  padding: var(--s-3) var(--s-3) var(--s-4);
+  background: #fff; color: var(--ink);
+  border-radius: var(--r-xl);
+  box-shadow: 0 24px 50px -24px rgba(0, 0, 0, .6), 0 0 0 1px rgba(255,255,255,.06);
+  transition: box-shadow .3s ease;
+}
+.icard:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 4px; }
+.icard__media {
+  position: relative; aspect-ratio: 1 / 1; border-radius: var(--r-md); overflow: hidden;
+  background:
+    radial-gradient(80% 70% at 50% 60%, #FFFFFF 0%, transparent 70%),
+    #FFF1E4;
+  display: grid; place-items: center;
+}
+.icard__media img { width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 14px 18px rgba(120, 50, 10, .18)); }
+.icard__ph { display: grid; justify-items: center; gap: var(--s-2); color: var(--brand-500); }
+.icard__ph svg { width: 40px; height: 40px; }
+.icard__ph span { font-size: 12px; line-height: 16px; color: #A08572; }
+.icard__body { padding: var(--s-4) var(--s-1) 0; display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
+.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); }
+.icard__text { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.icard__link {
+  margin-top: auto; padding-top: var(--s-3);
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink);
+}
+.icard__link svg { width: 16px; height: 16px; transition: transform .4s var(--ease-expo); }
+.icard:hover .icard__link svg { transform: translateX(3px); }
+
+/* control */
+.wheel-ctrl { display: flex; justify-content: center; gap: var(--s-3); margin-top: var(--s-4); }
+.wheel-ctrl__btn {
+  width: 44px; height: 44px; border-radius: 50%;
+  display: grid; place-items: center; color: #fff;
+  background: rgba(255, 255, 255, .1);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .16);
+  -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
+  transition: background-color .2s ease;
+}
+.wheel-ctrl__btn:hover { background: rgba(255, 255, 255, .18); }
+.wheel-ctrl__btn:active { transform: scale(.94); }
+.wheel-ctrl__btn { transition: background-color .2s ease, transform .15s ease; }
+.wheel-ctrl__btn svg { width: 18px; height: 18px; grid-area: 1 / 1; transition: opacity .2s ease, transform .3s var(--ease-expo); }
+.wheel-ctrl__btn .i-play { opacity: 0; transform: scale(.6); }
+.wheel-ctrl__btn[aria-pressed="true"] .i-pause { opacity: 0; transform: scale(.6); }
+.wheel-ctrl__btn[aria-pressed="true"] .i-play  { opacity: 1; transform: none; }
+
+/* no-JS / reduced-motion fallback: a plain horizontal scroller */
+.wheel:not(.is-ready) { display: flex; gap: var(--s-6); overflow-x: auto; height: auto; padding: var(--s-4) var(--margin); scroll-snap-type: x mandatory; }
+.wheel:not(.is-ready) .wheel__card { position: static; margin: 0; flex: none; scroll-snap-align: center; }
+
+@media (max-width: 960px) {
+  .industries { --card-w: 210px; }
+}
+
+/* =========================================================
+   REVEAL — statement that sharpens word by word as you scroll
+   ========================================================= */
+.reveal { padding-block: var(--section-y); }
+.reveal__text {
+  max-width: 1040px; margin-inline: auto; text-align: center;
+  font-family: var(--font-head); font-weight: 600;
+  font-size: clamp(28px, 1.2rem + 2.2vw, 48px); line-height: 1.25; letter-spacing: -0.02em;
+  color: var(--ink); text-wrap: balance;
+}
+.reveal__text .rw { display: inline-block; will-change: opacity, filter; }
+.reveal.is-live .rw { opacity: .14; filter: blur(6px); }
+
+/* =========================================================
+   FEATURE RAIL — vertical scroll drives a horizontal card rail
+   ========================================================= */
+.rail { position: relative; overflow-x: clip; }
+.rail__stick {
+  position: sticky; top: var(--stick-top, 0px);          /* JS centres the box in the screen while pinned */
+  display: flex; flex-direction: column; gap: var(--head-gap);
+  padding-block: var(--section-y);                         /* same rhythm as every other section */
+}
+.rail__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-8); }
+.rail__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; text-wrap: balance; }
+.rail__bar { flex: none; width: 200px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: .6em; }
+.rail__bar i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform-origin: left; transform: scaleX(0); border-radius: inherit; }
+
+.rail__body { flex: none; }
+.rail__track { display: flex; align-items: flex-start; gap: var(--gutter); will-change: transform; }
+.fcard {
+  /* one full card + half of the next fill the container */
+  /* always 16:10; width = one card + half the next, reduced only if the screen is too short */
+  flex: none; width: var(--fcard-w, 560px); aspect-ratio: 16 / 10;
+  padding: var(--s-6); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line);
+  display: flex; flex-direction: column; gap: var(--s-6);
+}
+.fcard__title { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: var(--s-1); }
+.fcard__text { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.fcard__media {
+  flex: 1; min-height: 0; border-radius: var(--r-md); background: var(--surface);
+  display: grid; place-items: center; color: var(--brand-500);
+}
+.fcard__media svg { width: 40px; height: 40px; opacity: .9; }
+
+/* not pinned (small screens / short screens / reduced motion): a native swipe rail */
+.rail:not(.is-pinned) .rail__stick { position: static; }
+.rail:not(.is-pinned) .rail__track {
+  height: auto; overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;
+  margin-inline: calc(var(--margin) * -1); padding-inline: var(--margin); scroll-padding-inline: var(--margin);
+}
+.rail:not(.is-pinned) .rail__track::-webkit-scrollbar { display: none; }
+.rail:not(.is-pinned) .fcard { scroll-snap-align: start; width: min(640px, 84vw); aspect-ratio: auto; }
+.rail:not(.is-pinned) .fcard__media { flex: none; aspect-ratio: 16 / 10; }
+
+/* =========================================================
+   TESTIMONIALS — rating summary + equal-height review slider
+   ========================================================= */
+.reviews { background: var(--tint); padding-block: var(--section-y); position: relative; isolation: isolate; }
+.reviews__title { text-align: center; font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-wrap: balance; }
+.reviews__grid {
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-4);
+  grid-template-areas: "sum sum sum sl sl sl sl sl sl sl sl sl" "ctl ctl ctl sl sl sl sl sl sl sl sl sl";
+  grid-template-rows: 1fr auto;
+}
+
+.stars { position: relative; display: inline-flex; width: max-content; }
+.stars__row { display: flex; gap: 2px; }
+.stars__row svg { width: 18px; height: 18px; flex: none; }
+.stars__base { color: var(--tint-line); }
+.stars__fill { position: absolute; inset: 0; overflow: hidden; color: var(--brand-600); width: var(--fill, 100%); }
+
+.rsum {
+  grid-area: sum; position: relative; padding: 1px; border-radius: calc(var(--r-xl) + 1px);
+  background: linear-gradient(160deg, rgba(229, 56, 15, .45), rgba(245, 130, 32, .25) 50%, rgba(229, 56, 15, .45));
+  --ring-delay: -4s;                         /* out of phase with the hero ring */
+}
+.rsum > .ring { --ring-w: 1px; }
+.rsum__in {
+  height: 100%; border-radius: var(--r-xl); background: var(--bg);
+  padding: var(--s-6); display: flex; flex-direction: column; gap: var(--s-4);
+}
+.rsum__top { display: flex; flex-direction: column; align-items: flex-start; gap: var(--s-3); }
+.rsum__score { font-family: var(--font-head); font-weight: 600; font-size: 52px; line-height: 1; letter-spacing: -0.03em; color: var(--ink); }
+.rsum__score small { font-size: 20px; color: var(--ink-muted); letter-spacing: 0; font-weight: 500; margin-left: 2px; vertical-align: super; }
+.rsum__text { color: var(--ink-muted); }
+.rsum__text strong { color: var(--ink); font-weight: 500; }
+.rsum .btn { margin-top: auto; width: 100%; justify-content: space-between; padding-left: var(--s-4); }
+
+.rslider { grid-area: sl; min-width: 0; overflow: hidden; border-radius: var(--r-xl); touch-action: pan-y; }
+.rtrack {
+  display: flex; gap: var(--gutter); align-items: stretch;   /* stretch = every card takes the tallest card's height */
+  height: 100%; will-change: transform; cursor: grab; user-select: none;
+}
+.rtrack.is-dragging { cursor: grabbing; }
+.rcard {
+  flex: none; width: calc((100% - var(--gutter)) / 2); scroll-snap-align: start;
+  padding: var(--s-6); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line);
+  display: flex; flex-direction: column; gap: var(--s-4);
+}
+.rcard__quote { color: var(--ink); font-size: var(--t-body); line-height: var(--t-body-lh); }
+.rcard__who { margin-top: auto; padding-top: var(--s-4); border-top: 1px solid var(--tint-line); }
+.rcard__name { font-weight: 600; color: var(--ink); }
+.rcard__where { font-size: var(--t-body); line-height: var(--t-body-lh); color: var(--ink-muted); }
+
+.rctl {
+  grid-area: ctl; display: flex; align-items: center; gap: var(--s-3);
+  padding: var(--s-2); border-radius: 999px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line);
+}
+.rctl__btn {
+  flex: none; width: 40px; height: 40px; border-radius: 50%; display: grid; place-items: center;
+  color: var(--ink); background: var(--surface);
+  transition: background-color .2s ease, color .2s ease, opacity .2s ease, transform .15s ease;
+}
+.rctl__btn svg { width: 20px; height: 20px; }
+.rctl__btn:hover:not(:disabled) { background: var(--brand-500); color: #fff; }
+.rctl__btn:active:not(:disabled) { transform: scale(.94); }
+.rctl__btn:disabled { opacity: .35; cursor: default; }
+.rdots { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+.rdot {
+  position: relative; width: 8px; height: 8px; border-radius: 999px; padding: 0; overflow: hidden;
+  background: var(--tint-line);
+  transition: width .5s var(--ease-expo), background-color .3s ease;
+}
+.rdot::before { content: ""; position: absolute; inset: -8px; }          /* bigger tap target */
+.rdot:hover { background: color-mix(in srgb, var(--brand-500) 35%, var(--tint-line)); }
+.rdot.is-active { width: 32px; background: color-mix(in srgb, var(--brand-500) 22%, var(--tint-line)); }
+.rdot.is-active::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; background: var(--brand-grad);
+  transform-origin: left; transform: scaleX(var(--p, 0));   /* driven by the JS autoplay clock */
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .rdot.is-active::after { transform: scaleX(1); }
+  .rdot { transition: none; }
+}
+@media (max-width: 960px) {
+  .rail__head { flex-direction: column; align-items: flex-start; gap: var(--s-4); }
+  .reviews__grid { grid-template-columns: minmax(0, 1fr); grid-template-areas: "sum" "sl" "ctl"; grid-template-rows: auto; row-gap: var(--s-4); }
+  .rcard { width: min(86%, 420px); }
+  .rslider { margin-inline: calc(var(--margin) * -1); padding-inline: var(--margin); border-radius: 0; }
+}
+
+/* =========================================================
+   HOW IT WORKS — hover a step: it widens, others yield, its note fades in
+   ========================================================= */
+.how { padding-block: var(--section-y); }
+.how__title { text-align: center; font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--s-16); text-wrap: balance; }
+.steps { display: flex; gap: var(--s-4); list-style: none; margin: 0; padding: 0; }
+
+.step {
+  flex: 1 1 0; min-width: 0; outline: none;
+  transition: flex-grow .75s var(--ease-expo);
+}
+.steps.has-active .step { flex-grow: .78; }
+.steps.has-active .step.is-active { flex-grow: 2.3; }
+
+.step__vis {
+  position: relative; height: 340px; overflow: hidden; border-radius: var(--r-lg);
+  background:
+    radial-gradient(circle at 1px 1px, rgba(229, 56, 15, .10) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    radial-gradient(120% 90% at 50% 100%, #FFE3CC 0%, transparent 60%),
+    #FFF4EA;
+  box-shadow: inset 0 0 0 1px var(--tint-line);
+  display: grid; place-items: center;
+}
+.step__open {
+  position: absolute; top: var(--s-3); right: var(--s-3); width: 28px; height: 28px; border-radius: 50%;
+  display: grid; place-items: center; background: rgba(255,255,255,.85); color: #2F2F2F;
+  opacity: 0; transform: scale(.7); transition: opacity .3s ease, transform .5s var(--ease-expo);
+}
+.step__open svg { width: 14px; height: 14px; }
+.step.is-active .step__open { opacity: 1; transform: none; }
+.step:focus-visible .step__vis { box-shadow: inset 0 0 0 2px var(--brand-500); }
+
+.step__cap { padding: var(--s-4) var(--s-1) 0; overflow: hidden; }
+.step__row { display: flex; align-items: baseline; gap: var(--s-2); white-space: nowrap; }
+.step__num { font-size: 16px; line-height: 24px; color: var(--brand-600); font-weight: 600; font-variant-numeric: tabular-nums; }
+.step__title { font-size: 20px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+.step__text {
+  width: 360px; max-width: 100vw;               /* fixed measure: no re-wrapping while the card widens */
+  margin-top: var(--s-1); color: var(--ink-muted); font-size: var(--t-body); line-height: var(--t-body-lh);
+  opacity: 0; transform: translate3d(0, 4px, 0);
+  transition: opacity .25s ease, transform .5s var(--ease-expo);
+}
+.step.is-active .step__text { opacity: 1; transform: none; transition-delay: .22s, .22s; }
+
+/* ---- illustrations (fixed-size scenes centred in the visual; widening reveals more of the stage) */
+.scene {
+  position: absolute; left: 50%; top: 50%;
+  width: 260px; height: 220px; color: #2F2F2F; font-size: 12px; line-height: 16px;
+  transform: translate(-50%, -50%) scale(var(--fit, 1)); transform-origin: 50% 50%;   /* centred by geometry, then fitted */
+}
+.ui { position: absolute; background: #fff; border-radius: 12px; box-shadow: 0 12px 28px -14px rgba(120, 50, 10, .35), 0 0 0 1px rgba(229, 56, 15, .08); }
+.ln { display: block; height: 6px; border-radius: 3px; background: #F1E6DC; }
+
+/* 1 · install */
+.s-install .ui { left: 20px; right: 20px; top: 40px; padding: 16px; }
+.s-install .app { display: flex; gap: 12px; align-items: center; }
+.s-install .app svg { width: 40px; height: 40px; flex: none; border-radius: 8px; }
+.s-install .app div { flex: 1; display: grid; gap: 6px; }
+.s-install .app b { font-family: var(--font-head); font-size: 14px; font-weight: 600; }
+.s-install .go {
+  margin-top: 14px; height: 32px; border-radius: 8px; background: var(--brand-grad); color: #fff;
+  display: grid; place-items: center; font-weight: 500; position: relative; overflow: hidden;
+}
+.s-install .go span { grid-area: 1/1; }
+.s-install .go .ok { opacity: 0; }
+.s-install .prog { margin-top: 10px; height: 4px; border-radius: 4px; background: #F1E6DC; overflow: hidden; }
+.s-install .prog i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform: scaleX(0); transform-origin: left; }
+.step:is(.is-active, .is-on) .s-install .go { animation: press 3.2s var(--ease-expo) infinite; }
+.step:is(.is-active, .is-on) .s-install .prog i { animation: fill 3.2s ease-in-out infinite; }
+.step:is(.is-active, .is-on) .s-install .go .lbl { animation: out 3.2s infinite; }
+.step:is(.is-active, .is-on) .s-install .go .ok { animation: in 3.2s infinite; }
+@keyframes press { 0%, 8% { transform: none; } 12% { transform: scale(.95); } 18%, 100% { transform: none; } }
+@keyframes fill { 0%, 15% { transform: scaleX(0); } 60%, 100% { transform: scaleX(1); } }
+@keyframes out { 0%, 58% { opacity: 1; } 64%, 100% { opacity: 0; } }
+@keyframes in  { 0%, 60% { opacity: 0; transform: scale(.6); } 68%, 100% { opacity: 1; transform: none; } }
+
+/* 2 · embed */
+.s-embed .win { inset: 22px 10px 22px 10px; overflow: hidden; }
+.s-embed .bar { height: 22px; display: flex; gap: 5px; align-items: center; padding: 0 10px; border-bottom: 1px solid #F3E9E0; }
+.s-embed .bar i { width: 7px; height: 7px; border-radius: 50%; background: #EADBCF; }
+.s-embed .body { display: grid; grid-template-columns: 70px 1fr; height: calc(100% - 22px); }
+.s-embed .side { border-right: 1px solid #F3E9E0; padding: 12px 10px; display: grid; align-content: start; gap: 8px; }
+.s-embed .main { padding: 14px; display: grid; align-content: start; gap: 10px; }
+.s-embed .row { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px; border-radius: 8px; background: #FFF7F0; }
+.s-embed .row b { font-weight: 500; font-size: 12px; white-space: nowrap; }
+.s-embed .tg { width: 30px; height: 18px; border-radius: 9px; background: #E3D6CB; position: relative; flex: none; transition: background-color .3s; }
+.s-embed .tg::after { content: ""; position: absolute; top: 2px; left: 2px; width: 14px; height: 14px; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.step:is(.is-active, .is-on) .s-embed .tg { animation: tg-bg 3s infinite; }
+.step:is(.is-active, .is-on) .s-embed .tg::after { animation: tg-knob 3s var(--ease-expo) infinite; }
+.s-embed .saved { position: absolute; right: 22px; bottom: 34px; padding: 4px 10px; border-radius: 999px; background: #2F2F2F; color: #fff; font-size: 11px; opacity: 0; }
+.step:is(.is-active, .is-on) .s-embed .saved { animation: toast 3s var(--ease-expo) infinite; }
+@keyframes tg-bg { 0%, 25% { background: #E3D6CB; } 32%, 100% { background: var(--brand-600); } }
+@keyframes tg-knob { 0%, 25% { transform: none; } 35%, 100% { transform: translateX(12px); } }
+@keyframes toast { 0%, 40% { opacity: 0; transform: translateY(6px); } 50%, 85% { opacity: 1; transform: none; } 95%, 100% { opacity: 0; } }
+
+/* 3 · product setup */
+.s-setup img { position: absolute; left: 50%; top: 50%; width: 210px; height: 210px; margin: -105px 0 0 -105px; object-fit: contain; filter: drop-shadow(0 16px 20px rgba(120, 50, 10, .18)); }
+.s-setup .area {
+  position: absolute; left: 50%; top: 46%; width: 64px; height: 76px; margin: -38px 0 0 -32px;
+  border: 1.5px dashed var(--editor-blue); border-radius: 3px; background: rgba(28, 140, 240, .06);
+}
+.s-setup .area i { position: absolute; width: 8px; height: 8px; border-radius: 50%; background: #fff; border: 1.5px solid var(--editor-blue); }
+.s-setup .area i:nth-child(1) { left: -5px; top: -5px; } .s-setup .area i:nth-child(2) { right: -5px; top: -5px; }
+.s-setup .area i:nth-child(3) { left: -5px; bottom: -5px; } .s-setup .area i:nth-child(4) { right: -5px; bottom: -5px; }
+.s-setup .tag { position: absolute; left: 50%; top: 18px; transform: translateX(-50%); padding: 4px 10px; border-radius: 999px; background: var(--editor-blue); color: #fff; font-size: 11px; white-space: nowrap; }
+.step:is(.is-active, .is-on) .s-setup .area { animation: resize 3.4s var(--ease-expo) infinite; }
+@keyframes resize { 0%, 15% { transform: none; } 45%, 70% { transform: scale(1.25, 1.18); } 100% { transform: none; } }
+
+/* 4 · start selling */
+.s-sell .chart { left: 8px; right: 8px; top: 70px; bottom: 6px; }
+.s-sell .chart__head { position: absolute; left: 16px; right: 16px; top: 32px; display: flex; justify-content: space-between; align-items: baseline; }
+.s-sell .chart__head b { font-weight: 600; font-size: 12px; }
+.s-sell .chart__head span { font-size: 11px; font-weight: 600; color: var(--brand-600); }
+.s-sell .bars { position: absolute; left: 16px; right: 16px; bottom: 14px; height: 56px; display: flex; align-items: flex-end; gap: 8px; }
+.s-sell .bars i { flex: 1; border-radius: 4px 4px 2px 2px; background: #F6DFCC; height: var(--h); transform-origin: bottom; }
+.s-sell .bars i:last-child { background: var(--brand-grad); }
+.s-sell .order { left: 18px; right: 18px; top: 14px; z-index: 2; padding: 10px 12px; display: grid; grid-template-columns: 36px minmax(0, 1fr); column-gap: 10px; row-gap: 6px; align-items: center; }
+.s-sell .order img { grid-row: span 2; width: 36px; height: 36px; border-radius: 8px; background: #FFF4EA; object-fit: contain; }
+.s-sell .o-top { display: flex; justify-content: space-between; align-items: baseline; font-size: 10px; line-height: 12px; color: #8A7A6E; }
+.s-sell .o-top em { font-style: normal; display: inline-flex; align-items: center; gap: 4px; }
+.s-sell .o-top em::before { content: ""; width: 6px; height: 6px; border-radius: 50%; background: var(--brand-600); }
+.s-sell .o-main { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; }
+.s-sell .o-main b { font-weight: 600; font-size: 12px; line-height: 16px; white-space: nowrap; }
+.s-sell .o-main strong { font-family: var(--font-head); font-weight: 600; font-size: 14px; line-height: 16px; }
+.s-sell .o-chip {
+  grid-column: 2; justify-self: start; display: inline-flex; align-items: center; gap: 4px;
+  padding: 2px 8px 2px 6px; border-radius: 999px; background: #FFF1E4; color: #B4520F; font-size: 10px; line-height: 14px; font-weight: 500;
+}
+.s-sell .o-chip svg { width: 11px; height: 11px; }
+.step:is(.is-active, .is-on) .s-sell .order { animation: notify 3.4s var(--ease-expo) infinite; }
+.step:is(.is-active, .is-on) .s-sell .bars i { animation: grow 3.4s var(--ease-expo) infinite; animation-delay: calc(var(--d) * 70ms); }
+@keyframes notify { 0% { opacity: 0; transform: translateY(-10px) scale(.97); } 14%, 82% { opacity: 1; transform: none; } 100% { opacity: 0; transform: translateY(-4px); } }
+@keyframes grow { 0% { transform: scaleY(.3); } 35%, 100% { transform: none; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .step, .step__text, .step__open { transition: none; }
+  .scene *, .scene *::after { animation: none !important; }
+}
+@media (max-width: 960px) {
+  .how__title { margin-bottom: var(--s-10); }
+  .steps { flex-direction: column; gap: var(--s-8); }
+  .steps .step, .steps.has-active .step { flex-grow: 1; }
+  .step__vis { height: 260px; }
+  .step__text { width: auto; opacity: 1; transform: none; font-size: var(--t-body); line-height: var(--t-body-lh); }
+  .step__open { display: none; }
+}
+
+/* =========================================================
+   FAQ — sticky intro on the left, single-open accordion on the right
+   ========================================================= */
+.faq { padding-block: var(--section-y); }
+.faq__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+.faq__intro { grid-column: 1 / span 4; position: sticky; top: calc(var(--nav-h) + var(--s-8)); display: grid; gap: var(--s-4); }
+.faq__title { font-size: clamp(28px, 1.4rem + 1.2vw, 40px); line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance; }
+.faq__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.faq__help { margin-top: var(--s-6); padding-top: var(--s-6); border-top: 1px solid var(--line); display: grid; gap: var(--s-3); justify-items: start; }
+.faq__help p { font-weight: 500; color: var(--ink); }
+.faq__list { grid-column: 6 / span 7; list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
+
+.qa {
+  border-radius: var(--r-lg); background: var(--bg);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line);
+  transition: box-shadow .3s ease;
+}
+.qa:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 22%, transparent); }
+.qa.is-open { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--tint-line)), 0 12px 30px -20px rgba(229, 56, 15, .35); }
+.qa__q {
+  width: 100%; display: flex; align-items: center; justify-content: space-between; gap: var(--s-4);
+  padding: var(--s-5) var(--s-6); text-align: left;
+  font-family: var(--font-head); font-weight: 500; font-size: 20px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink);
+  border-radius: inherit;
+}
+.qa__icon {
+  position: relative; flex: none; width: 32px; height: 32px; border-radius: 50%;
+  background: var(--surface); transition: background-color .3s ease, transform .5s var(--ease-expo);
+}
+.qa__icon::before, .qa__icon::after {
+  content: ""; position: absolute; left: 50%; top: 50%; width: 12px; height: 1.5px; margin: -.75px 0 0 -6px;
+  background: currentColor; border-radius: 2px; transition: transform .5s var(--ease-expo);
+}
+.qa__icon::after { transform: rotate(90deg); }
+.qa.is-open .qa__icon { background: var(--brand-500); color: #fff; transform: rotate(180deg); }
+.qa.is-open .qa__icon::after { transform: rotate(0deg); }        /* plus folds into minus */
+.qa__a { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .55s var(--ease-expo); }
+.qa.is-open .qa__a { grid-template-rows: 1fr; }
+.qa__a > div { overflow: hidden; }
+.qa__a p {
+  padding: 0 var(--s-6) var(--s-6); max-width: 62ch; color: var(--ink-muted);
+  opacity: 0; transform: translate3d(0, -4px, 0); transition: opacity .3s ease, transform .5s var(--ease-expo);
+}
+.qa.is-open .qa__a p { opacity: 1; transform: none; transition-delay: .08s; }
+
+/* =========================================================
+   CTA + FOOTER — one continuous warm-dark zone (matches Industries)
+   ========================================================= */
+.endzone {
+  --ink: #FFFFFF; --ink-muted: rgba(255, 255, 255, .64); --line: rgba(255, 255, 255, .1);
+  --btn-2-bg: rgba(255, 255, 255, .04); --bg: #150E09;
+  position: relative; isolation: isolate; overflow: hidden; color: var(--ink);
+  background:
+    radial-gradient(60% 50% at 85% 30%, rgba(255, 117, 0, .22), transparent 70%),
+    radial-gradient(50% 40% at 10% 0%, rgba(212, 36, 39, .12), transparent 70%),
+    #150E09;
+}
+.endzone::before {
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .5;
+  background-image: radial-gradient(rgba(255,255,255,.035) 1px, transparent 1px); background-size: 3px 3px;
+}
+.cta { padding-block: var(--section-y); }
+.cta__card {
+  position: relative; border-radius: calc(var(--r-xl) + 4px);
+  background: linear-gradient(180deg, rgba(255,255,255,.045), rgba(255,255,255,.015)), #120B07;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), 0 40px 80px -40px rgba(0, 0, 0, .8);
+  display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center;
+  padding: var(--s-16) var(--s-16); min-height: 420px;
+}
+.cta__card > .ring { --ring-w: 1px; }
+.cta__text { grid-column: 1 / span 6; display: grid; gap: var(--s-4); justify-items: start; position: relative; z-index: 1; }
+.cta__title { color: var(--ink); font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; text-wrap: balance; }
+.cta__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.cta__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-4); }
+.cta__actions .btn--secondary { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.cta__actions .btn--secondary:hover { background: rgba(255, 255, 255, .08); }
+
+/* visual: the editor in miniature — artwork on a mug, selected, with a colour pill */
+.cta__vis { grid-column: 7 / span 6; position: relative; z-index: 4; align-self: stretch; min-height: 300px; }   /* above .ring (z 3) */
+.cta__vis img {             /* sits on the card's bottom edge and rises above its top edge */
+  position: absolute; right: 0; bottom: calc(var(--s-16) * -1 + var(--s-8));    /* 32px above the card's bottom edge */
+  height: calc(100% + var(--s-16) + 64px); width: auto; max-width: none;
+  filter: drop-shadow(0 30px 50px rgba(0, 0, 0, .45));
+}
+
+/* footer */
+.foot { padding-top: var(--s-20); }
+.foot__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-10); }
+.foot__brand { grid-column: 1 / span 4; display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
+.foot__brand p { color: var(--ink-muted); max-width: 30ch; }
+.foot__social { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); margin-top: var(--s-2); }
+.foot__social a {
+  color: var(--ink-muted); text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px;
+  transition: color .2s ease, text-decoration-color .2s ease;
+}
+.foot__social a:hover { color: #fff; text-decoration-color: var(--brand-500); }
+.foot__col { grid-column: span 2; }
+.foot__col h3 { font-family: var(--font-body); font-size: var(--t-body); font-weight: 600; color: var(--ink); margin-bottom: var(--s-4); }
+.foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
+.foot__col a { color: var(--ink-muted); transition: color .2s ease; }
+.foot__col a:hover { color: #fff; }
+.foot__bar {
+  margin-top: var(--s-20); padding-block: var(--s-8); border-top: 1px solid var(--line);
+  display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-4);
+  color: var(--ink-muted);
+}
+.foot__bar nav { display: flex; flex-wrap: wrap; gap: var(--s-6); }
+.foot__bar a { color: var(--ink-muted); transition: color .2s ease; }
+.foot__bar a:hover { color: #fff; }
+.foot__bar a.parse { color: var(--ink); }
+.foot__markwrap { position: relative; width: 100%; margin-top: var(--s-12); overflow: hidden; user-select: none; cursor: default; }
+.foot__mark { display: block; width: 100%; height: auto; margin-bottom: -2.5%; }   /* bleeds into the bottom edge */
+.foot__mark--lit {                 /* brighter copy, revealed only inside a soft spotlight that follows the cursor */
+  position: absolute; inset: 0 0 auto 0; pointer-events: none; opacity: 0;
+  -webkit-mask-image: radial-gradient(var(--spot, 260px) circle at var(--mx, 50%) var(--my, 50%), #000 0%, rgba(0,0,0,.55) 35%, transparent 70%);
+          mask-image: radial-gradient(var(--spot, 260px) circle at var(--mx, 50%) var(--my, 50%), #000 0%, rgba(0,0,0,.55) 35%, transparent 70%);
+  transition: opacity .5s ease;
+}
+.foot__markwrap.is-lit .foot__mark--lit { opacity: 1; }
+@media (hover: none) {             /* touch: a slow automatic sweep instead */
+  .foot__mark--lit { opacity: .9; animation: mark-sweep 7s ease-in-out infinite alternate; }
+}
+@keyframes mark-sweep { from { --mx: 10%; } to { --mx: 90%; } }
+@property --mx { syntax: "<length-percentage>"; inherits: true; initial-value: 50%; }
+
+/* how it works: header row with CTA opposite the title */
+.how__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-8); margin-bottom: var(--head-gap); }
+.how__head .how__title { margin-bottom: 0; text-align: left; }
+
+@media (prefers-reduced-motion: reduce) {
+  .qa__a, .qa__a p, .qa__icon, .qa__icon::before, .qa__icon::after { transition: none; }
+}
+@media (max-width: 960px) {
+  .faq__intro { grid-column: 1 / -1; position: static; margin-bottom: var(--s-8); }
+  .faq__list { grid-column: 1 / -1; }
+  .qa__q { font-size: 18px; line-height: 26px; padding: var(--s-4) var(--s-5); }
+  .qa__a p { padding: 0 var(--s-5) var(--s-5); }
+  .cta__card { padding: var(--s-10) var(--s-6); min-height: 0; row-gap: var(--s-8); }
+  .cta__text, .cta__vis { grid-column: 1 / -1; }
+  .cta__vis { order: -1; min-height: 0; display: grid; place-items: center; }
+  .cta__vis img { position: static; height: auto; width: min(100%, 360px); margin-top: calc(var(--s-10) * -1 - 24px); }
+  .foot__brand { grid-column: 1 / -1; }
+  .foot__col { grid-column: span 6; }
+  .how__head { flex-direction: column; align-items: flex-start; gap: var(--s-6); }
+}
+@media (max-width: 520px) {
+  .cta__actions { width: 100%; flex-direction: column; }
+  .cta__actions .btn { width: 100%; }
+  .cta__actions .btn--primary { justify-content: space-between; padding-left: var(--s-4); }
+}
+
+/* =========================================================
+   WHY INKYBAY — image left, stacked cards right; click to open, auto-advances
+   Always dark, like Industries
+   ========================================================= */
+.why { position: relative; padding-block: var(--section-y); background: var(--tint); }
+.why__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-8); margin-bottom: var(--head-gap); }
+.why__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; }
+.why__sub { margin-top: var(--s-3); color: var(--ink); font-size: var(--t-lead); line-height: var(--t-lead-lh); font-weight: 500; }
+.why__lead { margin-top: var(--s-2); color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 60ch; }
+.why__body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
+
+.why__media { grid-column: 1 / span 6; position: relative; aspect-ratio: 1 / 1; max-height: 520px; width: 100%; }
+.wframe {
+  position: absolute; inset: 0; border-radius: var(--r-xl); overflow: hidden;
+  opacity: 0; transform: scale(1.02); transition: opacity .6s ease, transform .9s var(--ease-expo);
+  background:
+    radial-gradient(circle at 1px 1px, var(--tint-line) 1px, transparent 1.5px) 0 0 / 18px 18px,
+    var(--bg);
+  box-shadow: inset 0 0 0 1px var(--tint-line);
+  display: grid; place-items: center;
+}
+.wframe.is-active { opacity: 1; transform: none; }
+.wframe__ph { display: grid; justify-items: center; gap: var(--s-3); color: var(--ink-muted); text-align: center; padding: var(--s-6); }
+.wframe__ph svg { width: 44px; height: 44px; color: var(--brand-500); }
+
+/* the stack: every card tucks 18px under the one after it; the active card grows slightly and glows */
+.why__list { grid-column: 7 / span 6; list-style: none; margin: 0; padding: var(--s-4) 0; display: flex; flex-direction: column; }
+.wcard {
+  position: relative; border-radius: var(--r-xl);
+  background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--tint-line), 0 -8px 20px -16px rgba(13, 18, 28, .35);
+  transition: margin .6s var(--ease-expo), box-shadow .45s ease;
+}
+.wcard + .wcard { margin-top: -18px; }
+.wcard:not(:last-child) { padding-bottom: 18px; }            /* the part that hides under the next card */
+.wcard:nth-child(1) { z-index: 1; } .wcard:nth-child(2) { z-index: 2; } .wcard:nth-child(3) { z-index: 3; } .wcard:nth-child(4) { z-index: 4; }
+.wcard.is-active {
+  margin-inline: -8px;
+  box-shadow:
+    inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 70%, transparent),
+    0 0 0 3px color-mix(in srgb, var(--brand-500) 12%, transparent),
+    0 0 28px -6px color-mix(in srgb, var(--brand-500) 45%, transparent),
+    0 -8px 20px -16px rgba(13, 18, 28, .35);
+}
+
+.wcard__btn {
+  width: 100%; display: flex; align-items: center; gap: var(--s-4); text-align: left;
+  padding: var(--s-6) var(--s-8); color: var(--ink); border-radius: inherit;
+}
+.wcard__icon {
+  flex: none; width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center;
+  background: var(--surface); color: var(--ink-muted); transition: background-color .45s ease, color .45s ease;
+}
+.wcard__icon svg { width: 20px; height: 20px; }
+.wcard.is-active .wcard__icon { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-600); }
+.wcard__title { flex: 1; font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink-muted); transition: color .45s ease; }
+.wcard.is-active .wcard__title { color: var(--ink); }
+.wcard__chev { flex: none; width: 20px; height: 20px; color: var(--ink-muted); transition: transform .5s var(--ease-expo); }
+.wcard.is-active .wcard__chev { transform: rotate(180deg); }
+
+.wcard__panel { display: grid; grid-template-rows: 0fr; transition: grid-template-rows .6s var(--ease-expo); }
+.wcard.is-active .wcard__panel { grid-template-rows: 1fr; }
+.wcard__panel > div { overflow: hidden; }
+.wcard__body { padding: 0 var(--s-8) var(--s-6) calc(var(--s-8) + 40px + var(--s-4)); opacity: 0; transition: opacity .3s ease; }
+.wcard.is-active .wcard__body { opacity: 1; transition-delay: .12s; }
+.wcard__text { color: var(--ink-muted); max-width: 48ch; }
+.why__progress { position: absolute; left: var(--s-6); right: var(--s-6); bottom: var(--s-6); z-index: 2; height: 2px; border-radius: 2px; background: color-mix(in srgb, var(--ink) 10%, transparent); overflow: hidden; }
+.why__progress i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform-origin: left; transform: scaleX(var(--p, 0)); }
+
+@media (prefers-reduced-motion: reduce) {
+  .wframe, .wcard, .wcard__panel, .wcard__body, .wcard__chev { transition: none; }
+  .why__progress { display: none; }
+}
+@media (max-width: 960px) {
+  .why__head { flex-direction: column; align-items: flex-start; gap: var(--s-6); }
+  .why__media, .why__list { grid-column: 1 / -1; }
+  .why__media { aspect-ratio: 4 / 3; margin-bottom: var(--s-6); }
+  .wcard__btn { padding: var(--s-5); }
+  .wcard__title { font-size: 20px; }
+  .wcard__body { padding: 0 var(--s-5) var(--s-5); }
+  .wcard.is-active { margin-inline: -4px; }
+}
+
+/* Small screens: "Everything you need" / "for product" / "customization" + swatches */
+@media (max-width: 600px) {
+  .features__title { font-size: clamp(26px, 7.6vw, 40px); }
+  .features__title .fx { flex-direction: column; }
+  .fx__tools { --sw: 16px; --ring-gap: 2px; margin-left: calc(var(--space) + .14em); }
+  .fx__for-d { display: none; }
+  .fx__for-m { display: inline; }
+  .fx__word--product { margin-right: 0; }
+  .fx__group { margin-top: .08em; }
+}
+
+/* =========================================================
+   CASE STUDY — one story card + three overview stats (shares the tint band with Reviews)
+   ========================================================= */
+.case { background: var(--tint); padding-top: var(--section-y); }
+.case__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-align: center; text-wrap: balance; }
+.case__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--gutter); align-items: stretch; }
+.story {
+  grid-column: 1 / span 8; position: relative; overflow: hidden;
+  display: flex; flex-direction: column; gap: var(--s-6);
+  padding: var(--s-10); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line);
+}
+.story::after {
+  content: "\201C"; position: absolute; right: var(--s-8); top: -.12em; pointer-events: none;
+  font-family: var(--font-head); font-weight: 700; font-size: 220px; line-height: 1;
+  color: color-mix(in srgb, var(--brand-500) 12%, transparent);
+}
+.story__quote {
+  position: relative; font-family: var(--font-head); font-weight: 500;
+  font-size: clamp(22px, 1.1rem + .9vw, 30px); line-height: 1.35; letter-spacing: -0.015em; color: var(--ink);
+  max-width: 34ch; text-wrap: pretty;
+}
+.story__foot { margin-top: auto; padding-top: var(--s-6); border-top: 1px solid var(--tint-line); display: flex; align-items: center; justify-content: space-between; gap: var(--s-6); flex-wrap: wrap; }
+.story__who { display: flex; align-items: center; gap: var(--s-3); }
+.story__avatar {
+  width: 48px; height: 48px; border-radius: 50%; flex: none; display: grid; place-items: center;
+  background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-600);
+  font-family: var(--font-head); font-weight: 600; font-size: 18px;
+}
+.story__name { font-weight: 600; color: var(--ink); }
+.story__where { color: var(--ink-muted); }
+.story__link {
+  display: inline-flex; align-items: center; gap: var(--s-2); font-weight: 500; color: var(--ink);
+  padding-block: var(--s-1); border-bottom: 1px solid transparent;
+  transition: border-color .2s ease, color .2s ease;
+}
+.story__link svg { width: 18px; height: 18px; transition: transform .45s var(--ease-expo); }
+.story__link:hover { color: var(--brand-600); border-color: var(--brand-500); }
+.story__link:hover svg { transform: translateX(3px); }
+.stats { grid-column: 9 / span 4; display: grid; grid-template-rows: repeat(3, 1fr); gap: var(--gutter); }
+.stat {
+  display: flex; flex-direction: column; justify-content: center; gap: var(--s-1);
+  padding: var(--s-6) var(--s-8); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line);
+}
+.stat__num { font-family: var(--font-head); font-weight: 600; font-size: clamp(36px, 1.6rem + 1.6vw, 52px); line-height: 1; letter-spacing: -0.035em; color: var(--ink); font-variant-numeric: tabular-nums; }
+.stat__num span { color: var(--brand-600); }
+.stat__label { color: var(--ink-muted); }
+@media (max-width: 960px) {
+  .story, .stats { grid-column: 1 / -1; }
+  .story { padding: var(--s-6); }
+  .story::after { font-size: 160px; right: var(--s-5); }
+  .stats { grid-template-rows: none; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-3); }
+  .stat { padding: var(--s-5); }
+}
+@media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
+
+/* Section headings: split into words by JS, revealed once on entering the viewport */
+.h-anim .hw { display: inline-block; }
+@media (prefers-reduced-motion: no-preference) {
+  .h-anim .hw { opacity: 0; transform: translate3d(0, .4em, 0); filter: blur(8px);
+    transition: opacity .7s ease, transform 1s var(--ease-expo), filter .8s ease;
+    transition-delay: calc(var(--i) * 55ms); }
+  .h-anim.is-in .hw { opacity: 1; transform: none; filter: blur(0); }
+}
+
+/* =========================================================
+   MINI UI — small, quiet product snippets used as section visuals.
+   Everything is in em; the host sets the scale via container size.
+   Animations only run while the host is on screen (.mui-live).
+   ========================================================= */
+.fmedia, .fcard__media, .wframe { container-type: size; }
+.mui-stage { width: 100%; height: 100%; display: grid; place-items: center; font-size: clamp(11px, 3.8cqmin, 18px); }
+.fcard__media .mui-stage { font-size: clamp(11px, 4.4cqmin, 20px); }     /* rail cards are wide and short: scale with their height */
+.mui {
+  width: 22em; max-width: 92%; display: grid; gap: .7em; padding: 1.1em;
+  border-radius: 1em; background: var(--bg); color: var(--ink);
+  box-shadow: inset 0 0 0 1px var(--line), 0 1em 2.4em -1.4em rgba(13, 18, 28, .35);
+  font-size: 1em; line-height: 1.35;
+}
+.mui__h { display: flex; justify-content: space-between; align-items: baseline; gap: .6em; font-weight: 600; }
+.mui__h span { font-weight: 400; color: var(--ink-muted); font-size: .85em; }
+.mui__row { display: flex; align-items: center; justify-content: space-between; gap: .6em; padding: .55em .7em; border-radius: .6em; background: var(--surface); font-size: .9em; }
+.mui__muted { color: var(--ink-muted); }
+.mui__chips { display: flex; flex-wrap: wrap; gap: .4em; }
+.mui__chip { padding: .28em .75em; border-radius: 999px; background: var(--surface); font-size: .85em; color: var(--ink-muted); box-shadow: inset 0 0 0 1px var(--line); }
+.mui__chip.is-on { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-700); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, transparent); }
+.mui__btn { justify-self: start; padding: .45em .9em; border-radius: .55em; background: var(--brand-grad); color: #fff; font-weight: 500; font-size: .85em; }
+.mui__sw { display: flex; gap: .45em; }
+.mui__sw i { width: 1.1em; height: 1.1em; border-radius: 50%; background: var(--c); box-shadow: 0 0 0 2px var(--bg), 0 0 0 2px transparent; }
+.mui__sw i.is-on { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--c); }
+.mui__tg { width: 2em; height: 1.15em; border-radius: 1em; background: color-mix(in srgb, var(--ink) 18%, var(--surface)); position: relative; flex: none; }
+.mui__tg::after { content: ""; position: absolute; top: .15em; left: .15em; width: .85em; height: .85em; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.25); }
+.mui__tg.is-on { background: var(--brand-600); } .mui__tg.is-on::after { transform: translateX(.85em); }
+.mui__bar { flex: 1; height: .45em; border-radius: 1em; background: color-mix(in srgb, var(--ink) 10%, var(--surface)); overflow: hidden; }
+.mui__bar i { display: block; height: 100%; width: var(--w); border-radius: inherit; background: var(--brand-grad); transform-origin: left; }
+.mui__ok { width: 1.2em; height: 1.2em; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, #17A673 16%, var(--bg)); color: #17A673; flex: none; }
+.mui__ok svg { width: .75em; height: .75em; }
+.mui__tag { font-size: .75em; padding: .15em .55em; border-radius: 999px; background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-700); }
+.mui__canvas { position: relative; height: 10em; border-radius: .7em; background: var(--surface); display: grid; place-items: center; overflow: hidden; }
+.mui__canvas img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain; padding: .5em; }   /* pinned to the canvas: the whole product always fits */
+.mui__sel { position: absolute; z-index: 1; left: 50%; top: 42%; transform: translate(-50%, -50%); padding: .15em .4em; border: 1.5px solid var(--editor-blue); border-radius: 2px;
+  font-family: var(--font-head); font-weight: 700; font-size: .95em; white-space: nowrap; color: var(--art, var(--brand-600)); }
+.mui__bubble { max-width: 80%; padding: .55em .8em; border-radius: .9em; font-size: .9em; }
+.mui__bubble--in { justify-self: start; background: var(--surface); border-bottom-left-radius: .25em; }
+.mui__bubble--out { justify-self: end; background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-700); border-bottom-right-radius: .25em; }
+.mui__dots { display: inline-flex; gap: .25em; } .mui__dots i { width: .4em; height: .4em; border-radius: 50%; background: currentColor; opacity: .4; }
+.mui__grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: .45em; }
+.mui__tile { aspect-ratio: 1; border-radius: .55em; background: var(--surface); display: grid; place-items: center; color: var(--ink); font-family: var(--font-head); box-shadow: inset 0 0 0 1px var(--line); }
+.mui__tile svg { width: 45%; height: 45%; color: var(--brand-600); }
+.mui__tile.is-on { box-shadow: inset 0 0 0 1.5px var(--brand-500); background: color-mix(in srgb, var(--brand-500) 8%, var(--bg)); }
+.mui__tpls { display: grid; grid-template-columns: repeat(3, 1fr); gap: .5em; }
+.mui__tpl { aspect-ratio: 3 / 4; border-radius: .6em; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); position: relative; overflow: hidden; display: grid; align-content: center; justify-items: center; gap: .3em; }
+.mui__tpl b { width: 55%; height: 22%; border-radius: .3em; background: var(--c); }
+.mui__tpl s { width: 40%; height: .35em; border-radius: 1em; background: color-mix(in srgb, var(--ink) 18%, transparent); }
+.mui__tpl.is-on { box-shadow: inset 0 0 0 1.5px var(--brand-500); }
+.mui__tpl.is-on::after { content: "✓"; position: absolute; top: .3em; right: .35em; width: 1.2em; height: 1.2em; border-radius: 50%; background: var(--brand-600); color: #fff; font-size: .7em; display: grid; place-items: center; }
+.mui__tabs { display: flex; gap: .3em; padding: .25em; border-radius: .6em; background: var(--surface); }
+.mui__tabs span { flex: 1; text-align: center; padding: .3em 0; border-radius: .45em; font-size: .85em; color: var(--ink-muted); }
+.mui__tabs span.is-on { background: var(--bg); color: var(--ink); box-shadow: 0 1px 3px rgba(13,18,28,.12); }
+.mui__chart { display: flex; align-items: flex-end; gap: .45em; height: 6em; padding-top: .4em; }
+.mui__chart i { flex: 1; height: var(--h); border-radius: .3em .3em .15em .15em; background: color-mix(in srgb, var(--brand-500) 22%, var(--surface)); transform-origin: bottom; }
+.mui__chart i:last-child { background: var(--brand-grad); }
+.mui__total { display: flex; justify-content: space-between; font-weight: 600; padding-top: .5em; border-top: 1px dashed var(--line); }
+
+/* ---- one quiet loop per snippet (only while on screen) */
+@media (prefers-reduced-motion: no-preference) {
+  .mui-live .a-seq > * { animation: mui-in 6s var(--ease-expo) infinite both; animation-delay: calc(var(--k, 0) * 350ms); }
+  .mui-live .a-tg { animation: mui-tg 6s ease infinite; animation-delay: calc(var(--k, 0) * 500ms); }
+  .mui-live .a-tg::after { animation: mui-knob 6s var(--ease-expo) infinite; animation-delay: calc(var(--k, 0) * 500ms); }
+  .mui-live .a-bar i { animation: mui-bar 5s var(--ease-expo) infinite both; }
+  .mui-live .a-grow i { animation: mui-grow 5s var(--ease-expo) infinite both; animation-delay: calc(var(--k, 0) * 90ms); }
+  .mui-live .a-pulse { animation: mui-pulse 2.4s ease-in-out infinite; }
+  .mui-live .a-dots i { animation: mui-dot 1.2s ease-in-out infinite; } .mui-live .a-dots i:nth-child(2) { animation-delay: .15s; } .mui-live .a-dots i:nth-child(3) { animation-delay: .3s; }
+  .mui-live .a-recolor { animation: mui-recolor 6s steps(1) infinite; }
+  .mui-live .a-cycle > * { animation: mui-cycle var(--n4, 6s) infinite; animation-delay: calc(var(--k, 0) * var(--step, 1.5s)); }
+}
+@keyframes mui-in { 0% { opacity: 0; transform: translateY(.5em); } 8%, 88% { opacity: 1; transform: none; } 100% { opacity: 0; } }
+@keyframes mui-tg { 0%, 20% { background: color-mix(in srgb, var(--ink) 18%, var(--surface)); } 28%, 100% { background: var(--brand-600); } }
+@keyframes mui-knob { 0%, 20% { transform: none; } 30%, 100% { transform: translateX(.85em); } }
+@keyframes mui-bar { 0% { transform: scaleX(.15); } 40%, 100% { transform: none; } }
+@keyframes mui-grow { 0% { transform: scaleY(.25); } 35%, 100% { transform: none; } }
+@keyframes mui-pulse { 0%, 100% { transform: scale(1); } 50% { transform: scale(1.06); } }
+@keyframes mui-dot { 0%, 100% { opacity: .3; transform: none; } 50% { opacity: 1; transform: translateY(-.15em); } }
+@keyframes mui-recolor { 0% { --art: #FF7500; } 33% { --art: #1C8CF0; } 66% { --art: #2F2F2F; } }
+@keyframes mui-cycle { 0%, 24% { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-700); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, transparent); } 25%, 100% { background: var(--surface); color: var(--ink-muted); box-shadow: inset 0 0 0 1px var(--line); } }
+@property --art { syntax: "<color>"; inherits: true; initial-value: #FF7500; }
+
+/* =========================================================
+   BREAKPOINTS
+   ========================================================= */
+@media (max-width: 1100px) {
+  .nav__link { padding-inline: var(--s-2); }
+  .nav__menu { gap: 0; }
+}
+@media (max-width: 960px) {
+  :root { --nav-h: 64px; --nav-h-compact: 60px; --logo-h: 40px; --t-btn: 16px; }
+  .nav__menu, .nav__cta-wrap { display: none; }
+  .nav__toggle { display: grid; }
+  .nav.is-compact .nav__bar { max-width: calc(100% - var(--s-4) * 2); padding-right: calc((var(--nav-h-compact) - 44px) / 2 - 1px); }
+  .nav__sheet[data-open="true"] {
+    display: block; border-top: 1px solid var(--line);
+    padding-block: var(--s-3) var(--s-4);
+  }
+  .nav__bar:has(.nav__sheet[data-open="true"]) { background: rgba(var(--bg-rgb), .97); }
+  .nav__sheet ul { list-style: none; margin: 0 0 var(--s-3); padding: 0; }
+  .nav__sheet .nav__link { width: 100%; justify-content: space-between; padding: var(--s-3) 0; }
+  .nav__sheet .nav__link:hover { background: none; }
+  .nav__sheet .btn { width: 100%; justify-content: space-between; padding-left: var(--s-4); }
+  .hero { padding-top: var(--s-10); padding-bottom: var(--s-16); }
+  .hero__inner { gap: var(--s-10); }
+  .hero__media { --bw: 1px; }
+}
+@media (max-width: 520px) {
+  .hero__actions { width: 100%; flex-direction: column; }
+  .hero__actions .btn { width: 100%; }
+  .hero__actions .btn--primary { justify-content: space-between; padding-left: var(--s-4); }
+  .hero__screen { border-radius: var(--r-md); }
+  .hero__media { border-radius: calc(var(--r-md) + var(--bw)); }
+}
+</style>
+</head>
+<body>
+
+<header class="nav" id="nav">
+  <div class="nav__bar">
+    <div class="nav__row">
+      <a class="logo" href="#" aria-label="InkyBay home">
+        {{LOGO_MARK}}
+        {{LOGO_TYPE}}
+      </a>
+
+      <nav aria-label="Primary">
+        <ul class="nav__menu">
+          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Features {{CHEVRON}}</button></li>
+          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Industries {{CHEVRON}}</button></li>
+          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources {{CHEVRON}}</button></li>
+          <li><a class="nav__link" href="#pricing">Pricing</a></li>
+        </ul>
+      </nav>
+
+      <div class="nav__cta-wrap">
+        {{BTN_PRIMARY:Start free trial}}
+      </div>
+
+      <button class="nav__toggle" aria-label="Open menu" aria-expanded="false" aria-controls="nav-sheet">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+      </button>
+    </div>
+
+    <div class="nav__sheet" id="nav-sheet" data-open="false">
+      <ul>
+        <li><button class="nav__link">Features {{CHEVRON}}</button></li>
+        <li><button class="nav__link">Industries {{CHEVRON}}</button></li>
+        <li><button class="nav__link">Resources {{CHEVRON}}</button></li>
+        <li><a class="nav__link" href="#pricing">Pricing</a></li>
+      </ul>
+      {{BTN_PRIMARY:Start free trial}}
+    </div>
+  </div>
+</header>
+
+<main>
+  <!-- ===== SECTION 01 · HERO ===== -->
+  <section class="hero" aria-labelledby="hero-title">
+    <div class="container hero__inner">
+      <div class="hero__copy">
+        <a class="proof" href="#reviews-title"><span class="proof__rate"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><span><b>4.6</b> on Shopify<span class="proof__long"> App Store</span></span></span><span class="proof__sep" aria-hidden="true"></span><span>169 reviews</span></a>
+        <div class="hero__text">
+          <h1 class="hero__title" id="hero-title" aria-label="Sell personalized products with a live design editor"><span aria-hidden="true"><span class="w" style="--i:0">Sell</span> <span class="w" style="--i:1">personalized</span> <span class="w" style="--i:2">products</span> <span class="w" style="--i:3">with</span> <span class="w" style="--i:4">a</span> <span class="w" style="--i:5">live</span> <span class="w" style="--i:6">design</span> <span class="w" style="--i:7">editor</span></span></h1>
+          <p class="hero__lead">Give customers the freedom to customize text, images, artwork, and more with an interactive design editor.</p>
+        </div>
+        <div class="hero__actions">
+          {{BTN_PRIMARY:Install on Shopify}}
+          {{BTN_SECONDARY:Try live demo}}
+        </div>
+      </div>
+
+      <div class="hero__stage">
+        <div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+          <div class="hero__screen">
+            <img src="{{EDITOR}}" width="2240" height="1836" alt="InkyBay design editor customizing a soccer jersey with a logo, crest and front, back, left and right product sides" decoding="async" fetchpriority="high">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== SECTION 02 · LOGOS ===== -->
+  <section class="logos" aria-labelledby="logos-title">
+    <div class="container">
+      <p class="logos__title" id="logos-title">Trusted by 10,000+ Shopify merchants</p>
+      <div class="marquee">
+        <div class="marquee__track">
+          <ul class="marquee__set">
+              <li class="logo-card"><img src="{{IMG:logos/acme-corp.webp}}" alt="Acme Corp" width="380" height="200" loading="lazy" decoding="async"></li>
+              <li class="logo-card"><img src="{{IMG:logos/teefever.webp}}" alt="teefever" width="380" height="200" loading="lazy" decoding="async"></li>
+              <li class="logo-card"><img src="{{IMG:logos/pick-on-us.webp}}" alt="Pick On Us" width="380" height="200" loading="lazy" decoding="async"></li>
+              <li class="logo-card"><img src="{{IMG:logos/allstar.webp}}" alt="Allstar Logo" width="380" height="200" loading="lazy" decoding="async"></li>
+              <li class="logo-card"><img src="{{IMG:logos/z-palette.webp}}" alt="Z-palette" width="380" height="200" loading="lazy" decoding="async"></li>
+              <li class="logo-card"><img src="{{IMG:logos/luminous.webp}}" alt="Luminous" width="380" height="200" loading="lazy" decoding="async"></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== SECTION 03 · FEATURES ===== -->
+  <section class="features" aria-labelledby="features-title">
+    <div class="container">
+      <h2 class="features__title" id="features-title" aria-label="Everything you need for product customization">
+        <span class="line" aria-hidden="true">Everything you need<span class="fx__for-d"> for</span></span>
+        <span class="line fx" aria-hidden="true">
+          <span class="fx__word fx__word--product"><span class="fx__for-m">for </span>product</span>
+          <span class="fx__group">
+            <span class="fx__word fx__word--custom">customization<span class="fx__select"><i></i><i></i><i></i><i></i></span></span>
+            <span class="fx__tools">
+              <button class="fx__sw" tabindex="-1" style="--c: var(--brand-600)"></button>
+              <button class="fx__sw" tabindex="-1" style="--c: var(--editor-blue)"></button>
+              <button class="fx__sw" tabindex="-1" style="--c: var(--ink)"></button>
+            </span>
+          </span>
+        </span>
+      </h2>
+
+      <div class="grid features__body">
+        <div class="flist">
+          <ul class="flist__items">
+            <li class="fitem is-active">
+              <span class="fitem__bar" aria-hidden="true"></span>
+              <h3><button class="fitem__btn" id="fbtn-0" aria-expanded="true" aria-controls="fpanel-0">Set up without coding</button></h3>
+              <div class="fitem__panel" id="fpanel-0" role="region" aria-labelledby="fbtn-0"><div><p>Configure complex products and print areas without writing a single line of code.</p></div></div>
+            </li>
+            <li class="fitem">
+              <span class="fitem__bar" aria-hidden="true"></span>
+              <h3><button class="fitem__btn" id="fbtn-1" aria-expanded="false" aria-controls="fpanel-1">Design freely</button></h3>
+              <div class="fitem__panel" id="fpanel-1" role="region" aria-labelledby="fbtn-1"><div><p>Let shoppers create custom designs with a powerful Live Design Editor.</p></div></div>
+            </li>
+            <li class="fitem">
+              <span class="fitem__bar" aria-hidden="true"></span>
+              <h3><button class="fitem__btn" id="fbtn-2" aria-expanded="false" aria-controls="fpanel-2">Ready-to-print orders</button></h3>
+              <div class="fitem__panel" id="fpanel-2" role="region" aria-labelledby="fbtn-2"><div><p>Get organized custom orders with all the files and details your team needs.</p></div></div>
+            </li>
+          </ul>
+          <div>{{BTN_PRIMARY:Start free trial}}</div>
+        </div>
+        <div class="fmedia">
+          <div class="fmedia__frame is-active" data-index="0">
+            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Product setup<span>Custom tee</span></div><div class="mui__row"><span>Print area · Front</span><span class="mui__tg is-on"></span></div><div class="mui__row"><span>Print area · Back</span><span class="mui__tg a-tg" style="--k:1"></span></div><div class="mui__row"><span>Sleeves</span><span class="mui__tg a-tg" style="--k:2"></span></div><div class="mui__row"><span>Name and number</span><span class="mui__tg a-tg" style="--k:3"></span></div></div></div>
+          </div>
+          <div class="fmedia__frame" data-index="1">
+            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Live design editor<span>Front</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel a-recolor">Make it yours</span></div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div></div></div>
+          </div>
+          <div class="fmedia__frame" data-index="2">
+            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Order #1042<span>Print-ready</span></div><div class="a-seq" style="display:grid;gap:.45em"><div class="mui__row" style="--k:0"><span>front.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:1"><span>back.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:2"><span>proof.pdf <span class="mui__muted">· preview</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div></div><span class="mui__btn">Download all</span></div></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== SECTION 04 · INDUSTRIES ===== -->
+  <section class="industries" aria-labelledby="industries-title">
+    <div class="container industries__head">
+      <h2 class="industries__title" id="industries-title">Custom products for every business</h2>
+      <p class="industries__lead">Turn any product into a personalized experience with a powerful, flexible customization solution.</p>
+    </div>
+    <ul class="wheel" aria-label="Industries">
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/socks.webp}}" alt="Custom apparel example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Apparel</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/mug.webp}}" alt="Custom drinkware example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Drinkware</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/pillow.webp}}" alt="Custom home decor example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Home decor</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/wallart.webp}}" alt="Custom wall art example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Wall art</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/photo.webp}}" alt="Custom photo gifts example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Photo gifts</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/necklace.webp}}" alt="Custom jewelry example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Jewelry</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/handbag.webp}}" alt="Custom fashion accessories example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Fashion accessories</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/tote.webp}}" alt="Custom bags & totes example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Bags & totes</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/drawstring.webp}}" alt="Custom packaging example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Packaging</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/petbowl.webp}}" alt="Custom pet products example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Pet products</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/phone.webp}}" alt="Custom phone cases example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Phone cases</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/puzzle.webp}}" alt="Custom toys & puzzles example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Toys & puzzles</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/pumpkin.webp}}" alt="Custom seasonal example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Seasonal</h3>
+              </div>
+            </a>
+          </li>
+          <li class="wheel__card">
+            <a class="icard" href="#">
+              <div class="icard__media"><img src="{{IMG:products/card.webp}}" alt="Custom cards & prints example" width="440" height="440" loading="lazy" decoding="async"></div>
+              <div class="icard__body">
+                <h3 class="icard__title">Cards & prints</h3>
+              </div>
+            </a>
+          </li>
+    </ul>
+    <div class="wheel-ctrl">
+      <button class="wheel-ctrl__btn wheel-ctrl__prev" aria-label="Previous industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+      <button class="wheel-ctrl__btn wheel-ctrl__toggle" aria-pressed="false" aria-label="Pause rotation">
+        <svg class="i-pause" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><rect x="6" y="5" width="4" height="14" rx="1.2"/><rect x="14" y="5" width="4" height="14" rx="1.2"/></svg>
+        <svg class="i-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z"/></svg>
+      </button>
+      <button class="wheel-ctrl__btn wheel-ctrl__next" aria-label="Next industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button>
+    </div>
+  </section>
+  <!-- ===== SECTION 05 · REVEAL ===== -->
+  <section class="reveal" aria-label="Why InkyBay">
+    <div class="container"><p class="reveal__text"><span class="rw">Your</span> <span class="rw">products.</span> <span class="rw">Their</span> <span class="rw">creativity.</span> <span class="rw">One</span> <span class="rw">seamless</span> <span class="rw">experience.</span> <span class="rw">Let</span> <span class="rw">shoppers</span> <span class="rw">design</span> <span class="rw">without</span> <span class="rw">limits</span> <span class="rw">while</span> <span class="rw">InkyBay</span> <span class="rw">handles</span> <span class="rw">the</span> <span class="rw">complexity</span> <span class="rw">behind</span> <span class="rw">every</span> <span class="rw">custom</span> <span class="rw">order.</span> <span class="rw">Set</span> <span class="rw">up</span> <span class="rw">once.</span> <span class="rw">Customize</span> <span class="rw">freely.</span> <span class="rw">Sell</span> <span class="rw">more.</span></p></div>
+  </section>
+
+  <!-- ===== SECTION 06 · FEATURE RAIL ===== -->
+  <section class="rail" aria-labelledby="rail-title">
+    <div class="rail__stick">
+      <div class="container rail__head">
+        <h2 class="rail__title" id="rail-title">Built for every custom order</h2>
+        <span class="rail__bar" aria-hidden="true"><i></i></span>
+      </div>
+      <div class="container rail__body">
+        <div class="rail__track">
+          <article class="fcard">
+            <div><h3 class="fcard__title">Advanced product setup</h3><p class="fcard__text">Build complex customizable products without any coding.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Options<span>3 groups</span></div><div class="mui__muted" style="font-size:.85em">Size</div><div class="mui__chips"><span class="mui__chip">S</span><span class="mui__chip is-on">M</span><span class="mui__chip">L</span><span class="mui__chip">XL</span></div><div class="mui__muted" style="font-size:.85em">Color</div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div><div class="mui__muted" style="font-size:.85em">Material</div><div class="mui__chips"><span class="mui__chip is-on">Cotton</span><span class="mui__chip">Blend</span><span class="mui__chip">Recycled</span></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Multiple printing methods</h3><p class="fcard__text">Set up printing methods and colors for every production workflow.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Printing method<span>per product</span></div><div class="mui__chips a-cycle" style="--n4:6s;--step:1.5s"><span class="mui__chip" style="--k:0">DTG</span><span class="mui__chip" style="--k:1">Embroidery</span><span class="mui__chip" style="--k:2">Screen print</span><span class="mui__chip" style="--k:3">Sublimation</span></div><div class="mui__row"><span>Ink colors</span><span class="mui__muted">Up to 6</span></div><div class="mui__row"><span>Min. order</span><span class="mui__muted">12 pcs</span></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Inventory management</h3><p class="fcard__text">Track inventory while managing your custom product orders.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Inventory<span>Live</span></div><div class="mui__row"><span style="min-width:6.5em">Tee · White</span><span class="mui__bar a-bar"><i style="--w:82%"></i></span><span class="mui__muted">164</span></div><div class="mui__row"><span style="min-width:6.5em">Mug · 11 oz</span><span class="mui__bar a-bar"><i style="--w:46%"></i></span><span class="mui__muted">92</span></div><div class="mui__row"><span style="min-width:6.5em">Cap · Black</span><span class="mui__bar a-bar"><i style="--w:14%"></i></span><span class="mui__tag a-pulse">Low</span></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Custom quote requests</h3><p class="fcard__text">Let shoppers request custom pricing for unique orders.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Quote request<span>New</span></div><div class="mui__bubble mui__bubble--in">Can you print 500 jerseys with names and numbers?</div><div class="mui__bubble mui__bubble--out"><span class="mui__dots a-dots"><i></i><i></i><i></i></span></div><div class="mui__bubble mui__bubble--out">Yes. Your quote is ready to review.</div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Smart add-on pricing</h3><p class="fcard__text">Add extra charges for colors, options, inputs, and more.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Price<span>Updates live</span></div><div class="a-seq" style="display:grid;gap:.4em"><div class="mui__row" style="--k:0"><span>Base tee</span><span>$18.00</span></div><div class="mui__row" style="--k:1"><span>Back print</span><span>+ $4.00</span></div><div class="mui__row" style="--k:2"><span>Gold foil text</span><span>+ $2.50</span></div></div><div class="mui__total"><span>Total</span><span>$24.50</span></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Quantity discounts</h3><p class="fcard__text">Reward larger orders with percentage or fixed discounts.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Quantity discounts<span>Auto-applied</span></div><div class="a-cycle" style="display:grid;gap:.4em;--n4:6s;--step:2s"><div class="mui__row" style="--k:0"><span>1 to 9 pcs</span><span>Full price</span></div><div class="mui__row" style="--k:1"><span>10 to 49 pcs</span><span>10% off</span></div><div class="mui__row" style="--k:2"><span>50+ pcs</span><span>20% off</span></div></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Font & clipart library</h3><p class="fcard__text">Manage the creative assets shoppers use to design their products.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Library<span>Fonts and clipart</span></div><div class="mui__grid"><span class="mui__tile" style="font-weight:400">Aa</span><span class="mui__tile is-on a-pulse" style="font-weight:700">Aa</span><span class="mui__tile" style="font-weight:500;font-style:italic">Aa</span><span class="mui__tile" style="font-weight:300">Aa</span><span class="mui__tile"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="mui__tile"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.4-9.2-8.6C1.2 8.2 3 4.8 6.4 4.8c2 0 3.4 1.1 4.1 2.3h3c.7-1.2 2.1-2.3 4.1-2.3 3.4 0 5.2 3.4 3.6 6.6C19 15.6 12 20 12 20z"/></svg></span><span class="mui__tile"><svg viewBox="0 0 24 24" fill="currentColor"><circle cx="12" cy="12" r="8"/></svg></span><span class="mui__tile"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M13 2L4 14h7l-1 8 9-12h-7l1-8z"/></svg></span></div></div></div></div>
+          </article>
+          <article class="fcard">
+            <div><h3 class="fcard__title">Ready-made templates</h3><p class="fcard__text">Give shoppers a head start with pre-designed templates.</p></div>
+            <div class="fcard__media"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Templates<span>12 ready</span></div><div class="mui__tpls"><span class="mui__tpl" style="--c:#1C8CF0"><b></b><s></s></span><span class="mui__tpl is-on a-pulse" style="--c:#FF7500"><b></b><s></s></span><span class="mui__tpl" style="--c:#17A673"><b></b><s></s></span></div><span class="mui__btn">Use template</span></div></div></div>
+          </article>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 06b · CASE STUDY (shares the tint band with Reviews) ===== -->
+  <section class="case" aria-labelledby="case-title">
+    <div class="container">
+      <h2 class="case__title" id="case-title">Merchants growing with InkyBay</h2>
+      <div class="case__grid">
+        <article class="story">
+          <span class="stars" role="img" aria-label="5 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+          <p class="story__quote">InkyBay turned our custom orders from endless back-and-forth emails into a smooth checkout. Shoppers design their own products, and our print team gets files that are ready to go.</p>
+          <div class="story__foot">
+            <div class="story__who"><span class="story__avatar" aria-hidden="true">SN</span><div><div class="story__name">Store name (draft)</div><div class="story__where">City, Country</div></div></div>
+            <a class="story__link" href="#">See full case study <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg></a>
+          </div>
+        </article>
+        <div class="stats">
+          <div class="stat"><div class="stat__num">10,000<span>+</span></div><div class="stat__label">Merchants worldwide</div></div>
+          <div class="stat"><div class="stat__num">50,000<span>+</span></div><div class="stat__label">Products customized daily</div></div>
+          <div class="stat"><div class="stat__num">169</div><div class="stat__label">Customer reviews</div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 07 · TESTIMONIALS ===== -->
+  <section class="reviews" aria-labelledby="reviews-title">
+    <div class="container">
+      <h2 class="reviews__title" id="reviews-title">Loved by Shopify merchants</h2>
+      <div class="reviews__grid">
+        <div class="rsum has-ring"><span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+          <div class="rsum__in">
+            <div class="rsum__top"><div class="rsum__score">4.6<small>/5</small></div><span class="stars" role="img" aria-label="4.6 out of 5 stars" style="--fill:92%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span></div>
+            <p class="rsum__text">Based on <strong>169 reviews</strong> on the Shopify App Store.</p>
+            {{BTN_PRIMARY:See all reviews}}
+          </div>
+        </div>
+        <div class="rslider" role="region" aria-roledescription="carousel" aria-label="Merchant reviews">
+          <div class="rtrack" tabindex="0" aria-live="off">
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">We&#x27;ve only been using this app for a few days, but it was exactly what we&#x27;ve been looking for. We are a print shop and this is perfect for our needs. We wish we had found this sooner. Support has been amazing, with a chat feature to talk to someone right away. Honestly, we have no complaints.</p>
+              <div class="rcard__who"><div class="rcard__name">C4 Design Studio</div><div class="rcard__where">United States</div></div>
+            </article>
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">Setup took an afternoon. Our jersey builder now handles names, numbers and both sides without a single custom line of code.</p>
+              <div class="rcard__who"><div class="rcard__name">Draft review · Sportswear store</div><div class="rcard__where">Canada</div></div>
+            </article>
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">The print-ready files are the real win. Our production team stopped chasing customers for artwork, and reorders went up because shoppers can save and edit their designs later.</p>
+              <div class="rcard__who"><div class="rcard__name">Draft review · Print on demand</div><div class="rcard__where">United Kingdom</div></div>
+            </article>
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">Add-on pricing for extra print areas used to be a spreadsheet nightmare. Now it is a few toggles and the price updates as shoppers design.</p>
+              <div class="rcard__who"><div class="rcard__name">Draft review · Promotional products</div><div class="rcard__where">Australia</div></div>
+            </article>
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">Clean editor, fast on mobile, and the templates gave our customers a starting point. Conversion on custom mugs roughly doubled in the first month.</p>
+              <div class="rcard__who"><div class="rcard__name">Draft review · Drinkware brand</div><div class="rcard__where">Germany</div></div>
+            </article>
+            <article class="rcard">
+              <span class="stars" role="img" aria-label="5.0 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
+              <p class="rcard__quote">Great support team. They helped us map our print areas for tote bags and caps on a call and followed up the next day.</p>
+              <div class="rcard__who"><div class="rcard__name">Draft review · Bags &amp; accessories</div><div class="rcard__where">United States</div></div>
+            </article>
+          </div>
+        </div>
+        <div class="rctl">
+          <button class="rctl__btn rctl__prev" aria-label="Previous review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button>
+          <div class="rdots" role="group" aria-label="Choose review"></div>
+          <button class="rctl__btn rctl__next" aria-label="Next review"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M9.5 6l6 6-6 6"/></svg></button>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- ===== SECTION 08 · HOW IT WORKS ===== -->
+  <section class="how" aria-labelledby="how-title">
+    <div class="container">
+      <div class="how__head">
+        <h2 class="how__title" id="how-title">Go live in four simple steps</h2>
+        {{BTN_PRIMARY:Start free trial}}
+      </div>
+      <ol class="steps">
+        <li class="step" tabindex="0">
+          <div class="step__vis"><div class="scene s-install" aria-hidden="true"><div class="ui">
+      <div class="app">{{LOGO_MARK}}<div><b>InkyBay</b><span class="ln" style="width:70%"></span></div></div>
+      <div class="go"><span class="lbl">Install app</span><span class="ok">✓ Installed</span></div>
+      <div class="prog"><i></i></div>
+    </div></div><span class="step__open" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg></span></div>
+          <div class="step__cap">
+            <div class="step__row"><span class="step__num">01</span><h3 class="step__title">Install</h3></div>
+            <p class="step__text">Add InkyBay from the Shopify App Store in a couple of clicks.</p>
+          </div>
+        </li>
+        <li class="step" tabindex="0">
+          <div class="step__vis"><div class="scene s-embed" aria-hidden="true"><div class="ui win">
+      <div class="bar"><i></i><i></i><i></i></div>
+      <div class="body"><div class="side"><span class="ln" style="width:80%"></span><span class="ln" style="width:60%"></span><span class="ln" style="width:70%"></span><span class="ln" style="width:50%"></span></div>
+      <div class="main"><span class="ln" style="width:55%"></span><div class="row"><b>InkyBay embed</b><span class="tg"></span></div><span class="ln" style="width:80%"></span><span class="ln" style="width:65%"></span></div></div>
+    </div><span class="saved">Saved</span></div><span class="step__open" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg></span></div>
+          <div class="step__cap">
+            <div class="step__row"><span class="step__num">02</span><h3 class="step__title">Embed</h3></div>
+            <p class="step__text">Turn on the app embed in your theme editor. No code needed.</p>
+          </div>
+        </li>
+        <li class="step" tabindex="0">
+          <div class="step__vis"><div class="scene s-setup" aria-hidden="true"><img src="{{IMG:products/tee.webp}}" alt=""><span class="tag">Print area · Front</span><span class="area"><i></i><i></i><i></i><i></i></span></div><span class="step__open" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg></span></div>
+          <div class="step__cap">
+            <div class="step__row"><span class="step__num">03</span><h3 class="step__title">Product setup</h3></div>
+            <p class="step__text">Pick products, draw print areas and choose what shoppers can customize.</p>
+          </div>
+        </li>
+        <li class="step" tabindex="0">
+          <div class="step__vis"><div class="scene s-sell" aria-hidden="true">
+      <div class="ui chart"><div class="chart__head"><b>Sales this week</b><span>+28%</span></div>
+        <div class="bars"><i style="--h:34%;--d:0"></i><i style="--h:48%;--d:1"></i><i style="--h:40%;--d:2"></i><i style="--h:64%;--d:3"></i><i style="--h:56%;--d:4"></i><i style="--h:92%;--d:5"></i></div></div>
+      <div class="ui order"><img src="{{IMG:products/tee.webp}}" alt="">
+        <div class="o-top"><em>New order #1042</em><span>now</span></div>
+        <div class="o-main"><b>Custom tee</b><strong>$42.00</strong></div>
+        <span class="o-chip"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><path d="M9 2H4.5A1.5 1.5 0 0 0 3 3.5v9A1.5 1.5 0 0 0 4.5 14h7a1.5 1.5 0 0 0 1.5-1.5V6L9 2z"/><path d="M6 9.5l1.5 1.5L10.5 8"/></svg>Print file ready</span>
+      </div>
+    </div><span class="step__open" aria-hidden="true"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg></span></div>
+          <div class="step__cap">
+            <div class="step__row"><span class="step__num">04</span><h3 class="step__title">Start selling</h3></div>
+            <p class="step__text">Shoppers design their products and you get print-ready orders.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+  <!-- ===== SECTION 08b · WHY INKYBAY ===== -->
+  <section class="why" aria-labelledby="why-title">
+    <div class="container">
+      <div class="why__head">
+        <div>
+          <h2 class="why__title" id="why-title">Why choose InkyBay?</h2>
+        </div>
+        {{BTN_PRIMARY:Start free trial}}
+      </div>
+      <div class="why__body">
+        <div class="why__media" aria-hidden="true">
+          <span class="why__progress"><i></i></span>
+          <div class="wframe is-active"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Live design editor<span>Front</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel a-recolor">Make it yours</span></div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div></div></div></div>
+          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Product sides<span>4 print areas</span></div><div class="mui__tabs a-cycle" style="--n4:8s;--step:2s"><span style="--k:0">Front</span><span style="--k:1">Back</span><span style="--k:2">Left</span><span style="--k:3">Right</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel" style="color:transparent;width:30%;height:38%;border-style:dashed">.</span></div></div></div></div>
+          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Order #1042<span>Print-ready</span></div><div class="a-seq" style="display:grid;gap:.45em"><div class="mui__row" style="--k:0"><span>front.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:1"><span>back.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:2"><span>proof.pdf <span class="mui__muted">· preview</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div></div><span class="mui__btn">Download all</span></div></div></div>
+          <div class="wframe"><div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Custom orders<span>This month</span></div><div class="mui__chart a-grow"><i style="--h:30%;--k:0"></i><i style="--h:42%;--k:1"></i><i style="--h:38%;--k:2"></i><i style="--h:58%;--k:3"></i><i style="--h:66%;--k:4"></i><i style="--h:92%;--k:5"></i></div><div class="mui__row"><span>Orders</span><span>+24%</span></div></div></div></div>
+        </div>
+        <ul class="why__list">
+          <li class="wcard is-active">
+            <h3><button class="wcard__btn" id="wq0" aria-expanded="true" aria-controls="wa0"><span class="wcard__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19l9-9"/><path d="M14 4l1 2.5L17.5 7.5 15 8.5 14 11l-1-2.5L10.5 7.5 13 6.5 14 4zM19 12l.6 1.4L21 14l-1.4.6L19 16l-.6-1.4L17 14l1.4-.6L19 12z"/></svg></span><span class="wcard__title">Powerful customization</span><svg class="wcard__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></button></h3>
+            <div class="wcard__panel" id="wa0" role="region" aria-labelledby="wq0"><div><div class="wcard__body"><p class="wcard__text">Let customers personalize products with text, images, clipart, QR codes and more through an intuitive Live Design Editor.</p></div></div></div>
+          </li>
+          <li class="wcard">
+            <h3><button class="wcard__btn" id="wq1" aria-expanded="false" aria-controls="wa1"><span class="wcard__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span class="wcard__title">Built for complex products</span><svg class="wcard__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></button></h3>
+            <div class="wcard__panel" id="wa1" role="region" aria-labelledby="wq1"><div><div class="wcard__body"><p class="wcard__text">Handle multiple print areas, product sides and advanced customization options without coding or complicated setup.</p></div></div></div>
+          </li>
+          <li class="wcard">
+            <h3><button class="wcard__btn" id="wq2" aria-expanded="false" aria-controls="wa2"><span class="wcard__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6H7z"/></svg></span><span class="wcard__title">Ready-to-print orders</span><svg class="wcard__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></button></h3>
+            <div class="wcard__panel" id="wa2" role="region" aria-labelledby="wq2"><div><div class="wcard__body"><p class="wcard__text">Get customer details, designs, previews and print-ready files together, so your team can move faster.</p></div></div></div>
+          </li>
+          <li class="wcard">
+            <h3><button class="wcard__btn" id="wq3" aria-expanded="false" aria-controls="wa3"><span class="wcard__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 17l6-6 4 4 8-8"/><path d="M15 7h6v6"/></svg></span><span class="wcard__title">Made to grow with you</span><svg class="wcard__chev" viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 7.5l5 5 5-5"/></svg></button></h3>
+            <div class="wcard__panel" id="wa3" role="region" aria-labelledby="wq3"><div><div class="wcard__body"><p class="wcard__text">Whether you sell a few personalized products or thousands of custom orders, InkyBay gives you the tools to scale with confidence.</p></div></div></div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SECTION 09 · FAQ ===== -->
+  <section class="faq" aria-labelledby="faq-title">
+    <div class="container faq__grid">
+      <div class="faq__intro">
+        <h2 class="faq__title" id="faq-title">Frequently asked questions</h2>
+        <p class="faq__lead">Short answers to what merchants ask before they install.</p>
+        <div class="faq__help">
+          <p>Still have questions?</p>
+          {{BTN_SECONDARY:Talk to our team}}
+        </div>
+      </div>
+      <ul class="faq__list">
+          <li class="qa is-open">
+            <h3><button class="qa__q" id="qa-q0" aria-expanded="true" aria-controls="qa-a0">Will it work with my existing Shopify theme?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a0" role="region" aria-labelledby="qa-q0"><div><p>Yes. InkyBay installs from the Shopify App Store and adds the editor to your product pages through an app embed, so there are no theme code edits.</p></div></div>
+          </li>
+          <li class="qa">
+            <h3><button class="qa__q" id="qa-q1" aria-expanded="false" aria-controls="qa-a1">Do I need to know how to code?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a1" role="region" aria-labelledby="qa-q1"><div><p>No. You set up products, print areas, options and pricing from the InkyBay dashboard. Everything is point-and-click.</p></div></div>
+          </li>
+          <li class="qa">
+            <h3><button class="qa__q" id="qa-q2" aria-expanded="false" aria-controls="qa-a2">What files do I get with each order?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a2" role="region" aria-labelledby="qa-q2"><div><p>Every custom order comes with print-ready files and the full design details, so your production team can start printing right away.</p></div></div>
+          </li>
+          <li class="qa">
+            <h3><button class="qa__q" id="qa-q3" aria-expanded="false" aria-controls="qa-a3">Can I migrate from another product customizer?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a3" role="region" aria-labelledby="qa-q3"><div><p>Yes. Our team can help you move your products, print areas and design assets over, so you don&#x27;t have to rebuild your catalog from scratch.</p></div></div>
+          </li>
+          <li class="qa">
+            <h3><button class="qa__q" id="qa-q4" aria-expanded="false" aria-controls="qa-a4">What if a customer wants something we don&#x27;t sell yet?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a4" role="region" aria-labelledby="qa-q4"><div><p>Turn on custom quote requests. Shoppers send you the details, and you reply with a price for that one-off order.</p></div></div>
+          </li>
+          <li class="qa">
+            <h3><button class="qa__q" id="qa-q5" aria-expanded="false" aria-controls="qa-a5">Is there a free trial?<span class="qa__icon" aria-hidden="true"></span></button></h3>
+            <div class="qa__a" id="qa-a5" role="region" aria-labelledby="qa-q5"><div><p>Yes. Every plan starts with a 21-day free trial, and you can cancel anytime.</p></div></div>
+          </li>
+      </ul>
+    </div>
+  </section>
+</main>
+
+<!-- ===== SECTION 10–11 · CTA + FOOTER (one dark zone) ===== -->
+<div class="endzone">
+  <section class="cta" aria-labelledby="cta-title">
+    <div class="container">
+      <div class="cta__card has-ring">
+        <span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+        <div class="cta__text">
+          <h2 class="cta__title" id="cta-title">Run your custom product business on InkyBay</h2>
+          <p class="cta__lead">21-day free trial. Cancel anytime.</p>
+          <div class="cta__actions">
+            {{BTN_PRIMARY:Install on Shopify}}
+            {{BTN_SECONDARY:Try live demo}}
+          </div>
+        </div>
+        <div class="cta__vis"><img src="{{IMG:cta-products.webp}}" alt="Custom cap, t-shirt, mugs, bottle and shoes with InkyBay color and clipart pickers" width="1000" height="990" loading="lazy" decoding="async"></div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="foot">
+    <div class="container">
+      <div class="foot__top">
+        <div class="foot__brand">
+          <a class="logo" href="#" aria-label="InkyBay home">{{LOGO_MARK}}{{LOGO_TYPE}}</a>
+          <p>Effortless, powerful product personalization for Shopify stores.</p>
+          <div class="foot__social" aria-label="InkyBay on social media"><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">X</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
+        </div>
+          <div class="foot__col"><h3>Product</h3><ul><li><a href="#">Live design editor</a></li><li><a href="#">Features</a></li><li><a href="#">Product options</a></li><li><a href="#">Pricing</a></li></ul></div>
+          <div class="foot__col"><h3>Industries</h3><ul><li><a href="#">Apparel</a></li><li><a href="#">Drinkware</a></li><li><a href="#">Home decor</a></li><li><a href="#">Jewelry</a></li><li><a href="#">Pet products</a></li></ul></div>
+          <div class="foot__col"><h3>Resources</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Case studies</a></li><li><a href="#">Video tutorials</a></li><li><a href="#">Partners</a></li><li><a href="#">Affiliate program</a></li></ul></div>
+          <div class="foot__col"><h3>Get help</h3><ul><li><a href="#">Help center</a></li><li><a href="#">Live chat</a></li><li><a href="#">Contact</a></li></ul></div>
+      </div>
+      <div class="foot__bar">
+        <span>© 2026 InkyBay. Powered by <a class="parse" href="#">ParseLab</a></span>
+        <nav aria-label="Legal"><a href="#">Privacy policy</a><a href="#">Terms and conditions</a><a href="#">Changelog</a></nav>
+      </div>
+      <div class="foot__markwrap" aria-hidden="true">{{WORDMARK}}{{WORDMARK_LIT}}</div>
+    </div>
+  </footer>
+</div>
+
+<script>
+  (function () {
+    /* Compact navbar on scroll (hysteresis avoids flicker at the threshold) */
+    var nav = document.getElementById('nav');
+    var compact = false, ticking = false;
+    function update() {
+      var y = window.scrollY || window.pageYOffset;
+      if (!compact && y > 40) { compact = true; nav.classList.add('is-compact'); }
+      else if (compact && y < 12) { compact = false; nav.classList.remove('is-compact'); }
+      ticking = false;
+    }
+    window.addEventListener('scroll', function () {
+      if (!ticking) { window.requestAnimationFrame(update); ticking = true; }
+    }, { passive: true });
+    update();
+
+    /* Marquee: clone the logo set once so the loop is seamless */
+    document.querySelectorAll('.marquee__track').forEach(function (track) {
+      var set = track.querySelector('.marquee__set');
+      var copy = set.cloneNode(true);
+      copy.setAttribute('aria-hidden', 'true');
+      copy.querySelectorAll('img').forEach(function (img) { img.alt = ''; });
+      track.appendChild(copy);
+    });
+
+    /* Features heading: swatches auto-cycle; a click picks one and restarts the cycle */
+    document.querySelectorAll('.fx').forEach(function (fx) {
+      var sws = [].slice.call(fx.querySelectorAll('.fx__sw'));
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var idx = 0, timer = null;
+      function pick(i) {
+        idx = (i + sws.length) % sws.length;
+        fx.style.setProperty('--fx-color', getComputedStyle(sws[idx]).backgroundColor);
+        sws.forEach(function (s, k) { s.classList.toggle('is-active', k === idx); });
+      }
+      function start() {
+        if (reduce) return;
+        clearInterval(timer);
+        timer = setInterval(function () { pick(idx + 1); }, 2000);
+      }
+      sws.forEach(function (s, i) {
+        s.addEventListener('click', function () { pick(i); start(); });
+      });
+      pick(0); start();
+    });
+
+    /* Features list: progress line fills, then the next item opens */
+    document.querySelectorAll('.features').forEach(function (sec) {
+      var items = [].slice.call(sec.querySelectorAll('.fitem'));
+      var frames = [].slice.call(sec.querySelectorAll('.fmedia__frame'));
+      var current = 0;
+      function activate(i) {
+        current = (i + items.length) % items.length;
+        items.forEach(function (it, k) {
+          var on = k === current;
+          it.classList.toggle('is-active', on);
+          it.querySelector('.fitem__btn').setAttribute('aria-expanded', String(on));
+          var bar = it.querySelector('.fitem__bar');
+          bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
+        });
+        frames.forEach(function (f, k) { f.classList.toggle('is-active', k === current); });
+      }
+      items.forEach(function (it, k) {
+        it.querySelector('.fitem__btn').addEventListener('click', function () { activate(k); });
+        it.querySelector('.fitem__bar').addEventListener('animationend', function () {
+          if (k === current) activate(current + 1);
+        });
+      });
+      sec.classList.add('is-paused');
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          es.forEach(function (e) { sec.classList.toggle('is-paused', !e.isIntersecting); });
+        }, { threshold: 0.35 }).observe(sec);
+      } else { sec.classList.remove('is-paused'); }
+    });
+
+    /* Industries wheel: cards on a circle; angle advances slowly, eases to a stop on pause/hover */
+    document.querySelectorAll('.industries').forEach(function (sec) {
+      var wheel = sec.querySelector('.wheel');
+      var cards = [].slice.call(wheel.querySelectorAll('.wheel__card'));
+      var btn = sec.querySelector('.wheel-ctrl__toggle');
+      var prevBtn = sec.querySelector('.wheel-ctrl__prev');
+      var nextBtn = sec.querySelector('.wheel-ctrl__next');
+      var N = cards.length;
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var STEP = 9.5, SPAN = STEP * N;            /* degrees between cards; full loop span */
+      var SPEED = -1.6;                           /* deg/s (~6s per card); negative = cards travel left */
+      var R = 1000, cardH = 0, spacing = 0, flat = false, theta = 0, vel = 0, last = 0;
+      var userPaused = reduce, hover = false, visible = false, focusTarget = null, snapTarget = null;
+
+      wheel.classList.add('is-ready');
+      function measure() {
+        var w = cards[0].offsetWidth;
+        cardH = cards[0].offsetHeight;
+        flat = window.innerWidth < 600;
+        var gap = flat ? 20 : 32;
+        spacing = w + gap;
+        /* Tilted neighbours are closest at their bottom edges (nearest the circle's centre).
+           Size the radius so the chord measured THERE is card width + gap: never touch, never overlap. */
+        var chord = 2 * Math.sin(STEP * Math.PI / 360);
+        R = spacing / chord + cardH / 2;
+        var drop = flat ? 0 : R * (1 - Math.cos(1.5 * STEP * Math.PI / 180));
+        wheel.style.height = Math.ceil(cardH + drop + 8) + 'px';
+      }
+      function wrap(a) { a = ((a + SPAN / 2) % SPAN + SPAN) % SPAN; return a - SPAN / 2; }
+      function render() {
+        for (var i = 0; i < N; i++) {
+          var a = wrap(theta + i * STEP), rad = a * Math.PI / 180, x, y, rot;
+          if (flat) { x = (a / STEP) * spacing; y = 0; rot = 0; }
+          else { x = R * Math.sin(rad); y = R * (1 - Math.cos(rad)); rot = a; }
+          var c = cards[i];
+          c.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) rotate(' + rot.toFixed(3) + 'deg)';
+          c.style.zIndex = String(100 - Math.round(Math.abs(a)));
+          c.style.visibility = Math.abs(a) > SPAN / 2 - STEP * 0.6 ? 'hidden' : 'visible';
+        }
+      }
+      function frame(t) {
+        var dt = last ? Math.min((t - last) / 1000, 0.05) : 0; last = t;
+        var goal = focusTarget !== null ? focusTarget : snapTarget;
+        if (goal !== null) {
+          var d = wrap(goal - theta);
+          theta += d * Math.min(1, dt * 6);      /* ease into place */
+          vel = 0;
+          if (snapTarget !== null && Math.abs(d) < 0.02) { theta = snapTarget; snapTarget = null; }
+        } else {
+          var target = (userPaused || hover || !visible) ? 0 : SPEED;
+          vel += (target - vel) * Math.min(1, dt * 3);   /* soft start / soft stop */
+          theta += vel * dt;
+        }
+        theta = wrap(theta);
+        render();
+        requestAnimationFrame(frame);
+      }
+      function setPaused(p) {
+        userPaused = p;
+        btn.setAttribute('aria-pressed', String(p));
+        btn.setAttribute('aria-label', p ? 'Play rotation' : 'Pause rotation');
+      }
+      btn.addEventListener('click', function () { setPaused(!userPaused); });
+      /* manual step: move exactly one card, measured from wherever the wheel is heading */
+      function step(dir) {
+        var base = snapTarget !== null ? snapTarget : Math.round(theta / STEP) * STEP;
+        snapTarget = wrap(base + dir * STEP);
+      }
+      nextBtn.addEventListener('click', function () { step(-1); });
+      prevBtn.addEventListener('click', function () { step(1); });
+      wheel.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      wheel.addEventListener('pointerleave', function () { hover = false; });
+      cards.forEach(function (c, i) {
+        c.addEventListener('focusin', function () { focusTarget = -i * STEP; });
+        c.addEventListener('focusout', function () { focusTarget = null; });
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { visible = es[0].isIntersecting; }, { threshold: 0.15 }).observe(sec);
+      } else { visible = true; }
+      window.addEventListener('resize', function () { measure(); render(); });
+      measure(); theta = 0; render();
+      setPaused(userPaused);
+      requestAnimationFrame(frame);
+    });
+
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function clamp(v, a, b) { return Math.max(a, Math.min(b, v)); }
+
+    /* Reveal: words sharpen in order (soft 5-word leading edge) as the paragraph passes through the viewport */
+    document.querySelectorAll('.reveal').forEach(function (sec) {
+      var text = sec.querySelector('.reveal__text');
+      var words = [].slice.call(sec.querySelectorAll('.rw'));
+      if (reduceMotion) return;
+      sec.classList.add('is-live');
+      var N = words.length, W = 5, ticking = false;
+      function update() {
+        var r = text.getBoundingClientRect(), vh = window.innerHeight;
+        /* 0 when the text's top reaches 85% of the screen, 1 when its bottom reaches 45% */
+        var start = vh * 0.85, end = vh * 0.45;
+        var p = clamp((start - r.top) / ((start - end) + r.height), 0, 1);
+        var head = p * (N + W);
+        for (var i = 0; i < N; i++) {
+          var s = clamp((head - i) / W, 0, 1);
+          words[i].style.opacity = (0.14 + 0.86 * s).toFixed(3);
+          words[i].style.filter = s >= 1 ? 'none' : 'blur(' + ((1 - s) * 6).toFixed(2) + 'px)';
+        }
+        ticking = false;
+      }
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      window.addEventListener('resize', update);
+      update();
+    });
+
+    /* Feature rail: pin the section and translate the track by scroll progress */
+    document.querySelectorAll('.rail').forEach(function (sec) {
+      var track = sec.querySelector('.rail__track');
+      var bar = sec.querySelector('.rail__bar i');
+      var cards = track.children, N = cards.length;
+      var overflow = 0, pinned = false, ticking = false, stickTop = 0;
+      function layout() {
+        pinned = !reduceMotion && window.innerWidth >= 960 && window.innerHeight >= 600;
+        sec.classList.toggle('is-pinned', pinned);
+        track.style.transform = '';
+        if (!pinned) { sec.style.height = ''; sec.style.removeProperty('--fcard-w'); sec.style.removeProperty('--stick-top'); return; }
+        /* Card width: one full card + half of the next, at 16:10. Only shrinks if the screen is too short
+           to show header + card between the floating nav and the bottom edge. Never grows on tall screens. */
+        var cs0 = getComputedStyle(track.parentNode);
+        var cw = track.parentNode.clientWidth - parseFloat(cs0.paddingLeft) - parseFloat(cs0.paddingRight);
+        var g = parseFloat(getComputedStyle(track).columnGap) || 32;
+        var head = sec.querySelector('.rail__head').offsetHeight + (parseFloat(getComputedStyle(sec.querySelector('.rail__stick')).rowGap) || 64);
+        var navRoom = 96;                                    /* compact nav + breathing room */
+        var maxH = window.innerHeight - navRoom - head - 40;
+        var w = Math.min((cw - g) / 1.5, maxH * 1.6);
+        sec.style.setProperty('--fcard-w', Math.floor(w) + 'px');
+        var cs = getComputedStyle(track.parentNode);
+        overflow = Math.max(0, track.scrollWidth - (track.parentNode.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight)));
+        var stick = sec.querySelector('.rail__stick');
+        var boxH = stick.offsetHeight;
+        /* centre the content (not the padding) in the screen while pinned, below the floating nav */
+        var pad = parseFloat(getComputedStyle(stick).paddingTop);
+        var contentH = boxH - pad * 2;
+        stickTop = Math.round(Math.max(navRoom - pad, (window.innerHeight - contentH) / 2 - pad));
+        sec.style.setProperty('--stick-top', stickTop + 'px');
+        sec.style.height = (boxH + overflow) + 'px';         /* 1px of scroll = 1px of travel */
+        update();
+      }
+      function setMeta(p) {
+        bar.style.transform = 'scaleX(' + p.toFixed(4) + ')';
+      }
+      function update() {
+        ticking = false;
+        if (!pinned) {
+          var p2 = track.scrollWidth > track.clientWidth ? track.scrollLeft / (track.scrollWidth - track.clientWidth) : 0;
+          setMeta(p2); return;
+        }
+        var r = sec.getBoundingClientRect();
+        var p = overflow ? clamp((stickTop - r.top) / overflow, 0, 1) : 0;
+        track.style.transform = 'translate3d(' + (-p * overflow).toFixed(1) + 'px,0,0)';
+        setMeta(p);
+      }
+      window.addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(update); } }, { passive: true });
+      track.addEventListener('scroll', function () { if (!pinned) update(); }, { passive: true });
+      window.addEventListener('resize', layout);
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(layout);
+      layout();
+    });
+
+    /* Reviews: infinite loop (clones at both ends), autoplay paced by the active dot, drag/swipe, keys */
+    document.querySelectorAll('.reviews').forEach(function (sec) {
+      var view = sec.querySelector('.rslider');
+      var track = sec.querySelector('.rtrack');
+      var originals = [].slice.call(track.children);
+      var N = originals.length;
+      var prev = sec.querySelector('.rctl__prev'), next = sec.querySelector('.rctl__next');
+      var dotsBox = sec.querySelector('.rdots');
+      var AUTO = 5000, elapsed = 0, lastT = 0;
+      var v = 0, idx = 0, stepPx = 0, moving = false, hover = false, focusIn = false, dragging = false, offscreen = true;
+
+      originals.forEach(function (c, i) {
+        c.setAttribute('role', 'group'); c.setAttribute('aria-roledescription', 'slide');
+        c.setAttribute('aria-label', 'Review ' + (i + 1) + ' of ' + N);   /* screen readers only */
+      });
+      var dots = originals.map(function (_, i) {
+        var d = document.createElement('button');
+        d.className = 'rdot'; d.type = 'button'; d.setAttribute('aria-label', 'Show review ' + (i + 1));
+        d.addEventListener('click', function () { go(i); });
+        dotsBox.appendChild(d); return d;
+      });
+
+      function visibleCount() { return window.innerWidth <= 960 ? 1 : 2; }
+      function build() {
+        [].slice.call(track.querySelectorAll('.is-clone')).forEach(function (c) { c.remove(); });
+        v = visibleCount();
+        function clone(c) { var k = c.cloneNode(true); k.classList.add('is-clone'); k.setAttribute('aria-hidden', 'true'); k.inert = true; k.removeAttribute('aria-label'); return k; }
+        originals.slice(-v).forEach(function (c) { track.insertBefore(clone(c), originals[0]); });
+        originals.slice(0, v).forEach(function (c) { track.appendChild(clone(c)); });
+        stepPx = originals[1].offsetLeft - originals[0].offsetLeft;
+        place(false);
+      }
+      function place(animate, extra) {
+        track.style.transition = animate ? 'transform .75s var(--ease-expo)' : 'none';
+        track.style.transform = 'translate3d(' + (-(idx + v) * stepPx + (extra || 0)) + 'px,0,0)';
+      }
+      function paint() {
+        var real = ((idx % N) + N) % N;
+        elapsed = 0;
+        dots.forEach(function (d, k) {
+          var on = k === real;
+          d.style.setProperty('--p', '0');
+          d.classList.toggle('is-active', on);
+          d.setAttribute('aria-current', on ? 'true' : 'false');
+        });
+      }
+      function go(i) {
+        if (moving && Math.abs(i - idx) > 1) { idx = ((idx % N) + N) % N; place(false); }
+        idx = i; moving = true; place(true); paint();
+      }
+      track.addEventListener('transitionend', function (e) {
+        if (e.target !== track) return;
+        moving = false;
+        if (idx >= N || idx < 0) { idx = ((idx % N) + N) % N; place(false); }   /* jump from clone to its original: invisible */
+      });
+      next.addEventListener('click', function () { go(idx + 1); });
+      prev.addEventListener('click', function () { go(idx - 1); });
+      track.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); go(idx + 1); }
+        if (e.key === 'ArrowLeft') { e.preventDefault(); go(idx - 1); }
+      });
+
+      /* autoplay clock: only un-paused time counts, and a frame can add at most 50ms,
+         so a busy page load or a background tab can never make it skip ahead */
+      function tick(now) {
+        var dt = lastT ? Math.min(now - lastT, 50) : 0; lastT = now;
+        if (!reduceMotion && !sec.classList.contains('is-paused') && !document.hidden) {
+          elapsed += dt;
+          var active = dotsBox.querySelector('.rdot.is-active');
+          if (active) active.style.setProperty('--p', Math.min(1, elapsed / AUTO).toFixed(4));
+          if (elapsed >= AUTO) go(idx + 1);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+      function syncPause() { sec.classList.toggle('is-paused', hover || focusIn || dragging || offscreen); }
+      view.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') { hover = true; syncPause(); } });
+      view.addEventListener('pointerleave', function () { hover = false; syncPause(); });
+      sec.addEventListener('focusin', function (e) { focusIn = e.target.matches(':focus-visible'); syncPause(); });   /* keyboard focus pauses; a mouse click does not */
+      sec.addEventListener('focusout', function () { focusIn = false; syncPause(); });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) { offscreen = !es[0].isIntersecting; syncPause(); }, { threshold: 0.3 }).observe(sec);
+      } else { offscreen = false; }
+
+      /* drag / swipe */
+      var startX = 0, startY = 0, dx = 0, axis = null;
+      track.addEventListener('pointerdown', function (e) {
+        if (e.button !== 0) return;
+        startX = e.clientX; startY = e.clientY; dx = 0; axis = null; dragging = true; syncPause();
+        if (moving) { idx = ((idx % N) + N) % N; moving = false; }
+        place(false);
+      });
+      window.addEventListener('pointermove', function (e) {
+        if (!dragging) return;
+        var mx = e.clientX - startX, my = e.clientY - startY;
+        if (!axis && (Math.abs(mx) > 6 || Math.abs(my) > 6)) axis = Math.abs(mx) > Math.abs(my) ? 'x' : 'y';
+        if (axis === 'x') { dx = mx; track.classList.add('is-dragging'); place(false, dx); }
+      });
+      window.addEventListener('pointerup', function () {
+        if (!dragging) return;
+        dragging = false; track.classList.remove('is-dragging'); syncPause();
+        if (axis === 'x' && Math.abs(dx) > stepPx * 0.18) go(idx + (dx < 0 ? 1 : -1));
+        else place(true);
+      });
+      track.addEventListener('click', function (e) { if (Math.abs(dx) > 6) { e.preventDefault(); e.stopPropagation(); } }, true);
+
+      var lastV = visibleCount();
+      window.addEventListener('resize', function () {
+        if (visibleCount() !== lastV) { lastV = visibleCount(); build(); }
+        else { stepPx = originals[1].offsetLeft - originals[0].offsetLeft; place(false); }
+      });
+      build(); paint(); syncPause();
+    });
+
+    /* How it works: scale each scene to its card so narrow cards never crop it */
+    (function () {
+      var vis = [].slice.call(document.querySelectorAll('.step__vis'));
+      if (!vis.length) return;
+      function fit(el) {
+        var w = el.clientWidth, h = el.clientHeight;
+        var s = Math.min(1, (w - 28) / 260, (h - 28) / 220);
+        el.style.setProperty('--fit', Math.max(0.5, s).toFixed(4));
+      }
+      if ('ResizeObserver' in window) {
+        var ro = new ResizeObserver(function (es) { es.forEach(function (e) { fit(e.target); }); });
+        vis.forEach(function (v) { ro.observe(v); });
+      }
+      vis.forEach(fit);
+    })();
+
+    /* How it works: one active step at a time. Entering a step activates it at once; crossing the gaps
+       between steps keeps the current one open; only leaving the whole row resets — no collapse/re-expand jump */
+    document.querySelectorAll('.steps').forEach(function (row) {
+      var steps = [].slice.call(row.querySelectorAll('.step'));
+      var leaveT = null;
+      function activate(s) {
+        clearTimeout(leaveT);
+        row.classList.toggle('has-active', !!s);
+        steps.forEach(function (x) { x.classList.toggle('is-active', x === s); });
+      }
+      steps.forEach(function (s) {
+        s.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') activate(s); });
+        s.addEventListener('focusin', function () { activate(s); });
+      });
+      row.addEventListener('pointerleave', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        clearTimeout(leaveT); leaveT = setTimeout(function () { activate(null); }, 140);
+      });
+      row.addEventListener('focusout', function (e) { if (!row.contains(e.relatedTarget)) activate(null); });
+    });
+
+    /* How it works: on touch layouts there is no hover, so scenes play while on screen */
+    (function () {
+      var steps = [].slice.call(document.querySelectorAll('.step'));
+      if (!steps.length || !('IntersectionObserver' in window)) return;
+      var mq = window.matchMedia('(max-width: 960px)');
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.target.classList.toggle('is-on', mq.matches && e.isIntersecting); });
+      }, { threshold: 0.5 });
+      steps.forEach(function (s) { io.observe(s); });
+    })();
+
+    /* FAQ: one answer open at a time */
+    document.querySelectorAll('.faq__list').forEach(function (list) {
+      var items = [].slice.call(list.querySelectorAll('.qa'));
+      items.forEach(function (it) {
+        it.querySelector('.qa__q').addEventListener('click', function () {
+          var open = !it.classList.contains('is-open');
+          items.forEach(function (x) {
+            var on = x === it && open;
+            x.classList.toggle('is-open', on);
+            x.querySelector('.qa__q').setAttribute('aria-expanded', String(on));
+          });
+        });
+      });
+    });
+
+    /* Why InkyBay: click opens a card; otherwise it advances every 6s (JS clock, paused on hover/focus/offscreen) */
+    document.querySelectorAll('.why').forEach(function (sec) {
+      var cards = [].slice.call(sec.querySelectorAll('.wcard'));
+      var frames = [].slice.call(sec.querySelectorAll('.wframe'));
+      var prog = sec.querySelector('.why__progress');
+      var DWELL = 6000, elapsed = 0, lastT = 0, cur = 0, hover = false, focusIn = false, off = true;
+      function open(i) {
+        cur = (i + cards.length) % cards.length; elapsed = 0;
+        cards.forEach(function (c, k) {
+          var on = k === cur;
+          c.classList.toggle('is-active', on);
+          c.querySelector('.wcard__btn').setAttribute('aria-expanded', String(on));
+        });
+        prog.style.setProperty('--p', '0');
+        frames.forEach(function (f, k) { f.classList.toggle('is-active', k === cur); });
+      }
+      cards.forEach(function (c, k) { c.querySelector('.wcard__btn').addEventListener('click', function () { open(k); }); });
+      var list = sec.querySelector('.why__list');
+      list.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') hover = true; });
+      list.addEventListener('pointerleave', function () { hover = false; });
+      sec.addEventListener('focusin', function (e) { focusIn = e.target.matches(':focus-visible'); });
+      sec.addEventListener('focusout', function () { focusIn = false; });
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { off = !es[0].isIntersecting; }, { threshold: 0.35 }).observe(sec);
+      else off = false;
+      function tick(now) {
+        var dt = lastT ? Math.min(now - lastT, 50) : 0; lastT = now;
+        if (!reduceMotion && !hover && !focusIn && !off && !document.hidden) {
+          elapsed += dt;
+          prog.style.setProperty('--p', Math.min(1, elapsed / DWELL).toFixed(4));
+          if (elapsed >= DWELL) open(cur + 1);
+        }
+        requestAnimationFrame(tick);
+      }
+      requestAnimationFrame(tick);
+    });
+
+    /* Footer wordmark: spotlight follows the cursor */
+    document.querySelectorAll('.foot__markwrap').forEach(function (wrap) {
+      var raf = 0, x = 0, y = 0;
+      wrap.addEventListener('pointermove', function (e) {
+        if (e.pointerType !== 'mouse') return;
+        var r = wrap.getBoundingClientRect(); x = e.clientX - r.left; y = e.clientY - r.top;
+        if (!raf) raf = requestAnimationFrame(function () { raf = 0; wrap.style.setProperty('--mx', x + 'px'); wrap.style.setProperty('--my', y + 'px'); });
+        wrap.classList.add('is-lit');
+      });
+      wrap.addEventListener('pointerleave', function () { wrap.classList.remove('is-lit'); });
+    });
+
+    /* Section headings: split plain-text h2s into words, reveal when they enter the viewport */
+    (function () {
+      var heads = [].slice.call(document.querySelectorAll('main h2, .endzone h2')).filter(function (h) {
+        return h.children.length === 0 && h.textContent.trim().length;   /* skip headings with their own markup (features) */
+      });
+      if (!heads.length || reduceMotion || !('IntersectionObserver' in window)) return;
+      heads.forEach(function (h) {
+        var text = h.textContent.trim();
+        h.setAttribute('aria-label', text);
+        h.innerHTML = text.split(/\s+/).map(function (w, i) {
+          return '<span class="hw" aria-hidden="true" style="--i:' + i + '">' + w.replace(/[&<>]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;' }[c]; }) + '</span>';
+        }).join(' ');
+        h.classList.add('h-anim');
+      });
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('is-in'); io.unobserve(e.target); } });
+      }, { threshold: 0.4, rootMargin: '0px 0px -8% 0px' });
+      heads.forEach(function (h) { io.observe(h); });
+    })();
+
+    /* Stats: count up once when they come into view */
+    (function () {
+      var nums = [].slice.call(document.querySelectorAll('.stat__num'));
+      if (!nums.length || reduceMotion || !('IntersectionObserver' in window)) return;
+      nums.forEach(function (n) {
+        var txt = n.firstChild; var target = parseInt(txt.textContent.replace(/[^0-9]/g, ''), 10);
+        n.dataset.target = target; txt.textContent = '0';
+      });
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) {
+          if (!e.isIntersecting) return; io.unobserve(e.target);
+          var el = e.target, txt = el.firstChild, target = +el.dataset.target, t0 = 0, D = 1600;
+          function step(now) {
+            if (!t0) t0 = now;
+            var p = Math.min(1, (now - t0) / D), eased = 1 - Math.pow(1 - p, 4);
+            txt.textContent = Math.round(target * eased).toLocaleString('en-US');
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        });
+      }, { threshold: 0.6 });
+      nums.forEach(function (n) { io.observe(n); });
+    })();
+
+    /* Mini UI snippets animate only while on screen */
+    (function () {
+      var hosts = [].slice.call(document.querySelectorAll('.mui-stage'));
+      if (!('IntersectionObserver' in window)) { hosts.forEach(function (h) { h.classList.add('mui-live'); }); return; }
+      var io = new IntersectionObserver(function (es) {
+        es.forEach(function (e) { e.target.classList.toggle('mui-live', e.isIntersecting); });
+      }, { threshold: 0.25 });
+      hosts.forEach(function (h) { io.observe(h); });
+    })();
+
+    /* Mobile menu */
+    var toggle = document.querySelector('.nav__toggle');
+    var sheet = document.getElementById('nav-sheet');
+    toggle.addEventListener('click', function () {
+      var open = sheet.getAttribute('data-open') === 'true';
+      sheet.setAttribute('data-open', String(!open));
+      toggle.setAttribute('aria-expanded', String(!open));
+      toggle.setAttribute('aria-label', open ? 'Open menu' : 'Close menu');
+    });
+  })();
+</script>
+</body>
+</html>
