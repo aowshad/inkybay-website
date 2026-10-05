@@ -302,13 +302,13 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   position: absolute; inset: 0; z-index: 3; pointer-events: none;
   border-radius: inherit; padding: var(--ring-w);
   background: conic-gradient(from var(--sweep),
-    transparent 0deg 190deg,
-    rgba(212, 36, 39, .7) 262deg,
-    #FF7500 300deg,
-    #FFB04D 326deg,
-    #FFFFFF 344deg,
-    #FFFFFF 349deg,
-    transparent 353deg 360deg);
+    transparent 0deg 292deg,
+    rgba(212, 36, 39, .55) 318deg,
+    #FF7500 334deg,
+    #FFB04D 344deg,
+    #FFFFFF 350deg,
+    #FFFFFF 352deg,
+    transparent 355deg 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
@@ -316,19 +316,21 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   animation-delay: var(--ring-delay, 0s);
 }
 .has-ring { isolation: isolate; }
-.has-ring > .ring-glow {          /* warm glow that follows the head of the comet — kept to a band around the edge */
-  position: absolute; inset: -5px; z-index: 2; pointer-events: none; border-radius: calc(var(--r-xl) + 5px);
-  padding: 10px;                   /* band centred on the stroke: 5px outside + 5px inside, drawn above the content */
+.has-ring > .ring-glow {          /* wrapper: blurs AFTER its child is masked to the stroke -> soft halo centred on the line */
+  position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit;
+  filter: blur(7px); opacity: .9;
+}
+.ring-glow > i {
+  position: absolute; inset: -1px; border-radius: inherit; padding: 3px;   /* a 3px stroke straddling the 1px ring */
+  background: conic-gradient(from var(--sweep),
+    transparent 0deg 318deg,
+    rgba(255, 117, 0, .55) 336deg,
+    rgba(255, 196, 130, .85) 348deg,
+    rgba(255, 255, 255, .9) 351deg,
+    transparent 355deg 360deg);
   -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
   -webkit-mask-composite: xor;
           mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
-  background: conic-gradient(from var(--sweep),
-    transparent 0deg 250deg,
-    rgba(229, 56, 15, .10) 310deg,
-    rgba(255, 140, 40, .26) 336deg,
-    rgba(255, 220, 170, .34) 347deg,
-    transparent 353deg 360deg);
-  filter: blur(5px);
   animation: sweep var(--ring-speed, 8s) linear infinite;
   animation-delay: var(--ring-delay, 0s);
 }
@@ -720,8 +722,11 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--line);
   display: flex; flex-direction: column; gap: var(--s-6);
 }
-.fcard__title { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: var(--s-1); }
-.fcard__text { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.fcard__title { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: var(--s-1);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.fcard__text { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh);
+  min-height: calc(var(--t-lead-lh) * 2);                 /* always reserve two lines: every card's media box is the same size */
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .fcard__media {
   flex: 1; min-height: 0; border-radius: var(--r-md); background: var(--surface);
   display: grid; place-items: center; color: var(--brand-500);
@@ -1156,13 +1161,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   position: relative; border-radius: var(--r-xl);
   background: var(--bg);
   box-shadow: inset 0 0 0 1px var(--tint-line), 0 -8px 20px -16px rgba(13, 18, 28, .35);
-  transition: margin .6s var(--ease-expo), box-shadow .45s ease;
+  transition: box-shadow .5s ease;
 }
 .wcard + .wcard { margin-top: -18px; }
 .wcard:not(:last-child) { padding-bottom: 18px; }            /* the part that hides under the next card */
 .wcard:nth-child(1) { z-index: 1; } .wcard:nth-child(2) { z-index: 2; } .wcard:nth-child(3) { z-index: 3; } .wcard:nth-child(4) { z-index: 4; }
 .wcard.is-active {
-  margin-inline: -8px;
   box-shadow:
     inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 70%, transparent),
     0 0 0 3px color-mix(in srgb, var(--brand-500) 12%, transparent),
@@ -1205,7 +1209,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   .wcard__btn { padding: var(--s-5); }
   .wcard__title { font-size: 20px; }
   .wcard__body { padding: 0 var(--s-5) var(--s-5); }
-  .wcard.is-active { margin-inline: -4px; }
 }
 
 /* Small screens: "Everything you need" / "for product" / "customization" + swatches */
@@ -1293,7 +1296,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    ========================================================= */
 .fmedia, .fcard__media, .wframe { container-type: size; }
 .mui-stage { width: 100%; height: 100%; display: grid; place-items: center; font-size: clamp(11px, 3.8cqmin, 18px); }
-.fcard__media .mui-stage { font-size: clamp(11px, 4.4cqmin, 20px); }     /* rail cards are wide and short: scale with their height */
+.fcard__media .mui-stage { font-size: clamp(12px, 5.8cqmin, 24px); }     /* rail cards are wide and short: scale with their height */
 .mui {
   width: 22em; max-width: 92%; display: grid; gap: .7em; padding: 1.1em;
   border-radius: 1em; background: var(--bg); color: var(--ink);
@@ -1459,7 +1462,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       </div>
 
       <div class="hero__stage">
-        <div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+        <div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
           <div class="hero__screen">
             <img src="{{EDITOR}}" width="2240" height="1836" alt="InkyBay design editor customizing a soccer jersey with a logo, crest and front, back, left and right product sides" decoding="async" fetchpriority="high">
           </div>
@@ -1745,7 +1748,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     <div class="container">
       <h2 class="reviews__title" id="reviews-title">Loved by Shopify merchants</h2>
       <div class="reviews__grid">
-        <div class="rsum has-ring"><span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+        <div class="rsum has-ring"><span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
           <div class="rsum__in">
             <div class="rsum__top"><div class="rsum__score">4.6<small>/5</small></div><span class="stars" role="img" aria-label="4.6 out of 5 stars" style="--fill:92%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span></div>
             <p class="rsum__text">Based on <strong>169 reviews</strong> on the Shopify App Store.</p>
@@ -1934,7 +1937,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <section class="cta" aria-labelledby="cta-title">
     <div class="container">
       <div class="cta__card has-ring">
-        <span class="ring-glow" aria-hidden="true"></span><span class="ring" aria-hidden="true"></span>
+        <span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
         <div class="cta__text">
           <h2 class="cta__title" id="cta-title">Run your custom product business on InkyBay</h2>
           <p class="cta__lead">21-day free trial. Cancel anytime.</p>
