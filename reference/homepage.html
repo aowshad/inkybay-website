@@ -987,7 +987,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .faq { padding-block: var(--section-y); }
 .faq__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
 .faq__intro { grid-column: 1 / span 4; position: sticky; top: calc(var(--nav-h) + var(--s-8)); display: grid; gap: var(--s-4); }
-.faq__title { font-size: clamp(28px, 1.4rem + 1.2vw, 40px); line-height: 1.15; letter-spacing: -0.02em; text-wrap: balance; }
+.faq__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; }   /* same H2 as every other section */
 .faq__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
 .faq__help { margin-top: var(--s-6); padding-top: var(--s-6); border-top: 1px solid var(--line); display: grid; gap: var(--s-3); justify-items: start; }
 .faq__help p { font-weight: 500; color: var(--ink); }
@@ -2019,7 +2019,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <section class="faq" aria-labelledby="faq-title">
     <div class="container faq__grid">
       <div class="faq__intro">
-        <h2 class="faq__title" id="faq-title">Frequently asked questions</h2>
+        <h2 class="faq__title" id="faq-title">FAQs</h2>
         <p class="faq__lead">Short answers to what merchants ask before they install.</p>
         <div class="faq__help">
           <p>Still have questions?</p>
