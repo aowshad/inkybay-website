@@ -1,0 +1,188 @@
+{
+  "slug": "smart-add-on-pricing",
+  "nav_label": "Smart add-on pricing",
+  "meta": {
+    "title": "Smart add-on pricing | InkyBay",
+    "description": "Charge extra for colors, options and more."
+  },
+  "hero": {
+    "title": "Smart add-on pricing",
+    "lead": "Automatically adjust product pricing based on customization. Add extra charges for product options, colors, print areas, clipart, sizes, and other design elements to keep pricing accurate as customers customize.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing smart add-on pricing"
+  },
+  "benefits": [
+    {
+      "icon": "tag",
+      "title": "Accurate totals",
+      "text": "Prices change as shoppers customize."
+    },
+    {
+      "icon": "layers",
+      "title": "Every element",
+      "text": "Charge for options, areas and more."
+    },
+    {
+      "icon": "star",
+      "title": "Clipart and colors",
+      "text": "Extra charges for premium choices."
+    },
+    {
+      "icon": "wand",
+      "title": "Automatic",
+      "text": "No manual price math."
+    }
+  ],
+  "details_heading": [
+    "Price every detail.",
+    "Keep customization profitable."
+  ],
+  "details": [
+    {
+      "title": "Prices that follow the design",
+      "text": "As shoppers add options, colors or print areas, the price updates instantly in the editor.",
+      "points": [
+        "Live price in the editor",
+        "Clear line items",
+        "No surprises at checkout"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "addons",
+        "chip": "Back print +$4.00",
+        "badge": "Total updated"
+      }
+    },
+    {
+      "title": "Charge for what costs you more",
+      "text": "Add extra charges for product options, colors, print areas, clipart, sizes and other design elements.",
+      "points": [
+        "Options and colors",
+        "Print areas and sizes",
+        "Clipart and elements"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "mug",
+        "chips": [
+          {
+            "label": "Add-on",
+            "roll": [
+              "Gold foil",
+              "Back print",
+              "Gift box",
+              "Name"
+            ]
+          },
+          "+ $2.50"
+        ],
+        "colors": [
+          "#FFFFFF",
+          "#2F2F2F",
+          "#FF7500"
+        ]
+      }
+    },
+    {
+      "title": "Profitable by default",
+      "text": "Set the rules once and every customized order is priced correctly, however complex it gets.",
+      "points": [
+        "Rules you set once",
+        "Works on every product",
+        "Keeps margins safe"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "options",
+        "front": "addons",
+        "badge": "Price updated"
+      }
+    }
+  ],
+  "quote": {
+    "text": "Extra print areas and premium colors used to eat our margin. Now the price adds up while the customer designs.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything you can charge for.",
+    "Priced as shoppers design."
+  ],
+  "capabilities": [
+    {
+      "icon": "sliders",
+      "title": "Option pricing",
+      "text": "Charges per product option."
+    },
+    {
+      "icon": "star",
+      "title": "Color pricing",
+      "text": "Premium colors cost more."
+    },
+    {
+      "icon": "layers",
+      "title": "Print area pricing",
+      "text": "Extra areas, extra charge."
+    },
+    {
+      "icon": "image",
+      "title": "Clipart pricing",
+      "text": "Charge for premium artwork."
+    },
+    {
+      "icon": "hash",
+      "title": "Size pricing",
+      "text": "Larger sizes, adjusted price."
+    },
+    {
+      "icon": "type",
+      "title": "Text pricing",
+      "text": "Charge for added text."
+    },
+    {
+      "icon": "eye",
+      "title": "Live total",
+      "text": "Shown in the editor."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Set it up in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Price any product.",
+    "Every detail counted."
+  ],
+  "products_lead": "From a simple mug to a fully customized jacket, every choice can carry its own price.",
+  "products": [
+    "mug",
+    "tote",
+    "pillow",
+    "socks",
+    "handbag",
+    "necklace",
+    "phone",
+    "card"
+  ],
+  "faqs": [
+    {
+      "q": "When does the price update?",
+      "a": "Instantly, as shoppers add options, colors, print areas or clipart in the editor."
+    },
+    {
+      "q": "What can I charge extra for?",
+      "a": "Product options, colors, print areas, clipart, sizes and other design elements."
+    },
+    {
+      "q": "Do shoppers see the extra charges?",
+      "a": "Yes. The price in the editor updates so shoppers see the total before checkout."
+    },
+    {
+      "q": "Can each product have its own add-on prices?",
+      "a": "Yes. Set add-on pricing per product."
+    }
+  ]
+}

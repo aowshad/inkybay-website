@@ -1,0 +1,188 @@
+{
+  "slug": "font-clipart-library",
+  "nav_label": "Font & clipart library",
+  "meta": {
+    "title": "Font & clipart library | InkyBay",
+    "description": "Manage the fonts and artwork shoppers use."
+  },
+  "hero": {
+    "title": "Font & clipart library",
+    "lead": "Give shoppers more creative freedom with your own collection of fonts and cliparts. Organize assets into categories, set defaults, add custom graphics, and control which assets are available for different products or printing methods.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing font & clipart library"
+  },
+  "benefits": [
+    {
+      "icon": "type",
+      "title": "Your fonts",
+      "text": "Upload the fonts that match your brand."
+    },
+    {
+      "icon": "star",
+      "title": "Your clipart",
+      "text": "Add graphics shoppers can drop into designs."
+    },
+    {
+      "icon": "layers",
+      "title": "Organized",
+      "text": "Group assets into clear categories."
+    },
+    {
+      "icon": "sliders",
+      "title": "Controlled",
+      "text": "Choose which assets each product shows."
+    }
+  ],
+  "details_heading": [
+    "Your fonts. Your artwork.",
+    "Your creative possibilities."
+  ],
+  "details": [
+    {
+      "title": "A library shoppers love to browse",
+      "text": "Organize fonts and clipart into categories so shoppers find the right asset in seconds.",
+      "points": [
+        "Categories for every asset",
+        "Default fonts and clipart",
+        "Search-friendly names"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "library",
+        "chip": "New font added",
+        "badge": "Categorized"
+      }
+    },
+    {
+      "title": "Your artwork on every product",
+      "text": "Add your own graphics and let shoppers place them on any product, at any size you allow.",
+      "points": [
+        "Custom graphics upload",
+        "Resize within limits",
+        "Works on every side"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "tote",
+        "chips": [
+          {
+            "label": "Font",
+            "roll": [
+              "Sans",
+              "Serif",
+              "Script",
+              "Mono"
+            ]
+          },
+          "Clipart · Star"
+        ],
+        "colors": [
+          "#2F2F2F",
+          "#FF7500",
+          "#1F3A68"
+        ]
+      }
+    },
+    {
+      "title": "The right assets for each product",
+      "text": "Control which fonts and clipart are available for each product or printing method.",
+      "points": [
+        "Assets per product",
+        "Assets per printing method",
+        "Defaults you choose"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "design",
+        "front": "library",
+        "badge": "Clipart added"
+      }
+    }
+  ],
+  "quote": {
+    "text": "We uploaded our own fonts and logo pack, and every customer design now looks like it came from our studio.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything in your library.",
+    "Fonts, clipart and control."
+  ],
+  "capabilities": [
+    {
+      "icon": "type",
+      "title": "Custom fonts",
+      "text": "Upload the fonts you own."
+    },
+    {
+      "icon": "star",
+      "title": "Custom clipart",
+      "text": "Add your own graphics."
+    },
+    {
+      "icon": "layers",
+      "title": "Categories",
+      "text": "Group assets for easy browsing."
+    },
+    {
+      "icon": "save",
+      "title": "Defaults",
+      "text": "Set a starting font and clipart."
+    },
+    {
+      "icon": "sliders",
+      "title": "Per-product assets",
+      "text": "Show only what fits."
+    },
+    {
+      "icon": "printer",
+      "title": "Per-method assets",
+      "text": "Match assets to print methods."
+    },
+    {
+      "icon": "image",
+      "title": "Graphic upload",
+      "text": "SVG and image files."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Manage it all from the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Brand every product.",
+    "Your assets, any item."
+  ],
+  "products_lead": "Give every product the same creative toolkit, or a different one for each.",
+  "products": [
+    "tote",
+    "mug",
+    "pillow",
+    "card",
+    "phone",
+    "wallart",
+    "drawstring",
+    "socks"
+  ],
+  "faqs": [
+    {
+      "q": "Can I upload my own fonts?",
+      "a": "Yes. Add your own fonts and choose which ones shoppers can use."
+    },
+    {
+      "q": "Can I organize clipart into categories?",
+      "a": "Yes. Group clipart into categories so shoppers can browse it easily."
+    },
+    {
+      "q": "Can different products show different assets?",
+      "a": "Yes. You control which fonts and clipart are available for each product or printing method."
+    },
+    {
+      "q": "Can I set a default font?",
+      "a": "Yes. Set defaults so every design starts on brand."
+    }
+  ]
+}

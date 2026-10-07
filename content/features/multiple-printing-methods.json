@@ -1,0 +1,188 @@
+{
+  "slug": "multiple-printing-methods",
+  "nav_label": "Multiple printing methods",
+  "meta": {
+    "title": "Multiple printing methods | InkyBay",
+    "description": "Set up print methods for every workflow."
+  },
+  "hero": {
+    "title": "Multiple printing methods",
+    "lead": "Support different production workflows from one customizable product. Add multiple printing types and configure pricing, colors, size ranges, and design restrictions for each method.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing multiple printing methods"
+  },
+  "benefits": [
+    {
+      "icon": "printer",
+      "title": "Many methods",
+      "text": "Offer every way you print on one product."
+    },
+    {
+      "icon": "tag",
+      "title": "Priced per method",
+      "text": "Each method has its own pricing."
+    },
+    {
+      "icon": "sliders",
+      "title": "Own limits",
+      "text": "Colors and sizes set per method."
+    },
+    {
+      "icon": "file",
+      "title": "Right files",
+      "text": "Orders match the method chosen."
+    }
+  ],
+  "details_heading": [
+    "One product. Multiple ways to print.",
+    "Choose what works for you."
+  ],
+  "details": [
+    {
+      "title": "Every printing method, one product",
+      "text": "Add several printing types to a single product, so shoppers choose the finish they want.",
+      "points": [
+        "Several methods per product",
+        "Shopper picks the method",
+        "One product to manage"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "methods",
+        "chip": "Embroidery enabled",
+        "badge": "4 methods"
+      }
+    },
+    {
+      "title": "Rules that follow the method",
+      "text": "Set colors, size ranges and design restrictions for each method, so every design stays printable.",
+      "points": [
+        "Colors per method",
+        "Size ranges per method",
+        "Design restrictions"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "tee",
+        "chips": [
+          {
+            "label": "Method",
+            "roll": [
+              "DTG",
+              "Embroidery",
+              "Screen print",
+              "Vinyl"
+            ]
+          },
+          "Up to 6 colors"
+        ],
+        "colors": [
+          "#2F2F2F",
+          "#FF7500",
+          "#E7E7EA"
+        ]
+      }
+    },
+    {
+      "title": "Pricing for each workflow",
+      "text": "Give every printing method its own price, so the total always matches how the order is made.",
+      "points": [
+        "Price per method",
+        "Clear totals",
+        "Fits your production"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "methods",
+        "front": "addons",
+        "badge": "Method price applied"
+      }
+    }
+  ],
+  "quote": {
+    "text": "We print with DTG and embroidery. Now one product offers both, and each order tells the team exactly how to make it.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything per print method.",
+    "Set once, print right."
+  ],
+  "capabilities": [
+    {
+      "icon": "printer",
+      "title": "Multiple methods",
+      "text": "Several print types per product."
+    },
+    {
+      "icon": "tag",
+      "title": "Method pricing",
+      "text": "A price for each method."
+    },
+    {
+      "icon": "star",
+      "title": "Color limits",
+      "text": "Max colors per method."
+    },
+    {
+      "icon": "sliders",
+      "title": "Size ranges",
+      "text": "Print sizes per method."
+    },
+    {
+      "icon": "file",
+      "title": "Design restrictions",
+      "text": "Rules that keep designs printable."
+    },
+    {
+      "icon": "layers",
+      "title": "Per-side setup",
+      "text": "Methods per print area."
+    },
+    {
+      "icon": "eye",
+      "title": "Shopper choice",
+      "text": "Pick the finish in the editor."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Configure it in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Print on anything.",
+    "With any method."
+  ],
+  "products_lead": "Apparel, drinkware, bags and more, each with the printing methods you actually use.",
+  "products": [
+    "socks",
+    "tote",
+    "mug",
+    "drawstring",
+    "pillow",
+    "phone",
+    "card",
+    "handbag"
+  ],
+  "faqs": [
+    {
+      "q": "Can one product have several printing methods?",
+      "a": "Yes. Add multiple printing types to the same product and let shoppers choose."
+    },
+    {
+      "q": "Can each method have its own price?",
+      "a": "Yes. Pricing is set per printing method."
+    },
+    {
+      "q": "Can I limit colors for a method?",
+      "a": "Yes. Set colors, size ranges and design restrictions for each method."
+    },
+    {
+      "q": "Do orders show which method was chosen?",
+      "a": "Yes. The method is part of the order details your team receives."
+    }
+  ]
+}

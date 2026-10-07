@@ -1,0 +1,188 @@
+{
+  "slug": "ready-made-templates",
+  "nav_label": "Ready-made templates",
+  "meta": {
+    "title": "Ready-made templates | InkyBay",
+    "description": "Give shoppers a head start with templates."
+  },
+  "hero": {
+    "title": "Ready-made templates",
+    "lead": "Help customers start designing faster with professionally prepared templates. Create predefined designs, control what shoppers can edit, and let them browse available templates directly in the design experience.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing ready-made templates"
+  },
+  "benefits": [
+    {
+      "icon": "template",
+      "title": "Faster starts",
+      "text": "Shoppers begin from a finished design."
+    },
+    {
+      "icon": "star",
+      "title": "Professional look",
+      "text": "Templates you prepared and approved."
+    },
+    {
+      "icon": "sliders",
+      "title": "You decide edits",
+      "text": "Lock or unlock each element."
+    },
+    {
+      "icon": "eye",
+      "title": "Easy browsing",
+      "text": "Templates right inside the editor."
+    }
+  ],
+  "details_heading": [
+    "Start with inspiration.",
+    "Customize it your way."
+  ],
+  "details": [
+    {
+      "title": "Templates inside the editor",
+      "text": "Shoppers browse your templates without leaving the design experience, then make one their own.",
+      "points": [
+        "Browse in the editor",
+        "One click to apply",
+        "Edit to taste"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "templates",
+        "chip": "Template applied",
+        "badge": "Editable"
+      }
+    },
+    {
+      "title": "Designs ready for every product",
+      "text": "Create predefined designs for each product, so shoppers always have a strong starting point.",
+      "points": [
+        "Templates per product",
+        "Your own designs",
+        "Ready for print"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "card",
+        "chips": [
+          {
+            "label": "Template",
+            "roll": [
+              "Birthday",
+              "Wedding",
+              "Team",
+              "Holiday"
+            ]
+          },
+          "Text · Editable"
+        ],
+        "colors": [
+          "#FFD7EB",
+          "#FF7500",
+          "#1F3A68"
+        ]
+      }
+    },
+    {
+      "title": "Control what changes",
+      "text": "Choose which parts of a template shoppers can edit, so designs stay on brand.",
+      "points": [
+        "Lock layout or colors",
+        "Editable text and images",
+        "Brand-safe results"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "templates",
+        "front": "design",
+        "badge": "Locked layout"
+      }
+    }
+  ],
+  "quote": {
+    "text": "Most customers start from a template now. They change the name and date, and the order is ready in minutes.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything in templates.",
+    "Start fast, stay on brand."
+  ],
+  "capabilities": [
+    {
+      "icon": "template",
+      "title": "Predefined designs",
+      "text": "Templates you create."
+    },
+    {
+      "icon": "eye",
+      "title": "In-editor browsing",
+      "text": "Shoppers pick without leaving."
+    },
+    {
+      "icon": "sliders",
+      "title": "Edit controls",
+      "text": "Choose what can change."
+    },
+    {
+      "icon": "type",
+      "title": "Editable text",
+      "text": "Names, dates and messages."
+    },
+    {
+      "icon": "image",
+      "title": "Editable images",
+      "text": "Swap photos and graphics."
+    },
+    {
+      "icon": "layers",
+      "title": "Per-product templates",
+      "text": "The right set for each item."
+    },
+    {
+      "icon": "star",
+      "title": "Categories",
+      "text": "Group templates by occasion."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Manage it in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Templates for anything.",
+    "Cards, mugs and more."
+  ],
+  "products_lead": "Cards, mugs, apparel and gifts, each with designs shoppers can start from.",
+  "products": [
+    "card",
+    "mug",
+    "pillow",
+    "tote",
+    "wallart",
+    "photo",
+    "puzzle",
+    "pumpkin"
+  ],
+  "faqs": [
+    {
+      "q": "Where do shoppers find templates?",
+      "a": "Directly in the design editor, where they can browse and apply them."
+    },
+    {
+      "q": "Can I limit what shoppers edit?",
+      "a": "Yes. You control which parts of each template can be changed."
+    },
+    {
+      "q": "Can I create templates for specific products?",
+      "a": "Yes. Create predefined designs for each product."
+    },
+    {
+      "q": "Can shoppers start from scratch instead?",
+      "a": "Yes. Templates are optional; shoppers can always design their own."
+    }
+  ]
+}

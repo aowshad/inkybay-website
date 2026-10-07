@@ -1,0 +1,188 @@
+{
+  "slug": "unlimited-product-options",
+  "nav_label": "Unlimited product options",
+  "meta": {
+    "title": "Unlimited product options | InkyBay",
+    "description": "Add as many product options as you need."
+  },
+  "hero": {
+    "title": "Unlimited product options",
+    "lead": "Give shoppers the flexibility to configure products exactly the way they want. Add as many product options as needed and build detailed customization experiences for everything from simple choices to complex products.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing unlimited product options"
+  },
+  "benefits": [
+    {
+      "icon": "sliders",
+      "title": "No limits",
+      "text": "Add as many options as you need."
+    },
+    {
+      "icon": "layers",
+      "title": "Simple to complex",
+      "text": "From one choice to full configurators."
+    },
+    {
+      "icon": "eye",
+      "title": "Clear for shoppers",
+      "text": "Options shown in a clean flow."
+    },
+    {
+      "icon": "tag",
+      "title": "Priced options",
+      "text": "Options can change the price."
+    }
+  ],
+  "details_heading": [
+    "No limits on customization.",
+    "Give shoppers more choices."
+  ],
+  "details": [
+    {
+      "title": "As many options as the product needs",
+      "text": "Add options without limits, so shoppers configure products exactly the way they want.",
+      "points": [
+        "Unlimited options",
+        "Any option type",
+        "One product to manage"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "options",
+        "chip": "Option added",
+        "badge": "No limit"
+      }
+    },
+    {
+      "title": "From simple choices to configurators",
+      "text": "Build anything from a single color choice to a detailed, multi-step product configuration.",
+      "points": [
+        "Simple choices",
+        "Detailed configurations",
+        "Shopper-friendly flow"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "handbag",
+        "chips": [
+          {
+            "label": "Strap",
+            "roll": [
+              "Short",
+              "Long",
+              "Chain",
+              "None"
+            ]
+          },
+          "Monogram · AB"
+        ],
+        "colors": [
+          "#E9DCCB",
+          "#2F2F2F",
+          "#8A4B2A"
+        ]
+      }
+    },
+    {
+      "title": "Options that work together",
+      "text": "Combine options with pricing and rules so every configuration is valid and priced right.",
+      "points": [
+        "Options with pricing",
+        "Rules between options",
+        "Valid every time"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "options",
+        "front": "setup",
+        "badge": "Configuration saved"
+      }
+    }
+  ],
+  "quote": {
+    "text": "Our bags have materials, straps, hardware and monograms. Every combination is now one product with options.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything shoppers can choose.",
+    "Without any limits."
+  ],
+  "capabilities": [
+    {
+      "icon": "sliders",
+      "title": "Unlimited options",
+      "text": "No cap on choices."
+    },
+    {
+      "icon": "hash",
+      "title": "Option types",
+      "text": "Dropdowns, swatches and inputs."
+    },
+    {
+      "icon": "type",
+      "title": "Text inputs",
+      "text": "Names, notes and monograms."
+    },
+    {
+      "icon": "image",
+      "title": "Image swatches",
+      "text": "Pick visually."
+    },
+    {
+      "icon": "tag",
+      "title": "Priced options",
+      "text": "Options can add cost."
+    },
+    {
+      "icon": "file",
+      "title": "Option rules",
+      "text": "Keep configurations valid."
+    },
+    {
+      "icon": "layers",
+      "title": "Any product",
+      "text": "Simple items to complex kits."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Build it in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Options for anything.",
+    "Simple or fully custom."
+  ],
+  "products_lead": "Bags, jewelry, apparel and decor, configured exactly the way your shoppers want them.",
+  "products": [
+    "handbag",
+    "necklace",
+    "socks",
+    "pillow",
+    "phone",
+    "tote",
+    "wallart",
+    "mug"
+  ],
+  "faqs": [
+    {
+      "q": "Is there a limit on product options?",
+      "a": "No. Add as many product options as each product needs."
+    },
+    {
+      "q": "What kinds of options can I add?",
+      "a": "Choices such as dropdowns, swatches and text inputs, for simple or complex products."
+    },
+    {
+      "q": "Can options change the price?",
+      "a": "Yes. Options can work together with your pricing rules."
+    },
+    {
+      "q": "Do options work with the design editor?",
+      "a": "Yes. Options and customization work together in the same product experience."
+    }
+  ]
+}

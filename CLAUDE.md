@@ -140,3 +140,44 @@ seamless loop. Hover pauses the wall.
 To add a feature page: copy `src/features/advanced-product-setup.json`, take the title, description and tagline
 from `_index.json`, write the rest, run `python3 build.py`. Do not add page-specific CSS; if a feature needs a new
 section type, add it to the template for all pages.
+
+
+## Writing a feature page (playbook)
+
+Draft content for the remaining eight features is ready in `content/features/<slug>.json`. Each one is already
+checked against these rules; adjust the copy, then move the file to `src/features/` to build it.
+
+**Source of truth**: title, description and tagline come from `src/features/_index.json`. The hero lead is the
+description; `details_heading` is the tagline, word for word. Never invent numbers, integrations or claims that the
+description (or https://docs.inkybay.com) does not support.
+
+**Voice**: plain, confident, short. Sentence case for every heading and title. No em dashes (use a comma or a full
+stop). No exclamation marks. Write for a Shopify merchant, not a developer.
+
+**Lengths** (enforced by `scripts/audit.py`):
+| Field | Rule |
+|---|---|
+| `hero.lead` | max 260 chars |
+| `benefits` | exactly 4; title max 3-4 words; text max 70 chars |
+| `details` | exactly 3; title max 40 chars; text max 180 chars; exactly 3 `points`, each max 32 chars |
+| `details[].visual` | use each layout once: `single`, `product`, `stack` |
+| `capabilities` | exactly 8; title max 24 chars; text max 45 chars; heading lines max 36 chars |
+| `products` | 6-14 names from `src/assets/products/`; heading lines max 24 chars (half-width column) |
+| `faqs` | 3-5; answer max 200 chars |
+| `_index.json short` | about 40 chars; must fit two lines in the mega menu |
+
+**Visuals**: pick mini UIs that show the feature itself (quotes: `quote`; library: `library`; inventory: `inventory`;
+discounts: `tiers`; pricing: `addons`; printing: `methods`; templates: `templates`; options: `options`). Chips and
+badges are short labels a real UI would show ("Tier unlocked", "Quote sent"); a rolling chip cycles through 4 values.
+
+**Checks before every commit**:
+```
+python3 build.py
+python3 scripts/audit.py <slug>        # must print PASS
+```
+The audit checks the JSON rules above, then opens the built page at 390, 768 and 1440px in light and dark mode:
+no JS errors, no horizontal overflow, no text under 16px, every heading reveals, every chip and badge overlaps its
+card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, and no mega-menu
+description is cut off. Setup once: `pip install playwright && python3 -m playwright install chromium`.
+
+**Commits**: one commit per page, e.g. `Add feature page: Custom quote requests`. Never batch pages together.

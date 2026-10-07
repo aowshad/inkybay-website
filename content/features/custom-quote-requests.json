@@ -1,0 +1,188 @@
+{
+  "slug": "custom-quote-requests",
+  "nav_label": "Custom quote requests",
+  "meta": {
+    "title": "Custom quote requests | InkyBay",
+    "description": "Let shoppers request custom pricing."
+  },
+  "hero": {
+    "title": "Custom quote requests",
+    "lead": "Let customers request a personalized quote directly from the designer, without adding the product to cart. Review their design, product details, and requirements, then send a custom price based on their request.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing custom quote requests"
+  },
+  "benefits": [
+    {
+      "icon": "chat",
+      "title": "Requests from the editor",
+      "text": "Shoppers ask for a quote while they design."
+    },
+    {
+      "icon": "eye",
+      "title": "Full context",
+      "text": "See the design, product and notes together."
+    },
+    {
+      "icon": "tag",
+      "title": "Your price",
+      "text": "Reply with a custom price for that order."
+    },
+    {
+      "icon": "file",
+      "title": "No cart needed",
+      "text": "Quotes work without adding to cart."
+    }
+  ],
+  "details_heading": [
+    "Every custom request matters.",
+    "Turn ideas into orders."
+  ],
+  "details": [
+    {
+      "title": "Quotes start in the designer",
+      "text": "Shoppers request a quote right from the design editor, so every request arrives with the design attached.",
+      "points": [
+        "Request button in the editor",
+        "Design saved with the request",
+        "No cart required"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "quote",
+        "chip": "New quote request",
+        "badge": "Design attached"
+      }
+    },
+    {
+      "title": "Every detail in one place",
+      "text": "Review the product, quantity, design and any notes before you decide on a price.",
+      "points": [
+        "Product and quantity",
+        "Shopper notes",
+        "Design preview"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "tee",
+        "chips": [
+          {
+            "label": "Qty",
+            "roll": [
+              "50",
+              "100",
+              "250",
+              "500"
+            ]
+          },
+          "Team jerseys"
+        ],
+        "colors": [
+          "#1F3A68",
+          "#FF7500",
+          "#E7E7EA"
+        ]
+      }
+    },
+    {
+      "title": "Send a price that fits the job",
+      "text": "Reply with a custom price for that request, so large and unusual orders turn into sales.",
+      "points": [
+        "Custom price per request",
+        "Clear follow-up",
+        "Turn requests into orders"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "files",
+        "front": "addons",
+        "badge": "Quote sent"
+      }
+    }
+  ],
+  "quote": {
+    "text": "Big team orders used to start with long email threads. Now the request comes in with the design, and we just send a price.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything for custom quotes.",
+    "From request to order."
+  ],
+  "capabilities": [
+    {
+      "icon": "chat",
+      "title": "Quote button",
+      "text": "Shown inside the design editor."
+    },
+    {
+      "icon": "file",
+      "title": "Design attached",
+      "text": "Every request includes the design."
+    },
+    {
+      "icon": "hash",
+      "title": "Quantities",
+      "text": "Shoppers say how many they need."
+    },
+    {
+      "icon": "type",
+      "title": "Notes",
+      "text": "Room for special instructions."
+    },
+    {
+      "icon": "eye",
+      "title": "Request review",
+      "text": "See every detail before pricing."
+    },
+    {
+      "icon": "tag",
+      "title": "Custom pricing",
+      "text": "Set a price for each request."
+    },
+    {
+      "icon": "save",
+      "title": "Request history",
+      "text": "Find past requests quickly."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Turn it on from the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Quote any product.",
+    "Big jobs, odd sizes."
+  ],
+  "products_lead": "Bulk apparel, event merch or one-off pieces: let shoppers ask, then price the job your way.",
+  "products": [
+    "tote",
+    "mug",
+    "drawstring",
+    "card",
+    "puzzle",
+    "pumpkin",
+    "socks",
+    "phone"
+  ],
+  "faqs": [
+    {
+      "q": "Do shoppers need to add the product to cart?",
+      "a": "No. Shoppers can request a quote directly from the design editor without adding anything to cart."
+    },
+    {
+      "q": "What do I see in a request?",
+      "a": "The shopper's design, product details, quantity and any notes they add."
+    },
+    {
+      "q": "Can I send a different price for each request?",
+      "a": "Yes. You reply with a custom price based on what the shopper asked for."
+    },
+    {
+      "q": "Can I use quotes on some products only?",
+      "a": "Yes. You choose which products offer quote requests."
+    }
+  ]
+}

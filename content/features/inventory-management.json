@@ -1,0 +1,188 @@
+{
+  "slug": "inventory-management",
+  "nav_label": "Inventory management",
+  "meta": {
+    "title": "Inventory management | InkyBay",
+    "description": "Track stock across every custom order."
+  },
+  "hero": {
+    "title": "Inventory management",
+    "lead": "Keep your customizable products in sync with available stock. Track inventory across sizes, colors, and styles, manage SKUs, monitor items currently in carts, and automatically stop sales when stock reaches your set threshold.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing inventory management"
+  },
+  "benefits": [
+    {
+      "icon": "box",
+      "title": "Always in sync",
+      "text": "Stock follows every order."
+    },
+    {
+      "icon": "sliders",
+      "title": "Every variant",
+      "text": "Sizes, colors and styles tracked."
+    },
+    {
+      "icon": "hash",
+      "title": "SKUs managed",
+      "text": "Clear codes for each variant."
+    },
+    {
+      "icon": "eye",
+      "title": "Cart visibility",
+      "text": "See items currently in carts."
+    }
+  ],
+  "details_heading": [
+    "Stay on top of every product.",
+    "Keep inventory in sync."
+  ],
+  "details": [
+    {
+      "title": "Stock for every variant",
+      "text": "Track inventory across sizes, colors and styles of your customizable products.",
+      "points": [
+        "Per size and color",
+        "Per style",
+        "Live counts"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "inventory",
+        "chip": "Low stock alert",
+        "badge": "Synced"
+      }
+    },
+    {
+      "title": "SKUs that make sense",
+      "text": "Manage SKUs for each variant so your team always knows exactly which blank to pull.",
+      "points": [
+        "SKU per variant",
+        "Clear for production",
+        "Easy to update"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "socks",
+        "chips": [
+          {
+            "label": "Stock",
+            "roll": [
+              "164",
+              "92",
+              "18",
+              "0"
+            ]
+          },
+          "SKU · IB-SOCK-M"
+        ],
+        "colors": [
+          "#FFFFFF",
+          "#2F2F2F",
+          "#FF7500"
+        ]
+      }
+    },
+    {
+      "title": "Stop sales at the right time",
+      "text": "Set a threshold and sales stop automatically when stock reaches it, so you never sell what you can't make.",
+      "points": [
+        "Stock thresholds",
+        "Automatic stop",
+        "Items in carts counted"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "inventory",
+        "front": "setup",
+        "badge": "Auto-paused"
+      }
+    }
+  ],
+  "quote": {
+    "text": "We used to oversell popular sizes every season. Now sales stop on their own before we run out.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything for stock control.",
+    "Never oversell a blank."
+  ],
+  "capabilities": [
+    {
+      "icon": "box",
+      "title": "Inventory tracking",
+      "text": "Counts for every variant."
+    },
+    {
+      "icon": "sliders",
+      "title": "Variants",
+      "text": "Sizes, colors and styles."
+    },
+    {
+      "icon": "hash",
+      "title": "SKU management",
+      "text": "A code for each variant."
+    },
+    {
+      "icon": "eye",
+      "title": "Items in carts",
+      "text": "See what shoppers hold."
+    },
+    {
+      "icon": "tag",
+      "title": "Thresholds",
+      "text": "Set your minimum stock."
+    },
+    {
+      "icon": "file",
+      "title": "Auto stop",
+      "text": "Sales pause at the threshold."
+    },
+    {
+      "icon": "layers",
+      "title": "All products",
+      "text": "Works across your catalog."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Set it up in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Track any product.",
+    "Every size and color."
+  ],
+  "products_lead": "Apparel, drinkware, accessories and more, with stock that matches what you can really make.",
+  "products": [
+    "socks",
+    "mug",
+    "tote",
+    "handbag",
+    "phone",
+    "necklace",
+    "drawstring",
+    "pillow"
+  ],
+  "faqs": [
+    {
+      "q": "Can I track stock per size and color?",
+      "a": "Yes. Inventory is tracked across sizes, colors and styles."
+    },
+    {
+      "q": "Can I manage SKUs?",
+      "a": "Yes. Manage SKUs for each variant of your customizable products."
+    },
+    {
+      "q": "What happens when stock runs low?",
+      "a": "Sales stop automatically when stock reaches the threshold you set."
+    },
+    {
+      "q": "Does it count items in carts?",
+      "a": "Yes. You can monitor items currently in carts."
+    }
+  ]
+}

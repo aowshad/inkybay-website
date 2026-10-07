@@ -1,0 +1,188 @@
+{
+  "slug": "quantity-discounts",
+  "nav_label": "Quantity discounts",
+  "meta": {
+    "title": "Quantity discounts | InkyBay",
+    "description": "Reward bigger orders with tiered discounts."
+  },
+  "hero": {
+    "title": "Quantity discounts",
+    "lead": "Reward larger orders with flexible tiered pricing. Set percentage or fixed discounts based on quantity and choose whether discounts apply to the base product, customization, or add-on options.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor showing quantity discounts"
+  },
+  "benefits": [
+    {
+      "icon": "percent",
+      "title": "Tiered pricing",
+      "text": "Bigger orders, better prices."
+    },
+    {
+      "icon": "tag",
+      "title": "Percent or fixed",
+      "text": "Choose the discount type."
+    },
+    {
+      "icon": "layers",
+      "title": "You choose scope",
+      "text": "Base product, customization or add-ons."
+    },
+    {
+      "icon": "wand",
+      "title": "Automatic",
+      "text": "Applied as quantity changes."
+    }
+  ],
+  "details_heading": [
+    "Buy more. Save more.",
+    "Reward every bigger order."
+  ],
+  "details": [
+    {
+      "title": "Tiers that reward bigger orders",
+      "text": "Set price breaks by quantity so shoppers see the saving grow as they order more.",
+      "points": [
+        "Quantity tiers",
+        "Visible savings",
+        "Applied automatically"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "tiers",
+        "chip": "Tier unlocked",
+        "badge": "20% off"
+      }
+    },
+    {
+      "title": "Percentage or fixed discounts",
+      "text": "Choose a percentage or a fixed amount for each tier, whatever fits your margins.",
+      "points": [
+        "Percentage discounts",
+        "Fixed amount discounts",
+        "Per-tier values"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "mug",
+        "chips": [
+          {
+            "label": "Qty",
+            "roll": [
+              "10",
+              "25",
+              "50",
+              "100"
+            ]
+          },
+          "Bulk price applied"
+        ],
+        "colors": [
+          "#FFFFFF",
+          "#FF7500",
+          "#1F3A68"
+        ]
+      }
+    },
+    {
+      "title": "Discount exactly what you want",
+      "text": "Decide whether discounts apply to the base product, the customization, or add-on options.",
+      "points": [
+        "Base product",
+        "Customization",
+        "Add-on options"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "tiers",
+        "front": "addons",
+        "badge": "Discount applied"
+      }
+    }
+  ],
+  "quote": {
+    "text": "Teams and companies order in bulk now because they see the price drop right in the editor.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything for bulk orders.",
+    "Discounts that grow with quantity."
+  ],
+  "capabilities": [
+    {
+      "icon": "percent",
+      "title": "Quantity tiers",
+      "text": "Price breaks by quantity."
+    },
+    {
+      "icon": "tag",
+      "title": "Percentage discounts",
+      "text": "A share off each tier."
+    },
+    {
+      "icon": "hash",
+      "title": "Fixed discounts",
+      "text": "A set amount off."
+    },
+    {
+      "icon": "layers",
+      "title": "Discount scope",
+      "text": "Product, customization or add-ons."
+    },
+    {
+      "icon": "eye",
+      "title": "Visible savings",
+      "text": "Shown as shoppers order."
+    },
+    {
+      "icon": "sliders",
+      "title": "Per-product rules",
+      "text": "Different tiers per item."
+    },
+    {
+      "icon": "save",
+      "title": "Works with add-ons",
+      "text": "Pricing stays accurate."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Set it in the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Built for bulk orders.",
+    "Teams, events, gifts."
+  ],
+  "products_lead": "Team kits, event merch and corporate gifts, priced to reward every bigger order.",
+  "products": [
+    "mug",
+    "tote",
+    "socks",
+    "drawstring",
+    "card",
+    "pillow",
+    "phone",
+    "puzzle"
+  ],
+  "faqs": [
+    {
+      "q": "Can I set different tiers?",
+      "a": "Yes. Set quantity tiers with their own discount for each."
+    },
+    {
+      "q": "Percentage or fixed amount?",
+      "a": "Either. Choose percentage or fixed discounts for each tier."
+    },
+    {
+      "q": "What does the discount apply to?",
+      "a": "You decide: the base product, the customization, or add-on options."
+    },
+    {
+      "q": "Can each product have its own tiers?",
+      "a": "Yes. Set quantity discounts per product."
+    }
+  ]
+}
