@@ -98,53 +98,5 @@
   "laptop-bag": {
     "label": "Laptop sleeve",
     "industry": "gadgets-electronics"
-  },
-  "pillow": {
-    "label": "Home decor",
-    "industry": "home-furniture"
-  },
-  "wallart": {
-    "label": "Wall art",
-    "industry": "home-furniture"
-  },
-  "photo": {
-    "label": "Photo gifts",
-    "industry": "gifts-promotional"
-  },
-  "necklace": {
-    "label": "Jewelry",
-    "industry": "jewelry-accessories"
-  },
-  "handbag": {
-    "label": "Accessories",
-    "industry": "footwear-bags"
-  },
-  "tote": {
-    "label": "Bags & totes",
-    "industry": "footwear-bags"
-  },
-  "drawstring": {
-    "label": "Packaging",
-    "industry": "printing-packaging"
-  },
-  "petbowl": {
-    "label": "Pet products",
-    "industry": "gifts-promotional"
-  },
-  "phone": {
-    "label": "Phone cases",
-    "industry": "gadgets-electronics"
-  },
-  "puzzle": {
-    "label": "Toys & puzzles",
-    "industry": "gifts-promotional"
-  },
-  "pumpkin": {
-    "label": "Seasonal",
-    "industry": "gifts-promotional"
-  },
-  "card": {
-    "label": "Cards & prints",
-    "industry": "printing-packaging"
   }
 }
