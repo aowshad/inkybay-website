@@ -26,7 +26,7 @@ chosen stack until it matches the build, and only then create new pages. Do not 
 ## Repo layout
 
 ```
-site/                     build output, not in git (.gitignore); python3 build.py regenerates it
+site/                     build output, not in git (.gitignore); python3 build.py regenerates it, Actions deploys it
   index.html              the homepage, one self-contained file
   features/<slug>/index.html  one page per src/features/<slug>.json (clean URL: features/<slug>/)
   404.html                copy of the homepage for now
@@ -37,7 +37,18 @@ render_feature.py         renders a feature page: homepage head/nav/CTA/footer/J
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), hero-editor.webp, cta-products.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
+.github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
+
+## Build and deploy
+
+- Local: `python3 build.py`, then preview with `python3 -m http.server -d site` (open http://localhost:8000/).
+  Opening the files directly works for single pages, but folder links like `features/<slug>/` need a server.
+- Live: https://aowshad.github.io/inkybay-website/ (feature pages at `features/<slug>/`). Every push to `main` runs
+  `.github/workflows/pages.yml`: checkout, Python 3.12, `python3 build.py`, upload `site/` with
+  `actions/upload-pages-artifact`, deploy with `actions/deploy-pages` (concurrency group `pages`).
+- Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
+  `index.html` or `.nojekyll` any more; the deployed artifact is `site/` only.
 
 ## Locked kit (do not add new values; extend the scale only if a real need appears)
 
@@ -213,6 +224,7 @@ description is cut off. Setup once: `pip install playwright && python3 -m playwr
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Deploy to GitHub Pages with Actions (.github/workflows/pages.yml builds and deploys site/ on every push to main). Removed the root index.html redirect and .nojekyll: they served the old branch-based deploy and pointed at the untracked reference/
 - 2026-10-07: Relative links for the new URL structure (mega menu, mobile sheet, logos, breadcrumb). Relative, not root-absolute, because GitHub Pages serves the site under /inkybay-website/; the breadcrumb now uses {{HOME}} like the logos
 - 2026-10-07: Build to site/ with clean URLs (site/index.html, site/features/<slug>/index.html, site/404.html; reference/ and site/ ignored, reference/ untracked). audit.py reads site/ in this same commit so the audit checks the new build, not stale files; internal links are fixed in the next commit
 - 2026-10-07: CLAUDE.md: rules for keeping docs in sync (rules section at the top, this change log seeded from git history)
