@@ -10,7 +10,16 @@
     "lead": "Let customers request a personalized quote directly from the designer, without adding the product to cart. Review their design, product details, and requirements, then send a custom price based on their request.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing custom quote requests"
+    "visual_alt": "InkyBay editor showing custom quote requests",
+    "visual": {
+      "layout": "showcase",
+      "image": "custom-quote-requests",
+      "ui": "quote",
+      "chips": [
+        "Design attached",
+        "Quote sent"
+      ]
+    }
   },
   "benefits": [
     {
