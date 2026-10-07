@@ -181,8 +181,8 @@ section type, add it to the template for all pages.
 
 ## Writing a feature page (playbook)
 
-Draft content for the remaining eight features is ready in `content/features/<slug>.json`. Each one is already
-checked against these rules; adjust the copy, then move the file to `src/features/` to build it.
+All nine feature pages are built from `src/features/<slug>.json`. For a new feature, add it to `_index.json`, copy an
+existing page's JSON and rewrite it against these rules.
 
 **Source of truth**: title, description and tagline come from `src/features/_index.json`. The hero lead is the
 description; `details_heading` is the tagline, word for word. Never invent numbers, integrations or claims that the
@@ -210,12 +210,12 @@ badges are short labels a real UI would show ("Tier unlocked", "Quote sent"); a 
 **Checks before every commit**:
 ```
 python3 build.py
-python3 scripts/audit.py <slug>        # must print PASS
+python3 scripts/audit.py <slug>        # must print PASS (use --all for every page and the homepage)
 ```
 The audit checks the JSON rules above, then opens the built page at 390, 768 and 1440px in light and dark mode:
 no JS errors, no horizontal overflow, no text under 16px, every heading reveals, every chip and badge overlaps its
 card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, and no mega-menu
-description is cut off. Setup once: `pip install playwright && python3 -m playwright install chromium`.
+description is cut off. Setup once: `python3 -m pip install --user playwright && python3 -m playwright install chromium`.
 
 **Commits**: one commit per page, e.g. `Add feature page: Custom quote requests`. Never batch pages together.
 
@@ -224,6 +224,7 @@ description is cut off. Setup once: `pip install playwright && python3 -m playwr
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Document the new structure (README rewritten for site/, Actions deploy and local preview; playbook no longer points at the moved content/ drafts; Playwright setup uses python3 -m pip since bare pip is not always installed)
 - 2026-10-07: Deploy to GitHub Pages with Actions (.github/workflows/pages.yml builds and deploys site/ on every push to main). Removed the root index.html redirect and .nojekyll: they served the old branch-based deploy and pointed at the untracked reference/
 - 2026-10-07: Relative links for the new URL structure (mega menu, mobile sheet, logos, breadcrumb). Relative, not root-absolute, because GitHub Pages serves the site under /inkybay-website/; the breadcrumb now uses {{HOME}} like the logos
 - 2026-10-07: Build to site/ with clean URLs (site/index.html, site/features/<slug>/index.html, site/404.html; reference/ and site/ ignored, reference/ untracked). audit.py reads site/ in this same commit so the audit checks the new build, not stale files; internal links are fixed in the next commit
