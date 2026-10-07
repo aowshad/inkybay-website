@@ -224,6 +224,7 @@ description is cut off. Setup once: `python3 -m pip install --user playwright &&
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Pages source switched to GitHub Actions; live site verified (homepage and feature pages load, mega menu, breadcrumb and logo links work between them)
 - 2026-10-07: Document the new structure (README rewritten for site/, Actions deploy and local preview; playbook no longer points at the moved content/ drafts; Playwright setup uses python3 -m pip since bare pip is not always installed)
 - 2026-10-07: Deploy to GitHub Pages with Actions (.github/workflows/pages.yml builds and deploys site/ on every push to main). Removed the root index.html redirect and .nojekyll: they served the old branch-based deploy and pointed at the untracked reference/
 - 2026-10-07: Relative links for the new URL structure (mega menu, mobile sheet, logos, breadcrumb). Relative, not root-absolute, because GitHub Pages serves the site under /inkybay-website/; the breadcrumb now uses {{HOME}} like the logos
