@@ -10,7 +10,24 @@
     "lead": "Keep your customizable products in sync with available stock. Track inventory across sizes, colors, and styles, manage SKUs, monitor items currently in carts, and automatically stop sales when stock reaches your set threshold.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing inventory management"
+    "visual_alt": "InkyBay editor showing inventory management",
+    "visual": {
+      "layout": "showcase",
+      "image": "inventory-management",
+      "ui": "inventory",
+      "chips": [
+        {
+          "label": "Stock",
+          "roll": [
+            "164",
+            "92",
+            "18",
+            "0"
+          ]
+        },
+        "Unavailable"
+      ]
+    }
   },
   "benefits": [
     {
