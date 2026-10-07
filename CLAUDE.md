@@ -93,8 +93,10 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 ## Mega menu
 
 "Features" in the navbar opens a mega menu on click (not hover); outside click and Esc close it. Left: the nine
-features from `_index.json` (icon, title, `short`), the current page highlighted. Right: a dark promo card with
-"Try live demo". Under 1100px the promo hides; on phones the menu sheet shows the nine as a collapsible list.
+features from `_index.json` (icon, title, `short`), the current page highlighted. `short` is menu copy: 14px,
+two lines max, about 40 characters, written so it never truncates. Right: a 280px dark promo card with
+`assets/mega-promo.webp` fading into it and "Try live demo". Below 1360px the promo hides (it would squeeze the
+items); below 1100px the grid drops to two columns; on phones the menu sheet shows the nine as a collapsible list.
 Links are written per page by build.py (`features/<slug>.html` from the homepage, `<slug>.html` between features).
 
 ## Feature pages (one template, nine pages)

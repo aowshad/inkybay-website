@@ -9,7 +9,7 @@
         "Configured your way."
       ],
       "docs": "https://docs.inkybay.com/spf/en/category/products",
-      "short": "Build complex customizable products without any coding.",
+      "short": "Build complex products without coding.",
       "icon": "layers"
     },
     {
@@ -21,7 +21,7 @@
         "Turn ideas into orders."
       ],
       "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay",
-      "short": "Let shoppers request custom pricing for unique orders.",
+      "short": "Let shoppers request custom pricing.",
       "icon": "chat"
     },
     {
@@ -33,7 +33,7 @@
         "Your creative possibilities."
       ],
       "docs": "https://docs.inkybay.com/spf/en",
-      "short": "Manage the creative assets shoppers use to design their products.",
+      "short": "Manage the fonts and artwork shoppers use.",
       "icon": "type"
     },
     {
@@ -45,7 +45,7 @@
         "Choose what works for you."
       ],
       "docs": "https://docs.inkybay.com/spf/en/category/printing-types-and-pricing",
-      "short": "Set up printing methods and colors for every production workflow.",
+      "short": "Set up print methods for every workflow.",
       "icon": "printer"
     },
     {
@@ -57,7 +57,7 @@
         "Keep customization profitable."
       ],
       "docs": "https://docs.inkybay.com/spf/en/category/configuration",
-      "short": "Add extra charges for colors, options, inputs, and more.",
+      "short": "Charge extra for colors, options and more.",
       "icon": "tag"
     },
     {
@@ -69,7 +69,7 @@
         "Customize it your way."
       ],
       "docs": "https://docs.inkybay.com/spf/en/category/predefined-templates",
-      "short": "Give shoppers a head start with pre-designed templates.",
+      "short": "Give shoppers a head start with templates.",
       "icon": "template"
     },
     {
@@ -81,7 +81,7 @@
         "Keep inventory in sync."
       ],
       "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay",
-      "short": "Track inventory while managing your custom product orders.",
+      "short": "Track stock across every custom order.",
       "icon": "box"
     },
     {
@@ -93,7 +93,7 @@
         "Reward every bigger order."
       ],
       "docs": "https://docs.inkybay.com/spf/en/how-to-set-quantity-discounts-using-inkybay",
-      "short": "Reward larger orders with percentage or fixed discounts.",
+      "short": "Reward bigger orders with tiered discounts.",
       "icon": "percent"
     },
     {
@@ -105,7 +105,7 @@
         "Give shoppers more choices."
       ],
       "docs": null,
-      "short": "Create advanced product options and configurations.",
+      "short": "Add as many product options as you need.",
       "icon": "sliders"
     }
   ]

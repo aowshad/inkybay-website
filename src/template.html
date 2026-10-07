@@ -1286,7 +1286,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mega { position: absolute; left: 0; right: 0; top: 100%; padding-top: var(--s-2); pointer-events: none; }
 .mega__panel {
   width: min(var(--container), 100% - var(--margin) * 2); margin-inline: auto;
-  display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--s-6);
+  display: grid; grid-template-columns: minmax(0, 1fr) 280px; gap: var(--s-6);
   padding: var(--s-6); border-radius: var(--r-xl);
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -30px rgba(13, 18, 28, .35);
   opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.99); transform-origin: top center;
@@ -1295,22 +1295,23 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mega[data-open="true"] { pointer-events: auto; }
 .mega[data-open="true"] .mega__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .3s ease, transform .45s var(--ease-expo), visibility 0s; }
 .mega__label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); margin: 0 0 var(--s-4) var(--s-3); }
-.mega__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-1); }
-.mega__item { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--s-3); align-items: start; padding: var(--s-3); border-radius: var(--r-md); color: var(--ink); transition: background-color .2s ease; }
+.mega__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-2) var(--s-4); }
+.mega__item { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--s-4); align-items: start; padding: var(--s-4); border-radius: var(--r-md); color: var(--ink); transition: background-color .2s ease; }
 .mega__item:hover, .mega__item:focus-visible, .mega__item[aria-current="page"] { background: color-mix(in srgb, var(--brand-500) 7%, var(--bg)); }
 .mega__icon { width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; background: var(--surface); color: var(--ink); transition: background-color .2s ease, color .2s ease; }
 .mega__icon svg { width: 20px; height: 20px; }
 .mega__item:hover .mega__icon, .mega__item[aria-current="page"] .mega__icon { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-600); }
 .mega__title, .mega__desc { display: block; }
 .mega__title { font-weight: 600; line-height: 24px; }
-.mega__desc { color: var(--ink-muted); font-size: var(--t-body); line-height: 22px; margin-top: 2px; }
+.mega__desc { color: var(--ink-muted); font-size: 14px; line-height: 20px; margin-top: var(--s-1);   /* menu meta text: two lines max */
+  display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .mega__promo {
-  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-lg); padding: var(--s-6);
-  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-3); min-height: 260px;
-  background: #150E09; color: #fff;
+  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-lg); padding: 0 var(--s-6) var(--s-6);
+  display: flex; flex-direction: column; gap: var(--s-3);
+  background: #121010; color: #fff;
 }
-.mega__glow { position: absolute; inset: -20% -10% auto auto; width: 90%; aspect-ratio: 1; z-index: -1; border-radius: 50%;
-  background: radial-gradient(circle, rgba(255,117,0,.55), rgba(229,56,15,.25) 45%, transparent 70%); filter: blur(30px); animation: blob-a 12s ease-in-out infinite alternate; }
+.mega__img { display: block; width: calc(100% + var(--s-6) * 2); max-width: none; margin: 0 calc(var(--s-6) * -1) var(--s-1); height: auto; aspect-ratio: 16 / 10; object-fit: cover;
+  -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }   /* image melts into the card */
 .mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
 .mega__promo-text { color: rgba(255, 255, 255, .7); }
 .mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
@@ -1322,9 +1323,10 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .sheet-sub a { display: block; padding: var(--s-2) 0; color: var(--ink-muted); }
 .sheet-sub a[aria-current="page"] { color: var(--brand-600); }
 @keyframes blob-a { to { transform: translate(18%, 14%) scale(1.15); } }
-@media (max-width: 1100px) { .mega__panel { grid-template-columns: minmax(0, 1fr); } .mega__promo { display: none; } .mega__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 1360px) { .mega__panel { grid-template-columns: minmax(0, 1fr); } .mega__promo { display: none; } }   /* below this the promo would squeeze the items */
+@media (max-width: 1100px) { .mega__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 960px) { .mega { display: none; } }
-@media (prefers-reduced-motion: reduce) { .mega__panel, .sheet-sub { transition: none; } .mega__glow { animation: none; } }
+@media (prefers-reduced-motion: reduce) { .mega__panel, .sheet-sub { transition: none; } }
 
 /* Two-tone headings: first part ink, second part muted. Block lines on feature pages, inline on the homepage. */
 .h-line { display: block; }
@@ -1573,7 +1575,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         <ul class="mega__grid">{{MEGA_ITEMS}}</ul>
       </div>
       <aside class="mega__promo">
-        <span class="mega__glow" aria-hidden="true"></span>
+        <img class="mega__img" src="{{IMG:mega-promo.webp}}" alt="" width="720" height="489" loading="lazy" decoding="async">
         <p class="mega__promo-title">See the editor in action</p>
         <p class="mega__promo-text">Try InkyBay the way your shoppers will, right in the browser.</p>
         {{BTN_PRIMARY:Try live demo}}
