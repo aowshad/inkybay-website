@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase: Font & clipart library (photo heroes/font-clipart-library.webp, mini UI library | Font roll, Clipart added)
 - 2026-10-07: Hero showcase: Custom quote requests (photo heroes/custom-quote-requests.webp, mini UI quote | Design attached, Quote sent)
 - 2026-10-07: Hero showcase: Advanced product setup (photo heroes/advanced-product-setup.webp, mini UI sides | Size roll, 4 print areas)
 - 2026-10-07: Hero product photos: src/assets/heroes/<slug>.webp for all nine features, 1200x1200 (2x the hero size), quality 82, transparency kept, 54-83 KB each (converted from ~/Downloads/heroes/<slug>.png). Not used by any page until each hero is switched to the showcase

@@ -10,7 +10,24 @@
     "lead": "Give shoppers more creative freedom with your own collection of fonts and cliparts. Organize assets into categories, set defaults, add custom graphics, and control which assets are available for different products or printing methods.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing font & clipart library"
+    "visual_alt": "InkyBay editor showing font & clipart library",
+    "visual": {
+      "layout": "showcase",
+      "image": "font-clipart-library",
+      "ui": "library",
+      "chips": [
+        {
+          "label": "Font",
+          "roll": [
+            "Sans",
+            "Serif",
+            "Script",
+            "Display"
+          ]
+        },
+        "Clipart added"
+      ]
+    }
   },
   "benefits": [
     {
