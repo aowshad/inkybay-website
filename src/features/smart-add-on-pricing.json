@@ -44,7 +44,7 @@
       "text": "As shoppers add options, colors or print areas, the price updates instantly in the editor.",
       "points": [
         "Live price in the editor",
-        "Clear line items",
+        "Accurate as they customize",
         "No surprises at checkout"
       ],
       "visual": {
@@ -89,7 +89,7 @@
       "text": "Set the rules once and every customized order is priced correctly, however complex it gets.",
       "points": [
         "Rules you set once",
-        "Works on every product",
+        "Applied automatically",
         "Keeps margins safe"
       ],
       "visual": {
@@ -147,9 +147,9 @@
       "text": "Shown in the editor."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Set it up in the dashboard."
+      "icon": "file",
+      "title": "Design elements",
+      "text": "Charge for other elements too."
     }
   ],
   "products_heading": [
@@ -181,8 +181,8 @@
       "a": "Yes. The price in the editor updates so shoppers see the total before checkout."
     },
     {
-      "q": "Can each product have its own add-on prices?",
-      "a": "Yes. Set add-on pricing per product."
+      "q": "Do I have to adjust prices by hand?",
+      "a": "No. Prices adjust automatically based on what the shopper adds to their design."
     }
   ]
 }
