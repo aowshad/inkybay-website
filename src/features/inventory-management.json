@@ -45,12 +45,12 @@
       "points": [
         "Per size and color",
         "Per style",
-        "Live counts"
+        "Updates as orders come in"
       ],
       "visual": {
         "layout": "single",
         "ui": "inventory",
-        "chip": "Low stock alert",
+        "chip": "Stop sell at 5",
         "badge": "Synced"
       }
     },
@@ -90,13 +90,13 @@
       "points": [
         "Stock thresholds",
         "Automatic stop",
-        "Items in carts counted"
+        "Items in carts shown"
       ],
       "visual": {
         "layout": "stack",
         "back": "inventory",
         "front": "setup",
-        "badge": "Auto-paused"
+        "badge": "Unavailable"
       }
     }
   ],
@@ -143,13 +143,13 @@
     },
     {
       "icon": "layers",
-      "title": "All products",
-      "text": "Works across your catalog."
+      "title": "Custom products",
+      "text": "Built for every product you customize."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Set it up in the dashboard."
+      "icon": "save",
+      "title": "Shopify fallback",
+      "text": "Blank SKUs use your Shopify SKU."
     }
   ],
   "products_heading": [
@@ -182,7 +182,7 @@
     },
     {
       "q": "Does it count items in carts?",
-      "a": "Yes. You can monitor items currently in carts."
+      "a": "Yes. You can see how many units of each variation are in active carts."
     }
   ]
 }
