@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase: Advanced product setup (photo heroes/advanced-product-setup.webp, mini UI sides | Size roll, 4 print areas)
 - 2026-10-07: Hero product photos: src/assets/heroes/<slug>.webp for all nine features, 1200x1200 (2x the hero size), quality 82, transparency kept, 54-83 KB each (converted from ~/Downloads/heroes/<slug>.png). Not used by any page until each hero is switched to the showcase
 - 2026-10-07: Hero showcase layout (shared: render_feature.py, feature.css, once-only entrance JS in template.html, audit checks). Decisions: the comet ring leaves feature heroes (stays on the homepage hero, rating card and CTA card); square showcase so the 18em UI hangs below the product instead of covering it; no monospace in chip text ("Display" not "Mono"); docs wording "Unavailable" for inventory chips. To fix later: re-export ~/Downloads/heroes/inventory-management.png with the shelf tags in order S, M, L (no blank tags)
 - 2026-10-07: Mega menu promo: new image (glowing InkyBay app icon with cursor), 720x489 WebP at quality 82, same file name. Subject measures centred in the 16:10 crop (50.5% x, 49.7% y), so no object-position override

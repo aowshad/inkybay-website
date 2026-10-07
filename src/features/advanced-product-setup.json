@@ -10,7 +10,24 @@
     "lead": "Create highly customizable products with multiple print areas, sides, sizes, colors, styles, and product options. Set up complex products with flexible pricing and customization rules, all without coding.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor with a jersey set up on four product sides"
+    "visual_alt": "InkyBay editor with a jersey set up on four product sides",
+    "visual": {
+      "layout": "showcase",
+      "image": "advanced-product-setup",
+      "ui": "sides",
+      "chips": [
+        {
+          "label": "Size",
+          "roll": [
+            "S",
+            "M",
+            "L",
+            "XL"
+          ]
+        },
+        "4 print areas"
+      ]
+    }
   },
   "benefits": [
     {
