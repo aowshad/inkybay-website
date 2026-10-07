@@ -131,7 +131,7 @@ def render(slug):
   <section class="fhero" aria-labelledby="f-title">
     <div class="container fhero__grid">
       <div class="fhero__text">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="../homepage.html">Home</a>{CHEV_R}<a href="#">Features</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Features</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
         <h1 class="fhero__title" id="f-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}}}}}</div>

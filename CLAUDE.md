@@ -102,6 +102,8 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 - Draft content to replace: case study quote and store, five reviews marked "Draft review", FAQ answers (verify feature claims).
 - Social links are text; drop in official icons from each platform's brand kit.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
+- `site/404.html` is a copy of the homepage with relative links, so its links only work when it is served from the
+  site root; give it root-safe links when it becomes a real 404 page.
 - Fonts load from Google Fonts in the build; self-host Geist and Inter in production.
 
 ## Suggested next steps
@@ -119,7 +121,9 @@ features from `_index.json` (icon, title, `short`), the current page highlighted
 two lines max, about 40 characters, written so it never truncates. Right: a 280px dark promo card with
 `assets/mega-promo.webp` fading into it and "Try live demo". Below 1360px the promo hides (it would squeeze the
 items); below 1100px the grid drops to two columns; on phones the menu sheet shows the nine as a collapsible list.
-Links are written per page by build.py (`features/<slug>.html` from the homepage, `<slug>.html` between features).
+Links are written per page by build.py and are always relative to the page's own folder, because the site is
+served under `/inkybay-website/` (never start an internal link with `/`): homepage -> `features/<slug>/`; feature ->
+`../../` (homepage: logos and breadcrumb, via `{{HOME}}`) and `../<slug>/` (other features). The homepage logo is `#`.
 
 ## Feature pages (one template, nine pages)
 
@@ -209,6 +213,7 @@ description is cut off. Setup once: `pip install playwright && python3 -m playwr
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Relative links for the new URL structure (mega menu, mobile sheet, logos, breadcrumb). Relative, not root-absolute, because GitHub Pages serves the site under /inkybay-website/; the breadcrumb now uses {{HOME}} like the logos
 - 2026-10-07: Build to site/ with clean URLs (site/index.html, site/features/<slug>/index.html, site/404.html; reference/ and site/ ignored, reference/ untracked). audit.py reads site/ in this same commit so the audit checks the new build, not stale files; internal links are fixed in the next commit
 - 2026-10-07: CLAUDE.md: rules for keeping docs in sync (rules section at the top, this change log seeded from git history)
 - 2026-10-07: Add feature page: Unlimited product options

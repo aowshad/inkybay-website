@@ -4,7 +4,9 @@
                            site/features/<slug>/index.html   (one per src/features/<slug>.json)
                            site/404.html                     (copy of the homepage for now)
 
-site/ is build output and is not in git.
+site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
+under /inkybay-website/, so never start a link with "/"): homepage -> features/<slug>/, feature -> ../../ (home)
+and ../<slug>/ (other features).
 
 src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head, navbar, CTA,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
@@ -33,11 +35,11 @@ def b64(path):
 INDEX = json.loads((ROOT / "src" / "features" / "_index.json").read_text())["features"]
 
 def mega(base, current):
-    """Mega-menu items and the mobile sub-list, from _index.json. base = path prefix to the features folder."""
+    """Mega-menu items and the mobile sub-list, from _index.json. base = relative path from this page to site/features/."""
     items, mobile = [], []
     for f in INDEX:
         cur = ' aria-current="page"' if f["slug"] == current else ""
-        href = f'{base}{f["slug"]}.html'
+        href = f'{base}{f["slug"]}/'
         items.append(f'<li><a class="mega__item" href="{href}"{cur}><span class="mega__icon">{ICON[f["icon"]]}</span>'
                      f'<span><span class="mega__title">{html.escape(f["title"])}</span><span class="mega__desc">{html.escape(f["short"])}</span></span></a></li>')
         mobile.append(f'<li><a href="{href}"{cur}>{html.escape(f["title"])}</a></li>')
@@ -66,4 +68,4 @@ homepage = build((ROOT / "src" / "template.html").read_text())
 write(SITE / "index.html", homepage)
 write(SITE / "404.html", homepage)
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
-    write(SITE / "features" / j.stem / "index.html", build(render(j.stem), base="", home="../homepage.html", current=j.stem))
+    write(SITE / "features" / j.stem / "index.html", build(render(j.stem), base="../", home="../../", current=j.stem))
