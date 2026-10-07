@@ -157,7 +157,7 @@ def render(slug):
   </section>
 
   <!-- 6 · WORKS WITH (vertical product wall; any number of products) -->
-  <section class="fsec fsec--tint" aria-labelledby="f-prod">
+  <section class="fsec fsec--tint fsec--wall" aria-labelledby="f-prod">
     <div class="container fprod">
       <div class="fprod__text">
         <div class="fsec__head">{heading(d["products_heading"], id_="f-prod")}<p class="fsec__lead">{E(d["products_lead"])}</p></div>

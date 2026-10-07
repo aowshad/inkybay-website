@@ -1281,6 +1281,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 @media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 
+/* Two-tone headings: first part ink, second part muted. Block lines on feature pages, inline on the homepage. */
+.h-line { display: block; }
+.h-line.h-inline { display: inline; }
+.h-muted { color: var(--ink-muted); }
+.industries h2 .h-muted, .endzone h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back, like the reference */
+
 /* Section headings: split into words by JS, revealed once on entering the viewport */
 .h-anim .hw { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
@@ -1478,9 +1484,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    FEATURE PAGE — one template for every feature (content from src/features/*.json)
    ========================================================= */
 
-/* two-tone headings: first line ink, second line muted (used across the feature pages) */
-.h-line { display: block; }
-.h-muted { color: var(--ink-muted); }
 
 .fhero { padding-block: var(--s-12) var(--section-y); }
 .fhero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-12); align-items: center; }
@@ -1598,11 +1601,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .fquote .story { max-width: 880px; margin-inline: auto; }
 
 /* ---- works with: vertical product marquee (any number of products) */
+.fsec--wall { padding-block: 0; }                                   /* the wall itself meets the section edges */
 .fprod { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
-.fprod__text { grid-column: 1 / span 6; display: grid; gap: var(--s-6); justify-items: start; }
+.fprod__text { grid-column: 1 / span 6; display: grid; gap: var(--s-6); justify-items: start; padding-block: var(--s-16); }
 .fprod__text .fsec__head { margin-bottom: 0; }
-.vwall { grid-column: 7 / span 6; position: relative; height: 600px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); overflow: hidden;
-  -webkit-mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%); }
+.vwall { grid-column: 7 / span 6; position: relative; height: 560px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent 0, #000 22%, #000 78%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 22%, #000 78%, transparent 100%); }
 .vcol { min-width: 0; }
 .vtrack { display: grid; gap: var(--s-4); animation: vscroll var(--dur, 40s) linear infinite; }
 .vcol:nth-child(2) .vtrack { animation-direction: reverse; --dur: 48s; }
@@ -1634,7 +1638,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   .frow__text, .frow__vis, .frow:nth-child(even) .frow__text, .frow:nth-child(even) .frow__vis { grid-column: 1 / -1; grid-row: auto; }
   .frow__vis { order: -1; }
   .fprod { row-gap: var(--s-10); }
-  .vwall { height: 480px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vwall { height: 440px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fprod__text { padding-block: var(--section-y) 0; }
   .vcol:nth-child(3) { display: none; }
 }
 @media (max-width: 600px) {
@@ -1800,7 +1805,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   </section>
 
   <!-- 6 · WORKS WITH (vertical product wall; any number of products) -->
-  <section class="fsec fsec--tint" aria-labelledby="f-prod">
+  <section class="fsec fsec--tint fsec--wall" aria-labelledby="f-prod">
     <div class="container fprod">
       <div class="fprod__text">
         <div class="fsec__head"><h2 class="fsec__title" id="f-prod"><span class="h-line">Made for any product.</span> <span class="h-line h-muted">Apparel to pet bowls.</span></h2><p class="fsec__lead">Set up anything you sell as a customizable product, with the right print areas and options for each.</p></div>
@@ -1847,7 +1852,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <div class="cta__card has-ring">
         <span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
         <div class="cta__text">
-          <h2 class="cta__title" id="cta-title">Run your custom product business on InkyBay</h2>
+          <h2 class="cta__title" id="cta-title"><span class="h-line h-inline">Run your custom product business</span> <span class="h-line h-inline h-muted">on InkyBay.</span></h2>
           <p class="cta__lead">21-day free trial. Cancel anytime.</p>
           <div class="cta__actions">
             <a class="btn btn--primary" href="#" aria-label="Install on Shopify"><span class="btn__label" aria-hidden="true"><span data-text="Install on Shopify">Install on Shopify</span></span><span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg></span></a>

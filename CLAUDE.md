@@ -107,7 +107,9 @@ descriptions and two-line taglines live in `src/features/_index.json` (data only
 | 8 | CTA, crowd marquee, footer | from the homepage | dark |
 
 **Two-tone headings**: `["First line.", "Second line."]` renders the first line in ink and the second muted; the
-heading reveal animates both lines word by word.
+heading reveal animates both lines word by word. The homepage uses the inline variant (`.h-line.h-inline`) on
+Industries, Rail, Case study, How it works and CTA ("Custom products / for every business."). On dark sections the
+muted part is rgba(255,255,255,.42). Reviews, Why InkyBay, FAQs and the Features heading stay single-tone.
 
 **Zig-zag visuals**: no box; a soft brand glow (orange, red, amber) drifts behind floating UI. Three layouts, so
 any feature can reuse them with its own content:
@@ -117,7 +119,7 @@ any feature can reuse them with its own content:
 Floating parts drift slightly with the pointer (depth-1 and depth-2 layers).
 Mini-UI names: setup, design, files, options, methods, inventory, quote, addons, tiers, library, templates, sides, grow.
 
-**Product wall**: any number of products. Cards are rendered into three columns; JS spreads them over the visible
+**Product wall**: the section has no vertical padding; the 560px wall meets its top and bottom edges and fades into them. Any number of products. Cards are rendered into three columns; JS spreads them over the visible
 columns (two on phones, so none are lost), repeats them until each column overfills, then duplicates for a
 seamless loop. Hover pauses the wall.
 

@@ -1280,6 +1280,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 @media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 
+/* Two-tone headings: first part ink, second part muted. Block lines on feature pages, inline on the homepage. */
+.h-line { display: block; }
+.h-line.h-inline { display: inline; }
+.h-muted { color: var(--ink-muted); }
+.industries h2 .h-muted, .endzone h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back, like the reference */
+
 /* Section headings: split into words by JS, revealed once on entering the viewport */
 .h-anim .hw { display: inline-block; }
 @media (prefers-reduced-motion: no-preference) {
@@ -1655,7 +1661,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <!-- ===== SECTION 04 · INDUSTRIES ===== -->
   <section class="industries" aria-labelledby="industries-title">
     <div class="container industries__head">
-      <h2 class="industries__title" id="industries-title">Custom products for every business</h2>
+      <h2 class="industries__title" id="industries-title"><span class="h-line h-inline">Custom products</span> <span class="h-line h-inline h-muted">for every business.</span></h2>
       <p class="industries__lead">Turn any product into a personalized experience with a powerful, flexible customization solution.</p>
     </div>
     <ul class="wheel" aria-label="Industries">
@@ -1790,7 +1796,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <section class="rail" aria-labelledby="rail-title">
     <div class="rail__stick">
       <div class="container rail__head">
-        <h2 class="rail__title" id="rail-title">Customize without limits</h2>
+        <h2 class="rail__title" id="rail-title"><span class="h-line h-inline">Customize</span> <span class="h-line h-inline h-muted">without limits.</span></h2>
         <span class="rail__bar" aria-hidden="true"><i></i></span>
       </div>
       <div class="container rail__body">
@@ -1835,7 +1841,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <!-- ===== SECTION 06b · CASE STUDY (shares the tint band with Reviews) ===== -->
   <section class="case" aria-labelledby="case-title">
     <div class="container">
-      <h2 class="case__title" id="case-title">Merchants growing with InkyBay</h2>
+      <h2 class="case__title" id="case-title"><span class="h-line h-inline">Merchants growing</span> <span class="h-line h-inline h-muted">with InkyBay.</span></h2>
       <div class="case__grid">
         <article class="story">
           <span class="stars" role="img" aria-label="5 out of 5 stars" style="--fill:100%"><span class="stars__row stars__base" aria-hidden="true"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span><span class="stars__fill" aria-hidden="true"><span class="stars__row"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg><svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg></span></span></span>
@@ -1912,7 +1918,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   <section class="how" aria-labelledby="how-title">
     <div class="container">
       <div class="how__head">
-        <h2 class="how__title" id="how-title">Go live in four simple steps</h2>
+        <h2 class="how__title" id="how-title"><span class="h-line h-inline">Go live</span> <span class="h-line h-inline h-muted">in four simple steps.</span></h2>
         <a class="btn btn--primary" href="#" aria-label="Start free trial"><span class="btn__label" aria-hidden="true"><span data-text="Start free trial">Start free trial</span></span><span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg></span></a>
       </div>
       <ol class="steps">
@@ -2063,7 +2069,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <div class="cta__card has-ring">
         <span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
         <div class="cta__text">
-          <h2 class="cta__title" id="cta-title">Run your custom product business on InkyBay</h2>
+          <h2 class="cta__title" id="cta-title"><span class="h-line h-inline">Run your custom product business</span> <span class="h-line h-inline h-muted">on InkyBay.</span></h2>
           <p class="cta__lead">21-day free trial. Cancel anytime.</p>
           <div class="cta__actions">
             <a class="btn btn--primary" href="#" aria-label="Install on Shopify"><span class="btn__label" aria-hidden="true"><span data-text="Install on Shopify">Install on Shopify</span></span><span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg></span></a>

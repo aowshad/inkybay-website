@@ -3,9 +3,6 @@
    FEATURE PAGE — one template for every feature (content from src/features/*.json)
    ========================================================= */
 
-/* two-tone headings: first line ink, second line muted (used across the feature pages) */
-.h-line { display: block; }
-.h-muted { color: var(--ink-muted); }
 
 .fhero { padding-block: var(--s-12) var(--section-y); }
 .fhero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-12); align-items: center; }
@@ -123,11 +120,12 @@
 .fquote .story { max-width: 880px; margin-inline: auto; }
 
 /* ---- works with: vertical product marquee (any number of products) */
+.fsec--wall { padding-block: 0; }                                   /* the wall itself meets the section edges */
 .fprod { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
-.fprod__text { grid-column: 1 / span 6; display: grid; gap: var(--s-6); justify-items: start; }
+.fprod__text { grid-column: 1 / span 6; display: grid; gap: var(--s-6); justify-items: start; padding-block: var(--s-16); }
 .fprod__text .fsec__head { margin-bottom: 0; }
-.vwall { grid-column: 7 / span 6; position: relative; height: 600px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); overflow: hidden;
-  -webkit-mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 14%, #000 86%, transparent 100%); }
+.vwall { grid-column: 7 / span 6; position: relative; height: 560px; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); overflow: hidden;
+  -webkit-mask-image: linear-gradient(transparent 0, #000 22%, #000 78%, transparent 100%); mask-image: linear-gradient(transparent 0, #000 22%, #000 78%, transparent 100%); }
 .vcol { min-width: 0; }
 .vtrack { display: grid; gap: var(--s-4); animation: vscroll var(--dur, 40s) linear infinite; }
 .vcol:nth-child(2) .vtrack { animation-direction: reverse; --dur: 48s; }
@@ -159,7 +157,8 @@
   .frow__text, .frow__vis, .frow:nth-child(even) .frow__text, .frow:nth-child(even) .frow__vis { grid-column: 1 / -1; grid-row: auto; }
   .frow__vis { order: -1; }
   .fprod { row-gap: var(--s-10); }
-  .vwall { height: 480px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .vwall { height: 440px; grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .fprod__text { padding-block: var(--section-y) 0; }
   .vcol:nth-child(3) { display: none; }
 }
 @media (max-width: 600px) {
