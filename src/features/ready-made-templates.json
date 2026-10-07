@@ -44,7 +44,7 @@
       "text": "Shoppers browse your templates without leaving the design experience, then make one their own.",
       "points": [
         "Browse in the editor",
-        "One click to apply",
+        "Sorted into your categories",
         "Edit to taste"
       ],
       "visual": {
@@ -60,7 +60,7 @@
       "points": [
         "Templates per product",
         "Your own designs",
-        "Ready for print"
+        "Categories and subcategories"
       ],
       "visual": {
         "layout": "product",
@@ -89,7 +89,7 @@
       "text": "Choose which parts of a template shoppers can edit, so designs stay on brand.",
       "points": [
         "Lock layout or colors",
-        "Editable text and images",
+        "Editable text and fonts",
         "Brand-safe results"
       ],
       "visual": {
@@ -133,8 +133,8 @@
     },
     {
       "icon": "image",
-      "title": "Editable images",
-      "text": "Swap photos and graphics."
+      "title": "Photo uploads",
+      "text": "Allow or block shopper photos."
     },
     {
       "icon": "layers",
@@ -147,9 +147,9 @@
       "text": "Group templates by occasion."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Manage it in the dashboard."
+      "icon": "hash",
+      "title": "Character limits",
+      "text": "Cap the length of any text."
     }
   ],
   "products_heading": [
@@ -181,8 +181,8 @@
       "a": "Yes. Create predefined designs for each product."
     },
     {
-      "q": "Can shoppers start from scratch instead?",
-      "a": "Yes. Templates are optional; shoppers can always design their own."
+      "q": "Can I organize my templates?",
+      "a": "Yes. Group templates into categories and subcategories so shoppers find the right one quickly."
     }
   ]
 }
