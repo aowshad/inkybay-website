@@ -176,13 +176,13 @@
   "products_lead": "From a simple mug to a fully customized jacket, every choice can carry its own price.",
   "products": [
     "mug",
-    "tote",
-    "pillow",
+    "tote-bag",
+    "hoodie",
     "socks",
-    "handbag",
-    "necklace",
-    "phone",
-    "card"
+    "backpack",
+    "bracelet",
+    "airpod",
+    "notebook"
   ],
   "faqs": [
     {

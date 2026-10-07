@@ -167,14 +167,14 @@
   ],
   "products_lead": "Bulk apparel, event merch or one-off pieces: let shoppers ask, then price the job your way.",
   "products": [
-    "tote",
+    "tote-bag",
     "mug",
-    "drawstring",
-    "card",
-    "puzzle",
-    "pumpkin",
+    "cap",
+    "notebook",
+    "hoodie",
+    "water-bottle",
     "socks",
-    "phone"
+    "tumbler"
   ],
   "faqs": [
     {

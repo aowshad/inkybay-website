@@ -73,14 +73,14 @@
       ],
       "visual": {
         "layout": "product",
-        "image": "handbag",
+        "image": "backpack",
         "chips": [
           {
             "label": "Strap",
             "roll": [
               "Short",
               "Long",
-              "Chain",
+              "Padded",
               "None"
             ]
           },
@@ -167,13 +167,13 @@
   ],
   "products_lead": "Bags, jewelry, apparel and decor, configured exactly the way your shoppers want them.",
   "products": [
-    "handbag",
-    "necklace",
+    "backpack",
+    "locket",
     "socks",
-    "pillow",
-    "phone",
-    "tote",
-    "wallart",
+    "blanket",
+    "laptop-bag",
+    "sneakers",
+    "photoframe",
     "mug"
   ],
   "faqs": [

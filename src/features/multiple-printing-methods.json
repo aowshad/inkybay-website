@@ -176,13 +176,13 @@
   "products_lead": "Apparel, drinkware, bags and more, each with the printing methods you actually use.",
   "products": [
     "socks",
-    "tote",
+    "tote-bag",
     "mug",
-    "drawstring",
-    "pillow",
-    "phone",
-    "card",
-    "handbag"
+    "cap",
+    "hoodie",
+    "tumbler",
+    "notebook",
+    "bandana"
   ],
   "faqs": [
     {

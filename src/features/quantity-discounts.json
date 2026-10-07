@@ -176,13 +176,13 @@
   "products_lead": "Team kits, event merch and corporate gifts, priced to reward every bigger order.",
   "products": [
     "mug",
-    "tote",
+    "tote-bag",
     "socks",
-    "drawstring",
-    "card",
-    "pillow",
-    "phone",
-    "puzzle"
+    "cap",
+    "notebook",
+    "water-bottle",
+    "keyring",
+    "tumbler"
   ],
   "faqs": [
     {

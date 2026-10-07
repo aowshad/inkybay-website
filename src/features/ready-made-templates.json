@@ -73,7 +73,7 @@
       ],
       "visual": {
         "layout": "product",
-        "image": "card",
+        "image": "photoframe",
         "chips": [
           {
             "label": "Template",
@@ -167,14 +167,14 @@
   ],
   "products_lead": "Cards, mugs, apparel and gifts, each with designs shoppers can start from.",
   "products": [
-    "card",
+    "photoframe",
     "mug",
-    "pillow",
-    "tote",
-    "wallart",
-    "photo",
-    "puzzle",
-    "pumpkin"
+    "blanket",
+    "tote-bag",
+    "wall-clock",
+    "notebook",
+    "baby-onesie",
+    "keyring"
   ],
   "faqs": [
     {

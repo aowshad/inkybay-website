@@ -81,7 +81,7 @@
       ],
       "visual": {
         "layout": "product",
-        "image": "tote",
+        "image": "tote-bag",
         "chips": [
           {
             "label": "Font",
@@ -175,13 +175,13 @@
   ],
   "products_lead": "Give every product the same creative toolkit, or a different one for each.",
   "products": [
-    "tote",
+    "tote-bag",
     "mug",
-    "pillow",
-    "card",
-    "phone",
-    "wallart",
-    "drawstring",
+    "blanket",
+    "notebook",
+    "airpod",
+    "wall-clock",
+    "bandana",
     "socks"
   ],
   "faqs": [
