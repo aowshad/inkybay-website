@@ -121,13 +121,66 @@ async def check_page(slug, d):
                       return {loaded: !!img && img.complete && img.naturalWidth > 0, bad}})()""")
                     if not h["loaded"]: bad(slug, f"{tag}: hero image did not load")
                     if h["bad"]: bad(slug, f"{tag}: hero {h['bad']} does not overlap the photo or stage edge")
-                if w == 1440 and scheme == "light":
-                    await pg.evaluate("window.scrollTo(0,0)"); await pg.wait_for_timeout(300)
-                    await pg.click("#nav-features"); await pg.wait_for_timeout(500)
-                    t = await pg.evaluate("[...document.querySelectorAll('.mega__desc')].some(x=>x.scrollHeight>x.clientHeight+1)")
-                    if t: bad(slug, "mega menu: a description is cut off; shorten its 'short' text in _index.json")
                 await pg.close()
+        await check_menus(b, slug, path)
         await b.close()
+
+
+def nav_expected():
+    """{menu id: number of links} from src/nav.json (grid items from their index file, or the sum of group items)."""
+    out = {}
+    for m in json.loads((ROOT / "src/nav.json").read_text())["menus"]:
+        if m["layout"] == "groups": out[m["id"]] = sum(len(g["items"]) for g in m["groups"])
+        elif "items_from" in m: out[m["id"]] = len(next(v for v in json.loads((ROOT / m["items_from"]).read_text()).values() if isinstance(v, list)))
+        else: out[m["id"]] = len(m.get("items", []))
+    return out
+
+
+async def check_menus(b, slug, path):
+    """Every mega menu at 1366 and 1440px: opens alone, nothing cut off, promo image loads, Esc and outside click close.
+    At 390px: every menu's sub-list opens in the mobile sheet with the right number of links."""
+    exp = nav_expected()
+    for w in (1366, 1440):
+        pg = await b.new_page(viewport={"width": w, "height": 900}); errs = []
+        pg.on("pageerror", lambda e: errs.append(str(e)))
+        await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+        tag = f"menus {w}px"
+        for mid in exp:
+            t = pg.locator(f"#nav-{mid}")
+            if not await t.count(): bad(slug, f"{tag}: no trigger #nav-{mid}"); continue
+            if await t.get_attribute("aria-controls") != f"mega-{mid}": bad(slug, f"{tag}: #nav-{mid} has no aria-controls=mega-{mid}")
+            await t.click(); await pg.wait_for_timeout(450)    # opens directly, even while another menu is open
+            r = await pg.evaluate(f"""(()=>{{const m=document.getElementById('mega-{mid}');
+              const open=[...document.querySelectorAll('.mega[data-open="true"]')].map(x=>x.id);
+              const cut=[...m.querySelectorAll('.mega__desc')].filter(x=>x.scrollHeight>x.clientHeight+1).map(x=>x.textContent);
+              const imgs=[...m.querySelectorAll('.mega__promo img')], promo=getComputedStyle(m.querySelector('.mega__promo')).display!=='none';
+              return {{open, cut, imgs: imgs.length, loaded: imgs.every(i=>i.complete&&i.naturalWidth>0), promo,
+                       expanded: document.getElementById('nav-{mid}').getAttribute('aria-expanded')}}}})()""")
+            if r["open"] != [f"mega-{mid}"]: bad(slug, f"{tag}: opening {mid} leaves open {r['open']} (need exactly mega-{mid})")
+            if r["expanded"] != "true": bad(slug, f"{tag}: #nav-{mid} aria-expanded is not true when open")
+            if r["cut"]: bad(slug, f"{tag}: {mid} description cut off (two lines max): {r['cut'][:2]}")
+            if r["promo"] and (not r["imgs"] or not r["loaded"]): bad(slug, f"{tag}: {mid} promo image did not load")
+        mid = next(iter(exp))
+        await pg.keyboard.press("Escape"); await pg.wait_for_timeout(300)
+        r = await pg.evaluate("[[...document.querySelectorAll('.mega[data-open=\"true\"]')].length, document.activeElement && document.activeElement.id]")
+        if r[0]: bad(slug, f"{tag}: Esc does not close the open menu")
+        await pg.click(f"#nav-{mid}"); await pg.wait_for_timeout(400)
+        await pg.mouse.click(4, 896); await pg.wait_for_timeout(300)
+        if await pg.evaluate("document.querySelectorAll('.mega[data-open=\"true\"]').length"): bad(slug, f"{tag}: outside click does not close the menu")
+        if errs: bad(slug, f"{tag}: JS errors {errs[:2]}")
+        await pg.close()
+    pg = await b.new_page(viewport={"width": 390, "height": 844})
+    await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+    await pg.click(".nav__toggle"); await pg.wait_for_timeout(400)
+    for mid, n in exp.items():
+        t = pg.locator(f'.sheet-toggle[aria-controls="sheet-{mid}"]')
+        if not await t.count(): bad(slug, f"menus 390px: no sheet toggle for {mid}"); continue
+        await t.click(); await pg.wait_for_timeout(550)
+        r = await pg.evaluate(f"""(()=>{{const u=document.getElementById('sheet-{mid}'), h=u.getBoundingClientRect().height;
+          return {{links: u.querySelectorAll('a').length, open: h > 0 && h >= u.scrollHeight - 1}}}})()""")
+        if not r["open"]: bad(slug, f"menus 390px: {mid} sub-list does not open fully in the sheet")
+        if r["links"] != n: bad(slug, f"menus 390px: {mid} sub-list has {r['links']} links, nav.json has {n}")
+    await pg.close()
 
 
 def main():

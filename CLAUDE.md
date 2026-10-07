@@ -271,7 +271,10 @@ The audit checks the JSON rules above, then opens the built page at 390, 768 and
 no JS errors, no horizontal overflow, no text under 16px, every heading reveals, every chip and badge overlaps its
 card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, no mega-menu
 description is cut off, and (for a hero showcase) the photo loads and the hero UI and chips overlap the photo's or the
-stage's edge at every width and mode. Setup once: `python3 -m pip install --user playwright && python3 -m playwright install chromium`.
+stage's edge at every width and mode. On every page it also opens each mega menu from `nav.json` at 1366 and 1440px:
+exactly one open at a time (switching directly), `aria-expanded`/`aria-controls` set, no description cut off, every
+promo image loads, Esc and an outside click close it; and at 390px every menu's sheet sub-list opens fully with the
+same number of links as `nav.json`. Setup once: `python3 -m pip install --user playwright && python3 -m playwright install chromium`.
 
 **Commits**: one commit per page, e.g. `Add feature page: Custom quote requests`. Never batch pages together.
 
@@ -280,6 +283,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Audit all mega menus (scripts/audit.py check_menus: every page, 1366 and 1440px, plus the 390px sheet; link counts come from nav.json, so new menus and items are covered automatically). Verified against a deliberately broken page: catches a cut-off description, a missing sheet link and Esc not closing
 - 2026-10-07: Resources mega menu (groups layout, five new icons, external Help center with arrow-out icon, Live chat data-action hook, video promo from hero-editor.webp with a dark wash so it reads as a paused video). Footer Resources and Get help columns now come from nav.json (Contact kept as an extra Get help link). Fix found while testing: with all three sub-lists open the mobile sheet ran past the screen with no way to scroll; it now scrolls inside itself, and the wheel smooth-scroll leaves the sheet native
 - 2026-10-07: Industries mega menu (nine industries from src/industries/_index.json, eight new icons, promo "Built for your kind of store" linking to resources/case-studies/). The cta-products image is near-square, so its promo uses object-position 50% 0% to keep the cap, colour picker and clipart panel whole. The footer Industries column is now generated from the same data (first five plus "All industries"), so no footer copy is hardcoded for it
 - 2026-10-07: Data-driven mega menu component: src/nav.json renders the triggers, panels and mobile sub-lists; generic JS (one open at a time, instant swap between triggers, outside click/Esc). Features moved in with no visual change (before/after screenshots identical at 1440px, light and dark). Industries and Resources stay placeholders until their own commits. Menu links are now <root><path> everywhere (feature pages link to ../../features/<slug>/ instead of ../<slug>/), which replaces the old per-page link rule
