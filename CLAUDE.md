@@ -34,7 +34,7 @@ src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs a
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
-src/assets/               logos/, products/, people/, photos/, brand/ (SVG), hero-editor.webp, cta-products.webp
+src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero product photos: src/assets/heroes/<slug>.webp for all nine features, 1200x1200 (2x the hero size), quality 82, transparency kept, 54-83 KB each (converted from ~/Downloads/heroes/<slug>.png). Not used by any page until each hero is switched to the showcase
 - 2026-10-07: Hero showcase layout (shared: render_feature.py, feature.css, once-only entrance JS in template.html, audit checks). Decisions: the comet ring leaves feature heroes (stays on the homepage hero, rating card and CTA card); square showcase so the 18em UI hangs below the product instead of covering it; no monospace in chip text ("Display" not "Mono"); docs wording "Unavailable" for inventory chips. To fix later: re-export ~/Downloads/heroes/inventory-management.png with the shelf tags in order S, M, L (no blank tags)
 - 2026-10-07: Mega menu promo: new image (glowing InkyBay app icon with cursor), 720x489 WebP at quality 82, same file name. Subject measures centred in the 16:10 crop (50.5% x, 49.7% y), so no object-position override
 - 2026-10-07: Mega menu promo: distinct surface in dark mode (#1E1714, top glow, 1px border; light mode unchanged). The border is on ::after, not the card, because the full-bleed image would cover an inset shadow
