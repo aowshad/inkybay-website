@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase: Quantity discounts (photo heroes/quantity-discounts.webp, mini UI tiers | Qty roll, 20% off)
 - 2026-10-07: Hero showcase: Inventory management (photo heroes/inventory-management.webp, mini UI inventory | Stock roll, Unavailable)
 - 2026-10-07: Hero showcase: Ready-made templates (photo heroes/ready-made-templates.webp, mini UI templates | Template applied, Text editable)
 - 2026-10-07: Hero showcase: Smart add-on pricing (photo heroes/smart-add-on-pricing.webp, mini UI addons | Add-on roll, Total updated)

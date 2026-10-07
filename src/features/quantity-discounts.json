@@ -10,7 +10,24 @@
     "lead": "Reward larger orders with flexible tiered pricing. Set percentage or fixed discounts based on quantity and choose whether discounts apply to the base product, customization, or add-on options.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing quantity discounts"
+    "visual_alt": "InkyBay editor showing quantity discounts",
+    "visual": {
+      "layout": "showcase",
+      "image": "quantity-discounts",
+      "ui": "tiers",
+      "chips": [
+        {
+          "label": "Qty",
+          "roll": [
+            "10",
+            "25",
+            "50",
+            "100"
+          ]
+        },
+        "20% off"
+      ]
+    }
   },
   "benefits": [
     {
