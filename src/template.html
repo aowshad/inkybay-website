@@ -1315,6 +1315,13 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
 .mega__promo-text { color: rgba(255, 255, 255, .7); }
 .mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
+.mega__promo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }   /* border layer: sits above the full-bleed image */
+@media (prefers-color-scheme: dark) {   /* dark mode: a lifted warm surface so the card stands off the panel */
+  :root:not([data-theme="light"]) .mega__promo { background: radial-gradient(80% 60% at 50% 0%, rgba(255, 117, 0, .18), transparent 70%), #1E1714; }
+  :root:not([data-theme="light"]) .mega__promo::after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+}
+:root[data-theme="dark"] .mega__promo { background: radial-gradient(80% 60% at 50% 0%, rgba(255, 117, 0, .18), transparent 70%), #1E1714; }
+:root[data-theme="dark"] .mega__promo::after { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
 .nav__link--mega svg, .sheet-toggle svg { transition: transform .35s var(--ease-expo); }
 .nav__link--mega[aria-expanded="true"] svg, .sheet-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 .nav__link--mega[aria-expanded="true"] { background: rgba(13, 18, 28, .05); }

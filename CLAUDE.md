@@ -129,8 +129,10 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 
 "Features" in the navbar opens a mega menu on click (not hover); outside click and Esc close it. Left: the nine
 features from `_index.json` (icon, title, `short`), the current page highlighted. `short` is menu copy: 14px,
-two lines max, about 40 characters, written so it never truncates. Right: a 280px dark promo card with
-`assets/mega-promo.webp` fading into it and "Try live demo". Below 1360px the promo hides (it would squeeze the
+two lines max, about 40 characters, written so it never truncates. Right: a 280px dark promo card (`#121010`) with
+`assets/mega-promo.webp` fading into it and "Try live demo". In dark mode the card lifts off the panel: warm surface
+`#1E1714` with a soft orange glow at the top (radial, `rgba(255,117,0,.18)`) and a 1px `rgba(255,255,255,.08)` border
+drawn on `::after` so it stays visible over the full-bleed image. Light mode is unchanged. Below 1360px the promo hides (it would squeeze the
 items); below 1100px the grid drops to two columns; on phones the menu sheet shows the nine as a collapsible list.
 Links are written per page by build.py and are always relative to the page's own folder, because the site is
 served under `/inkybay-website/` (never start an internal link with `/`): homepage -> `features/<slug>/`; feature ->
@@ -224,6 +226,7 @@ description is cut off. Setup once: `python3 -m pip install --user playwright &&
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Mega menu promo: distinct surface in dark mode (#1E1714, top glow, 1px border; light mode unchanged). The border is on ::after, not the card, because the full-bleed image would cover an inset shadow
 - 2026-10-07: Pages source switched to GitHub Actions; live site verified (homepage and feature pages load, mega menu, breadcrumb and logo links work between them)
 - 2026-10-07: Document the new structure (README rewritten for site/, Actions deploy and local preview; playbook no longer points at the moved content/ drafts; Playwright setup uses python3 -m pip since bare pip is not always installed)
 - 2026-10-07: Deploy to GitHub Pages with Actions (.github/workflows/pages.yml builds and deploys site/ on every push to main). Removed the root index.html redirect and .nojekyll: they served the old branch-based deploy and pointed at the untracked reference/
