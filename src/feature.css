@@ -17,6 +17,40 @@
 .fhero__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .fhero__vis { grid-column: 7 / span 6; }
 
+/* hero showcase: product photo on a dark framed stage (dark in light and dark mode), one key mini UI and up to two
+   chips breaking its edges. Static mesh + grain, no glow blobs, no stacked cards: those belong to the zig-zag.
+   Everything is sized in cqw / em of the showcase, so it scales down as one unit. */
+.fshow { position: relative; container-type: inline-size; aspect-ratio: 1; isolation: isolate; }
+.fshow > * { font-size: clamp(10px, 2.7cqw, 18px); }
+.fshow__stage { position: absolute; left: 0; top: 0; width: 88%; height: 88%; border-radius: 24px; overflow: hidden;
+  background:
+    radial-gradient(55% 50% at 18% 12%, rgba(255, 117, 0, .34), transparent 70%),
+    radial-gradient(60% 55% at 22% 100%, rgba(229, 56, 15, .30), transparent 70%),
+    radial-gradient(40% 38% at 82% 18%, rgba(255, 176, 77, .14), transparent 70%),
+    #150E09;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08), 0 40px 80px -40px rgba(20, 8, 0, .55); }
+.fshow__stage::before { content: ""; position: absolute; inset: 0; opacity: .5; mix-blend-mode: overlay; pointer-events: none;
+  background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.55'/%3E%3C/svg%3E"); }   /* grain */
+.fshow__photo { position: absolute; left: 13.2%; top: 13.2%; width: 61.6%; aspect-ratio: 1; }   /* centred on the stage, 70% of its width */
+.fshow__img { display: block; width: 100%; height: 100%; object-fit: contain;
+  filter: drop-shadow(0 2.4em 2.2em rgba(0, 0, 0, .5)) drop-shadow(0 .6em .8em rgba(0, 0, 0, .35)); }   /* follows the product's shape */
+.fshow__ui { position: absolute; right: 0; bottom: 0; width: 18em; max-width: 60%; z-index: 2; }   /* breaks out over the stage's bottom-right corner */
+.fshow .mui { --ink: #2F2F2F; --ink-muted: #707070; --bg: #FFFFFF; --surface: #F6F6F7; --line: #E7E7EA; color: var(--ink);
+  position: relative; width: 100%; max-width: none; box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 2em 4em -1.6em rgba(0, 0, 0, .7); }
+.fshow__chip { position: absolute; z-index: 3; }
+.fshow__chip--1 { left: 6cqw; top: 58cqw; }      /* across the photo's left edge */
+.fshow__chip--2 { right: 0; top: 14cqw; }        /* across the stage's right edge */
+@media (prefers-reduced-motion: no-preference) {
+  .fshow__ui, .fshow__chip { opacity: 0; }
+  .fshow.is-shown .fshow__photo { animation: show-float 7s ease-in-out infinite alternate; }
+  .fshow.is-shown .fshow__ui { animation: show-rise .9s var(--ease-expo) .35s forwards; }   /* enters once, then stays still */
+  .fshow.is-shown .fshow__chip { scale: .85; animation: att-in .7s var(--ease-expo) var(--d) forwards, att-bob 6s ease-in-out calc(var(--d) + .7s) infinite alternate; }
+  .fshow.mui-live .roll > span { animation: roll 8s var(--ease-inout) infinite; }
+  .fshow:not(.mui-live) * { animation-play-state: paused; }   /* loops pause off screen without replaying the entrance */
+}
+@keyframes show-float { from { translate: 0 0; } to { translate: 0 -10px; } }
+@keyframes show-rise { from { opacity: 0; translate: 0 1.6em; } to { opacity: 1; translate: 0 0; } }
+
 .fsec { padding-block: var(--section-y); }
 .fsec--tint { background: var(--tint); overflow-x: clip; }
 .fsec__head { margin-bottom: var(--head-gap); display: grid; gap: var(--s-3); }

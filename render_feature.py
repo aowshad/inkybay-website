@@ -98,6 +98,23 @@ def visual(v, ui):
     return f'<div class="fvis" aria-hidden="true">{glow}{comp}</div>'
 
 
+def hero_visual(h, ui):
+    """Hero visual. {"layout": "showcase", "image": "<slug>", "ui": "<mini-ui>", "chips": [up to 2]} puts a product photo
+    on a dark framed stage with one key mini UI and chips breaking its edges. Without a showcase (no hero.visual, or
+    {"type": "image"}) the hero shows the editor screenshot with the comet ring."""
+    v = h.get("visual") or {"type": "image"}
+    if v.get("layout") != "showcase":
+        return (f'<div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>\n'
+                f'          <div class="hero__screen"><img src="{{{{EDITOR}}}}" width="2240" height="1836" alt="{E(h["visual_alt"])}" decoding="async" fetchpriority="high"></div>\n'
+                f'        </div>')
+    assert len(v.get("chips", [])) <= 2, "showcase: up to 2 chips"
+    chips = "".join(f'<span class="fshow__chip fshow__chip--{k + 1}" style="--d:{.9 + k * .25:.2f}s">{chip(c, "chip chip--brand" if k else "chip")}</span>'
+                    for k, c in enumerate(v.get("chips", [])))
+    return (f'<div class="fshow" aria-hidden="true"><div class="fshow__stage"></div>'
+            f'<div class="fshow__photo"><img class="fshow__img" src="{{{{IMG:heroes/{v["image"]}.webp}}}}" alt="" width="1200" height="1200" decoding="async" fetchpriority="high"></div>'
+            f'<div class="fshow__ui">{ui[v["ui"]]}</div>{chips}</div>')
+
+
 def render(slug):
     d = json.loads((ROOT / "src" / "features" / f"{slug}.json").read_text())
     home = (ROOT / "src" / "template.html").read_text()
@@ -138,9 +155,7 @@ def render(slug):
         {proof}
       </div>
       <div class="fhero__vis">
-        <div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
-          <div class="hero__screen"><img src="{{{{EDITOR}}}}" width="2240" height="1836" alt="{E(h["visual_alt"])}" decoding="async" fetchpriority="high"></div>
-        </div>
+        {hero_visual(h, ui)}
       </div>
     </div>
   </section>

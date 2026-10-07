@@ -49,6 +49,11 @@ def check_json(slug):
             if n and n not in MINI_UIS: bad(slug, f"unknown mini-UI '{n}'")
         if v.get("image") and not (ROOT / f"src/assets/products/{v['image']}.webp").exists():
             bad(slug, f"missing product image '{v['image']}'")
+    hv = d["hero"].get("visual")
+    if hv and hv.get("layout") == "showcase":
+        if hv.get("ui") not in MINI_UIS: bad(slug, f"hero: unknown mini-UI '{hv.get('ui')}'")
+        if len(hv.get("chips", [])) > 2: bad(slug, "hero: up to 2 chips")
+        if not (ROOT / f"src/assets/heroes/{hv.get('image')}.webp").exists(): bad(slug, f"hero: missing src/assets/heroes/{hv.get('image')}.webp")
     layouts = [r["visual"]["layout"] for r in d["details"]]
     if sorted(layouts) != ["product", "single", "stack"]: bad(slug, f"use each layout once (single, product, stack), got {layouts}")
     for h in ("details_heading", "capabilities_heading", "products_heading"):
@@ -106,6 +111,16 @@ async def check_page(slug, d):
                     if n < len(d["products"]): bad(slug, f"product wall shows {n} of {len(d['products'])} products")
                     lines = await pg.evaluate("""[...document.querySelectorAll('h2 .h-line:not(.h-inline)')].map(l=>Math.round(l.getBoundingClientRect().height/parseFloat(getComputedStyle(l.parentNode).lineHeight)))""")
                     if any(x > 1 for x in lines): bad(slug, f"1440px: a two-tone heading line wraps ({lines}); shorten it")
+                if d and d["hero"].get("visual", {}).get("layout") == "showcase":
+                    # hero showcase: the photo loads; the UI and every chip overlap the photo's or the stage's edge
+                    await pg.evaluate("window.scrollTo(0,0)"); await pg.wait_for_timeout(2200)
+                    h = await pg.evaluate("""(()=>{const box=e=>e.getBoundingClientRect(), img=document.querySelector('.fshow__img');
+                      const edge=(q,r)=>{const touch=!(q.right<r.left||q.left>r.right||q.bottom<r.top||q.top>r.bottom), inside=q.left>=r.left&&q.right<=r.right&&q.top>=r.top&&q.bottom<=r.bottom; return touch&&!inside};
+                      const P=box(document.querySelector('.fshow__photo')), S=box(document.querySelector('.fshow__stage'));
+                      const bad=[...document.querySelectorAll('.fshow__ui, .fshow__chip')].filter(e=>getComputedStyle(e).display!=='none').filter(e=>!(edge(box(e),P)||edge(box(e),S))).map(e=>e.className);
+                      return {loaded: !!img && img.complete && img.naturalWidth > 0, bad}})()""")
+                    if not h["loaded"]: bad(slug, f"{tag}: hero image did not load")
+                    if h["bad"]: bad(slug, f"{tag}: hero {h['bad']} does not overlap the photo or stage edge")
                 if w == 1440 and scheme == "light":
                     await pg.evaluate("window.scrollTo(0,0)"); await pg.wait_for_timeout(300)
                     await pg.click("#nav-features"); await pg.wait_for_timeout(500)

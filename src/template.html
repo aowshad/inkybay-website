@@ -2714,6 +2714,18 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       half.forEach(function (n) { var c = n.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c); });  /* identical second half */
     });
 
+    /* Hero showcase: entrance plays once (.is-shown stays); loops run only while on screen (.mui-live) */
+    (function () {
+      var shows = [].slice.call(document.querySelectorAll('.fshow'));
+      if (!shows.length) return;
+      if (!('IntersectionObserver' in window)) { shows.forEach(function (v) { v.classList.add('is-shown', 'mui-live'); }); return; }
+      var io = new IntersectionObserver(function (es) { es.forEach(function (en) {
+        if (en.isIntersecting) en.target.classList.add('is-shown');
+        en.target.classList.toggle('mui-live', en.isIntersecting);
+      }); }, { threshold: 0.2 });
+      shows.forEach(function (v) { io.observe(v); });
+    })();
+
     /* Feature visuals: start their loops only while on screen */
     (function () {
       var vis = [].slice.call(document.querySelectorAll('.fvis'));

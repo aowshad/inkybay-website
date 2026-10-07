@@ -55,7 +55,8 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
 **Layout**: 1440 frame, 1248 container, `--margin` 96 (fluid, 20 min), 12 columns, `--gutter` 32 (fluid).
 **Rhythm**: `--section-y` 120 desktop / 80 phones (every section's top and bottom padding).
 `--head-gap` 64 / 40 (section heading block to its content).
-**Type**: Geist for headings only, Inter for everything else. **No monospace anywhere.**
+**Type**: Geist for headings only, Inter for everything else. **No monospace anywhere**, including chip and mini-UI text:
+a font-name roll uses "Display", never "Mono".
 Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lead 18/24, body 16/24.
 **Floor**: paragraph text never below 16px; section sub headings are 18px.
 **Colour**: brand `#F58220` / `#FF7500` / `#E5380F` / red `#D42427`, brand gradient, frame gradient,
@@ -75,7 +76,8 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 - **Image swaps** (features, why): the new frame fades in on top while the old stays fully opaque until covered. No scale, no blink.
 - **Comet ring** (`.has-ring` + `.ring` + `.ring-glow > i`): 1px light with a short trail (~60deg), 8s per lap. The glow is a 3px
   masked stroke inside a wrapper that blurs it (7px) AFTER masking, so the halo is soft and centred on the line. Never mask after blurring.
-  Used on the hero editor, the rating card and the CTA card. Content that should sit above the light gets `z-index: 4`.
+  Used on the homepage hero editor, the rating card and the CTA card. Feature-page heroes use the showcase stage instead
+  (the ring appears there only in the `{"type": "image"}` fallback). Content that should sit above the light gets `z-index: 4`.
 - **Mini UI** (`.mui-stage > .mui`): em-based product snippets used as section visuals; scale with the host via container
   queries; one quiet loop each; animate only while on screen (`.mui-live`).
 - **Heading reveal**: plain-text h2s are split into words by JS and rise out of a blur once on entering the viewport.
@@ -146,7 +148,7 @@ descriptions and two-line taglines live in `src/features/_index.json` (data only
 
 | # | Section | JSON key | Background |
 |---|---|---|---|
-| 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, visual with comet ring | `hero` | white |
+| 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, showcase visual (no comet ring) | `hero`, `hero.visual` | white |
 | 2 | Benefits: 4 open columns, a hairline on top that fills with brand on hover | `benefits` | white |
 | 3 | How it works: two-tone heading (the feature's tagline), 3 zig-zag rows with a hairline checklist | `details_heading`, `details` | dark |
 | 4 | Quote (same dark band) | `quote` | dark |
@@ -155,7 +157,23 @@ descriptions and two-line taglines live in `src/features/_index.json` (data only
 | 7 | FAQs | `faqs` | tint |
 | 8 | CTA, crowd marquee, footer | from the homepage | dark |
 
-**Two-tone headings**: `["First line.", "Second line."]` renders the first line in ink and the second muted; the
+**Hero showcase** (`hero.visual`): `{"layout": "showcase", "image": "<slug>", "ui": "<mini-ui>", "chips": [up to 2]}`
+(a chip is a string or `{"label", "roll"}`, as in the zig-zag). The photo is `src/assets/heroes/<slug>.webp` (1200x1200,
+transparent). It must look clearly different from the zig-zag:
+- Square showcase (`.fshow`), sized in `cqw`/`em` so it scales down as one unit. A framed stage fills the top-left 88%:
+  radius 24, warm dark base `#150E09` with a static orange/red gradient mesh and grain, inset 1px `rgba(255,255,255,.08)`.
+  The stage stays dark in light and dark mode (like the mega promo and CTA card).
+- The photo is centred on the stage at 70% of its width and floats (0 to -10px, 7s, alternate). Its shadow is
+  `filter: drop-shadow()` on the image, so it follows the product; no ground shadow or ellipse.
+- Exactly one key mini UI, 18em wide at the zig-zag's text size, hanging over the stage's bottom-right corner and
+  the photo's lower-right edge. It enters once (fade + rise, `.is-shown` stays) and then stays still; its own loops run.
+- Chip 1 (white) across the photo's left edge, chip 2 (brand) across the stage's right edge; they enter after the UI and
+  bob like the zig-zag chips.
+- No glow blobs, no stacked cards: those belong to the zig-zag only. Loops pause off screen (`.mui-live`);
+  reduced motion shows the final state.
+- No `hero.visual`, or `{"type": "image"}`: the old editor screenshot with the comet ring (`hero.visual_alt` is its alt).
+
+ `["First line.", "Second line."]` renders the first line in ink and the second muted; the
 heading reveal animates both lines word by word. The homepage uses the inline variant (`.h-line.h-inline`) on
 Industries, Rail, Case study, How it works and CTA ("Custom products / for every business."). On dark sections the
 muted part is rgba(255,255,255,.42). Reviews, Why InkyBay, FAQs and the Features heading stay single-tone.
@@ -208,7 +226,9 @@ stop). No exclamation marks. Write for a Shopify merchant, not a developer.
 
 **Visuals**: pick mini UIs that show the feature itself (quotes: `quote`; library: `library`; inventory: `inventory`;
 discounts: `tiers`; pricing: `addons`; printing: `methods`; templates: `templates`; options: `options`). Chips and
-badges are short labels a real UI would show ("Tier unlocked", "Quote sent"); a rolling chip cycles through 4 values.
+badges are short labels a real UI would show ("Tier unlocked", "Quote sent"); a rolling chip cycles through 4 values. Chip text
+follows the docs wording, in the hero and the zig-zag alike: inventory at its stop-sell threshold is "Unavailable"
+(not "Auto-paused").
 
 **Checks before every commit**:
 ```
@@ -217,8 +237,9 @@ python3 scripts/audit.py <slug>        # must print PASS (use --all for every pa
 ```
 The audit checks the JSON rules above, then opens the built page at 390, 768 and 1440px in light and dark mode:
 no JS errors, no horizontal overflow, no text under 16px, every heading reveals, every chip and badge overlaps its
-card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, and no mega-menu
-description is cut off. Setup once: `python3 -m pip install --user playwright && python3 -m playwright install chromium`.
+card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, no mega-menu
+description is cut off, and (for a hero showcase) the photo loads and the hero UI and chips overlap the photo's or the
+stage's edge at every width and mode. Setup once: `python3 -m pip install --user playwright && python3 -m playwright install chromium`.
 
 **Commits**: one commit per page, e.g. `Add feature page: Custom quote requests`. Never batch pages together.
 
@@ -227,6 +248,7 @@ description is cut off. Setup once: `python3 -m pip install --user playwright &&
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase layout (shared: render_feature.py, feature.css, once-only entrance JS in template.html, audit checks). Decisions: the comet ring leaves feature heroes (stays on the homepage hero, rating card and CTA card); square showcase so the 18em UI hangs below the product instead of covering it; no monospace in chip text ("Display" not "Mono"); docs wording "Unavailable" for inventory chips. To fix later: re-export ~/Downloads/heroes/inventory-management.png with the shelf tags in order S, M, L (no blank tags)
 - 2026-10-07: Mega menu promo: new image (glowing InkyBay app icon with cursor), 720x489 WebP at quality 82, same file name. Subject measures centred in the 16:10 crop (50.5% x, 49.7% y), so no object-position override
 - 2026-10-07: Mega menu promo: distinct surface in dark mode (#1E1714, top glow, 1px border; light mode unchanged). The border is on ::after, not the card, because the full-bleed image would cover an inset shadow
 - 2026-10-07: Pages source switched to GitHub Actions; live site verified (homepage and feature pages load, mega menu, breadcrumb and logo links work between them)
