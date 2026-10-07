@@ -10,7 +10,16 @@
     "lead": "Give shoppers the flexibility to configure products exactly the way they want. Add as many product options as needed and build detailed customization experiences for everything from simple choices to complex products.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing unlimited product options"
+    "visual_alt": "InkyBay editor showing unlimited product options",
+    "visual": {
+      "layout": "showcase",
+      "image": "unlimited-product-options",
+      "ui": "options",
+      "chips": [
+        "Option added",
+        "No limit"
+      ]
+    }
   },
   "benefits": [
     {
