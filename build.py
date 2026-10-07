@@ -100,7 +100,8 @@ def render_nav(root, current):
                      f'<span class="mega__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></span>')
         else:
             w, h = webp_size(p["image"])
-            media = f'<img class="mega__img" src="{b64(p["image"])}" alt="" width="{w}" height="{h}" loading="lazy" decoding="async">'
+            pos = f' style="object-position: {html.escape(p["position"])}"' if p.get("position") else ""
+            media = f'<img class="mega__img" src="{b64(p["image"])}" alt="" width="{w}" height="{h}"{pos} loading="lazy" decoding="async">'
         phref, _ = link({"href": p["href"]}, "", root)
         promo = (f'<aside class="mega__promo">\n        {media}\n        <p class="mega__promo-title">{html.escape(p["title"])}</p>\n'
                  f'        <p class="mega__promo-text">{html.escape(p["text"])}</p>\n        {primary_html(p["cta"], phref)}\n      </aside>')
@@ -109,9 +110,30 @@ def render_nav(root, current):
         panels.append(f'<div class="mega mega--{m["layout"]}" id="mega-{mid}" role="region" aria-label="{lab}" data-open="false">\n    <div class="mega__panel">\n      {main}\n      {promo}\n    </div>\n  </div>')
     return "\n          ".join(triggers), "\n        ".join(sheet), "\n  ".join(panels)
 
+def foot_cols(mid, root):
+    """Footer columns for one menu (its "footer" list in nav.json): {"title", "groups"?, "limit"?, "more"?, "extra"?}."""
+    m = next(x for x in NAV if x["id"] == mid)
+    cols = []
+    for c in m["footer"]:
+        if m["layout"] == "groups":
+            items = [dict(i, base=i.get("base", m.get("base", ""))) for g in m["groups"] if g["title"] in c.get("groups", [g["title"]]) for i in g["items"]]
+        else:
+            items = [dict(i, base=m.get("base", "")) for i in menu_items(m)]
+        items = items[:c["limit"]] if c.get("limit") and len(items) > c["limit"] else items
+        items += [dict(x, base="") for x in c.get("extra", [])]
+        if c.get("more") and len(menu_items(m) if m["layout"] != "groups" else items) > c.get("limit", 99): items.append(dict(c["more"], base=""))
+        lis = []
+        for i in items:
+            href, extra = link(i, i["base"], root)
+            act = f' data-action="{html.escape(i["action"])}"' if i.get("action") else ""
+            lis.append(f'<li><a href="{href}"{extra}{act}>{html.escape(i["title"])}{EXT if i.get("external") else ""}</a></li>')
+        cols.append(f'<div class="foot__col"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
+    return "\n          ".join(cols)
+
 def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
+    t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{CHEVRON}}", CHEV)

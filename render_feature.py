@@ -28,6 +28,14 @@ ICON = {
     "chat": P('<path d="M5 4.5h14v11H9.5L5 19.5v-15z"/><path d="M9 9h6M9 12h4"/>'),
     "box": P('<path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5v-9z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/>'),
     "percent": P('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>'),
+    "shirt": P('<path d="M8.5 3.5L3.5 6.5l2 3.6 2-1V20.5h9V9.1l2 1 2-3.6-5-3c-.4 1.4-1.8 2.4-3.5 2.4S8.9 4.9 8.5 3.5z"/>'),
+    "gem": P('<path d="M6.5 4h11L21 9l-9 11L3 9l3.5-5z"/><path d="M3 9h18M9.5 4L8 9l4 11 4-11-1.5-5"/>'),
+    "trophy": P('<path d="M8 4h8v5a4 4 0 0 1-8 0V4z"/><path d="M8 6H5a3 3 0 0 0 3 4M16 6h3a3 3 0 0 1-3 4M12 13v4M8.5 20.5h7M10 17h4v3.5h-4z"/>'),
+    "home": P('<path d="M4 10.5L12 4l8 6.5V20H4v-9.5z"/><path d="M10 20v-5.5h4V20"/>'),
+    "package": P('<path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5v-9z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9M7.8 5.3l8.4 4.5"/>'),
+    "gift": P('<rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8.5h14V12M12 8v12.5M12 8S10.6 4 8.2 4.4 8.6 8 12 8zM12 8s1.4-4 3.8-3.6S15.4 8 12 8z"/>'),
+    "droplet": P('<path d="M12 3.5s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/>'),
+    "bag": P('<path d="M5 8h14l-1 12.5H6L5 8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>'),
 }
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'

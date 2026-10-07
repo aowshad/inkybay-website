@@ -1549,7 +1549,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <nav aria-label="Primary">
         <ul class="nav__menu">
           {{NAV_TRIGGERS}}
-          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Industries {{CHEVRON}}</button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources {{CHEVRON}}</button></li>
           <li><a class="nav__link" href="#pricing">Pricing</a></li>
         </ul>
@@ -1567,7 +1566,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
         {{SHEET_MENUS}}
-        <li><button class="nav__link">Industries {{CHEVRON}}</button></li>
         <li><button class="nav__link">Resources {{CHEVRON}}</button></li>
         <li><a class="nav__link" href="#pricing">Pricing</a></li>
       </ul>
@@ -2102,7 +2100,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           <div class="foot__social" aria-label="InkyBay on social media"><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">X</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
         </div>
           <div class="foot__col"><h3>Product</h3><ul><li><a href="#">Live design editor</a></li><li><a href="#">Features</a></li><li><a href="#">Product options</a></li><li><a href="#">Pricing</a></li></ul></div>
-          <div class="foot__col"><h3>Industries</h3><ul><li><a href="#">Apparel</a></li><li><a href="#">Drinkware</a></li><li><a href="#">Home decor</a></li><li><a href="#">Jewelry</a></li><li><a href="#">Pet products</a></li></ul></div>
+          {{FOOT_COLS:industries}}
           <div class="foot__col"><h3>Resources</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Case studies</a></li><li><a href="#">Video tutorials</a></li><li><a href="#">Partners</a></li><li><a href="#">Affiliate program</a></li></ul></div>
           <div class="foot__col"><h3>Get help</h3><ul><li><a href="#">Help center</a></li><li><a href="#">Live chat</a></li><li><a href="#">Contact</a></li></ul></div>
       </div>

@@ -33,7 +33,8 @@ site/                     build output, not in git (.gitignore); python3 build.p
 src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
-src/nav.json              every navbar mega menu: items, groups, promos (see Mega menu)
+src/nav.json              every navbar mega menu: items, groups, promos, footer columns (see Mega menu)
+src/industries/_index.json  the nine industries (slug, title, short, icon): single source for the menu and future pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
@@ -137,7 +138,13 @@ into the shared template. Never hand-write a menu in the template.
   `items_from` (an index file such as `src/features/_index.json`) or `items`; groups take `groups: [{"title", "items"}]`.
 - Item: `{"slug" or "href", "title", "short", "icon", "external": bool}` (+ optional `"action"` for a `data-action`
   hook). `slug` links to `<base><slug>/`. External links open in a new tab (`rel="noopener"`) with a small arrow-out icon.
-- Promo: `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card) or `"visual": "video"`.
+- Promo: `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card; optional
+  `"position"` sets its `object-position` when the subject is not centred in the 16:10 crop) or `"visual": "video"`.
+- Footer: a menu's `"footer"` list renders its footer columns (`{{FOOT_COLS:<id>}}` in the template):
+  `{"title", "groups"?, "limit"?, "more"?, "extra"?}`. Footer link copy comes from the same data as the menus.
+- Menus: Features (grid, `src/features/_index.json`, base `features/`); Industries (grid, `src/industries/_index.json`,
+  base `industries/`, promo `cta-products.webp` anchored to the top, footer: first five plus "All industries").
+  Industry pages come later, so `industries/...` links 404 until they exist.
 - Behaviour (every menu): opens on click, not hover; one open at a time; clicking another trigger swaps panels instantly
   (no close-then-open fade); outside click and Esc close (Esc returns focus to the trigger); every trigger has
   `aria-expanded` and `aria-controls`. The current page's own item is highlighted (`aria-current`).
@@ -261,6 +268,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Industries mega menu (nine industries from src/industries/_index.json, eight new icons, promo "Built for your kind of store" linking to resources/case-studies/). The cta-products image is near-square, so its promo uses object-position 50% 0% to keep the cap, colour picker and clipart panel whole. The footer Industries column is now generated from the same data (first five plus "All industries"), so no footer copy is hardcoded for it
 - 2026-10-07: Data-driven mega menu component: src/nav.json renders the triggers, panels and mobile sub-lists; generic JS (one open at a time, instant swap between triggers, outside click/Esc). Features moved in with no visual change (before/after screenshots identical at 1440px, light and dark). Industries and Resources stay placeholders until their own commits. Menu links are now <root><path> everywhere (feature pages link to ../../features/<slug>/ instead of ../<slug>/), which replaces the old per-page link rule
 - 2026-10-07: Hero showcase: Unlimited product options (photo heroes/unlimited-product-options.webp, mini UI options | Option added, No limit)
 - 2026-10-07: Hero showcase: Quantity discounts (photo heroes/quantity-discounts.webp, mini UI tiers | Qty roll, 20% off)

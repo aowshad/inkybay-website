@@ -13,6 +13,31 @@
         "href": "#",
         "image": "mega-promo.webp"
       }
+    },
+    {
+      "id": "industries",
+      "label": "Industries",
+      "layout": "grid",
+      "items_from": "src/industries/_index.json",
+      "base": "industries/",
+      "promo": {
+        "title": "Built for your kind of store",
+        "text": "See how merchants like you sell custom products with InkyBay.",
+        "cta": "Read case studies",
+        "href": "resources/case-studies/",
+        "image": "cta-products.webp",
+        "position": "50% 0%"
+      },
+      "footer": [
+        {
+          "title": "Industries",
+          "limit": 5,
+          "more": {
+            "title": "All industries",
+            "href": "industries/"
+          }
+        }
+      ]
     }
   ]
 }
