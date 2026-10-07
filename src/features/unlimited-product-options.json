@@ -56,7 +56,7 @@
     },
     {
       "title": "From simple choices to configurators",
-      "text": "Build anything from a single color choice to a detailed, multi-step product configuration.",
+      "text": "Build anything from a single color choice to a detailed product configuration with many options.",
       "points": [
         "Simple choices",
         "Detailed configurations",
@@ -86,11 +86,11 @@
     },
     {
       "title": "Options that work together",
-      "text": "Combine options with pricing and rules so every configuration is valid and priced right.",
+      "text": "Combine options with pricing and conditional logic so every configuration makes sense and is priced right.",
       "points": [
         "Options with pricing",
-        "Rules between options",
-        "Valid every time"
+        "Conditional logic",
+        "Reusable option sets"
       ],
       "visual": {
         "layout": "stack",
@@ -119,7 +119,7 @@
     {
       "icon": "hash",
       "title": "Option types",
-      "text": "Dropdowns, swatches and inputs."
+      "text": "Dropdowns, radios and swatches."
     },
     {
       "icon": "type",
@@ -128,7 +128,7 @@
     },
     {
       "icon": "image",
-      "title": "Image swatches",
+      "title": "Swatches",
       "text": "Pick visually."
     },
     {
@@ -137,9 +137,9 @@
       "text": "Options can add cost."
     },
     {
-      "icon": "file",
-      "title": "Option rules",
-      "text": "Keep configurations valid."
+      "icon": "wand",
+      "title": "Conditional logic",
+      "text": "Show options based on choices."
     },
     {
       "icon": "layers",
@@ -147,9 +147,9 @@
       "text": "Simple items to complex kits."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Build it in the dashboard."
+      "icon": "file",
+      "title": "File uploads",
+      "text": "Shoppers attach their own files."
     }
   ],
   "products_heading": [
@@ -174,15 +174,15 @@
     },
     {
       "q": "What kinds of options can I add?",
-      "a": "Choices such as dropdowns, swatches and text inputs, for simple or complex products."
+      "a": "Text fields, dropdowns, radio buttons, swatches, file uploads and custom size inputs, combined however you need."
     },
     {
       "q": "Can options change the price?",
-      "a": "Yes. Options can work together with your pricing rules."
+      "a": "Yes. Set dynamic pricing on options so the price follows each choice."
     },
     {
-      "q": "Do options work with the design editor?",
-      "a": "Yes. Options and customization work together in the same product experience."
+      "q": "Can I reuse options across products?",
+      "a": "Yes. Build an option set once and apply it to any of your products."
     }
   ]
 }
