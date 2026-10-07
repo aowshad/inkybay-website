@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase: Ready-made templates (photo heroes/ready-made-templates.webp, mini UI templates | Template applied, Text editable)
 - 2026-10-07: Hero showcase: Smart add-on pricing (photo heroes/smart-add-on-pricing.webp, mini UI addons | Add-on roll, Total updated)
 - 2026-10-07: Hero showcase: Multiple printing methods (photo heroes/multiple-printing-methods.webp, mini UI methods | Method roll, Thread colors: 6)
 - 2026-10-07: Hero showcase: Font & clipart library (photo heroes/font-clipart-library.webp, mini UI library | Font roll, Clipart added)

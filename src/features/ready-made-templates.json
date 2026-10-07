@@ -10,7 +10,16 @@
     "lead": "Help customers start designing faster with professionally prepared templates. Create predefined designs, control what shoppers can edit, and let them browse available templates directly in the design experience.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing ready-made templates"
+    "visual_alt": "InkyBay editor showing ready-made templates",
+    "visual": {
+      "layout": "showcase",
+      "image": "ready-made-templates",
+      "ui": "templates",
+      "chips": [
+        "Template applied",
+        "Text editable"
+      ]
+    }
   },
   "benefits": [
     {
