@@ -25,13 +25,13 @@
     },
     {
       "icon": "sliders",
-      "title": "Own limits",
-      "text": "Colors and sizes set per method."
+      "title": "Own rules",
+      "text": "Size ranges and design restrictions per method."
     },
     {
-      "icon": "file",
-      "title": "Right files",
-      "text": "Orders match the method chosen."
+      "icon": "star",
+      "title": "Own colors",
+      "text": "Printing colors set for each method."
     }
   ],
   "details_heading": [
@@ -101,7 +101,7 @@
     }
   ],
   "quote": {
-    "text": "We print with DTG and embroidery. Now one product offers both, and each order tells the team exactly how to make it.",
+    "text": "We print with DTG and embroidery. Now one product offers both, and each method keeps its own price and color limits.",
     "name": "Store name (draft)",
     "location": "City, Country",
     "initials": "SN"
@@ -137,9 +137,9 @@
       "text": "Rules that keep designs printable."
     },
     {
-      "icon": "layers",
-      "title": "Per-side setup",
-      "text": "Methods per print area."
+      "icon": "hash",
+      "title": "Price per color",
+      "text": "Charge by the print colors used."
     },
     {
       "icon": "eye",
@@ -147,9 +147,9 @@
       "text": "Pick the finish in the editor."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Configure it in the dashboard."
+      "icon": "tag",
+      "title": "Price per size",
+      "text": "Charge by print size range."
     }
   ],
   "products_heading": [
@@ -181,8 +181,8 @@
       "a": "Yes. Set colors, size ranges and design restrictions for each method."
     },
     {
-      "q": "Do orders show which method was chosen?",
-      "a": "Yes. The method is part of the order details your team receives."
+      "q": "Can I charge more for bigger prints?",
+      "a": "Yes. Set a printing price for each size range, so larger prints can cost more."
     }
   ]
 }
