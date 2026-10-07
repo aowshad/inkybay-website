@@ -41,10 +41,10 @@
   "details": [
     {
       "title": "Tiers that reward bigger orders",
-      "text": "Set price breaks by quantity so shoppers see the saving grow as they order more.",
+      "text": "Set price breaks by quantity, and show the discount table on the product page if you like.",
       "points": [
         "Quantity tiers",
-        "Visible savings",
+        "Optional discount table",
         "Applied automatically"
       ],
       "visual": {
@@ -56,11 +56,11 @@
     },
     {
       "title": "Percentage or fixed discounts",
-      "text": "Choose a percentage or a fixed amount for each tier, whatever fits your margins.",
+      "text": "Choose a percentage or a fixed amount for each discount set, whatever fits your margins.",
       "points": [
         "Percentage discounts",
         "Fixed amount discounts",
-        "Per-tier values"
+        "A value for every tier"
       ],
       "visual": {
         "layout": "product",
@@ -101,7 +101,7 @@
     }
   ],
   "quote": {
-    "text": "Teams and companies order in bulk now because they see the price drop right in the editor.",
+    "text": "Teams and companies order in bulk now because they see the price drop right on the product page.",
     "name": "Store name (draft)",
     "location": "City, Country",
     "initials": "SN"
@@ -133,13 +133,13 @@
     },
     {
       "icon": "eye",
-      "title": "Visible savings",
-      "text": "Shown as shoppers order."
+      "title": "Discount table",
+      "text": "Optional, on the product page."
     },
     {
       "icon": "sliders",
       "title": "Per-product rules",
-      "text": "Different tiers per item."
+      "text": "Different sets per product."
     },
     {
       "icon": "save",
@@ -147,9 +147,9 @@
       "text": "Pricing stays accurate."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Set it in the dashboard."
+      "icon": "star",
+      "title": "Unlimited sets",
+      "text": "Create as many as you need."
     }
   ],
   "products_heading": [
@@ -174,7 +174,7 @@
     },
     {
       "q": "Percentage or fixed amount?",
-      "a": "Either. Choose percentage or fixed discounts for each tier."
+      "a": "Either. Choose percentage or fixed for each discount set."
     },
     {
       "q": "What does the discount apply to?",
@@ -182,7 +182,7 @@
     },
     {
       "q": "Can each product have its own tiers?",
-      "a": "Yes. Set quantity discounts per product."
+      "a": "Yes. Create as many discount sets as you need and apply them to your custom products."
     }
   ]
 }
