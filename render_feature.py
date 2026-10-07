@@ -45,10 +45,7 @@ ICON = {
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg>'
-PROD = {"socks": "Apparel", "mug": "Drinkware", "pillow": "Home decor", "wallart": "Wall art", "photo": "Photo gifts",
-        "necklace": "Jewelry", "handbag": "Accessories", "tote": "Bags & totes", "drawstring": "Packaging",
-        "petbowl": "Pet products", "phone": "Phone cases", "puzzle": "Toys & puzzles", "pumpkin": "Seasonal",
-        "card": "Cards & prints", "tee": "Apparel"}
+PROD = {k: v["label"] for k, v in json.loads((ROOT / "src" / "products.json").read_text()).items()}   # product labels (src/products.json)
 
 
 def mini_uis(home):

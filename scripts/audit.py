@@ -60,8 +60,10 @@ def check_json(slug):
         if len(d[h]) != 2: bad(slug, f"{h} must have exactly two lines")
     if any(len(x) > 24 for x in d["products_heading"]): bad(slug, "products_heading: keep each line within 24 chars (it sits in a half-width column)")
     if any(len(x) > 36 for x in d["capabilities_heading"]): bad(slug, "capabilities_heading: keep each line within 36 chars")
-    for prod in d["products"]:
+    known = json.loads((ROOT / "src/products.json").read_text())
+    for prod in d["products"] + [r["visual"]["image"] for r in d["details"] if r["visual"].get("image")]:
         if not (ROOT / f"src/assets/products/{prod}.webp").exists(): bad(slug, f"missing product image '{prod}'")
+        if prod not in known: bad(slug, f"product '{prod}' is not in src/products.json")
     if not 6 <= len(d["products"]) <= 14: bad(slug, "products: use 6-14")
     if "—" in json.dumps(d, ensure_ascii=False): bad(slug, "em dash found; use a comma or a full stop")
     return d

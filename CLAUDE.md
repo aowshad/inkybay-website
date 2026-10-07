@@ -37,6 +37,7 @@ src/nav.json              every navbar mega menu: items, groups, promos, footer 
 src/industries/_index.json  the nine industries (slug, title, short, icon): single source for the menu and future pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
+src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
@@ -51,6 +52,13 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
   `actions/upload-pages-artifact`, deploy with `actions/deploy-pages` (concurrency group `pages`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
   `index.html` or `.nojekyll` any more; the deployed artifact is `site/` only.
+
+## Product images
+
+`src/assets/products/<name>.webp`: transparent, 600x600, WebP quality ~82, the product trimmed and centred so it fills
+82% of the frame (so every product reads at the same size). Keys are lowercase and hyphenated (`water-bottle`). Every
+image has an entry in `src/products.json` with its `label` (shown on product-wall cards, e.g. "Mug") and its
+`industry` (a slug from `src/industries/_index.json`). Never delete an image that something still references.
 
 ## Locked kit (do not add new values; extend the scale only if a real need appears)
 
@@ -252,7 +260,7 @@ stop). No exclamation marks. Write for a Shopify merchant, not a developer.
 | `details` | exactly 3; title max 40 chars; text max 180 chars; exactly 3 `points`, each max 32 chars |
 | `details[].visual` | use each layout once: `single`, `product`, `stack` |
 | `capabilities` | exactly 8; title max 24 chars; text max 45 chars; heading lines max 36 chars |
-| `products` | 6-14 names from `src/assets/products/`; heading lines max 24 chars (half-width column) |
+| `products` | 6-14 names from `src/products.json`; heading lines max 24 chars (half-width column) |
 | `faqs` | 3-5; answer max 200 chars |
 | `_index.json short` | about 40 chars; must fit two lines in the mega menu |
 
@@ -283,6 +291,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: New product image library: 22 new products (renamed to lowercase, correctly spelled keys; duplicates T-shirt and mug2 dropped) plus mug, tee and socks re-processed the same way (trim, 82% fill, 600x600, WebP q82). Labels move from render_feature.py to src/products.json and become product names ("Mug", not "Drinkware"); the old products keep their old labels until they are removed. Noted: the mega menu promos inline cta-products.webp and hero-editor.webp on every page (~340 KB of base64), worth smaller promo thumbnails later
 - 2026-10-07: Audit all mega menus (scripts/audit.py check_menus: every page, 1366 and 1440px, plus the 390px sheet; link counts come from nav.json, so new menus and items are covered automatically). Verified against a deliberately broken page: catches a cut-off description, a missing sheet link and Esc not closing
 - 2026-10-07: Resources mega menu (groups layout, five new icons, external Help center with arrow-out icon, Live chat data-action hook, video promo from hero-editor.webp with a dark wash so it reads as a paused video). Footer Resources and Get help columns now come from nav.json (Contact kept as an extra Get help link). Fix found while testing: with all three sub-lists open the mobile sheet ran past the screen with no way to scroll; it now scrolls inside itself, and the wheel smooth-scroll leaves the sheet native
 - 2026-10-07: Industries mega menu (nine industries from src/industries/_index.json, eight new icons, promo "Built for your kind of store" linking to resources/case-studies/). The cta-products image is near-square, so its promo uses object-position 50% 0% to keep the cap, colour picker and clipart panel whole. The footer Industries column is now generated from the same data (first five plus "All industries"), so no footer copy is hardcoded for it

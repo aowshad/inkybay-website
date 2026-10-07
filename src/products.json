@@ -1,0 +1,150 @@
+{
+  "hoodie": {
+    "label": "Hoodie",
+    "industry": "fashion-apparel"
+  },
+  "baby-onesie": {
+    "label": "Baby onesie",
+    "industry": "fashion-apparel"
+  },
+  "bandana": {
+    "label": "Bandana",
+    "industry": "fashion-apparel"
+  },
+  "socks": {
+    "label": "Socks",
+    "industry": "fashion-apparel"
+  },
+  "ring": {
+    "label": "Ring",
+    "industry": "jewelry-accessories"
+  },
+  "pendant": {
+    "label": "Pendant",
+    "industry": "jewelry-accessories"
+  },
+  "bracelet": {
+    "label": "Bracelet",
+    "industry": "jewelry-accessories"
+  },
+  "earrings": {
+    "label": "Earrings",
+    "industry": "jewelry-accessories"
+  },
+  "locket": {
+    "label": "Locket",
+    "industry": "jewelry-accessories"
+  },
+  "tee": {
+    "label": "Team tee",
+    "industry": "sports-teamwear"
+  },
+  "cap": {
+    "label": "Cap",
+    "industry": "sports-teamwear"
+  },
+  "water-bottle": {
+    "label": "Water bottle",
+    "industry": "sports-teamwear"
+  },
+  "blanket": {
+    "label": "Blanket",
+    "industry": "home-furniture"
+  },
+  "wall-clock": {
+    "label": "Wall clock",
+    "industry": "home-furniture"
+  },
+  "photoframe": {
+    "label": "Photo frame",
+    "industry": "home-furniture"
+  },
+  "doormat": {
+    "label": "Doormat",
+    "industry": "home-furniture"
+  },
+  "notebook": {
+    "label": "Notebook",
+    "industry": "printing-packaging"
+  },
+  "mug": {
+    "label": "Mug",
+    "industry": "gifts-promotional"
+  },
+  "keyring": {
+    "label": "Keyring",
+    "industry": "gifts-promotional"
+  },
+  "tumbler": {
+    "label": "Tumbler",
+    "industry": "gifts-promotional"
+  },
+  "sneakers": {
+    "label": "Sneakers",
+    "industry": "footwear-bags"
+  },
+  "backpack": {
+    "label": "Backpack",
+    "industry": "footwear-bags"
+  },
+  "tote-bag": {
+    "label": "Tote bag",
+    "industry": "footwear-bags"
+  },
+  "airpod": {
+    "label": "Earbuds case",
+    "industry": "gadgets-electronics"
+  },
+  "laptop-bag": {
+    "label": "Laptop sleeve",
+    "industry": "gadgets-electronics"
+  },
+  "pillow": {
+    "label": "Home decor",
+    "industry": "home-furniture"
+  },
+  "wallart": {
+    "label": "Wall art",
+    "industry": "home-furniture"
+  },
+  "photo": {
+    "label": "Photo gifts",
+    "industry": "gifts-promotional"
+  },
+  "necklace": {
+    "label": "Jewelry",
+    "industry": "jewelry-accessories"
+  },
+  "handbag": {
+    "label": "Accessories",
+    "industry": "footwear-bags"
+  },
+  "tote": {
+    "label": "Bags & totes",
+    "industry": "footwear-bags"
+  },
+  "drawstring": {
+    "label": "Packaging",
+    "industry": "printing-packaging"
+  },
+  "petbowl": {
+    "label": "Pet products",
+    "industry": "gifts-promotional"
+  },
+  "phone": {
+    "label": "Phone cases",
+    "industry": "gadgets-electronics"
+  },
+  "puzzle": {
+    "label": "Toys & puzzles",
+    "industry": "gifts-promotional"
+  },
+  "pumpkin": {
+    "label": "Seasonal",
+    "industry": "gifts-promotional"
+  },
+  "card": {
+    "label": "Cards & prints",
+    "industry": "printing-packaging"
+  }
+}
