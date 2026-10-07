@@ -10,7 +10,24 @@
     "lead": "Support different production workflows from one customizable product. Add multiple printing types and configure pricing, colors, size ranges, and design restrictions for each method.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing multiple printing methods"
+    "visual_alt": "InkyBay editor showing multiple printing methods",
+    "visual": {
+      "layout": "showcase",
+      "image": "multiple-printing-methods",
+      "ui": "methods",
+      "chips": [
+        {
+          "label": "Method",
+          "roll": [
+            "DTG",
+            "Embroidery",
+            "Screen print",
+            "Sublimation"
+          ]
+        },
+        "Thread colors: 6"
+      ]
+    }
   },
   "benefits": [
     {

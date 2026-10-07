@@ -248,6 +248,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Hero showcase: Multiple printing methods (photo heroes/multiple-printing-methods.webp, mini UI methods | Method roll, Thread colors: 6)
 - 2026-10-07: Hero showcase: Font & clipart library (photo heroes/font-clipart-library.webp, mini UI library | Font roll, Clipart added)
 - 2026-10-07: Hero showcase: Custom quote requests (photo heroes/custom-quote-requests.webp, mini UI quote | Design attached, Quote sent)
 - 2026-10-07: Hero showcase: Advanced product setup (photo heroes/advanced-product-setup.webp, mini UI sides | Size roll, 4 print areas)
