@@ -45,7 +45,7 @@
       "points": [
         "Categories for every asset",
         "Default fonts and clipart",
-        "Search-friendly names"
+        "Fonts and clipart side by side"
       ],
       "visual": {
         "layout": "single",
@@ -56,11 +56,11 @@
     },
     {
       "title": "Your artwork on every product",
-      "text": "Add your own graphics and let shoppers place them on any product, at any size you allow.",
+      "text": "Add your own graphics to the library so shoppers can place them in their designs alongside your clipart.",
       "points": [
         "Custom graphics upload",
-        "Resize within limits",
-        "Works on every side"
+        "Placed straight into designs",
+        "Sorted into your categories"
       ],
       "visual": {
         "layout": "product",
@@ -72,7 +72,7 @@
               "Sans",
               "Serif",
               "Script",
-              "Mono"
+              "Display"
             ]
           },
           "Clipart · Star"
@@ -129,7 +129,7 @@
     {
       "icon": "save",
       "title": "Defaults",
-      "text": "Set a starting font and clipart."
+      "text": "Choose where each design starts."
     },
     {
       "icon": "sliders",
@@ -142,14 +142,14 @@
       "text": "Match assets to print methods."
     },
     {
-      "icon": "image",
-      "title": "Graphic upload",
-      "text": "SVG and image files."
+      "icon": "eye",
+      "title": "In the editor",
+      "text": "Shoppers browse assets as they design."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Manage it all from the dashboard."
+      "icon": "type",
+      "title": "Default text font",
+      "text": "Used when shoppers add text."
     }
   ],
   "products_heading": [
@@ -182,7 +182,7 @@
     },
     {
       "q": "Can I set a default font?",
-      "a": "Yes. Set defaults so every design starts on brand."
+      "a": "Yes. Choose the default font the design tool uses when shoppers add custom text."
     }
   ]
 }
