@@ -588,7 +588,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   --ind-bg: #150E09;
   --ind-ink: #FFFFFF;
   --ind-muted: rgba(255, 255, 255, .68);
-  --card-w: 232px;
+  --card-w: 256px;   /* fits the longest industry title on one line at 20px */
   position: relative; overflow: hidden; isolation: isolate;
   padding-block: var(--section-y);
   background:
@@ -643,14 +643,15 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     #FFF1E4;
   display: grid; place-items: center;
 }
-.icard__media img { width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 14px 18px rgba(120, 50, 10, .18)); }
+.icard__media img { grid-area: 1 / 1; width: 86%; height: 86%; object-fit: contain; filter: drop-shadow(0 14px 18px rgba(120, 50, 10, .18)); }
+/* several products crossfade: the new image fades in on top, the old stays opaque until covered (no blink) */
+.icard__media[data-cycle] img { opacity: 0; z-index: 0; transition: opacity 0s linear .6s; }
+.icard__media[data-cycle] img.is-on { opacity: 1; z-index: 1; transition: opacity .6s ease; }
 .icard__ph { display: grid; justify-items: center; gap: var(--s-2); color: var(--brand-500); }
-.icard__ph svg { width: 40px; height: 40px; }
+.icard__ph svg { width: 56px; height: 56px; }   /* industry without photos yet: its icon on the card background */
 .icard__ph span { font-size: 12px; line-height: 16px; color: #A08572; }
-.icard__body { padding: var(--s-4) var(--s-1) 0; display: flex; align-items: center; justify-content: space-between; gap: var(--s-2); }
-.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.icard__media img.is-wide { width: 72%; height: 72%; }   /* wide products (handbag) read larger at the same box size */
-.icard__text { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.icard__body { padding: var(--s-4) var(--s-1) 0; display: grid; gap: 2px; min-width: 0; }
+.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 20px; line-height: 26px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .icard__link {
   margin-top: auto; padding-top: var(--s-3);
   display: inline-flex; align-items: center; gap: 6px;
@@ -682,7 +683,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .wheel:not(.is-ready) .wheel__card { position: static; margin: 0; flex: none; scroll-snap-align: center; }
 
 @media (max-width: 960px) {
-  .industries { --card-w: 210px; }
+  .industries { --card-w: 236px; }
+  .icard__title { font-size: 18px; line-height: 24px; }
 }
 
 /* =========================================================
@@ -1690,118 +1692,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <p class="industries__lead">Turn any product into a personalized experience with a powerful, flexible customization solution.</p>
     </div>
     <ul class="wheel" aria-label="Industries">
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/socks.webp}}" alt="Custom apparel example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Apparel</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/mug.webp}}" alt="Custom drinkware example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Drinkware</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/pillow.webp}}" alt="Custom home decor example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Home decor</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/wallart.webp}}" alt="Custom wall art example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Wall art</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/photo.webp}}" alt="Custom photo gifts example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Photo gifts</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/necklace.webp}}" alt="Custom jewelry example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Jewelry</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/handbag.webp}}" class="is-wide" alt="Custom accessories example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Accessories</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/tote.webp}}" alt="Custom bags & totes example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Bags & totes</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/drawstring.webp}}" alt="Custom packaging example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Packaging</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/petbowl.webp}}" alt="Custom pet products example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Pet products</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/phone.webp}}" alt="Custom phone cases example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Phone cases</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/puzzle.webp}}" alt="Custom toys & puzzles example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Toys & puzzles</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/pumpkin.webp}}" alt="Custom seasonal example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Seasonal</h3>
-              </div>
-            </a>
-          </li>
-          <li class="wheel__card">
-            <a class="icard" href="#">
-              <div class="icard__media"><img src="{{IMG:products/card.webp}}" alt="Custom cards & prints example" width="440" height="440" loading="lazy" decoding="async"></div>
-              <div class="icard__body">
-                <h3 class="icard__title">Cards & prints</h3>
-              </div>
-            </a>
-          </li>
+          {{INDUSTRY_WHEEL}}
     </ul>
     <div class="wheel-ctrl">
       <button class="wheel-ctrl__btn wheel-ctrl__prev" aria-label="Previous industry"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M14.5 6l-6 6 6 6"/></svg></button>
@@ -2246,6 +2137,28 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       } else { sec.classList.remove('is-paused'); }
     });
 
+    /* Industry cards with several products: crossfade every 3s, each card 0.4s after the previous one;
+       the clock only runs while the wheel is on screen; reduced motion keeps the first image */
+    document.querySelectorAll('.industries').forEach(function (sec) {
+      var media = [].slice.call(sec.querySelectorAll('.icard__media[data-cycle]'));
+      if (!media.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var on = false, elapsed = 0, last = 0;
+      media.forEach(function (m) { m._imgs = [].slice.call(m.querySelectorAll('img')); m._i = 0; m._k = +m.getAttribute('data-k'); });
+      function tick(t) {
+        if (on && last) elapsed += Math.min(t - last, 100);
+        last = t;
+        if (on) media.forEach(function (m) {
+          var local = elapsed - m._k * 400, n = m._imgs.length;
+          var i = local < 0 ? 0 : Math.floor(local / 3000) % n;
+          if (i !== m._i) { m._imgs[m._i].classList.remove('is-on'); m._imgs[i].classList.add('is-on'); m._i = i; }
+        });
+        requestAnimationFrame(tick);
+      }
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { on = es[0].isIntersecting; }, { threshold: 0.15 }).observe(sec);
+      else on = true;
+      requestAnimationFrame(tick);
+    });
+
     /* Industries wheel: cards on a circle; angle advances slowly, eases to a stop on pause/hover */
     document.querySelectorAll('.industries').forEach(function (sec) {
       var wheel = sec.querySelector('.wheel');
@@ -2283,7 +2196,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           var c = cards[i];
           c.style.transform = 'translate3d(' + x.toFixed(2) + 'px,' + y.toFixed(2) + 'px,0) rotate(' + rot.toFixed(3) + 'deg)';
           c.style.zIndex = String(100 - Math.round(Math.abs(a)));
-          c.style.visibility = Math.abs(a) > SPAN / 2 - STEP * 0.6 ? 'hidden' : 'visible';
+          c.style.visibility = Math.abs(a) > SPAN / 2 - STEP * 0.15 ? 'hidden' : 'visible';   /* hide only right at the wrap, so it stays off screen with nine cards at 1920px */
         }
       }
       function frame(t) {

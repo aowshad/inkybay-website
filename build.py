@@ -130,10 +130,35 @@ def foot_cols(mid, root):
         cols.append(f'<div class="foot__col"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
     return "\n          ".join(cols)
 
+INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]
+WHEEL_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
+
+def wheel(root):
+    """Homepage industries wheel: one card per industry in src/industries/_index.json order, linking to
+    industries/<slug>/. Several products crossfade (data-cycle); one is static; none shows the industry icon."""
+    cards = []
+    for k, ind in enumerate(INDUSTRIES):
+        prods = ind.get("products", [])
+        if prods:
+            imgs = "".join(f'<img class="icard__img{" is-on" if j == 0 else ""}" src="{b64("products/" + p + ".webp")}" alt="" width="600" height="600" loading="lazy" decoding="async">' for j, p in enumerate(prods))
+            media = f'<div class="icard__media"{" data-cycle" if len(prods) > 1 else ""} data-k="{k}">{imgs}</div>'
+        else:
+            media = f'<div class="icard__media" data-k="{k}"><span class="icard__ph" aria-hidden="true">{ICON[ind["icon"]]}</span></div>'
+        cards.append(f'''<li class="wheel__card">
+            <a class="icard" href="{root}industries/{ind["slug"]}/">
+              {media}
+              <div class="icard__body">
+                <h3 class="icard__title">{html.escape(ind["title"])}</h3>
+              </div>
+            </a>
+          </li>''')
+    return "\n          ".join(cards)
+
 def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
+    t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{CHEVRON}}", CHEV)

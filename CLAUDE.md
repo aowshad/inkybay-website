@@ -34,7 +34,8 @@ src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs a
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
 src/nav.json              every navbar mega menu: items, groups, promos, footer columns (see Mega menu)
-src/industries/_index.json  the nine industries (slug, title, short, icon): single source for the menu and future pages
+src/industries/_index.json  the nine industries (slug, title, short, icon, products): single source for
+                          the mega menu, the homepage wheel and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
@@ -98,7 +99,15 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, editor screenshot with comet ring.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
 3. **Features**: "customization" is always a selected layer; swatches auto-cycle every 2s and are clickable; ring is the active swatch's own box-shadow (always concentric). Left list auto-advances (7s progress line). Mobile heading: "Everything you need / for product / customization + swatches".
-4. **Industries** (always dark): 14 product cards on an arc; titles never wrap (wide products use `.is-wide`). Radius is computed at the card's bottom edge so neighbours never touch (32.8px gap). 1.6 deg/s. Pause/play plus prev/next steps. Flat track on phones.
+4. **Industries** (always dark, "Custom products for every business"): the wheel is built by build.py from
+   `src/industries/_index.json`: nine cards, one per industry in that order, each linking to `industries/<slug>/`
+   (never one card per product). Card: the industry's product image(s) and its title only (one line, never wraps, also
+   at 390px: cards are 256px with 20px titles, 236px with 18px titles at 960px and below). One product is static; several crossfade
+   every 3s (0.6s, new image on top, old one opaque until covered), each card 0.4s after the previous one, only while the
+   wheel is on screen; reduced motion shows the first image. An industry with no `products` shows its icon on the card
+   background. Radius is computed at the card's bottom edge so neighbours never touch (32.8px gap; 20px on the flat
+   phone track) for any number of cards; a card hides only right at the loop's wrap, so nothing pops on screen at
+   1920px. 1.6 deg/s. Pause/play plus prev/next steps. Flat track on phones.
 5. **Reveal**: in-flow statement; words sharpen with a 5-word soft edge as it passes through the viewport.
 6. **Feature rail** ("Customize without limits"): pinned; vertical scroll drives the horizontal track 1:1; cards always 16:10, one full plus half the next; title one line, description reserves two lines, so every media box is identical; progress bar, no numbers. Native swipe rail under 960px.
 7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The "See full case study"
@@ -291,6 +300,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Industries wheel: nine industries from src/industries/_index.json (new products field), staggered product crossfades, links to industries/<slug>/. Cards show the industry title only: an examples line was tried and dropped (your call; at 14px it also broke the 16px text floor, so the audit failed with it). Cards grow to 256px (236px on tablets/phones) with 20px/18px titles so "Gadgets & electronics" and the other long titles stay on one line, also at 390px; the wrap-hide point moves to the loop edge because with nine cards it was visible at 1920px. Removed the unused .is-wide rule. To fix later: add Beauty & cosmetics product images (jar, lipstick, gift box) to src/assets/products/ and products.json, then list them in that industry's products (it shows the droplet icon until then)
 - 2026-10-07: New product image library: 22 new products (renamed to lowercase, correctly spelled keys; duplicates T-shirt and mug2 dropped) plus mug, tee and socks re-processed the same way (trim, 82% fill, 600x600, WebP q82). Labels move from render_feature.py to src/products.json and become product names ("Mug", not "Drinkware"); the old products keep their old labels until they are removed. Noted: the mega menu promos inline cta-products.webp and hero-editor.webp on every page (~340 KB of base64), worth smaller promo thumbnails later
 - 2026-10-07: Audit all mega menus (scripts/audit.py check_menus: every page, 1366 and 1440px, plus the 390px sheet; link counts come from nav.json, so new menus and items are covered automatically). Verified against a deliberately broken page: catches a cut-off description, a missing sheet link and Esc not closing
 - 2026-10-07: Resources mega menu (groups layout, five new icons, external Help center with arrow-out icon, Live chat data-action hook, video promo from hero-editor.webp with a dark wash so it reads as a paused video). Footer Resources and Get help columns now come from nav.json (Contact kept as an extra Get help link). Fix found while testing: with all three sub-lists open the mobile sheet ran past the screen with no way to scroll; it now scrolls inside itself, and the wheel smooth-scroll leaves the sheet native
