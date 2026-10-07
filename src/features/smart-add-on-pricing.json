@@ -10,7 +10,24 @@
     "lead": "Automatically adjust product pricing based on customization. Add extra charges for product options, colors, print areas, clipart, sizes, and other design elements to keep pricing accurate as customers customize.",
     "primary_cta": "Start free trial",
     "secondary_cta": "Try live demo",
-    "visual_alt": "InkyBay editor showing smart add-on pricing"
+    "visual_alt": "InkyBay editor showing smart add-on pricing",
+    "visual": {
+      "layout": "showcase",
+      "image": "smart-add-on-pricing",
+      "ui": "addons",
+      "chips": [
+        {
+          "label": "Add-on",
+          "roll": [
+            "Gold foil",
+            "Back print",
+            "Gift box",
+            "Name"
+          ]
+        },
+        "Total updated"
+      ]
+    }
   },
   "benefits": [
     {
