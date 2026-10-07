@@ -1548,7 +1548,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
       <nav aria-label="Primary">
         <ul class="nav__menu">
-          <li><button class="nav__link nav__link--mega" id="nav-features" aria-expanded="false" aria-controls="mega-features">Features {{CHEVRON}}</button></li>
+          {{NAV_TRIGGERS}}
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Industries {{CHEVRON}}</button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources {{CHEVRON}}</button></li>
           <li><a class="nav__link" href="#pricing">Pricing</a></li>
@@ -1566,7 +1566,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
-        <li><button class="nav__link sheet-toggle" aria-expanded="false" aria-controls="sheet-features">Features {{CHEVRON}}</button><ul class="sheet-sub" id="sheet-features">{{MEGA_MOBILE}}</ul></li>
+        {{SHEET_MENUS}}
         <li><button class="nav__link">Industries {{CHEVRON}}</button></li>
         <li><button class="nav__link">Resources {{CHEVRON}}</button></li>
         <li><a class="nav__link" href="#pricing">Pricing</a></li>
@@ -1575,20 +1575,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     </div>
   </div>
 
-  <div class="mega" id="mega-features" role="region" aria-label="Features" data-open="false">
-    <div class="mega__panel">
-      <div class="mega__main">
-        <p class="mega__label">Features</p>
-        <ul class="mega__grid">{{MEGA_ITEMS}}</ul>
-      </div>
-      <aside class="mega__promo">
-        <img class="mega__img" src="{{IMG:mega-promo.webp}}" alt="" width="720" height="489" loading="lazy" decoding="async">
-        <p class="mega__promo-title">See the editor in action</p>
-        <p class="mega__promo-text">Try InkyBay the way your shoppers will, right in the browser.</p>
-        {{BTN_PRIMARY:Try live demo}}
-      </aside>
-    </div>
-  </div>
+  {{MEGA_PANELS}}
 </header>
 
 <main>
@@ -2735,17 +2722,37 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       vis.forEach(function (v) { io.observe(v); });
     })();
 
-    /* Mega menu: click (not hover) on "Features"; outside click or Esc closes */
+    /* Mega menus (from src/nav.json): open on click, not hover; one open at a time; clicking another trigger swaps
+       panels instantly (no close-then-open fade); outside click or Esc closes */
     (function () {
-      var trig = document.getElementById('nav-features'), mega = document.getElementById('mega-features');
-      if (!trig || !mega) return;
-      function set(open) {
-        mega.setAttribute('data-open', String(open)); trig.setAttribute('aria-expanded', String(open));
+      var trigs = [].slice.call(document.querySelectorAll('.nav__link--mega'));
+      if (!trigs.length) return;
+      var panel = function (t) { return document.getElementById(t.getAttribute('aria-controls')); };
+      var openTrig = null;
+      function set(t, open, instant) {
+        var m = panel(t); if (!m) return;
+        var p = m.querySelector('.mega__panel');
+        if (instant) p.style.transition = 'none';
+        m.setAttribute('data-open', String(open)); t.setAttribute('aria-expanded', String(open));
+        if (instant) { void p.offsetWidth; requestAnimationFrame(function () { p.style.transition = ''; }); }
       }
-      trig.addEventListener('click', function (e) { e.stopPropagation(); set(mega.getAttribute('data-open') !== 'true'); });
-      document.addEventListener('click', function (e) { if (!mega.contains(e.target) && e.target !== trig) set(false); });
-      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mega.getAttribute('data-open') === 'true') { set(false); trig.focus(); } });
-      window.addEventListener('resize', function () { if (window.innerWidth <= 960) set(false); });
+      function close() { if (openTrig) { set(openTrig, false); openTrig = null; } }
+      trigs.forEach(function (t) {
+        t.addEventListener('click', function (e) {
+          e.stopPropagation();
+          if (openTrig === t) { close(); return; }
+          var swap = !!openTrig;
+          if (swap) set(openTrig, false, true);
+          set(t, true, swap); openTrig = t;
+        });
+      });
+      document.addEventListener('click', function (e) {
+        if (openTrig && !panel(openTrig).contains(e.target)) close();
+      });
+      document.addEventListener('keydown', function (e) {
+        if (e.key === 'Escape' && openTrig) { var t = openTrig; close(); t.focus(); }
+      });
+      window.addEventListener('resize', function () { if (window.innerWidth <= 960) close(); });
     })();
     document.querySelectorAll('.sheet-toggle').forEach(function (b) {
       b.addEventListener('click', function () { b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true')); });

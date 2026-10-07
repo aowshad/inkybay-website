@@ -33,6 +33,7 @@ site/                     build output, not in git (.gitignore); python3 build.p
 src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
+src/nav.json              every navbar mega menu: items, groups, promos (see Mega menu)
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
@@ -129,17 +130,29 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 
 ## Mega menu
 
-"Features" in the navbar opens a mega menu on click (not hover); outside click and Esc close it. Left: the nine
-features from `_index.json` (icon, title, `short`), the current page highlighted. `short` is menu copy: 14px,
-two lines max, about 40 characters, written so it never truncates. Right: a 280px dark promo card (`#121010`) with
-`assets/mega-promo.webp` fading into it and "Try live demo". The image is a 720px-wide WebP (quality ~82) shown as a
-16:10 `object-fit: cover` crop; its subject (app icon and cursor) is centred, so it uses the default `object-position`. In dark mode the card lifts off the panel: warm surface
-`#1E1714` with a soft orange glow at the top (radial, `rgba(255,117,0,.18)`) and a 1px `rgba(255,255,255,.08)` border
-drawn on `::after` so it stays visible over the full-bleed image. Light mode is unchanged. Below 1360px the promo hides (it would squeeze the
-items); below 1100px the grid drops to two columns; on phones the menu sheet shows the nine as a collapsible list.
-Links are written per page by build.py and are always relative to the page's own folder, because the site is
-served under `/inkybay-website/` (never start an internal link with `/`): homepage -> `features/<slug>/`; feature ->
-`../../` (homepage: logos and breadcrumb, via `{{HOME}}`) and `../<slug>/` (other features). The homepage logo is `#`.
+One data-driven component. `src/nav.json` lists every menu (`{"menus": [...]}`) in navbar order; build.py renders the
+desktop triggers (`{{NAV_TRIGGERS}}`), the panels (`{{MEGA_PANELS}}`) and the mobile sheet sub-lists (`{{SHEET_MENUS}}`)
+into the shared template. Never hand-write a menu in the template.
+- Menu: `{"id", "label", "layout": "grid" | "groups", "base", "promo", ...}`. A grid takes its items from
+  `items_from` (an index file such as `src/features/_index.json`) or `items`; groups take `groups: [{"title", "items"}]`.
+- Item: `{"slug" or "href", "title", "short", "icon", "external": bool}` (+ optional `"action"` for a `data-action`
+  hook). `slug` links to `<base><slug>/`. External links open in a new tab (`rel="noopener"`) with a small arrow-out icon.
+- Promo: `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card) or `"visual": "video"`.
+- Behaviour (every menu): opens on click, not hover; one open at a time; clicking another trigger swaps panels instantly
+  (no close-then-open fade); outside click and Esc close (Esc returns focus to the trigger); every trigger has
+  `aria-expanded` and `aria-controls`. The current page's own item is highlighted (`aria-current`).
+- Look: left, the label and items (icon, title, `short`). `short` is menu copy: 14px, two lines max, about 40 characters,
+  written so it never truncates. Right: a 280px dark promo card (`#121010`) with its image fading into it and a CTA.
+  In dark mode the card lifts off the panel: warm surface `#1E1714` with a soft orange glow at the top (radial,
+  `rgba(255,117,0,.18)`) and a 1px `rgba(255,255,255,.08)` border drawn on `::after` so it stays visible over the
+  full-bleed image. Light mode is unchanged. The Features promo image (`mega-promo.webp`) is a 720px-wide WebP
+  (quality ~82) shown as a 16:10 `object-fit: cover` crop; its subject (app icon and cursor) is centred, so it uses the
+  default `object-position`. Below 1360px the promo hides (it would squeeze the items); below 1100px the grid drops to
+  two columns; on phones the menu sheet shows each menu as a collapsible list.
+- Links are relative to the page's own folder, because the site is served under `/inkybay-website/` (never start an
+  internal link with `/`): every link is `<root><path>`, where `<root>` is `""` on the homepage and `../../` on a
+  feature page (e.g. `../../features/<slug>/`). The homepage logo is `#`; feature pages link home with `../../`
+  (logos and breadcrumb, via `{{HOME}}`).
 
 ## Feature pages (one template, nine pages)
 
@@ -248,6 +261,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Data-driven mega menu component: src/nav.json renders the triggers, panels and mobile sub-lists; generic JS (one open at a time, instant swap between triggers, outside click/Esc). Features moved in with no visual change (before/after screenshots identical at 1440px, light and dark). Industries and Resources stay placeholders until their own commits. Menu links are now <root><path> everywhere (feature pages link to ../../features/<slug>/ instead of ../<slug>/), which replaces the old per-page link rule
 - 2026-10-07: Hero showcase: Unlimited product options (photo heroes/unlimited-product-options.webp, mini UI options | Option added, No limit)
 - 2026-10-07: Hero showcase: Quantity discounts (photo heroes/quantity-discounts.webp, mini UI tiers | Qty roll, 20% off)
 - 2026-10-07: Hero showcase: Inventory management (photo heroes/inventory-management.webp, mini UI inventory | Stock roll, Unavailable)

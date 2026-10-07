@@ -1,0 +1,18 @@
+{
+  "menus": [
+    {
+      "id": "features",
+      "label": "Features",
+      "layout": "grid",
+      "items_from": "src/features/_index.json",
+      "base": "features/",
+      "promo": {
+        "title": "See the editor in action",
+        "text": "Try InkyBay the way your shoppers will, right in the browser.",
+        "cta": "Try live demo",
+        "href": "#",
+        "image": "mega-promo.webp"
+      }
+    }
+  ]
+}
