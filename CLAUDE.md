@@ -8,9 +8,13 @@ stack until it matches the reference, and only then create new pages. Do not rei
 
 ```
 reference/homepage.html   single-file build of the locked homepage (open in a browser)
-src/template.html         the same page with {{TOKENS}} for buttons, brand SVGs and images
+reference/features/       one built page per src/features/<slug>.json
+src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
+src/feature.css           styles for the shared feature-page template
+src/features/<slug>.json  content for one feature page (the schema every feature page follows)
+render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), hero-editor.webp, cta-products.webp
-build.py                  python3 build.py  ->  regenerates reference/homepage.html
+build.py                  python3 build.py  ->  regenerates the homepage and every feature page
 ```
 
 ## Locked kit (do not add new values; extend the scale only if a real need appears)
@@ -84,3 +88,26 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 2. Port tokens, then Button, Navbar, Ring, Mini UI, heading reveal.
 3. Rebuild the homepage section by section and diff it visually against `reference/homepage.html`.
 4. Start the inner pages (Features, Industries, Pricing, Resources) with the same kit.
+
+
+## Feature pages (one template, nine pages)
+
+Every feature page has the same sections in the same order; only the JSON changes.
+
+| # | Section | JSON key | Background |
+|---|---|---|---|
+| 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, visual with comet ring | `hero` | white |
+| 2 | Benefits: 4 cards | `benefits` | white (no top padding) |
+| 3 | How it works: 3 rows, text and visual alternate sides; visuals are homepage mini UIs on the butter/peach/sky gradients | `details[].visual` = a mini-UI name | tint |
+| 4 | Quote (same tint band) | `quote` | tint |
+| 5 | Capabilities: 8 cards | `capabilities` | white |
+| 6 | Works with: 6 product tiles | `products` (asset names in products/) | tint |
+| 7 | FAQs | `faqs` | white |
+| 8 | Related features: 3 cards | `related` | tint |
+| 9 | CTA, crowd marquee, footer | from the homepage | dark |
+
+Mini-UI names available for `details[].visual`: setup, design, files, options, methods, inventory, quote,
+addons, tiers, library, templates, sides, grow. Icon names: see `ICON` in render_feature.py.
+
+To add a feature page: copy `src/features/live-design-editor.json`, change the content, run `python3 build.py`.
+Do not add page-specific CSS; if a feature needs a new section type, add it to the template for all pages.

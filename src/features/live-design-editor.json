@@ -1,0 +1,69 @@
+{
+  "slug": "live-design-editor",
+  "nav_label": "Live design editor",
+  "meta": {
+    "title": "Live design editor | InkyBay",
+    "description": "Let shoppers design their own products with text, images, clipart and more, right on your Shopify product page."
+  },
+  "hero": {
+    "title": "Live design editor",
+    "lead": "Give shoppers a simple, powerful editor to design their own products right on your product page, with a live preview on every side.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual": { "type": "image", "src": "hero-editor.webp", "alt": "InkyBay live design editor customizing a soccer jersey" }
+  },
+  "benefits": [
+    { "icon": "wand", "title": "Easy for shoppers", "text": "A clear, guided editor that works the same on desktop and mobile." },
+    { "icon": "eye", "title": "Live preview", "text": "Every change shows instantly on the product, side by side." },
+    { "icon": "layers", "title": "Every product side", "text": "Design the front, back, sleeves or any print area you set up." },
+    { "icon": "file", "title": "Print-ready output", "text": "Each design arrives with the files your team needs to produce it." }
+  ],
+  "details": [
+    {
+      "title": "Text, images and clipart in one place",
+      "text": "Shoppers add their own text, upload photos or pick from your clipart library, then move, resize and recolor everything on the canvas.",
+      "points": ["Custom fonts and colors", "Image upload", "Your own clipart library"],
+      "visual": "design"
+    },
+    {
+      "title": "Fonts and artwork you control",
+      "text": "Curate the fonts, clipart and colors shoppers can use, so every design stays on brand and ready to print.",
+      "points": ["Approved font list", "Clipart by category", "Color palettes per product"],
+      "visual": "library"
+    },
+    {
+      "title": "Design every side of the product",
+      "text": "Switch between front, back, left and right in one tap. Each side has its own print area and its own preview.",
+      "points": ["Multiple product sides", "Separate print areas", "Preview before checkout"],
+      "visual": "sides"
+    }
+  ],
+  "quote": {
+    "text": "Our customers design their own jerseys in a few minutes, and the files come in ready for the press. It changed how we take custom orders.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities": [
+    { "icon": "type", "title": "Text tools", "text": "Fonts, colors, outlines and curved text." },
+    { "icon": "image", "title": "Image upload", "text": "Shoppers add their own photos and logos." },
+    { "icon": "star", "title": "Clipart library", "text": "Organized artwork shoppers can drop in." },
+    { "icon": "qr", "title": "QR codes", "text": "Generate a QR code right inside a design." },
+    { "icon": "hash", "title": "Names and numbers", "text": "Perfect for team jerseys and rosters." },
+    { "icon": "template", "title": "Templates", "text": "Pre-made designs as a starting point." },
+    { "icon": "phone", "title": "Mobile friendly", "text": "The full editor on any screen size." },
+    { "icon": "save", "title": "Save and share", "text": "Shoppers save a design and come back later." }
+  ],
+  "products": ["socks", "mug", "pillow", "tote", "phone", "puzzle"],
+  "faqs": [
+    { "q": "Does the editor work on mobile?", "a": "Yes. Shoppers get the same editor on phones and tablets, with controls sized for touch." },
+    { "q": "Can I limit which fonts and colors shoppers use?", "a": "Yes. You choose the fonts, colors and clipart available for each product, so designs stay on brand." },
+    { "q": "Can shoppers design more than one side?", "a": "Yes. Every side you set up, like front, back or sleeves, gets its own print area and preview." },
+    { "q": "Do I need to change my theme?", "a": "No. The editor is added through an app embed, so there are no theme code edits." }
+  ],
+  "related": [
+    { "slug": "product-options", "icon": "sliders", "title": "Product options", "text": "Sizes, colors and materials with their own rules." },
+    { "slug": "smart-pricing", "icon": "tag", "title": "Smart add-on pricing", "text": "Charge for extra sides, colors and options automatically." },
+    { "slug": "print-ready-orders", "icon": "printer", "title": "Print-ready orders", "text": "Every order arrives with the files and details to produce it." }
+  ]
+}
