@@ -21,7 +21,7 @@
     {
       "icon": "eye",
       "title": "Full context",
-      "text": "See the design, product and notes together."
+      "text": "See the design, product and requirements together."
     },
     {
       "icon": "tag",
@@ -56,10 +56,10 @@
     },
     {
       "title": "Every detail in one place",
-      "text": "Review the product, quantity, design and any notes before you decide on a price.",
+      "text": "Review the design, product details and the shopper's requirements before you decide on a price.",
       "points": [
-        "Product and quantity",
-        "Shopper notes",
+        "Product details",
+        "Shopper requirements",
         "Design preview"
       ],
       "visual": {
@@ -89,7 +89,7 @@
       "text": "Reply with a custom price for that request, so large and unusual orders turn into sales.",
       "points": [
         "Custom price per request",
-        "Clear follow-up",
+        "Based on their requirements",
         "Turn requests into orders"
       ],
       "visual": {
@@ -123,12 +123,12 @@
     },
     {
       "icon": "hash",
-      "title": "Quantities",
-      "text": "Shoppers say how many they need."
+      "title": "Product details",
+      "text": "The product and options they chose."
     },
     {
       "icon": "type",
-      "title": "Notes",
+      "title": "Requirements",
       "text": "Room for special instructions."
     },
     {
@@ -142,14 +142,14 @@
       "text": "Set a price for each request."
     },
     {
-      "icon": "save",
-      "title": "Request history",
-      "text": "Find past requests quickly."
+      "icon": "chat",
+      "title": "Contact details",
+      "text": "Every request includes how to reach them."
     },
     {
-      "icon": "wand",
-      "title": "No coding",
-      "text": "Turn it on from the dashboard."
+      "icon": "type",
+      "title": "Editable form",
+      "text": "Change the quote form's text anytime."
     }
   ],
   "products_heading": [
@@ -174,15 +174,15 @@
     },
     {
       "q": "What do I see in a request?",
-      "a": "The shopper's design, product details, quantity and any notes they add."
+      "a": "The shopper's design, the product details, their requirements and their contact details."
     },
     {
       "q": "Can I send a different price for each request?",
       "a": "Yes. You reply with a custom price based on what the shopper asked for."
     },
     {
-      "q": "Can I use quotes on some products only?",
-      "a": "Yes. You choose which products offer quote requests."
+      "q": "Can I change the text in the quote form?",
+      "a": "Yes. Edit the quote window's default text and contact form under Settings, in Language & Translations."
     }
   ]
 }
