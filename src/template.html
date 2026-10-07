@@ -1315,6 +1315,18 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
 .mega__promo-text { color: rgba(255, 255, 255, .7); }
 .mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
+.mega__groups { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--s-4); }   /* one column per group, any number */
+.mega__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); align-content: start; }
+.mega__ext { display: inline-block; width: 12px; height: 12px; margin-left: 6px; vertical-align: 0; color: var(--ink-muted); }
+.sheet-group { padding: var(--s-3) 0 var(--s-1); font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.mega__video { position: relative; display: block; width: calc(100% + var(--s-6) * 2); margin: 0 calc(var(--s-6) * -1) var(--s-1); }
+.mega__video .mega__img { width: 100%; margin: 0; object-position: 50% 0; }
+.mega__video::after { content: ""; position: absolute; inset: 0; background: rgba(12, 9, 7, .28); pointer-events: none;   /* reads as a paused video */
+  -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }
+.mega__play { position: absolute; z-index: 1; left: 50%; top: 42%; translate: -50% -50%; width: 52px; height: 52px; border-radius: 50%; display: grid; place-items: center;
+  background: var(--brand-grad); box-shadow: 0 0 0 6px rgba(255, 255, 255, .14), 0 12px 24px -8px rgba(229, 56, 15, .75); transition: scale .35s var(--ease-expo); }
+.mega__play svg { width: 20px; height: 20px; margin-left: 3px; fill: #fff; }
+.mega__promo:hover .mega__play { scale: 1.08; }
 .mega__promo::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; }   /* border layer: sits above the full-bleed image */
 @media (prefers-color-scheme: dark) {   /* dark mode: a lifted warm surface so the card stands off the panel */
   :root:not([data-theme="light"]) .mega__promo { background: radial-gradient(80% 60% at 50% 0%, rgba(255, 117, 0, .18), transparent 70%), #1E1714; }
@@ -1517,6 +1529,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   .nav__sheet[data-open="true"] {
     display: block; border-top: 1px solid var(--line);
     padding-block: var(--s-3) var(--s-4);
+    max-height: calc(100dvh - var(--nav-h-compact) - var(--s-8)); overflow-y: auto; overscroll-behavior: contain;   /* long sub-lists scroll inside the sheet */
   }
   .nav__bar:has(.nav__sheet[data-open="true"]) { background: rgba(var(--bg-rgb), .97); }
   .nav__sheet ul { list-style: none; margin: 0 0 var(--s-3); padding: 0; }
@@ -1549,7 +1562,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <nav aria-label="Primary">
         <ul class="nav__menu">
           {{NAV_TRIGGERS}}
-          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources {{CHEVRON}}</button></li>
           <li><a class="nav__link" href="#pricing">Pricing</a></li>
         </ul>
       </nav>
@@ -1566,7 +1578,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
         {{SHEET_MENUS}}
-        <li><button class="nav__link">Resources {{CHEVRON}}</button></li>
         <li><a class="nav__link" href="#pricing">Pricing</a></li>
       </ul>
       {{BTN_PRIMARY:Start free trial}}
@@ -2101,8 +2112,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         </div>
           <div class="foot__col"><h3>Product</h3><ul><li><a href="#">Live design editor</a></li><li><a href="#">Features</a></li><li><a href="#">Product options</a></li><li><a href="#">Pricing</a></li></ul></div>
           {{FOOT_COLS:industries}}
-          <div class="foot__col"><h3>Resources</h3><ul><li><a href="#">Blog</a></li><li><a href="#">Case studies</a></li><li><a href="#">Video tutorials</a></li><li><a href="#">Partners</a></li><li><a href="#">Affiliate program</a></li></ul></div>
-          <div class="foot__col"><h3>Get help</h3><ul><li><a href="#">Help center</a></li><li><a href="#">Live chat</a></li><li><a href="#">Contact</a></li></ul></div>
+          {{FOOT_COLS:resources}}
       </div>
       <div class="foot__bar">
         <span>© 2026 InkyBay. Powered by <a class="parse" href="#">ParseLab</a></span>
@@ -2154,6 +2164,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       }
       window.addEventListener('wheel', function (e) {
         if (e.ctrlKey || Math.abs(e.deltaX) > Math.abs(e.deltaY)) return;     /* pinch zoom / sideways swipe */
+        if (e.target.closest && e.target.closest('.nav__sheet')) return;      /* the mobile sheet scrolls natively */
         var d = e.deltaY * (e.deltaMode === 1 ? 36 : e.deltaMode === 2 ? window.innerHeight : 1);
         e.preventDefault();
         go((running ? target : window.scrollY) + d);

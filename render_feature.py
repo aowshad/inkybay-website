@@ -36,6 +36,11 @@ ICON = {
     "gift": P('<rect x="3.5" y="8" width="17" height="4" rx="1"/><path d="M5 12v8.5h14V12M12 8v12.5M12 8S10.6 4 8.2 4.4 8.6 8 12 8zM12 8s1.4-4 3.8-3.6S15.4 8 12 8z"/>'),
     "droplet": P('<path d="M12 3.5s6 6.4 6 11a6 6 0 0 1-12 0c0-4.6 6-11 6-11z"/>'),
     "bag": P('<path d="M5 8h14l-1 12.5H6L5 8z"/><path d="M9 10V6.5a3 3 0 0 1 6 0V10"/>'),
+    "pen": P('<path d="M4 20l1-4.5L15.5 5a2.1 2.1 0 0 1 3 3L8 18.5 4 20z"/><path d="M13.5 7l3 3"/>'),
+    "chart": P('<path d="M4 20h16M7 16.5v-4M12 16.5V8M17 16.5V5"/>'),
+    "play": P('<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5-3.2-5-3.2z"/>'),
+    "handshake": P('<path d="M2.5 11.5L6 8l3 1 2.5-1.5L14 8l3.5 0 4 3.5"/><path d="M6 8l-3.5 3.5 5.6 5.6c.8.8 2 .8 2.8 0L16 12c.7-.7.7-1.8 0-2.5L14 8M9 14.5l2-2M11.5 17l2-2"/>'),
+    "book": P('<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 7h6"/>'),
 }
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'

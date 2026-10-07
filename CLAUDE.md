@@ -75,6 +75,7 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
   scrollY <= 4 (ignores trackpad overscroll). At <= 960px it is always the compact pill, as wide as the container.
 - **Smooth scroll**: dependency-free wheel glide (lerp 0.085). Touch, keyboard, scrollbar, pinch-zoom, sideways swipes and
   reduced motion stay native; any outside scroll cancels the glide; in-page anchors glide and stop below the navbar.
+  Wheel input over the open mobile sheet is left native so the sheet can scroll.
 - **Image swaps** (features, why): the new frame fades in on top while the old stays fully opaque until covered. No scale, no blink.
 - **Comet ring** (`.has-ring` + `.ring` + `.ring-glow > i`): 1px light with a short trail (~60deg), 8s per lap. The glow is a 3px
   masked stroke inside a wrapper that blurs it (7px) AFTER masking, so the halo is soft and centred on the line. Never mask after blurring.
@@ -116,6 +117,7 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 
 - Draft content to replace: case study quote and store, five reviews marked "Draft review", FAQ answers (verify feature claims).
 - Social links are text; drop in official icons from each platform's brand kit.
+- Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - `site/404.html` is a copy of the homepage with relative links, so its links only work when it is served from the
   site root; give it root-safe links when it becomes a real 404 page.
@@ -145,6 +147,16 @@ into the shared template. Never hand-write a menu in the template.
 - Menus: Features (grid, `src/features/_index.json`, base `features/`); Industries (grid, `src/industries/_index.json`,
   base `industries/`, promo `cta-products.webp` anchored to the top, footer: first five plus "All industries").
   Industry pages come later, so `industries/...` links 404 until they exist.
+  Resources (groups: Learn, Grow with InkyBay, Get help; internal pages `resources/blog/`, `resources/case-studies/`,
+  `resources/video-tutorials/`, `partners/`, `affiliate/` come later; Help center is external to docs.inkybay.com;
+  promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = Get help + Contact).
+- Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
+  title and a vertical list of items. Columns share the width evenly, so adding an item or a group needs no CSS change.
+- Video promo (`"visual": "video"`): `hero-editor.webp` as a full-bleed thumbnail (anchored to the top) under a light
+  dark wash, with a centred brand play button; same card, fade and dark-mode treatment as the image promos.
+- Live chat is `href="#"` with `data-action="live-chat"` (menu, sheet and footer) so the chat widget can hook in later.
+- Mobile sheet: each menu is a collapsible sub-list (group titles as small muted labels). The open sheet is capped to
+  the viewport and scrolls inside itself, so every sub-list stays reachable with all of them open.
 - Behaviour (every menu): opens on click, not hover; one open at a time; clicking another trigger swaps panels instantly
   (no close-then-open fade); outside click and Esc close (Esc returns focus to the trigger); every trigger has
   `aria-expanded` and `aria-controls`. The current page's own item is highlighted (`aria-current`).
@@ -268,6 +280,7 @@ stage's edge at every width and mode. Setup once: `python3 -m pip install --user
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Resources mega menu (groups layout, five new icons, external Help center with arrow-out icon, Live chat data-action hook, video promo from hero-editor.webp with a dark wash so it reads as a paused video). Footer Resources and Get help columns now come from nav.json (Contact kept as an extra Get help link). Fix found while testing: with all three sub-lists open the mobile sheet ran past the screen with no way to scroll; it now scrolls inside itself, and the wheel smooth-scroll leaves the sheet native
 - 2026-10-07: Industries mega menu (nine industries from src/industries/_index.json, eight new icons, promo "Built for your kind of store" linking to resources/case-studies/). The cta-products image is near-square, so its promo uses object-position 50% 0% to keep the cap, colour picker and clipart panel whole. The footer Industries column is now generated from the same data (first five plus "All industries"), so no footer copy is hardcoded for it
 - 2026-10-07: Data-driven mega menu component: src/nav.json renders the triggers, panels and mobile sub-lists; generic JS (one open at a time, instant swap between triggers, outside click/Esc). Features moved in with no visual change (before/after screenshots identical at 1440px, light and dark). Industries and Resources stay placeholders until their own commits. Menu links are now <root><path> everywhere (feature pages link to ../../features/<slug>/ instead of ../<slug>/), which replaces the old per-page link rule
 - 2026-10-07: Hero showcase: Unlimited product options (photo heroes/unlimited-product-options.webp, mini UI options | Option added, No limit)

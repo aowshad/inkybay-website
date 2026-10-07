@@ -38,6 +38,100 @@
           }
         }
       ]
+    },
+    {
+      "id": "resources",
+      "label": "Resources",
+      "layout": "groups",
+      "groups": [
+        {
+          "title": "Learn",
+          "items": [
+            {
+              "title": "Blog",
+              "short": "Tips and ideas for custom product stores.",
+              "icon": "pen",
+              "href": "resources/blog/"
+            },
+            {
+              "title": "Case studies",
+              "short": "How merchants grow with InkyBay.",
+              "icon": "chart",
+              "href": "resources/case-studies/"
+            },
+            {
+              "title": "Video tutorials",
+              "short": "Step-by-step setup videos.",
+              "icon": "play",
+              "href": "resources/video-tutorials/"
+            }
+          ]
+        },
+        {
+          "title": "Grow with InkyBay",
+          "items": [
+            {
+              "title": "Partners",
+              "short": "Agencies and apps that work with InkyBay.",
+              "icon": "handshake",
+              "href": "partners/"
+            },
+            {
+              "title": "Affiliate program",
+              "short": "Earn by recommending InkyBay.",
+              "icon": "percent",
+              "href": "affiliate/"
+            }
+          ]
+        },
+        {
+          "title": "Get help",
+          "items": [
+            {
+              "title": "Help center",
+              "short": "Guides and answers in the docs.",
+              "icon": "book",
+              "href": "https://docs.inkybay.com/spf/en",
+              "external": true
+            },
+            {
+              "title": "Live chat",
+              "short": "Talk to our support team.",
+              "icon": "chat",
+              "href": "#",
+              "action": "live-chat"
+            }
+          ]
+        }
+      ],
+      "promo": {
+        "title": "New to InkyBay?",
+        "text": "Set up your first customizable product with short step-by-step videos.",
+        "cta": "Watch tutorials",
+        "href": "resources/video-tutorials/",
+        "visual": "video"
+      },
+      "footer": [
+        {
+          "title": "Resources",
+          "groups": [
+            "Learn",
+            "Grow with InkyBay"
+          ]
+        },
+        {
+          "title": "Get help",
+          "groups": [
+            "Get help"
+          ],
+          "extra": [
+            {
+              "title": "Contact",
+              "href": "#"
+            }
+          ]
+        }
+      ]
     }
   ]
 }
