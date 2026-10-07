@@ -1,5 +1,24 @@
 # InkyBay website — Claude Code guide
 
+## Rules for working in this repo (read first, every session)
+
+1. CLAUDE.md is the source of truth. Any change to tokens, components,
+   section behaviour, page structure, URLs, build or deploy MUST update
+   CLAUDE.md in the same commit. A change without its doc update is not done.
+2. Before starting, check that CLAUDE.md matches the code for the area you
+   are about to touch. If they disagree, tell me before changing anything.
+3. Content lives in JSON (src/features/*.json, _index.json). Never hardcode
+   copy in templates or CSS.
+4. Shared look lives in src/template.html and src/feature.css. Never add
+   page-specific CSS; extend the shared template for all pages instead.
+5. Run python3 build.py and python3 scripts/audit.py on what you changed
+   before every commit. Never commit a failing audit.
+6. One logical change per commit, authored as me. Never force-push.
+7. After every task, add one line to the "Change log" section at the
+   bottom of CLAUDE.md: date, what changed, and any decision behind it.
+8. If a decision of mine changes an earlier rule in this file, update or
+   remove the old rule; never leave two rules that contradict each other.
+
 The homepage is **designed and locked**. `reference/homepage.html` is the source of truth for look and behaviour.
 When building the full site, extract tokens and components from it first, rebuild the homepage in the chosen
 stack until it matches the reference, and only then create new pages. Do not reinvent the look on page 2.
@@ -181,3 +200,36 @@ card's edge, the product wall shows every product, no two-tone heading line wrap
 description is cut off. Setup once: `pip install playwright && python3 -m playwright install chromium`.
 
 **Commits**: one commit per page, e.g. `Add feature page: Custom quote requests`. Never batch pages together.
+
+
+## Change log
+
+Newest first. One line per commit: date, what changed, and any decision behind it.
+
+- 2026-10-07: CLAUDE.md: rules for keeping docs in sync (rules section at the top, this change log seeded from git history)
+- 2026-10-07: Add feature page: Unlimited product options
+- 2026-10-07: Add feature page: Quantity discounts
+- 2026-10-07: Add feature page: Inventory management
+- 2026-10-07: Add feature page: Ready-made templates
+- 2026-10-07: Add feature page: Smart add-on pricing
+- 2026-10-07: Add feature page: Multiple printing methods
+- 2026-10-07: Add feature page: Font & clipart library
+- 2026-10-07: Add feature page: Custom quote requests
+- 2026-10-07: Add feature playbook, audit script and draft content
+- 2026-10-07: Mega menu: promo image, two-line menu copy, more spacing
+- 2026-10-07: Mega menu, anchored looping feature visuals, dark How it works band, one-tone headings on tint
+- 2026-10-07: Two-tone headings on the homepage; edge-to-edge product wall
+- 2026-10-07: Feature template v2: Advanced product setup, two-tone headings, glow visuals, vertical product wall
+- 2026-10-07: Feature page template, Live design editor page, one build for all pages
+- 2026-10-06: FAQ heading: FAQs at the standard 56px H2
+- 2026-10-05: How it works: first step uses the butter gradient
+- 2026-10-05: How it works: four Figma gradients with matching strokes
+- 2026-10-05: Why InkyBay glass keeps its light look in dark mode
+- 2026-10-05: New backgrounds for Powerful customization and Built for complex products
+- 2026-10-05: Why InkyBay glass cards fill the frame evenly with stronger contrast
+- 2026-10-05: Head-centred avatars, even marquee separator, photo backgrounds with glass mini UIs in Why InkyBay
+- 2026-10-05: Add merchants and shoppers text marquee between CTA and footer
+- 2026-10-05: Soft centred ring glow with short trail, equal rail media boxes with larger UIs, no scaling on Why cards
+- 2026-10-05: Smooth scroll, bounce-free navbar, always-compact mobile nav, blink-free image swaps, centred ring glow, drawn underline
+- 2026-10-05: Add GitHub Pages entry point that opens the homepage reference
+- 2026-10-05: Locked homepage design: reference build, template, assets, CLAUDE.md
