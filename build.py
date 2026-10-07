@@ -43,5 +43,5 @@ def write(path, t):
     print(f"ok -> {path.relative_to(ROOT)} ({round(len(t) / 1024)} KB)")
 
 write(ROOT / "reference" / "homepage.html", build((ROOT / "src" / "template.html").read_text()))
-for j in sorted((ROOT / "src" / "features").glob("*.json")):
+for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(ROOT / "reference" / "features" / f"{j.stem}.html", build(render(j.stem)))

@@ -92,22 +92,35 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 
 ## Feature pages (one template, nine pages)
 
-Every feature page has the same sections in the same order; only the JSON changes.
+Every feature page has the same sections in the same order; only the JSON changes. The nine features, their
+descriptions and two-line taglines live in `src/features/_index.json` (data only, not built as a page).
 
 | # | Section | JSON key | Background |
 |---|---|---|---|
 | 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, visual with comet ring | `hero` | white |
-| 2 | Benefits: 4 cards | `benefits` | white (no top padding) |
-| 3 | How it works: 3 rows, text and visual alternate sides; visuals are homepage mini UIs on the butter/peach/sky gradients | `details[].visual` = a mini-UI name | tint |
+| 2 | Benefits: 4 open columns, a hairline on top that fills with brand on hover | `benefits` | white |
+| 3 | How it works: two-tone heading (the feature's tagline), 3 zig-zag rows with a hairline checklist | `details_heading`, `details` | tint |
 | 4 | Quote (same tint band) | `quote` | tint |
-| 5 | Capabilities: 8 cards | `capabilities` | white |
-| 6 | Works with: 6 product tiles | `products` (asset names in products/) | tint |
+| 5 | Capabilities: 8 cards, two-tone heading | `capabilities_heading`, `capabilities` | white |
+| 6 | Works with: text left, vertical product wall right (3 columns, middle runs the other way) | `products_heading`, `products_lead`, `products` | tint |
 | 7 | FAQs | `faqs` | white |
-| 8 | Related features: 3 cards | `related` | tint |
-| 9 | CTA, crowd marquee, footer | from the homepage | dark |
+| 8 | CTA, crowd marquee, footer | from the homepage | dark |
 
-Mini-UI names available for `details[].visual`: setup, design, files, options, methods, inventory, quote,
-addons, tiers, library, templates, sides, grow. Icon names: see `ICON` in render_feature.py.
+**Two-tone headings**: `["First line.", "Second line."]` renders the first line in ink and the second muted; the
+heading reveal animates both lines word by word.
 
-To add a feature page: copy `src/features/live-design-editor.json`, change the content, run `python3 build.py`.
-Do not add page-specific CSS; if a feature needs a new section type, add it to the template for all pages.
+**Zig-zag visuals**: no box; a soft brand glow (orange, red, amber) drifts behind floating UI. Three layouts, so
+any feature can reuse them with its own content:
+- `{"layout": "single", "ui": "<mini-ui>", "chip": "text"}`: one card plus a floating chip
+- `{"layout": "product", "image": "<products/name>", "chips": ["a", "b"]}`: product photo, two chips, a swatch pill
+- `{"layout": "stack", "back": "<mini-ui>", "front": "<mini-ui>"}`: two overlapping cards
+Floating parts drift slightly with the pointer (depth-1 and depth-2 layers).
+Mini-UI names: setup, design, files, options, methods, inventory, quote, addons, tiers, library, templates, sides, grow.
+
+**Product wall**: any number of products. Cards are rendered into three columns; JS spreads them over the visible
+columns (two on phones, so none are lost), repeats them until each column overfills, then duplicates for a
+seamless loop. Hover pauses the wall.
+
+To add a feature page: copy `src/features/advanced-product-setup.json`, take the title, description and tagline
+from `_index.json`, write the rest, run `python3 build.py`. Do not add page-specific CSS; if a feature needs a new
+section type, add it to the template for all pages.

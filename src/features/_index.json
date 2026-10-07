@@ -1,0 +1,94 @@
+{
+  "features": [
+    {
+      "slug": "advanced-product-setup",
+      "title": "Advanced product setup",
+      "description": "Create highly customizable products with multiple print areas, sides, sizes, colors, styles, and product options. Set up complex products with flexible pricing and customization rules, all without coding.",
+      "tagline": [
+        "Built for complex products.",
+        "Configured your way."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/category/products"
+    },
+    {
+      "slug": "custom-quote-requests",
+      "title": "Custom quote requests",
+      "description": "Let customers request a personalized quote directly from the designer, without adding the product to cart. Review their design, product details, and requirements, then send a custom price based on their request.",
+      "tagline": [
+        "Every custom request matters.",
+        "Turn ideas into orders."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay"
+    },
+    {
+      "slug": "font-clipart-library",
+      "title": "Font & clipart library",
+      "description": "Give shoppers more creative freedom with your own collection of fonts and cliparts. Organize assets into categories, set defaults, add custom graphics, and control which assets are available for different products or printing methods.",
+      "tagline": [
+        "Your fonts. Your artwork.",
+        "Your creative possibilities."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en"
+    },
+    {
+      "slug": "multiple-printing-methods",
+      "title": "Multiple printing methods",
+      "description": "Support different production workflows from one customizable product. Add multiple printing types and configure pricing, colors, size ranges, and design restrictions for each method.",
+      "tagline": [
+        "One product. Multiple ways to print.",
+        "Choose what works for you."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/category/printing-types-and-pricing"
+    },
+    {
+      "slug": "smart-add-on-pricing",
+      "title": "Smart add-on pricing",
+      "description": "Automatically adjust product pricing based on customization. Add extra charges for product options, colors, print areas, clipart, sizes, and other design elements to keep pricing accurate as customers customize.",
+      "tagline": [
+        "Price every detail.",
+        "Keep customization profitable."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/category/configuration"
+    },
+    {
+      "slug": "ready-made-templates",
+      "title": "Ready-made templates",
+      "description": "Help customers start designing faster with professionally prepared templates. Create predefined designs, control what shoppers can edit, and let them browse available templates directly in the design experience.",
+      "tagline": [
+        "Start with inspiration.",
+        "Customize it your way."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/category/predefined-templates"
+    },
+    {
+      "slug": "inventory-management",
+      "title": "Inventory management",
+      "description": "Keep your customizable products in sync with available stock. Track inventory across sizes, colors, and styles, manage SKUs, monitor items currently in carts, and automatically stop sales when stock reaches your set threshold.",
+      "tagline": [
+        "Stay on top of every product.",
+        "Keep inventory in sync."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay"
+    },
+    {
+      "slug": "quantity-discounts",
+      "title": "Quantity discounts",
+      "description": "Reward larger orders with flexible tiered pricing. Set percentage or fixed discounts based on quantity and choose whether discounts apply to the base product, customization, or add-on options.",
+      "tagline": [
+        "Buy more. Save more.",
+        "Reward every bigger order."
+      ],
+      "docs": "https://docs.inkybay.com/spf/en/how-to-set-quantity-discounts-using-inkybay"
+    },
+    {
+      "slug": "unlimited-product-options",
+      "title": "Unlimited product options",
+      "description": "Give shoppers the flexibility to configure products exactly the way they want. Add as many product options as needed and build detailed customization experiences for everything from simple choices to complex products.",
+      "tagline": [
+        "No limits on customization.",
+        "Give shoppers more choices."
+      ],
+      "docs": null
+    }
+  ]
+}

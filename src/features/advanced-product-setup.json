@@ -1,0 +1,179 @@
+{
+  "slug": "advanced-product-setup",
+  "nav_label": "Advanced product setup",
+  "meta": {
+    "title": "Advanced product setup | InkyBay",
+    "description": "Create highly customizable products with multiple print areas, sides, sizes, colors, styles and options, all without coding."
+  },
+  "hero": {
+    "title": "Advanced product setup",
+    "lead": "Create highly customizable products with multiple print areas, sides, sizes, colors, styles, and product options. Set up complex products with flexible pricing and customization rules, all without coding.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "visual_alt": "InkyBay editor with a jersey set up on four product sides"
+  },
+  "benefits": [
+    {
+      "icon": "layers",
+      "title": "Every print area",
+      "text": "Front, back, sleeves or any custom zone, each with its own rules."
+    },
+    {
+      "icon": "sliders",
+      "title": "Every variant",
+      "text": "Sizes, colors and styles that shoppers pick in one place."
+    },
+    {
+      "icon": "tag",
+      "title": "Flexible pricing",
+      "text": "Prices that follow the options and areas shoppers choose."
+    },
+    {
+      "icon": "wand",
+      "title": "No coding",
+      "text": "Point-and-click setup from the InkyBay dashboard."
+    }
+  ],
+  "details_heading": [
+    "Built for complex products.",
+    "Configured your way."
+  ],
+  "details": [
+    {
+      "title": "Print areas on every side",
+      "text": "Add as many sides as the product needs and draw a print area on each. Every area keeps its own size limits and rules.",
+      "points": [
+        "Unlimited product sides",
+        "Custom print area shapes",
+        "Size limits per area"
+      ],
+      "visual": {
+        "layout": "single",
+        "ui": "setup",
+        "chip": "Back print area added"
+      }
+    },
+    {
+      "title": "Sizes, colors and styles",
+      "text": "Turn one product into every variant you sell. Shoppers choose a size, color and style, and the preview updates instantly.",
+      "points": [
+        "Size and color variants",
+        "Style options per product",
+        "Live preview for every choice"
+      ],
+      "visual": {
+        "layout": "product",
+        "image": "tee",
+        "chips": [
+          "Size · M",
+          "Style · Crew neck"
+        ]
+      }
+    },
+    {
+      "title": "Pricing and customization rules",
+      "text": "Decide what shoppers can change and what each choice costs. Rules keep every design printable and every price accurate.",
+      "points": [
+        "Option-based pricing",
+        "Design restrictions",
+        "Rules per print area"
+      ],
+      "visual": {
+        "layout": "stack",
+        "back": "options",
+        "front": "addons"
+      }
+    }
+  ],
+  "quote": {
+    "text": "We sell jerseys with four print areas and a dozen options. Setting them up took an afternoon, and we never touched our theme code.",
+    "name": "Store name (draft)",
+    "location": "City, Country",
+    "initials": "SN"
+  },
+  "capabilities_heading": [
+    "Everything you can configure.",
+    "All without writing code."
+  ],
+  "capabilities": [
+    {
+      "icon": "layers",
+      "title": "Multiple print areas",
+      "text": "Any number of zones on one product."
+    },
+    {
+      "icon": "template",
+      "title": "Product sides",
+      "text": "Front, back, sleeves and more."
+    },
+    {
+      "icon": "sliders",
+      "title": "Sizes and colors",
+      "text": "Every variant you sell, in one product."
+    },
+    {
+      "icon": "star",
+      "title": "Styles",
+      "text": "Different cuts or models of one item."
+    },
+    {
+      "icon": "hash",
+      "title": "Product options",
+      "text": "Inputs, dropdowns and choices."
+    },
+    {
+      "icon": "tag",
+      "title": "Flexible pricing",
+      "text": "Prices that follow each option."
+    },
+    {
+      "icon": "file",
+      "title": "Customization rules",
+      "text": "Control what shoppers can change."
+    },
+    {
+      "icon": "wand",
+      "title": "No-code setup",
+      "text": "Everything from the dashboard."
+    }
+  ],
+  "products_heading": [
+    "Made for any product.",
+    "Apparel to pet bowls."
+  ],
+  "products_lead": "Set up anything you sell as a customizable product, with the right print areas and options for each.",
+  "products": [
+    "socks",
+    "mug",
+    "pillow",
+    "wallart",
+    "photo",
+    "necklace",
+    "handbag",
+    "tote",
+    "drawstring",
+    "petbowl",
+    "phone",
+    "puzzle",
+    "pumpkin",
+    "card"
+  ],
+  "faqs": [
+    {
+      "q": "Do I need to code to set up a product?",
+      "a": "No. Print areas, sides, options and pricing are all set up from the InkyBay dashboard."
+    },
+    {
+      "q": "Can each side have its own print area?",
+      "a": "Yes. Every side you add gets its own print area, size limits and rules."
+    },
+    {
+      "q": "Can different options have different prices?",
+      "a": "Yes. Prices can change with the options, colors and print areas a shopper picks."
+    },
+    {
+      "q": "Can I make my existing products customizable?",
+      "a": "Yes. You can turn products from your Shopify store into customizable products in InkyBay."
+    }
+  ]
+}
