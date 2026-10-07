@@ -19,21 +19,24 @@
 8. If a decision of mine changes an earlier rule in this file, update or
    remove the old rule; never leave two rules that contradict each other.
 
-The homepage is **designed and locked**. `reference/homepage.html` is the source of truth for look and behaviour.
-When building the full site, extract tokens and components from it first, rebuild the homepage in the chosen
-stack until it matches the reference, and only then create new pages. Do not reinvent the look on page 2.
+The homepage is **designed and locked**. `src/template.html` (built to `site/index.html`) is the source of truth for look
+and behaviour. When building the full site, extract tokens and components from it first, rebuild the homepage in the
+chosen stack until it matches the build, and only then create new pages. Do not reinvent the look on page 2.
 
 ## Repo layout
 
 ```
-reference/homepage.html   single-file build of the locked homepage (open in a browser)
-reference/features/       one built page per src/features/<slug>.json
+site/                     build output, not in git (.gitignore); python3 build.py regenerates it
+  index.html              the homepage, one self-contained file
+  features/<slug>/index.html  one page per src/features/<slug>.json (clean URL: features/<slug>/)
+  404.html                copy of the homepage for now
 src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), hero-editor.webp, cta-products.webp
-build.py                  python3 build.py  ->  regenerates the homepage and every feature page
+build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
+scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 ```
 
 ## Locked kit (do not add new values; extend the scale only if a real need appears)
@@ -99,13 +102,13 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 - Draft content to replace: case study quote and store, five reviews marked "Draft review", FAQ answers (verify feature claims).
 - Social links are text; drop in official icons from each platform's brand kit.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
-- Fonts load from Google Fonts in the reference; self-host Geist and Inter in production.
+- Fonts load from Google Fonts in the build; self-host Geist and Inter in production.
 
 ## Suggested next steps
 
 1. Pick the stack (Next.js + CSS modules or Tailwind with these tokens as theme values).
 2. Port tokens, then Button, Navbar, Ring, Mini UI, heading reveal.
-3. Rebuild the homepage section by section and diff it visually against `reference/homepage.html`.
+3. Rebuild the homepage section by section and diff it visually against `site/index.html`.
 4. Start the inner pages (Features, Industries, Pricing, Resources) with the same kit.
 
 
@@ -206,6 +209,7 @@ description is cut off. Setup once: `pip install playwright && python3 -m playwr
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-07: Build to site/ with clean URLs (site/index.html, site/features/<slug>/index.html, site/404.html; reference/ and site/ ignored, reference/ untracked). audit.py reads site/ in this same commit so the audit checks the new build, not stale files; internal links are fixed in the next commit
 - 2026-10-07: CLAUDE.md: rules for keeping docs in sync (rules section at the top, this change log seeded from git history)
 - 2026-10-07: Add feature page: Unlimited product options
 - 2026-10-07: Add feature page: Quantity discounts

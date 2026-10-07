@@ -1,7 +1,10 @@
 """Build every page as a single self-contained HTML file.
 
-    python3 build.py   ->  reference/homepage.html
-                           reference/features/<slug>.html   (one per src/features/<slug>.json)
+    python3 build.py   ->  site/index.html                   (homepage)
+                           site/features/<slug>/index.html   (one per src/features/<slug>.json)
+                           site/404.html                     (copy of the homepage for now)
+
+site/ is build output and is not in git.
 
 src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head, navbar, CTA,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
@@ -58,6 +61,9 @@ def write(path, t):
     path.parent.mkdir(parents=True, exist_ok=True); path.write_text(t)
     print(f"ok -> {path.relative_to(ROOT)} ({round(len(t) / 1024)} KB)")
 
-write(ROOT / "reference" / "homepage.html", build((ROOT / "src" / "template.html").read_text()))
+SITE = ROOT / "site"
+homepage = build((ROOT / "src" / "template.html").read_text())
+write(SITE / "index.html", homepage)
+write(SITE / "404.html", homepage)
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
-    write(ROOT / "reference" / "features" / f"{j.stem}.html", build(render(j.stem), base="", home="../homepage.html", current=j.stem))
+    write(SITE / "features" / j.stem / "index.html", build(render(j.stem), base="", home="../homepage.html", current=j.stem))

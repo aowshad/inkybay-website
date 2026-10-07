@@ -64,7 +64,7 @@ def check_json(slug):
 
 async def check_page(slug, d):
     from playwright.async_api import async_playwright
-    path = ROOT / "reference" / ("homepage.html" if slug == "homepage" else f"features/{slug}.html")
+    path = ROOT / "site" / ("index.html" if slug == "homepage" else f"features/{slug}/index.html")
     if not path.exists():
         return bad(slug, f"not built: run python3 build.py ({path.relative_to(ROOT)})")
     async with async_playwright() as p:
