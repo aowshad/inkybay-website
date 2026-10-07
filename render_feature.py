@@ -25,6 +25,9 @@ ICON = {
     "sliders": P('<path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/>'),
     "tag": P('<path d="M3.5 12.5l8-8H20v8.5l-8 8-8.5-8.5z"/><circle cx="15.5" cy="8.5" r="1.5"/>'),
     "printer": P('<path d="M7 9V4h10v5"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6H7z"/>'),
+    "chat": P('<path d="M5 4.5h14v11H9.5L5 19.5v-15z"/><path d="M9 9h6M9 12h4"/>'),
+    "box": P('<path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5v-9z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/>'),
+    "percent": P('<path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/>'),
 }
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
@@ -65,17 +68,33 @@ def heading(lines, tag="h2", cls="fsec__title", id_=""):
             f'<span class="h-line h-muted">{E(second)}</span></{tag}>')
 
 
+def chip(c, cls="chip"):
+    """A chip is a string, or {"label": "Size", "roll": ["S", "M", "L", "XL"]} for a value that cycles."""
+    if isinstance(c, dict):
+        roll = "".join(f"<i>{E(x)}</i>" for x in c["roll"] + c["roll"][:1])
+        return f'<span class="{cls}">{E(c["label"])} · <span class="roll"><span>{roll}</span></span></span>'
+    return f'<span class="{cls}">{E(c)}</span>'
+
+
 def visual(v, ui):
+    """Three reusable layouts. Attachments sit inside the anchor (the main card's box), so they always
+    overlap its edges; --d staggers their entrance."""
     glow = '<span class="fvis__glow" aria-hidden="true"><i></i><i></i><i></i></span>'
     if v["layout"] == "single":
-        comp = (f'<div class="fcomp fcomp--single"><div class="layer depth-1">{ui[v["ui"]]}</div>'
-                f'<span class="fchip depth-2">{E(v["chip"])}</span></div>')
+        comp = (f'<div class="fcomp fcomp--single"><div class="fanchor">{ui[v["ui"]]}'
+                f'<span class="att att--tl" style="--d:.35s">{chip(v["chip"])}</span>'
+                f'<span class="att att--br" style="--d:.6s">{chip(v["badge"], "chip chip--brand")}</span></div></div>')
     elif v["layout"] == "product":
-        chips = "".join(f'<span class="fchip depth-2">{E(c)}</span>' for c in v["chips"])
-        comp = (f'<div class="fcomp fcomp--product"><div class="fphoto depth-1"><img src="{{{{IMG:products/{v["image"]}.webp}}}}" alt="" width="400" height="400" loading="lazy"></div>'
-                f'{chips}<span class="fswatch depth-2"><i style="--c:#1F3A68"></i><i style="--c:#FF7500"></i><i style="--c:#E7E7EA"></i><i style="--c:#2F2F2F"></i></span></div>')
+        tiles = "".join(f'<span class="tile" style="--k:{k}"><i style="--c:{c}"></i></span>' for k, c in enumerate(v["colors"]))
+        comp = (f'<div class="fcomp fcomp--product"><div class="fanchor fanchor--photo">'
+                f'<div class="fphoto"><img src="{{{{IMG:products/{v["image"]}.webp}}}}" alt="" width="400" height="400" loading="lazy"></div>'
+                f'<span class="att att--tl" style="--d:.35s">{chip(v["chips"][0])}</span>'
+                f'<span class="att att--r" style="--d:.55s"><span class="tiles">{tiles}</span></span>'
+                f'<span class="att att--bl" style="--d:.75s">{chip(v["chips"][1])}</span></div></div>')
     else:  # stack
-        comp = f'<div class="fcomp fcomp--stack"><div class="layer depth-1">{ui[v["back"]]}</div><div class="layer depth-2">{ui[v["front"]]}</div></div>'
+        comp = (f'<div class="fcomp fcomp--stack"><div class="fstack-back">{ui[v["back"]]}</div>'
+                f'<div class="fanchor fstack-front">{ui[v["front"]]}'
+                f'<span class="att att--tl" style="--d:.45s">{chip(v["badge"], "chip chip--brand")}</span></div></div>')
     return f'<div class="fvis" aria-hidden="true">{glow}{comp}</div>'
 
 
@@ -131,8 +150,8 @@ def render(slug):
     <div class="container"><ul class="fben__grid">{benefits}</ul></div>
   </section>
 
-  <!-- 3 · HOW IT WORKS (zig-zag) + 4 · QUOTE, one tint band -->
-  <section class="fsec fsec--tint" aria-labelledby="f-details">
+  <!-- 3 · HOW IT WORKS (zig-zag) + 4 · QUOTE, one dark band -->
+  <section class="fsec fsec--dark" aria-labelledby="f-details">
     <div class="container">
       <div class="fsec__head fsec__head--center">{heading(d["details_heading"], id_="f-details")}</div>
       <div class="frows">
@@ -149,7 +168,7 @@ def render(slug):
   </section>
 
   <!-- 5 · CAPABILITIES -->
-  <section class="fsec" aria-labelledby="f-cap">
+  <section class="fsec fsec--tint" aria-labelledby="f-cap">
     <div class="container">
       <div class="fsec__head fsec__head--center">{heading(d["capabilities_heading"], id_="f-cap")}</div>
       <ul class="fcap__grid">{caps}</ul>
@@ -157,7 +176,7 @@ def render(slug):
   </section>
 
   <!-- 6 · WORKS WITH (vertical product wall; any number of products) -->
-  <section class="fsec fsec--tint fsec--wall" aria-labelledby="f-prod">
+  <section class="fsec fsec--wall" aria-labelledby="f-prod">
     <div class="container fprod">
       <div class="fprod__text">
         <div class="fsec__head">{heading(d["products_heading"], id_="f-prod")}<p class="fsec__lead">{E(d["products_lead"])}</p></div>
@@ -168,7 +187,7 @@ def render(slug):
   </section>
 
   <!-- 7 · FAQS -->
-  <section class="faq" aria-labelledby="faq-title">
+  <section class="faq faq--tint" aria-labelledby="faq-title">
     <div class="container faq__grid">
       <div class="faq__intro">
         <h2 class="faq__title" id="faq-title">FAQs</h2>

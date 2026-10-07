@@ -8,7 +8,9 @@
         "Built for complex products.",
         "Configured your way."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/category/products"
+      "docs": "https://docs.inkybay.com/spf/en/category/products",
+      "short": "Build complex customizable products without any coding.",
+      "icon": "layers"
     },
     {
       "slug": "custom-quote-requests",
@@ -18,7 +20,9 @@
         "Every custom request matters.",
         "Turn ideas into orders."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay"
+      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay",
+      "short": "Let shoppers request custom pricing for unique orders.",
+      "icon": "chat"
     },
     {
       "slug": "font-clipart-library",
@@ -28,7 +32,9 @@
         "Your fonts. Your artwork.",
         "Your creative possibilities."
       ],
-      "docs": "https://docs.inkybay.com/spf/en"
+      "docs": "https://docs.inkybay.com/spf/en",
+      "short": "Manage the creative assets shoppers use to design their products.",
+      "icon": "type"
     },
     {
       "slug": "multiple-printing-methods",
@@ -38,7 +44,9 @@
         "One product. Multiple ways to print.",
         "Choose what works for you."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/category/printing-types-and-pricing"
+      "docs": "https://docs.inkybay.com/spf/en/category/printing-types-and-pricing",
+      "short": "Set up printing methods and colors for every production workflow.",
+      "icon": "printer"
     },
     {
       "slug": "smart-add-on-pricing",
@@ -48,7 +56,9 @@
         "Price every detail.",
         "Keep customization profitable."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/category/configuration"
+      "docs": "https://docs.inkybay.com/spf/en/category/configuration",
+      "short": "Add extra charges for colors, options, inputs, and more.",
+      "icon": "tag"
     },
     {
       "slug": "ready-made-templates",
@@ -58,7 +68,9 @@
         "Start with inspiration.",
         "Customize it your way."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/category/predefined-templates"
+      "docs": "https://docs.inkybay.com/spf/en/category/predefined-templates",
+      "short": "Give shoppers a head start with pre-designed templates.",
+      "icon": "template"
     },
     {
       "slug": "inventory-management",
@@ -68,7 +80,9 @@
         "Stay on top of every product.",
         "Keep inventory in sync."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay"
+      "docs": "https://docs.inkybay.com/spf/en/how-to-manage-inventory-with-inkybay",
+      "short": "Track inventory while managing your custom product orders.",
+      "icon": "box"
     },
     {
       "slug": "quantity-discounts",
@@ -78,7 +92,9 @@
         "Buy more. Save more.",
         "Reward every bigger order."
       ],
-      "docs": "https://docs.inkybay.com/spf/en/how-to-set-quantity-discounts-using-inkybay"
+      "docs": "https://docs.inkybay.com/spf/en/how-to-set-quantity-discounts-using-inkybay",
+      "short": "Reward larger orders with percentage or fixed discounts.",
+      "icon": "percent"
     },
     {
       "slug": "unlimited-product-options",
@@ -88,7 +104,9 @@
         "No limits on customization.",
         "Give shoppers more choices."
       ],
-      "docs": null
+      "docs": null,
+      "short": "Create advanced product options and configurations.",
+      "icon": "sliders"
     }
   ]
 }

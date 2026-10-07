@@ -71,9 +71,9 @@
   border-left: 2px solid #fff; border-bottom: 2px solid #fff; transform: rotate(-45deg);
 }
 
-/* visual: no box, a soft brand glow that drifts, UI floating on top */
+/* visual: no box, a soft brand glow that drifts; small parts sit ON the main card's edges and loop */
 .fvis { position: relative; container-type: size; aspect-ratio: 4 / 3; isolation: isolate; }
-.fvis__glow { position: absolute; inset: 4%; z-index: -1; pointer-events: none; filter: blur(42px); opacity: .75; }
+.fvis__glow { position: absolute; inset: 4%; z-index: -1; pointer-events: none; filter: blur(42px); opacity: .8; }
 .fvis__glow i { position: absolute; border-radius: 50%; }
 .fvis__glow i:nth-child(1) { width: 62%; height: 62%; left: 6%; top: 10%; background: radial-gradient(circle, #FF7500 0%, rgba(255,117,0,0) 70%); animation: blob-a 14s ease-in-out infinite alternate; }
 .fvis__glow i:nth-child(2) { width: 56%; height: 56%; right: 4%; bottom: 6%; background: radial-gradient(circle, #E5380F 0%, rgba(229,56,15,0) 70%); animation: blob-b 17s ease-in-out infinite alternate; }
@@ -82,38 +82,65 @@
 @keyframes blob-b { to { transform: translate(-16%, -12%) scale(.9); } }
 @keyframes blob-c { to { transform: translate(-14%, 16%) scale(1.2); } }
 
-.fcomp { position: absolute; inset: 0; font-size: clamp(11px, 3.6cqmin, 18px); --px: 0; --py: 0; }
-.fcomp .mui { --ink: #2F2F2F; --ink-muted: #707070; --bg: #FFFFFF; --surface: #F6F6F7; --line: #E7E7EA; color: var(--ink); position: absolute; }
-.fcomp .mui { box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 1.6em 3.2em -1.6em rgba(120, 30, 5, .45); }
-.layer { position: absolute; inset: 0; pointer-events: none; }     /* full-size wrapper: positions inside it resolve against the whole visual */
-.layer > * { pointer-events: auto; }
-.depth-1 { transform: translate3d(calc(var(--px) * 6px), calc(var(--py) * 5px), 0); transition: transform .6s var(--ease-expo); }
-.depth-2 { transform: translate3d(calc(var(--px) * 16px), calc(var(--py) * 12px), 0); transition: transform .6s var(--ease-expo); }
-.fchip {
-  position: absolute; z-index: 3; display: inline-flex; align-items: center; gap: .5em; white-space: nowrap;
-  padding: .55em .9em; border-radius: 999px; font-size: .85em; font-weight: 500; color: #2F2F2F;
-  background: rgba(255, 255, 255, .86); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 .8em 1.8em -.9em rgba(120, 30, 5, .5);
-}
-.fchip::before { content: ""; width: .55em; height: .55em; border-radius: 50%; background: var(--brand-600); box-shadow: 0 0 0 .2em rgba(255,117,0,.18); }
-/* layout A: one card + a floating chip */
-.fcomp--single .mui { left: 50%; top: 50%; width: 22em; max-width: 78%; translate: -50% -50%; }
-.fcomp--single .fchip { left: 6%; top: 18%; }
-/* layout B: product photo + chips + swatch pill */
-.fphoto { position: absolute; left: 50%; top: 50%; width: 56%; aspect-ratio: 1; translate: -50% -50%; border-radius: 1.2em; background: #fff;
-  box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 1.6em 3.2em -1.6em rgba(120, 30, 5, .45); display: grid; place-items: center; }
+.fcomp { position: absolute; inset: 0; font-size: clamp(11px, 3.6cqmin, 18px); }
+.fcomp .mui { --ink: #2F2F2F; --ink-muted: #707070; --bg: #FFFFFF; --surface: #F6F6F7; --line: #E7E7EA; color: var(--ink);
+  position: relative; width: 100%; max-width: none; box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 1.6em 3.2em -1.6em rgba(80, 20, 0, .55); }
+/* the anchor is the main card's box: attachments are positioned against it, so they always overlap its edges */
+.fanchor { position: absolute; left: 50%; top: 50%; translate: -50% -50%; width: 22em; max-width: 72%; }
+.fanchor--photo { width: 48%; aspect-ratio: 1; }
+.fphoto { position: absolute; inset: 0; border-radius: 1.2em; background: #fff; display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 1.6em 3.2em -1.6em rgba(80, 20, 0, .55); }
 .fphoto img { width: 82%; height: 82%; object-fit: contain; }
-.fcomp--product .fchip:nth-of-type(1) { left: 4%; top: 22%; }
-.fcomp--product .fchip:nth-of-type(2) { right: 4%; bottom: 20%; }
-.fswatch { position: absolute; z-index: 3; right: 10%; top: 14%; display: flex; gap: .5em; padding: .5em .65em; border-radius: 999px; background: rgba(255,255,255,.9);
-  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 .8em 1.8em -.9em rgba(120, 30, 5, .5); }
-.fswatch i { width: 1.2em; height: 1.2em; border-radius: 50%; background: var(--c); }
-.fswatch i:first-child { box-shadow: 0 0 0 2px #fff, 0 0 0 3.5px var(--c); }
-/* layout C: two stacked cards */
-.fcomp--stack .mui { width: 19em; max-width: 64%; }
-.fcomp--stack .layer:nth-child(1) .mui { left: 6%; top: 8%; rotate: -4deg; opacity: .96; }
-.fcomp--stack .layer:nth-child(2) { z-index: 2; }
-.fcomp--stack .layer:nth-child(2) .mui { right: 6%; bottom: 8%; }
+.fstack-back { position: absolute; left: 5%; top: 7%; width: 19em; max-width: 58%; rotate: -4deg; }
+.fstack-front { left: auto; top: auto; right: 5%; bottom: 7%; translate: none; width: 19em; max-width: 58%; }
+
+/* attachments: chips, badges, option tiles */
+.att { position: absolute; z-index: 3; opacity: 0; scale: .85; }
+.att--tl { left: -2.4em; top: -1.3em; }
+.att--br { right: -1.8em; bottom: -1.3em; }
+.att--bl { left: -2.2em; bottom: -1.1em; }
+.att--r  { right: -2.2em; top: 50%; transform: translateY(-50%); }
+.chip {
+  display: inline-flex; align-items: center; gap: .55em; white-space: nowrap;
+  padding: .65em 1.05em; border-radius: 999px; font-size: 1em; font-weight: 500; color: #2F2F2F; line-height: 1.35;
+  background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 .9em 2em -1em rgba(80, 20, 0, .55);
+}
+.chip::before { content: ""; flex: none; width: .6em; height: .6em; border-radius: 50%; background: var(--brand-600); box-shadow: 0 0 0 .22em rgba(255,117,0,.2); }
+.chip--brand { background: var(--brand-grad); color: #fff; box-shadow: 0 .9em 2em -1em rgba(229, 56, 15, .7); }
+.chip--brand::before { background: #fff; box-shadow: 0 0 0 .22em rgba(255,255,255,.3); }
+.roll { display: inline-block; height: 1.35em; overflow: hidden; vertical-align: bottom; }
+.roll > span { display: flex; flex-direction: column; }
+.roll i { font-style: normal; height: 1.35em; font-weight: 600; color: var(--brand-700); }
+.tiles { display: grid; gap: .55em; }
+.tile { width: 3.4em; height: 3.4em; border-radius: .95em; background: #fff; display: grid; place-items: center;
+  box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 .9em 2em -1em rgba(80, 20, 0, .5); }
+.tile i { width: 1.7em; height: 1.7em; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(13,18,28,.08); }
+
+/* loops (only while on screen: JS adds .mui-live to .fvis) */
+@media (prefers-reduced-motion: no-preference) {
+  .fvis.mui-live .att { animation: att-in .7s var(--ease-expo) var(--d, 0s) forwards, att-bob 6s ease-in-out calc(var(--d, 0s) + .7s) infinite alternate; }
+  .fvis.mui-live .fstack-front { animation: att-bob 7s ease-in-out infinite alternate; }
+  .fvis.mui-live .fstack-back { animation: tilt 9s ease-in-out infinite alternate; }
+  .fvis.mui-live .roll > span { animation: roll 8s var(--ease-inout) infinite; }
+  .fvis.mui-live .tile { animation: tile-on 6s infinite; animation-delay: calc(var(--k) * 2s); }
+}
+@keyframes att-in { to { opacity: 1; scale: 1; } }
+@keyframes att-bob { from { translate: 0 0; } to { translate: 0 -.4em; } }
+@keyframes tilt { from { rotate: -4deg; } to { rotate: -2deg; } }
+@keyframes roll { 0%, 20% { translate: 0 0; } 25%, 45% { translate: 0 -1.35em; } 50%, 70% { translate: 0 -2.7em; } 75%, 95% { translate: 0 -4.05em; } 100% { translate: 0 0; } }
+@keyframes tile-on {
+  0%, 30% { box-shadow: 0 0 0 .18em var(--brand-500), 0 .9em 2em -1em rgba(229, 56, 15, .6); scale: 1.06; }
+  33.4%, 100% { box-shadow: inset 0 0 0 1px rgba(13,18,28,.06), 0 .9em 2em -1em rgba(80, 20, 0, .5); scale: 1; }
+}
+@media (prefers-reduced-motion: reduce) { .att { opacity: 1; scale: 1; } }
+
+/* dark band (How it works): the two-tone tagline and the brand glow both read best on dark */
+.fsec--dark { background: #150E09; color: #fff;
+  --ink: #FFFFFF; --ink-muted: rgba(255, 255, 255, .64); --line: rgba(255, 255, 255, .1); --tint-line: rgba(255, 255, 255, .1); --bg: #1E150E; }
+.fsec--dark .fvis__glow { opacity: .9; }
+.fsec--tint .fcardx { box-shadow: inset 0 0 0 1px var(--tint-line); }
+.faq--tint { background: var(--tint); }
 
 /* quote */
 .fquote { margin-top: var(--section-y); }
@@ -146,7 +173,6 @@
 @media (prefers-reduced-motion: reduce) {
   .fvis__glow i, .vtrack { animation: none; }
   .vwall { overflow-y: auto; }
-  .depth-1, .depth-2 { transform: none; }
 }
 @media (max-width: 1100px) {
   .fben__grid, .fcap__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: var(--s-8); }

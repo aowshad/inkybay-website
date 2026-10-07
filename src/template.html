@@ -1280,11 +1280,58 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 @media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 
+/* =========================================================
+   MEGA MENU — opens on click from "Features"; content from src/features/_index.json
+   ========================================================= */
+.mega { position: absolute; left: 0; right: 0; top: 100%; padding-top: var(--s-2); pointer-events: none; }
+.mega__panel {
+  width: min(var(--container), 100% - var(--margin) * 2); margin-inline: auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--s-6);
+  padding: var(--s-6); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -30px rgba(13, 18, 28, .35);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.99); transform-origin: top center;
+  transition: opacity .3s ease, transform .45s var(--ease-expo), visibility 0s linear .45s;
+}
+.mega[data-open="true"] { pointer-events: auto; }
+.mega[data-open="true"] .mega__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .3s ease, transform .45s var(--ease-expo), visibility 0s; }
+.mega__label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); margin: 0 0 var(--s-4) var(--s-3); }
+.mega__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-1); }
+.mega__item { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--s-3); align-items: start; padding: var(--s-3); border-radius: var(--r-md); color: var(--ink); transition: background-color .2s ease; }
+.mega__item:hover, .mega__item:focus-visible, .mega__item[aria-current="page"] { background: color-mix(in srgb, var(--brand-500) 7%, var(--bg)); }
+.mega__icon { width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; background: var(--surface); color: var(--ink); transition: background-color .2s ease, color .2s ease; }
+.mega__icon svg { width: 20px; height: 20px; }
+.mega__item:hover .mega__icon, .mega__item[aria-current="page"] .mega__icon { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-600); }
+.mega__title, .mega__desc { display: block; }
+.mega__title { font-weight: 600; line-height: 24px; }
+.mega__desc { color: var(--ink-muted); font-size: var(--t-body); line-height: 22px; margin-top: 2px; }
+.mega__promo {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-lg); padding: var(--s-6);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-3); min-height: 260px;
+  background: #150E09; color: #fff;
+}
+.mega__glow { position: absolute; inset: -20% -10% auto auto; width: 90%; aspect-ratio: 1; z-index: -1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,117,0,.55), rgba(229,56,15,.25) 45%, transparent 70%); filter: blur(30px); animation: blob-a 12s ease-in-out infinite alternate; }
+.mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
+.mega__promo-text { color: rgba(255, 255, 255, .7); }
+.mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
+.nav__link--mega svg, .sheet-toggle svg { transition: transform .35s var(--ease-expo); }
+.nav__link--mega[aria-expanded="true"] svg, .sheet-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.nav__link--mega[aria-expanded="true"] { background: rgba(13, 18, 28, .05); }
+.sheet-sub { list-style: none; margin: 0; padding: 0 0 0 var(--s-3); overflow: hidden; max-height: 0; transition: max-height .45s var(--ease-expo); }
+.sheet-toggle[aria-expanded="true"] + .sheet-sub { max-height: 600px; }
+.sheet-sub a { display: block; padding: var(--s-2) 0; color: var(--ink-muted); }
+.sheet-sub a[aria-current="page"] { color: var(--brand-600); }
+@keyframes blob-a { to { transform: translate(18%, 14%) scale(1.15); } }
+@media (max-width: 1100px) { .mega__panel { grid-template-columns: minmax(0, 1fr); } .mega__promo { display: none; } .mega__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 960px) { .mega { display: none; } }
+@media (prefers-reduced-motion: reduce) { .mega__panel, .sheet-sub { transition: none; } .mega__glow { animation: none; } }
+
 /* Two-tone headings: first part ink, second part muted. Block lines on feature pages, inline on the homepage. */
 .h-line { display: block; }
 .h-line.h-inline { display: inline; }
 .h-muted { color: var(--ink-muted); }
-.industries h2 .h-muted, .endzone h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back, like the reference */
+.industries h2 .h-muted, .endzone h2 .h-muted, .fsec--dark h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back */
+.case h2 .h-muted, .reviews h2 .h-muted, .why h2 .h-muted, .fsec--tint h2 .h-muted { color: inherit; }   /* on the orange tint the muted tone loses contrast: one tone there */
 
 /* Section headings: split into words by JS, revealed once on entering the viewport */
 .h-anim .hw { display: inline-block; }
@@ -1485,14 +1532,14 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 <header class="nav" id="nav">
   <div class="nav__bar">
     <div class="nav__row">
-      <a class="logo" href="#" aria-label="InkyBay home">
+      <a class="logo" href="{{HOME}}" aria-label="InkyBay home">
         {{LOGO_MARK}}
         {{LOGO_TYPE}}
       </a>
 
       <nav aria-label="Primary">
         <ul class="nav__menu">
-          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Features {{CHEVRON}}</button></li>
+          <li><button class="nav__link nav__link--mega" id="nav-features" aria-expanded="false" aria-controls="mega-features">Features {{CHEVRON}}</button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Industries {{CHEVRON}}</button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources {{CHEVRON}}</button></li>
           <li><a class="nav__link" href="#pricing">Pricing</a></li>
@@ -1510,12 +1557,27 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
-        <li><button class="nav__link">Features {{CHEVRON}}</button></li>
+        <li><button class="nav__link sheet-toggle" aria-expanded="false" aria-controls="sheet-features">Features {{CHEVRON}}</button><ul class="sheet-sub" id="sheet-features">{{MEGA_MOBILE}}</ul></li>
         <li><button class="nav__link">Industries {{CHEVRON}}</button></li>
         <li><button class="nav__link">Resources {{CHEVRON}}</button></li>
         <li><a class="nav__link" href="#pricing">Pricing</a></li>
       </ul>
       {{BTN_PRIMARY:Start free trial}}
+    </div>
+  </div>
+
+  <div class="mega" id="mega-features" role="region" aria-label="Features" data-open="false">
+    <div class="mega__panel">
+      <div class="mega__main">
+        <p class="mega__label">Features</p>
+        <ul class="mega__grid">{{MEGA_ITEMS}}</ul>
+      </div>
+      <aside class="mega__promo">
+        <span class="mega__glow" aria-hidden="true"></span>
+        <p class="mega__promo-title">See the editor in action</p>
+        <p class="mega__promo-text">Try InkyBay the way your shoppers will, right in the browser.</p>
+        {{BTN_PRIMARY:Try live demo}}
+      </aside>
     </div>
   </div>
 </header>
@@ -2039,7 +2101,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     <div class="container">
       <div class="foot__top">
         <div class="foot__brand">
-          <a class="logo" href="#" aria-label="InkyBay home">{{LOGO_MARK}}{{LOGO_TYPE}}</a>
+          <a class="logo" href="{{HOME}}" aria-label="InkyBay home">{{LOGO_MARK}}{{LOGO_TYPE}}</a>
           <p>Effortless, powerful product personalization for Shopify stores.</p>
           <div class="foot__social" aria-label="InkyBay on social media"><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">X</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
         </div>
@@ -2643,16 +2705,29 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       half.forEach(function (n) { var c = n.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c); });  /* identical second half */
     });
 
-    /* Feature visuals: floating parts drift a little with the pointer (depth-1 slow, depth-2 more) */
-    document.querySelectorAll('.fvis').forEach(function (v) {
-      var comp = v.querySelector('.fcomp'); if (!comp || reduceMotion) return;
-      v.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = v.getBoundingClientRect();
-        comp.style.setProperty('--px', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
-        comp.style.setProperty('--py', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
-      });
-      v.addEventListener('pointerleave', function () { comp.style.setProperty('--px', 0); comp.style.setProperty('--py', 0); });
+    /* Feature visuals: start their loops only while on screen */
+    (function () {
+      var vis = [].slice.call(document.querySelectorAll('.fvis'));
+      if (!vis.length) return;
+      if (!('IntersectionObserver' in window)) { vis.forEach(function (v) { v.classList.add('mui-live'); }); return; }
+      var io = new IntersectionObserver(function (es) { es.forEach(function (en) { en.target.classList.toggle('mui-live', en.isIntersecting); }); }, { threshold: 0.3 });
+      vis.forEach(function (v) { io.observe(v); });
+    })();
+
+    /* Mega menu: click (not hover) on "Features"; outside click or Esc closes */
+    (function () {
+      var trig = document.getElementById('nav-features'), mega = document.getElementById('mega-features');
+      if (!trig || !mega) return;
+      function set(open) {
+        mega.setAttribute('data-open', String(open)); trig.setAttribute('aria-expanded', String(open));
+      }
+      trig.addEventListener('click', function (e) { e.stopPropagation(); set(mega.getAttribute('data-open') !== 'true'); });
+      document.addEventListener('click', function (e) { if (!mega.contains(e.target) && e.target !== trig) set(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mega.getAttribute('data-open') === 'true') { set(false); trig.focus(); } });
+      window.addEventListener('resize', function () { if (window.innerWidth <= 960) set(false); });
+    })();
+    document.querySelectorAll('.sheet-toggle').forEach(function (b) {
+      b.addEventListener('click', function () { b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true')); });
     });
 
     /* Product wall: spread the cards over the visible columns, repeat them until each column overfills,

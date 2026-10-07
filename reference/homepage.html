@@ -1280,11 +1280,58 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 @media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 
+/* =========================================================
+   MEGA MENU — opens on click from "Features"; content from src/features/_index.json
+   ========================================================= */
+.mega { position: absolute; left: 0; right: 0; top: 100%; padding-top: var(--s-2); pointer-events: none; }
+.mega__panel {
+  width: min(var(--container), 100% - var(--margin) * 2); margin-inline: auto;
+  display: grid; grid-template-columns: minmax(0, 1fr) 300px; gap: var(--s-6);
+  padding: var(--s-6); border-radius: var(--r-xl);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line), 0 30px 60px -30px rgba(13, 18, 28, .35);
+  opacity: 0; visibility: hidden; transform: translateY(-8px) scale(.99); transform-origin: top center;
+  transition: opacity .3s ease, transform .45s var(--ease-expo), visibility 0s linear .45s;
+}
+.mega[data-open="true"] { pointer-events: auto; }
+.mega[data-open="true"] .mega__panel { opacity: 1; visibility: visible; transform: none; transition: opacity .3s ease, transform .45s var(--ease-expo), visibility 0s; }
+.mega__label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); margin: 0 0 var(--s-4) var(--s-3); }
+.mega__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-1); }
+.mega__item { display: grid; grid-template-columns: 40px minmax(0, 1fr); column-gap: var(--s-3); align-items: start; padding: var(--s-3); border-radius: var(--r-md); color: var(--ink); transition: background-color .2s ease; }
+.mega__item:hover, .mega__item:focus-visible, .mega__item[aria-current="page"] { background: color-mix(in srgb, var(--brand-500) 7%, var(--bg)); }
+.mega__icon { width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; background: var(--surface); color: var(--ink); transition: background-color .2s ease, color .2s ease; }
+.mega__icon svg { width: 20px; height: 20px; }
+.mega__item:hover .mega__icon, .mega__item[aria-current="page"] .mega__icon { background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); color: var(--brand-600); }
+.mega__title, .mega__desc { display: block; }
+.mega__title { font-weight: 600; line-height: 24px; }
+.mega__desc { color: var(--ink-muted); font-size: var(--t-body); line-height: 22px; margin-top: 2px; }
+.mega__promo {
+  position: relative; overflow: hidden; isolation: isolate; border-radius: var(--r-lg); padding: var(--s-6);
+  display: flex; flex-direction: column; justify-content: flex-end; gap: var(--s-3); min-height: 260px;
+  background: #150E09; color: #fff;
+}
+.mega__glow { position: absolute; inset: -20% -10% auto auto; width: 90%; aspect-ratio: 1; z-index: -1; border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,117,0,.55), rgba(229,56,15,.25) 45%, transparent 70%); filter: blur(30px); animation: blob-a 12s ease-in-out infinite alternate; }
+.mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
+.mega__promo-text { color: rgba(255, 255, 255, .7); }
+.mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
+.nav__link--mega svg, .sheet-toggle svg { transition: transform .35s var(--ease-expo); }
+.nav__link--mega[aria-expanded="true"] svg, .sheet-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
+.nav__link--mega[aria-expanded="true"] { background: rgba(13, 18, 28, .05); }
+.sheet-sub { list-style: none; margin: 0; padding: 0 0 0 var(--s-3); overflow: hidden; max-height: 0; transition: max-height .45s var(--ease-expo); }
+.sheet-toggle[aria-expanded="true"] + .sheet-sub { max-height: 600px; }
+.sheet-sub a { display: block; padding: var(--s-2) 0; color: var(--ink-muted); }
+.sheet-sub a[aria-current="page"] { color: var(--brand-600); }
+@keyframes blob-a { to { transform: translate(18%, 14%) scale(1.15); } }
+@media (max-width: 1100px) { .mega__panel { grid-template-columns: minmax(0, 1fr); } .mega__promo { display: none; } .mega__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 960px) { .mega { display: none; } }
+@media (prefers-reduced-motion: reduce) { .mega__panel, .sheet-sub { transition: none; } .mega__glow { animation: none; } }
+
 /* Two-tone headings: first part ink, second part muted. Block lines on feature pages, inline on the homepage. */
 .h-line { display: block; }
 .h-line.h-inline { display: inline; }
 .h-muted { color: var(--ink-muted); }
-.industries h2 .h-muted, .endzone h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back, like the reference */
+.industries h2 .h-muted, .endzone h2 .h-muted, .fsec--dark h2 .h-muted { color: rgba(255, 255, 255, .42); }   /* dark sections: muted part clearly steps back */
+.case h2 .h-muted, .reviews h2 .h-muted, .why h2 .h-muted, .fsec--tint h2 .h-muted { color: inherit; }   /* on the orange tint the muted tone loses contrast: one tone there */
 
 /* Section headings: split into words by JS, revealed once on entering the viewport */
 .h-anim .hw { display: inline-block; }
@@ -1534,7 +1581,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
       <nav aria-label="Primary">
         <ul class="nav__menu">
-          <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Features <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+          <li><button class="nav__link nav__link--mega" id="nav-features" aria-expanded="false" aria-controls="mega-features">Features <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Industries <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
           <li><button class="nav__link" aria-haspopup="true" aria-expanded="false">Resources <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
           <li><a class="nav__link" href="#pricing">Pricing</a></li>
@@ -1552,12 +1599,27 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
-        <li><button class="nav__link">Features <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
+        <li><button class="nav__link sheet-toggle" aria-expanded="false" aria-controls="sheet-features">Features <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button><ul class="sheet-sub" id="sheet-features"><li><a href="features/advanced-product-setup.html">Advanced product setup</a></li><li><a href="features/custom-quote-requests.html">Custom quote requests</a></li><li><a href="features/font-clipart-library.html">Font &amp; clipart library</a></li><li><a href="features/multiple-printing-methods.html">Multiple printing methods</a></li><li><a href="features/smart-add-on-pricing.html">Smart add-on pricing</a></li><li><a href="features/ready-made-templates.html">Ready-made templates</a></li><li><a href="features/inventory-management.html">Inventory management</a></li><li><a href="features/quantity-discounts.html">Quantity discounts</a></li><li><a href="features/unlimited-product-options.html">Unlimited product options</a></li></ul></li>
         <li><button class="nav__link">Industries <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
         <li><button class="nav__link">Resources <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></button></li>
         <li><a class="nav__link" href="#pricing">Pricing</a></li>
       </ul>
       <a class="btn btn--primary" href="#" aria-label="Start free trial"><span class="btn__label" aria-hidden="true"><span data-text="Start free trial">Start free trial</span></span><span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg></span></a>
+    </div>
+  </div>
+
+  <div class="mega" id="mega-features" role="region" aria-label="Features" data-open="false">
+    <div class="mega__panel">
+      <div class="mega__main">
+        <p class="mega__label">Features</p>
+        <ul class="mega__grid"><li><a class="mega__item" href="features/advanced-product-setup.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 5-9 5-9-5 9-5z"/><path d="M3 13l9 5 9-5"/></svg></span><span><span class="mega__title">Advanced product setup</span><span class="mega__desc">Build complex customizable products without any coding.</span></span></a></li><li><a class="mega__item" href="features/custom-quote-requests.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 4.5h14v11H9.5L5 19.5v-15z"/><path d="M9 9h6M9 12h4"/></svg></span><span><span class="mega__title">Custom quote requests</span><span class="mega__desc">Let shoppers request custom pricing for unique orders.</span></span></a></li><li><a class="mega__item" href="features/font-clipart-library.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 6V4h14v2M12 4v16M9 20h6"/></svg></span><span><span class="mega__title">Font &amp; clipart library</span><span class="mega__desc">Manage the creative assets shoppers use to design their products.</span></span></a></li><li><a class="mega__item" href="features/multiple-printing-methods.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 9V4h10v5"/><rect x="3.5" y="9" width="17" height="8" rx="2"/><path d="M7 14h10v6H7z"/></svg></span><span><span class="mega__title">Multiple printing methods</span><span class="mega__desc">Set up printing methods and colors for every production workflow.</span></span></a></li><li><a class="mega__item" href="features/smart-add-on-pricing.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 12.5l8-8H20v8.5l-8 8-8.5-8.5z"/><circle cx="15.5" cy="8.5" r="1.5"/></svg></span><span><span class="mega__title">Smart add-on pricing</span><span class="mega__desc">Add extra charges for colors, options, inputs, and more.</span></span></a></li><li><a class="mega__item" href="features/ready-made-templates.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="2"/><path d="M3.5 9h17M9 9v11.5"/></svg></span><span><span class="mega__title">Ready-made templates</span><span class="mega__desc">Give shoppers a head start with pre-designed templates.</span></span></a></li><li><a class="mega__item" href="features/inventory-management.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 7.5L12 3l8.5 4.5v9L12 21l-8.5-4.5v-9z"/><path d="M3.5 7.5L12 12l8.5-4.5M12 12v9"/></svg></span><span><span class="mega__title">Inventory management</span><span class="mega__desc">Track inventory while managing your custom product orders.</span></span></a></li><li><a class="mega__item" href="features/quantity-discounts.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 5L5 19"/><circle cx="7" cy="7" r="2.5"/><circle cx="17" cy="17" r="2.5"/></svg></span><span><span class="mega__title">Quantity discounts</span><span class="mega__desc">Reward larger orders with percentage or fixed discounts.</span></span></a></li><li><a class="mega__item" href="features/unlimited-product-options.html"><span class="mega__icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 7h10M18 7h2M4 17h4M12 17h8"/><circle cx="16" cy="7" r="2"/><circle cx="10" cy="17" r="2"/></svg></span><span><span class="mega__title">Unlimited product options</span><span class="mega__desc">Create advanced product options and configurations.</span></span></a></li></ul>
+      </div>
+      <aside class="mega__promo">
+        <span class="mega__glow" aria-hidden="true"></span>
+        <p class="mega__promo-title">See the editor in action</p>
+        <p class="mega__promo-text">Try InkyBay the way your shoppers will, right in the browser.</p>
+        <a class="btn btn--primary" href="#" aria-label="Try live demo"><span class="btn__label" aria-hidden="true"><span data-text="Try live demo">Try live demo</span></span><span class="btn__icon" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg><svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg></span></a>
+      </aside>
     </div>
   </div>
 </header>
@@ -2742,16 +2804,29 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       half.forEach(function (n) { var c = n.cloneNode(true); c.setAttribute('aria-hidden', 'true'); track.appendChild(c); });  /* identical second half */
     });
 
-    /* Feature visuals: floating parts drift a little with the pointer (depth-1 slow, depth-2 more) */
-    document.querySelectorAll('.fvis').forEach(function (v) {
-      var comp = v.querySelector('.fcomp'); if (!comp || reduceMotion) return;
-      v.addEventListener('pointermove', function (e) {
-        if (e.pointerType !== 'mouse') return;
-        var r = v.getBoundingClientRect();
-        comp.style.setProperty('--px', (((e.clientX - r.left) / r.width) * 2 - 1).toFixed(3));
-        comp.style.setProperty('--py', (((e.clientY - r.top) / r.height) * 2 - 1).toFixed(3));
-      });
-      v.addEventListener('pointerleave', function () { comp.style.setProperty('--px', 0); comp.style.setProperty('--py', 0); });
+    /* Feature visuals: start their loops only while on screen */
+    (function () {
+      var vis = [].slice.call(document.querySelectorAll('.fvis'));
+      if (!vis.length) return;
+      if (!('IntersectionObserver' in window)) { vis.forEach(function (v) { v.classList.add('mui-live'); }); return; }
+      var io = new IntersectionObserver(function (es) { es.forEach(function (en) { en.target.classList.toggle('mui-live', en.isIntersecting); }); }, { threshold: 0.3 });
+      vis.forEach(function (v) { io.observe(v); });
+    })();
+
+    /* Mega menu: click (not hover) on "Features"; outside click or Esc closes */
+    (function () {
+      var trig = document.getElementById('nav-features'), mega = document.getElementById('mega-features');
+      if (!trig || !mega) return;
+      function set(open) {
+        mega.setAttribute('data-open', String(open)); trig.setAttribute('aria-expanded', String(open));
+      }
+      trig.addEventListener('click', function (e) { e.stopPropagation(); set(mega.getAttribute('data-open') !== 'true'); });
+      document.addEventListener('click', function (e) { if (!mega.contains(e.target) && e.target !== trig) set(false); });
+      document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && mega.getAttribute('data-open') === 'true') { set(false); trig.focus(); } });
+      window.addEventListener('resize', function () { if (window.innerWidth <= 960) set(false); });
+    })();
+    document.querySelectorAll('.sheet-toggle').forEach(function (b) {
+      b.addEventListener('click', function () { b.setAttribute('aria-expanded', String(b.getAttribute('aria-expanded') !== 'true')); });
     });
 
     /* Product wall: spread the cards over the visible columns, repeat them until each column overfills,

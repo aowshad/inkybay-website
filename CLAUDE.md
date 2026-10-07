@@ -90,6 +90,13 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 4. Start the inner pages (Features, Industries, Pricing, Resources) with the same kit.
 
 
+## Mega menu
+
+"Features" in the navbar opens a mega menu on click (not hover); outside click and Esc close it. Left: the nine
+features from `_index.json` (icon, title, `short`), the current page highlighted. Right: a dark promo card with
+"Try live demo". Under 1100px the promo hides; on phones the menu sheet shows the nine as a collapsible list.
+Links are written per page by build.py (`features/<slug>.html` from the homepage, `<slug>.html` between features).
+
 ## Feature pages (one template, nine pages)
 
 Every feature page has the same sections in the same order; only the JSON changes. The nine features, their
@@ -99,11 +106,11 @@ descriptions and two-line taglines live in `src/features/_index.json` (data only
 |---|---|---|---|
 | 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, visual with comet ring | `hero` | white |
 | 2 | Benefits: 4 open columns, a hairline on top that fills with brand on hover | `benefits` | white |
-| 3 | How it works: two-tone heading (the feature's tagline), 3 zig-zag rows with a hairline checklist | `details_heading`, `details` | tint |
-| 4 | Quote (same tint band) | `quote` | tint |
-| 5 | Capabilities: 8 cards, two-tone heading | `capabilities_heading`, `capabilities` | white |
-| 6 | Works with: text left, vertical product wall right (3 columns, middle runs the other way) | `products_heading`, `products_lead`, `products` | tint |
-| 7 | FAQs | `faqs` | white |
+| 3 | How it works: two-tone heading (the feature's tagline), 3 zig-zag rows with a hairline checklist | `details_heading`, `details` | dark |
+| 4 | Quote (same dark band) | `quote` | dark |
+| 5 | Capabilities: 8 cards (heading one tone on tint) | `capabilities_heading`, `capabilities` | tint |
+| 6 | Works with: text left, vertical product wall right (3 columns, middle runs the other way) | `products_heading`, `products_lead`, `products` | white |
+| 7 | FAQs | `faqs` | tint |
 | 8 | CTA, crowd marquee, footer | from the homepage | dark |
 
 **Two-tone headings**: `["First line.", "Second line."]` renders the first line in ink and the second muted; the
@@ -111,12 +118,17 @@ heading reveal animates both lines word by word. The homepage uses the inline va
 Industries, Rail, Case study, How it works and CTA ("Custom products / for every business."). On dark sections the
 muted part is rgba(255,255,255,.42). Reviews, Why InkyBay, FAQs and the Features heading stay single-tone.
 
-**Zig-zag visuals**: no box; a soft brand glow (orange, red, amber) drifts behind floating UI. Three layouts, so
-any feature can reuse them with its own content:
-- `{"layout": "single", "ui": "<mini-ui>", "chip": "text"}`: one card plus a floating chip
-- `{"layout": "product", "image": "<products/name>", "chips": ["a", "b"]}`: product photo, two chips, a swatch pill
-- `{"layout": "stack", "back": "<mini-ui>", "front": "<mini-ui>"}`: two overlapping cards
-Floating parts drift slightly with the pointer (depth-1 and depth-2 layers).
+**Two-tone rule**: two-tone headings only on white and dark backgrounds. On the orange tint the muted tone loses
+contrast, so headings there render in one tone automatically (`.fsec--tint`, `.case`, `.reviews`, `.why`).
+
+**Zig-zag visuals**: no box; a soft brand glow (orange, red, amber) drifts behind the UI. Small parts (chips, badges,
+option tiles) live inside the anchor (the main card's box) so they always overlap its edges. They animate on their
+own while on screen: staggered entrance, a gentle bob, a cycling size value, rotating active colour. No pointer effects.
+- `{"layout": "single", "ui": "<mini-ui>", "chip": "text", "badge": "text"}`: one card, chip top-left, brand badge bottom-right
+- `{"layout": "product", "image": "<products/name>", "chips": [{"label": "Size", "roll": ["S","M","L","XL"]}, "text"], "colors": ["#hex", ...]}`:
+  product photo, cycling chip top-left, colour tiles on the right edge, chip bottom-left
+- `{"layout": "stack", "back": "<mini-ui>", "front": "<mini-ui>", "badge": "text"}`: two overlapping cards, badge on the front card
+A chip is a string or `{"label", "roll"}` (the value cycles).
 Mini-UI names: setup, design, files, options, methods, inventory, quote, addons, tiers, library, templates, sides, grow.
 
 **Product wall**: the section has no vertical padding; the 560px wall meets its top and bottom edges and fades into them. Any number of products. Cards are rendered into three columns; JS spreads them over the visible

@@ -50,7 +50,8 @@
       "visual": {
         "layout": "single",
         "ui": "setup",
-        "chip": "Back print area added"
+        "chip": "Back print area added",
+        "badge": "4 sides"
       }
     },
     {
@@ -65,8 +66,21 @@
         "layout": "product",
         "image": "tee",
         "chips": [
-          "Size · M",
+          {
+            "label": "Size",
+            "roll": [
+              "S",
+              "M",
+              "L",
+              "XL"
+            ]
+          },
           "Style · Crew neck"
+        ],
+        "colors": [
+          "#1F3A68",
+          "#FF7500",
+          "#E7E7EA"
         ]
       }
     },
@@ -81,7 +95,8 @@
       "visual": {
         "layout": "stack",
         "back": "options",
-        "front": "addons"
+        "front": "addons",
+        "badge": "Price updated"
       }
     }
   ],

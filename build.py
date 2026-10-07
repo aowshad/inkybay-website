@@ -7,7 +7,8 @@ src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
 """
 import base64, re, html, pathlib
-from render_feature import render
+import json
+from render_feature import render, ICON
 
 ROOT = pathlib.Path(__file__).parent
 ASSETS = ROOT / "src" / "assets"
@@ -26,7 +27,22 @@ def secondary(m):
 def b64(path):
     return "data:image/webp;base64," + base64.b64encode((ASSETS / path).read_bytes()).decode()
 
-def build(t):
+INDEX = json.loads((ROOT / "src" / "features" / "_index.json").read_text())["features"]
+
+def mega(base, current):
+    """Mega-menu items and the mobile sub-list, from _index.json. base = path prefix to the features folder."""
+    items, mobile = [], []
+    for f in INDEX:
+        cur = ' aria-current="page"' if f["slug"] == current else ""
+        href = f'{base}{f["slug"]}.html'
+        items.append(f'<li><a class="mega__item" href="{href}"{cur}><span class="mega__icon">{ICON[f["icon"]]}</span>'
+                     f'<span><span class="mega__title">{html.escape(f["title"])}</span><span class="mega__desc">{html.escape(f["short"])}</span></span></a></li>')
+        mobile.append(f'<li><a href="{href}"{cur}>{html.escape(f["title"])}</a></li>')
+    return "".join(items), "".join(mobile)
+
+def build(t, base="features/", home="#", current=None):
+    items, mobile = mega(base, current)
+    t = t.replace("{{MEGA_ITEMS}}", items).replace("{{MEGA_MOBILE}}", mobile).replace("{{HOME}}", home)
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{CHEVRON}}", CHEV)
@@ -44,4 +60,4 @@ def write(path, t):
 
 write(ROOT / "reference" / "homepage.html", build((ROOT / "src" / "template.html").read_text()))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
-    write(ROOT / "reference" / "features" / f"{j.stem}.html", build(render(j.stem)))
+    write(ROOT / "reference" / "features" / f"{j.stem}.html", build(render(j.stem), base="", home="../homepage.html", current=j.stem))
