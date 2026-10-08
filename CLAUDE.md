@@ -305,7 +305,7 @@ Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, contr
 `site/partners/`, built by `render_partners.py` from `src/partners.json` (all copy) and `src/partners-directory.json`
 (the list), styles in `src/partners.css` + `src/forms.css`. Reached from the Resources mega menu and the footer.
 1. Hero [white]: breadcrumb Home > Resources > Partners, two-tone H1 (H2 size), lead, "Become a partner" (to the form)
-   and "Browse partners" (to the directory); visual: six demo monogram tiles orbiting an InkyBay tile (90s, upright,
+   and "Browse partners" (to the directory); visual: the first six partners' logo tiles orbiting an InkyBay tile (90s, upright,
    the core and chips float; static with reduced motion).
 2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts, a search on name and description,
    3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
@@ -314,7 +314,9 @@ Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, contr
 3. Why partner [white]: four benefit columns (feature-page benefit style). 4. Who we partner with [dark]: one card per
    type with who it is for and an example. 5. How it works [white]: Apply, We review, Get listed (no time promises).
 6. Partner form [tint]: see Forms. 7. FAQs [white]. 8. CTA, crowd marquee, footer.
-- Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, monogram tiles, links to example.com);
+- Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
+- Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
+  supplied partner logos assigned at random, so names and logos do not belong together yet;
   the benefits and FAQ answers are `"draft": true`. The consent checkbox's privacy policy link is `#` (no privacy page
   yet). The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
   overflow at 390px.
@@ -446,6 +448,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Partners: real partner logos (13 supplied logos in src/assets/partners/, 192px WebP, assigned at random to the 12 demo partners and the hero orbit; monogram tiles stay as the fallback). Flagged: the logos are real apps while the names are still fictional demo names
 - 2026-10-08: Contact page (render_contact.py, src/contact.json, src/contact.css, contact JS in the template, audit check_contact); the shared form handler gains blur validation, a success template that replaces the form, and an email fallback on errors; Resources > Get help gets a Contact item and every "Talk to our team" button links to contact/. Fixes found while building: the field wrappers were renamed .cfx because .fx is the homepage features heading (its script crashed the page), and .form[hidden] now really hides the form on success. Figma not readable; copy from the brief
 - 2026-10-08: Partners page (render_partners.py, src/partners.json, src/partners-directory.json, src/partners.css) and the shared form setup (src/forms.css, one form handler in the template, FORM_ENDPOINT and NEWSLETTER_ENDPOINT in build.py, both empty: forms say "Form not connected yet"). Also {{BTN_SECONDARY:label|href}}. Decisions: the hero title uses the H2 size (two long lines at display size ran to seven lines); demo partners and draft benefits/FAQs are marked for replacement; Figma not readable, copy from the brief
 - 2026-10-08: Interactive 404 page (render_404.py, src/404.json, src/404.css, editor JS in the shared template, SITE_BASE in build.py, audit check_404 with a GitHub-Pages-like local server). Decisions: the homepage gets #features and #industries anchors for the 404's links (there are no Features or Industries index pages); Pricing points at #pricing like the navbar, flagged because no pricing page exists; the Figma frames could not be read (the Figma connector is not authorized), so the copy comes from the brief

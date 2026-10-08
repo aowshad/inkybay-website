@@ -17,6 +17,16 @@ def monogram(name):
     return "".join(w[0] for w in words[:2]).upper()
 
 
+def logo(p):
+    """The partner's logo (src/assets/partners/) when it has one, else a monogram tile."""
+    if p.get("logo"): return f'<img src="{{{{IMG:partners/{p["logo"]}}}}}" alt="" width="192" height="192" loading="lazy" decoding="async">'
+    return E(monogram(p["name"]))
+
+
+def logo_cls(p, k):
+    return " has-logo" if p.get("logo") else f" mono mono--{k % 4}"
+
+
 def render():
     c = json.loads((ROOT / "src" / "partners.json").read_text())
     partners = json.loads((ROOT / "src" / "partners-directory.json").read_text())["partners"]
@@ -27,7 +37,7 @@ def render():
     proof = home[home.index('<a class="proof"'):home.index("</a>", home.index('<a class="proof"')) + 4]
 
     # hero: partner tiles orbiting an InkyBay tile
-    ring = "".join(f'<span class="porbit__tile mono mono--{k % 4}" style="--k:{k}">{E(monogram(p["name"]))}</span>' for k, p in enumerate(partners[:6]))
+    ring = "".join(f'<span class="porbit__tile{logo_cls(p, k)}" style="--k:{k}">{logo(p)}</span>' for k, p in enumerate(partners[:6]))
     chips = "".join(f'<span class="porbit__chip porbit__chip--{k + 1} chip{" chip--brand" if k else ""}">{E(t)}</span>' for k, t in enumerate(h["chips"]))
     orbit = (f'<div class="porbit" aria-hidden="true"><span class="porbit__glow"></span><div class="porbit__ring">{ring}</div>'
              f'<span class="porbit__core">{{{{LOGO_MARK}}}}</span>{chips}</div>')
@@ -38,7 +48,7 @@ def render():
                       f'<span class="pdir__count">{sum(p["type"] == t["id"] for p in partners)}</span></button>' for t in c["types"]))
     cards = "".join(
         f'<li class="ptr{" is-featured" if p.get("featured") else ""}" data-type="{E(p["type"])}" data-q="{E((p["name"] + " " + p["description"]).lower())}">'
-        f'<span class="ptr__logo mono mono--{k % 4}" aria-hidden="true">{E(monogram(p["name"]))}</span>'
+        f'<span class="ptr__logo{logo_cls(p, k)}" aria-hidden="true">{logo(p)}</span>'
         f'<div class="ptr__head"><h3 class="ptr__name">{E(p["name"])}</h3><span class="ptr__badge">{E(types[p["type"]]["badge"])}</span></div>'
         f'<p class="ptr__text">{E(p["description"])}</p>'
         f'<a class="ptr__link" href="{E(p["url"])}" target="_blank" rel="noopener">{E(dr["learn_more"])}<span class="sr-only"> about {E(p["name"])} (opens in a new tab)</span>{EXT}</a></li>'

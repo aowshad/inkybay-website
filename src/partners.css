@@ -11,6 +11,9 @@
 .mono--1 { color: #9A2A0B; background: #FFD9CF; }
 .mono--2 { color: #7A4E00; background: #FFEDC2; }
 .mono--3 { color: #8B3A1A; background: #FCE1D4; }
+/* real partner logos: the image fills its tile (square, clipped to the tile's radius) */
+.has-logo { overflow: hidden; background: var(--surface); }
+.has-logo img { display: block; width: 100%; height: 100%; object-fit: cover; }
 
 /* hero: partner tiles slowly orbiting an InkyBay tile */
 .porbit { position: relative; width: min(100%, 520px); margin-inline: auto; aspect-ratio: 1; container-type: inline-size; isolation: isolate; }
