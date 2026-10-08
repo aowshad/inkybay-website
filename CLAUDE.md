@@ -34,8 +34,8 @@ src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs a
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
 src/nav.json              every navbar mega menu: items, groups, promos, footer columns (see Mega menu)
-src/industries/_index.json  the nine industries (slug, title, short, icon, products): single source for
-                          the mega menu, the homepage wheel and future industry pages
+src/industries/_index.json  the nine industries (slug, title, short, icon): single source for the mega menu,
+                          the wheel's industry order and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
@@ -59,7 +59,8 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
 `src/assets/products/<name>.webp`: transparent, 600x600, WebP quality ~82, the product trimmed and centred so it fills
 82% of the frame (so every product reads at the same size). Keys are lowercase and hyphenated (`water-bottle`). Every
 image has an entry in `src/products.json` with its `label` (shown on product-wall cards, e.g. "Mug") and its
-`industry` (a slug from `src/industries/_index.json`). Never delete an image that something still references.
+`industry` (a slug from `src/industries/_index.json`); every product with an industry gets a card on the homepage wheel.
+Never delete an image that something still references.
 
 ## Locked kit (do not add new values; extend the scale only if a real need appears)
 
@@ -100,14 +101,14 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
 3. **Features**: "customization" is always a selected layer; swatches auto-cycle every 2s and are clickable; ring is the active swatch's own box-shadow (always concentric). Left list auto-advances (7s progress line). Mobile heading: "Everything you need / for product / customization + swatches".
 4. **Industries** (always dark, "Custom products for every business"): the wheel is built by build.py from
-   `src/industries/_index.json`: nine cards, one per industry in that order, each linking to `industries/<slug>/`
-   (never one card per product). Card: the industry's product image(s) and its title only (one line, never wraps, also
-   at 390px: cards are 256px with 20px titles, 236px with 18px titles at 960px and below). One product is static; several crossfade
-   every 3s (0.6s, new image on top, old one opaque until covered), each card 0.4s after the previous one, only while the
-   wheel is on screen; reduced motion shows the first image. An industry with no `products` shows its icon on the card
-   background. Radius is computed at the card's bottom edge so neighbours never touch (32.8px gap; 20px on the flat
-   phone track) for any number of cards; a card hides only right at the loop's wrap, so nothing pops on screen at
-   1920px. 1.6 deg/s. Pause/play plus prev/next steps. Flat track on phones.
+   `src/products.json`: one static card per product that has an `industry`, each product exactly once. Card: the product
+   image and its `label` (one line, never wraps, also at 390px; cards 232px with 22px titles, 210px at 960px and below),
+   linking to `industries/<that product's industry>/`. Order: round-robin over the industries in `_index.json` order, so
+   two cards from the same industry are never neighbours (also across the loop's wrap; build.py checks this). An industry
+   with no products gets no card and appears once products are added. Geometry adapts to the card count: the step is
+   9.5deg (smaller once 9.5 x cards would pass 340deg), and the radius is computed at the card's bottom edge so
+   neighbours never touch (32.8px gap; 20px on the flat phone track); a card hides only right at the loop's wrap, so
+   nothing pops on screen. 1.6 deg/s; pause eases to a stop. Pause/play plus prev/next steps. Flat track on phones.
 5. **Reveal**: in-flow statement; words sharpen with a 5-word soft edge as it passes through the viewport.
 6. **Feature rail** ("Customize without limits"): pinned; vertical scroll drives the horizontal track 1:1; cards always 16:10, one full plus half the next; title one line, description reserves two lines, so every media box is identical; progress bar, no numbers. Native swipe rail under 960px.
 7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The "See full case study"
@@ -300,6 +301,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Wheel: one card per product (your call; replaces the one-card-per-industry rule). 25 static cards from src/products.json, labelled with the product and linking to its industry page, interleaved round-robin by industry with a build-time check that neighbours differ; the crossfade (JS, CSS, stagger) and the industries' products field are gone; cards return to the locked 232px/22px size now that labels are short; the step shrinks automatically if the product count would close the circle. Checked at 390/768/1440/1920px: 32.8px (20px on phones) gaps, no title cut off, no on-screen pops, 25 x next returns to the start, prev, pause and play work. To fix later: add Beauty & cosmetics product images (jar, lipstick, gift box) to src/assets/products/ and to products.json with industry beauty-cosmetics; their cards appear automatically
 - 2026-10-07: Product copy matches the new products: advanced-product-setup wall heading "Apparel to wall clocks." (the pet bowl is gone), ready-made-templates "Frames, mugs and more." and its lead (no greeting card any more)
 - 2026-10-07: Remove unused product images: card, drawstring, handbag, necklace, petbowl, phone, photo, pillow, pumpkin, puzzle, tote, wallart (each removed only after checking nothing references it: no image path in the repo, no product wall, zig-zag photo or industry uses it) and their src/products.json entries
 - 2026-10-07: Feature pages use the new products: every removed product on the nine product walls and three zig-zag photos is swapped for a new one that fits the feature (walls keep their counts, no duplicates); unlimited-product-options' strap roll becomes Short/Long/Padded/None because a chain strap does not fit the backpack

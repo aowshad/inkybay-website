@@ -133,22 +133,40 @@ def foot_cols(mid, root):
 INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]
 WHEEL_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
+PRODUCTS = json.loads((ROOT / "src" / "products.json").read_text())
+
+def wheel_order():
+    """Products with an industry, interleaved round-robin over the industries in _index.json order, so two cards from
+    the same industry never sit side by side (also across the loop's wrap). Industries without products get no card."""
+    groups = [[n for n, p in PRODUCTS.items() if p.get("industry") == ind["slug"]] for ind in INDUSTRIES]
+    order = []
+    while any(groups):
+        for g in groups:
+            if g: order.append(g.pop(0))
+    ind = lambda n: PRODUCTS[n]["industry"]
+    for _ in range(len(order) ** 2):                       # repair: move a card that repeats its neighbour's industry
+        bad = next((k for k in range(len(order)) if ind(order[k]) == ind(order[k - 1])), None)
+        if bad is None: break
+        card = order.pop(bad)
+        spot = next((k for k in range(len(order) + 1) if ind(order[k - 1]) != ind(card) and ind(order[k % len(order)]) != ind(card)), None)
+        assert spot is not None, "wheel: too many products in one industry to keep them apart"
+        order.insert(spot, card)
+    assert all(ind(order[k]) != ind(order[k - 1]) for k in range(len(order))), "wheel: same-industry neighbours"
+    return order
+
 def wheel(root):
-    """Homepage industries wheel: one card per industry in src/industries/_index.json order, linking to
-    industries/<slug>/. Several products crossfade (data-cycle); one is static; none shows the industry icon."""
+    """Homepage industries wheel: one static card per product (src/products.json), labelled with the product and
+    linking to its industry page, interleaved so neighbouring cards come from different industries."""
+    titles = {i["slug"]: i["title"] for i in INDUSTRIES}
     cards = []
-    for k, ind in enumerate(INDUSTRIES):
-        prods = ind.get("products", [])
-        if prods:
-            imgs = "".join(f'<img class="icard__img{" is-on" if j == 0 else ""}" src="{b64("products/" + p + ".webp")}" alt="" width="600" height="600" loading="lazy" decoding="async">' for j, p in enumerate(prods))
-            media = f'<div class="icard__media"{" data-cycle" if len(prods) > 1 else ""} data-k="{k}">{imgs}</div>'
-        else:
-            media = f'<div class="icard__media" data-k="{k}"><span class="icard__ph" aria-hidden="true">{ICON[ind["icon"]]}</span></div>'
+    for n in wheel_order():
+        p = PRODUCTS[n]; label = html.escape(p["label"])
+        aria = html.escape(f'{p["label"]}, {titles[p["industry"]]}', quote=True)
         cards.append(f'''<li class="wheel__card">
-            <a class="icard" href="{root}industries/{ind["slug"]}/">
-              {media}
+            <a class="icard" href="{root}industries/{p["industry"]}/" aria-label="{aria}">
+              <div class="icard__media"><img src="{b64("products/" + n + ".webp")}" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
               <div class="icard__body">
-                <h3 class="icard__title">{html.escape(ind["title"])}</h3>
+                <h3 class="icard__title">{label}</h3>
               </div>
             </a>
           </li>''')

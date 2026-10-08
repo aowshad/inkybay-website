@@ -4,96 +4,55 @@
       "slug": "fashion-apparel",
       "title": "Fashion & apparel",
       "short": "Tees, hoodies and custom clothing.",
-      "icon": "shirt",
-      "products": [
-        "hoodie",
-        "baby-onesie",
-        "bandana",
-        "socks"
-      ]
+      "icon": "shirt"
     },
     {
       "slug": "jewelry-accessories",
       "title": "Jewelry & accessories",
       "short": "Engraving and personalized pieces.",
-      "icon": "gem",
-      "products": [
-        "ring",
-        "pendant",
-        "bracelet",
-        "earrings"
-      ]
+      "icon": "gem"
     },
     {
       "slug": "sports-teamwear",
       "title": "Sports & teamwear",
       "short": "Jerseys with names, numbers and crests.",
-      "icon": "trophy",
-      "products": [
-        "tee",
-        "cap",
-        "water-bottle"
-      ]
+      "icon": "trophy"
     },
     {
       "slug": "home-furniture",
       "title": "Home & furniture",
       "short": "Cushions, wall art and custom decor.",
-      "icon": "home",
-      "products": [
-        "blanket",
-        "wall-clock",
-        "photoframe",
-        "doormat"
-      ]
+      "icon": "home"
     },
     {
       "slug": "printing-packaging",
       "title": "Printing & packaging",
       "short": "Labels, boxes and print-on-demand jobs.",
-      "icon": "package",
-      "products": [
-        "notebook"
-      ]
+      "icon": "package"
     },
     {
       "slug": "gifts-promotional",
       "title": "Gifts & promotional",
       "short": "Branded merch and personal gifts.",
-      "icon": "gift",
-      "products": [
-        "mug",
-        "keyring",
-        "tumbler"
-      ]
+      "icon": "gift"
     },
     {
       "slug": "beauty-cosmetics",
       "title": "Beauty & cosmetics",
       "short": "Custom labels and personalized packaging.",
-      "icon": "droplet",
-      "products": []
+      "icon": "droplet"
     },
     {
       "slug": "footwear-bags",
       "title": "Footwear & bags",
       "short": "Shoes, totes and bags made to order.",
-      "icon": "bag",
-      "products": [
-        "sneakers",
-        "backpack",
-        "tote-bag"
-      ]
+      "icon": "bag"
     },
     {
       "slug": "gadgets-electronics",
       "title": "Gadgets & electronics",
       "short": "Phone cases, skins and accessories.",
-      "icon": "phone",
-      "products": [
-        "airpod",
-        "laptop-bag"
-      ]
+      "icon": "phone"
     }
   ]
 }
