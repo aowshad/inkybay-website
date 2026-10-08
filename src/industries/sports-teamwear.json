@@ -1,0 +1,180 @@
+{
+  "slug": "sports-teamwear",
+  "nav_label": "Sports & teamwear",
+  "meta": {
+    "title": "Custom team gear for Shopify | InkyBay",
+    "description": "Sell jerseys, caps and bottles that teams personalize player by player, with bulk pricing and print-ready files for every piece."
+  },
+  "hero": {
+    "title": "Team gear with every name and number",
+    "lead": "Sell jerseys, caps and bottles that teams personalize player by player, with bulk pricing and print-ready files for every piece.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Add name",
+          "icon": "type"
+        },
+        {
+          "label": "Add number",
+          "icon": "hash"
+        },
+        {
+          "label": "Team colors",
+          "icon": "sliders"
+        }
+      ],
+      "swatches": [
+        "#1F3A68",
+        "#E5380F",
+        "#FF7500",
+        "#FFD982",
+        "#17A673",
+        "#2F2F2F",
+        "#F4F1EE",
+        "#BFE0FF"
+      ],
+      "deck": [
+        {
+          "product": "tee",
+          "label": "T-shirt",
+          "result": "RIVERS 10",
+          "swatch": 0,
+          "chip": "Size · L"
+        },
+        {
+          "product": "cap",
+          "label": "Cap",
+          "result": "RFC",
+          "swatch": 1,
+          "chip": "One size"
+        },
+        {
+          "product": "water-bottle",
+          "label": "Water bottle",
+          "result": "Coach K",
+          "swatch": 3,
+          "chip": "750 ml"
+        },
+        {
+          "product": "hoodie",
+          "label": "Hoodie",
+          "result": "Team 23",
+          "swatch": 0,
+          "chip": "Size · M"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Kit out the whole team.",
+    "Jerseys, caps and more."
+  ],
+  "products": [
+    {
+      "name": "T-shirt",
+      "image": "tee"
+    },
+    {
+      "name": "Cap",
+      "image": "cap"
+    },
+    {
+      "name": "Water bottle",
+      "image": "water-bottle"
+    },
+    {
+      "name": "Socks",
+      "image": "socks"
+    },
+    {
+      "name": "Hoodie",
+      "image": "hoodie"
+    },
+    {
+      "name": "Backpack",
+      "image": "backpack"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell sports and teamwear.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Coaches build the whole roster in one order, names and numbers included.",
+      "preview": "tee",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Clubs reorder every season because the designs are saved.",
+      "preview": "cap",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Bulk discounts show up as the team adds players, so big orders close faster.",
+      "preview": "water-bottle",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Our print team gets one file per player, ready for the press.",
+      "preview": "socks",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can every player have a different name and number?",
+      "a": "Yes. Shoppers add names and numbers for each piece in the same order."
+    },
+    {
+      "q": "Can I offer team discounts?",
+      "a": "Yes. Quantity discounts apply automatically as the order grows."
+    },
+    {
+      "q": "Can teams use their own logos?",
+      "a": "Yes. Shoppers upload logos and crests and place them on every side you set up."
+    },
+    {
+      "q": "Do I get files for each player?",
+      "a": "Yes. Orders include print-ready files and the details for every piece."
+    }
+  ]
+}

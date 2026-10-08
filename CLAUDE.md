@@ -339,6 +339,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Add industry page: Sports & teamwear
 - 2026-10-08: Add industry page: Jewelry & accessories
 - 2026-10-08: Industry hero: customizing deck (story, rotation, tabs, hover/focus pause, swipe, arrow keys, live region, reduced motion; shared on-screen observer extended to .ishow). Decisions: back-card blur is 0.3px per step (0.8px blurred the tab labels); the leave animation eases each half separately (an expo curve over the whole 0.6s hid the lift and blur within 100ms); the glass panel and palette are 92% white on dark pages so they stay light
 - 2026-10-08: Industry page template (render_industry.py, src/industry.css, build.py writes site/industries/<slug>/, shared "Show more" JS, audit checks for industry JSON and the hero deck). Ported from the kit's reference onto the current codebase; the hero is the deck from docs/industry-hero-spec.md (static here, motion next commit). Back-card tabs follow the spec's 14px strip with 11px labels. Only fashion-apparel is built in this step
