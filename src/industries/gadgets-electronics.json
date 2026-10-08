@@ -1,0 +1,173 @@
+{
+  "slug": "gadgets-electronics",
+  "nav_label": "Gadgets & electronics",
+  "meta": {
+    "title": "Custom tech accessories for Shopify | InkyBay",
+    "description": "Sell earbud cases, laptop sleeves and more that shoppers personalize with photos, names and patterns, previewed before they buy."
+  },
+  "hero": {
+    "title": "Tech accessories your customers design",
+    "lead": "Sell earbud cases, laptop sleeves and more that shoppers personalize with photos, names and patterns, previewed before they buy.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Add text",
+          "icon": "type"
+        },
+        {
+          "label": "Upload image",
+          "icon": "image"
+        },
+        {
+          "label": "Pick finish",
+          "icon": "sliders"
+        }
+      ],
+      "swatches": [
+        "#F4F1EE",
+        "#2F2F2F",
+        "#1F3A68",
+        "#FF7500",
+        "#E5380F",
+        "#17A673",
+        "#FFD0E6",
+        "#BFE0FF"
+      ],
+      "deck": [
+        {
+          "product": "airpod",
+          "label": "Earbuds case",
+          "result": "JAY",
+          "swatch": 3,
+          "chip": "Matte"
+        },
+        {
+          "product": "laptop-bag",
+          "label": "Laptop sleeve",
+          "result": "Acme",
+          "swatch": 2,
+          "chip": "14 inch"
+        },
+        {
+          "product": "backpack",
+          "label": "Backpack",
+          "result": "Tech",
+          "swatch": 1,
+          "chip": "Large"
+        },
+        {
+          "product": "water-bottle",
+          "label": "Water bottle",
+          "result": "Desk",
+          "swatch": 4,
+          "chip": "500 ml"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Personal tech, made easy.",
+    "Cases, sleeves and more."
+  ],
+  "products": [
+    {
+      "name": "Earbuds case",
+      "image": "airpod"
+    },
+    {
+      "name": "Laptop sleeve",
+      "image": "laptop-bag"
+    },
+    {
+      "name": "Backpack",
+      "image": "backpack"
+    },
+    {
+      "name": "Water bottle",
+      "image": "water-bottle"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell gadgets and electronics.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Earbud cases with names sell fast. Shoppers design them in under a minute.",
+      "preview": "airpod",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Laptop sleeves with company logos are now a steady bulk order.",
+      "preview": "laptop-bag",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Customers preview every finish, so returns are rare.",
+      "preview": "backpack",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Our print team gets clean files for every case.",
+      "preview": "water-bottle",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers upload photos?",
+      "a": "Yes. Shoppers upload images and place them on the product with a live preview."
+    },
+    {
+      "q": "Can I offer different models or sizes?",
+      "a": "Yes. Add models and sizes as variants, each with its own print area."
+    },
+    {
+      "q": "Can I offer different finishes?",
+      "a": "Yes. Add finishes as options with their own pricing."
+    },
+    {
+      "q": "Do I get print-ready files?",
+      "a": "Yes. Every order includes print-ready files and the design details."
+    }
+  ],
+  "needs_images": "Phone case and charger images would make this page stronger."
+}

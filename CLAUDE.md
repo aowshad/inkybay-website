@@ -339,6 +339,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Add industry page: Gadgets & electronics (built with stand-in images; needs: Phone case and charger images would make this page stronger.)
 - 2026-10-08: Add industry page: Footwear & bags
 - 2026-10-08: Add industry page: Gifts & promotional
 - 2026-10-08: Add industry page: Printing & packaging (built with stand-in images; needs: More packaging products (boxes, labels, mailers) would make this page stronger.)
