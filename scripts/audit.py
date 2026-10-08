@@ -193,6 +193,25 @@ async def check_industry_hero(b, slug, path):
         if not r["textIn"]: bad(slug, f"hero {w}px: result text is not inside the product's bounding box")
         if r["overflow"]: bad(slug, f"hero {w}px: horizontal overflow")
         await pg.close()
+    # interaction (motion on): the loop advances on its own when not hovered; each tab brings its card to the front
+    pg = await b.new_page(viewport={"width": 1440, "height": 900}); errs = []
+    pg.on("pageerror", lambda e: errs.append(str(e)))
+    await pg.goto(path.as_uri()); await pg.mouse.move(4, 896)
+    FRONT = "document.querySelector('.icardx[data-front]').getAttribute('aria-label')"
+    first = await pg.evaluate(FRONT)
+    try:
+        await pg.wait_for_function(f"{FRONT} !== {json.dumps(first)}", timeout=8000)
+    except Exception:
+        bad(slug, "hero: the deck does not advance on its own")
+    labels = await pg.evaluate("[...document.querySelectorAll('.icardx')].map(c=>c.getAttribute('aria-label'))")
+    for k, lab in enumerate(labels):
+        tab = pg.locator(f'.icardx[data-k="{k}"] .icardx__tab')
+        if await pg.evaluate(FRONT) == lab: continue
+        if not await tab.is_visible(): continue
+        await tab.click(); await pg.wait_for_timeout(700)
+        if await pg.evaluate(FRONT) != lab: bad(slug, f"hero: clicking the '{lab}' tab does not bring it to the front")
+    if errs: bad(slug, f"hero: JS errors {errs[:2]}")
+    await pg.close()
 
 
 def nav_expected():

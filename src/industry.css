@@ -53,6 +53,8 @@
 .ipanel, .ipalette { --ink: #2F2F2F; --ink-muted: #707070; position: absolute; z-index: 20; color: var(--ink);
   background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: blur(16px) saturate(1.2); backdrop-filter: blur(16px) saturate(1.2);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 24px 48px -24px rgba(60, 25, 5, .4); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) :is(.ipanel, .ipalette) { background: rgba(255, 255, 255, .92); } }   /* stays light on a dark page */
+:root[data-theme="dark"] :is(.ipanel, .ipalette) { background: rgba(255, 255, 255, .92); }
 .ipanel { right: 1.5cqw; top: 24cqw; width: 35cqw; padding: 3cqw; border-radius: 4cqw; }
 .ipanel__h { font-size: clamp(9px, 2.5cqw, 13px); line-height: 1.3; font-weight: 600; margin: 0 0 2cqw .5cqw; }
 .ipanel ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 1.2cqw; }
@@ -73,6 +75,26 @@
   transform: translate(var(--x, 60cqw), var(--y, 60cqw)); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .25)); }
 .icursor svg { width: 100%; height: 100%; display: block; transition: scale .18s ease; }
 .icursor.is-click svg { scale: .9; }
+
+/* deck motion (JS drives the story; see docs/industry-hero-spec.md). Reduced motion: no cursor, no blur, no rotation */
+@media (prefers-reduced-motion: no-preference) {
+  .icardx { filter: brightness(calc(1 - var(--slot) * .035)) blur(calc(var(--slot) * .3px));
+    transition: transform .6s var(--ease-expo), filter .6s var(--ease-expo); }
+  /* the front card lifts 12px, tilts back, blurs to 10px and fades, then settles at the back of the stack */
+  .icardx.is-leaving { animation: deck-leave .6s linear both; }   /* each half eases on its own, so the lift and blur stay visible */
+  .icardx__text { transition: opacity .45s ease; }
+  .icardx__tint { transition: opacity .5s ease; }
+  .icardx__label, .icardx__prog, .icardx__chip { transition: opacity .3s ease; }
+  .icursor { transition: transform .55s var(--ease-expo), opacity .3s ease; }
+  .ishow.is-playing .icursor { opacity: 1; }
+}
+@keyframes deck-leave {
+  0%   { transform: perspective(900px) translateY(0) rotateX(0) scale(1); filter: blur(0); opacity: 1; z-index: 20; animation-timing-function: cubic-bezier(.4, 0, .6, 1); }
+  45%  { transform: perspective(900px) translateY(-12px) rotateX(14deg) scale(.98); filter: blur(10px); opacity: 0; z-index: 20; }
+  46%  { z-index: 0; animation-timing-function: cubic-bezier(.16, 1, .3, 1); }
+  100% { transform: perspective(900px) translateY(calc(var(--slot) * -2.5cqw)) rotateX(0) scale(calc(1 - var(--slot) * .04));
+         filter: brightness(calc(1 - var(--slot) * .035)) blur(calc(var(--slot) * .3px)); opacity: 1; z-index: 0; }
+}
 
 /* phones: two back tabs instead of three, the palette's second row hidden */
 @media (max-width: 600px) {

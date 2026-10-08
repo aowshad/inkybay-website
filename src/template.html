@@ -2619,9 +2619,9 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       shows.forEach(function (v) { io.observe(v); });
     })();
 
-    /* Feature visuals: start their loops only while on screen */
+    /* Feature visuals and the industry deck: start their loops only while on screen */
     (function () {
-      var vis = [].slice.call(document.querySelectorAll('.fvis'));
+      var vis = [].slice.call(document.querySelectorAll('.fvis, .ishow'));
       if (!vis.length) return;
       if (!('IntersectionObserver' in window)) { vis.forEach(function (v) { v.classList.add('mui-live'); }); return; }
       var io = new IntersectionObserver(function (es) { es.forEach(function (en) { en.target.classList.toggle('mui-live', en.isIntersecting); }); }, { threshold: 0.3 });
@@ -2660,6 +2660,111 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       });
       window.addEventListener('resize', function () { if (window.innerWidth <= 960) close(); });
     })();
+    /* Industry hero: the customizing deck (docs/industry-hero-spec.md). Each front card is customized by the cursor
+       (text, swatch, option), then the deck rotates: the front card goes to the back. Runs only while on screen
+       (.mui-live, shared observer) and not hovered or focused; tabs, swipe and arrow keys drive it. */
+    document.querySelectorAll('.ishow').forEach(function (show) {
+      var deck = show.querySelector('.ideck'), cards = [].slice.call(deck.querySelectorAll('.icardx'));
+      var rows = [].slice.call(show.querySelectorAll('.ipanel__row')), sws = [].slice.call(show.querySelectorAll('.ipalette__sw'));
+      var cursor = show.querySelector('.icursor'), live = show.querySelector('.ishow__live');
+      var N = cards.length, order = cards.map(function (c, i) { return i; });
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var T = { row1: 0, text: 600, toSwatch: 1600, swatch: 2200, toRow3: 2800, chip: 3200, hold: 3600, rotate: 4200 }, SETTLE = 600;
+      var t = 0, last = 0, fired = {}, paused = false, rotating = 0;
+
+      /* tint: the product image's own alpha is the mask, so the background never tints (no second download) */
+      cards.forEach(function (c) {
+        var img = c.querySelector('.icardx__img'), tint = c.querySelector('.icardx__tint');
+        function set() { tint.style.webkitMaskImage = tint.style.maskImage = 'url("' + img.src + '")'; tint.classList.add('has-mask'); }
+        if (img.complete) set(); else img.addEventListener('load', set);
+      });
+
+      function front() { return cards[order[0]]; }
+      function layout() {
+        order.forEach(function (k, slot) {
+          var c = cards[k];
+          c.style.setProperty('--slot', slot); c.setAttribute('data-slot', slot);
+          if (slot === 0) c.setAttribute('data-front', ''); else c.removeAttribute('data-front');
+          c.querySelector('.icardx__tab').tabIndex = slot === 0 ? -1 : 0;
+        });
+        live.textContent = front().getAttribute('aria-label');
+      }
+      function customize(c, on) {
+        ['is-text', 'is-tint', 'is-chip'].forEach(function (k) { c.classList.toggle(k, on); });
+        if (on) sws.forEach(function (s, i) { s.classList.toggle('is-on', i === +c.getAttribute('data-swatch')); });
+      }
+      function at(el) {                       /* cursor tip on the target's centre, in the stage's pixels */
+        var s = show.getBoundingClientRect(), r = el.getBoundingClientRect();
+        cursor.style.setProperty('--x', (r.left + r.width * .55 - s.left) + 'px');
+        cursor.style.setProperty('--y', (r.top + r.height * .5 - s.top) + 'px');
+      }
+      function click() { cursor.classList.add('is-click'); setTimeout(function () { cursor.classList.remove('is-click'); }, 160); }
+      function hot(i) { rows.forEach(function (r, k) { r.classList.toggle('is-hot', k === i); }); }
+      function story() { t = -SETTLE; fired = {}; front().querySelector('.icardx__prog i').style.transform = 'scaleX(0)'; }
+
+      /* bring card k to the front; the cards in front of it go to the back, the old front card with the leave animation */
+      function goTo(k, instant) {
+        var i = order.indexOf(k); if (i <= 0) return;
+        var leaving = front();
+        customize(leaving, false); hot(-1);
+        leaving.querySelector('.icardx__prog i').style.transform = 'scaleX(0)';
+        order = order.slice(i).concat(order.slice(0, i));
+        if (!instant && !reduce) {
+          leaving.classList.add('is-leaving'); clearTimeout(rotating);
+          rotating = setTimeout(function () { leaving.classList.remove('is-leaving'); }, 650);
+        }
+        layout();
+        if (reduce) customize(front(), true); else story();
+      }
+      function next() { goTo(order[1]); }
+      function prev() { goTo(order[N - 1]); }
+
+      cards.forEach(function (c, k) { c.querySelector('.icardx__tab').addEventListener('click', function () { goTo(k); }); });
+      deck.addEventListener('keydown', function (e) {
+        if (e.key === 'ArrowRight') { e.preventDefault(); next(); }
+        else if (e.key === 'ArrowLeft') { e.preventDefault(); prev(); }
+      });
+      var x0 = null;                           /* phones: a horizontal swipe goes to the next / previous card */
+      deck.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') x0 = e.clientX; });
+      deck.addEventListener('pointerup', function (e) {
+        if (x0 === null) return; var dx = e.clientX - x0; x0 = null;
+        if (Math.abs(dx) > 40) { if (dx < 0) next(); else prev(); }
+      });
+      show.addEventListener('pointerenter', function (e) { if (e.pointerType === 'mouse') paused = true; });
+      show.addEventListener('pointerleave', function () { paused = false; });
+      show.addEventListener('focusin', function () { paused = true; });
+      show.addEventListener('focusout', function (e) { if (!show.contains(e.relatedTarget)) paused = false; });
+
+      layout();
+      if (reduce) return;                      /* first card stays customized; tabs switch instantly */
+      customize(front(), false); story();
+      function tick(now) {
+        var run = show.classList.contains('mui-live') && !paused;
+        show.classList.toggle('is-playing', run);
+        if (run && last) t += Math.min(now - last, 100);
+        last = now;
+        if (run) {
+          var c = front();
+          var ev = function (name, fn) { if (t >= T[name] && !fired[name]) { fired[name] = 1; fn(); } };
+          ev('row1', function () { at(rows[0]); });
+          ev('text', function () { click(); hot(0); c.classList.add('is-text'); });
+          ev('toSwatch', function () { hot(-1); at(sws[+c.getAttribute('data-swatch')]); });
+          ev('swatch', function () { click(); customizeSwatch(c); });
+          ev('toRow3', function () { at(rows[2]); });
+          ev('chip', function () { click(); hot(2); c.classList.add('is-chip'); });
+          ev('hold', function () { hot(-1); });
+          if (t >= 0) c.querySelector('.icardx__prog i').style.transform = 'scaleX(' + Math.min(1, t / T.rotate) + ')';
+          if (t >= T.rotate) next();
+        }
+        requestAnimationFrame(tick);
+      }
+      function customizeSwatch(c) {
+        sws.forEach(function (s, i) { s.classList.toggle('is-on', i === +c.getAttribute('data-swatch')); });
+        c.classList.add('is-tint');
+      }
+      requestAnimationFrame(tick);
+    });
+
     /* "Show more" buttons (industry merchants): reveal the rest of the list in the section */
     document.querySelectorAll('[data-show-more]').forEach(function (b) {
       b.addEventListener('click', function () { b.closest('.imer').classList.add('is-all'); });

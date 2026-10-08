@@ -271,10 +271,22 @@ Built by `render_industry.py` from `src/industries/<slug>.json` to `site/industr
 | 6 | FAQs | `faqs` | white |
 | 7 | CTA, crowd marquee, footer | from the homepage | dark |
 
-Primary buttons with a link use `{{BTN_PRIMARY:label|href}}`. The hero follows `docs/industry-hero-spec.md`
-(card deck, static glass panel and palette); without JS or with reduced motion the first card shows its customized
-state. The audit checks the JSON and that the panel, palette and chip overlap the front card and the result text sits
-inside the product's bounding box.
+Primary buttons with a link use `{{BTN_PRIMARY:label|href}}`.
+
+**Industry hero: the customizing deck** (`docs/industry-hero-spec.md`, data in `hero.stage`): 3-5 product cards
+(4:5, radius 24, white in both themes) stacked so each back card is 14px higher and 4% narrower and shows its label as
+a tab (11px). The editor panel (right) and palette (bottom-left) are frosted glass, light in both themes (more opaque
+on a dark page), and never move. Each front card's story runs 4.8s: the cursor clicks the first action (the `result`
+text appears on the product), a swatch (a multiply tint masked by the product image's own alpha, opacity .35), then the
+third action (the chip rolls to `chip`); the progress line fills; then the deck rotates (0.6s): the front card lifts
+12px, tilts back, blurs to 10px and fades while it moves to the back (each half of that animation eases on its own so
+it stays visible), and the next card sharpens forward (back cards carry a slight 0.3px-per-step blur that keeps the tabs
+readable). Runs only while on screen (the shared `.mui-live` observer) and pauses on hover or focus. Tabs (buttons,
+"Show <label>"), arrow keys and swipe change cards; the deck is an `aria-roledescription="carousel"` with a polite live
+region. Phones: two back tabs, one palette row. Reduced motion and no JS: no cursor, blur or rotation; the first card
+is shown customized and tabs switch instantly. The audit checks the JSON and that the panel, palette and chip overlap the front card and the result text sits
+inside the product's bounding box (from the image's alpha), that the deck advances on its own and that every visible tab
+brings its card to the front.
 
 ## Writing a feature page (playbook)
 
@@ -327,6 +339,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Industry hero: customizing deck (story, rotation, tabs, hover/focus pause, swipe, arrow keys, live region, reduced motion; shared on-screen observer extended to .ishow). Decisions: back-card blur is 0.3px per step (0.8px blurred the tab labels); the leave animation eases each half separately (an expo curve over the whole 0.6s hid the lift and blur within 100ms); the glass panel and palette are 92% white on dark pages so they stay light
 - 2026-10-08: Industry page template (render_industry.py, src/industry.css, build.py writes site/industries/<slug>/, shared "Show more" JS, audit checks for industry JSON and the hero deck). Ported from the kit's reference onto the current codebase; the hero is the deck from docs/industry-hero-spec.md (static here, motion next commit). Back-card tabs follow the spec's 14px strip with 11px labels. Only fashion-apparel is built in this step
 - 2026-10-08: Mobile menu sheet: balanced, easier to scan. Sub-items sat 8px left of their section labels (the compact-navbar padding beat the sheet rule and a generic ul rule removed the sub-list indent); now everything shares one left edge, sub-items get their menu icons and full-ink 16px titles in 48px rows, sections get 52px rows with hairlines, the current page is highlighted, and the sheet is an accordion so it stays short
 - 2026-10-08: Remove Beauty & cosmetics (your call): the industry leaves src/industries/_index.json, so the Industries mega menu and its mobile sub-list list eight industries; its unused droplet icon is gone. This replaces the earlier "To fix later" note about Beauty & cosmetics images
