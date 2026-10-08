@@ -1,0 +1,176 @@
+{
+  "slug": "jewelry-accessories",
+  "nav_label": "Jewelry & accessories",
+  "meta": {
+    "title": "Personalized jewelry for Shopify | InkyBay",
+    "description": "Let shoppers engrave names, pick metals and preview every piece before they buy, with every detail sent to your workshop."
+  },
+  "hero": {
+    "title": "Jewelry your customers make their own",
+    "lead": "Let shoppers engrave names, pick metals and preview every piece before they buy, with every detail sent to your workshop.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Engrave text",
+          "icon": "type"
+        },
+        {
+          "label": "Choose metal",
+          "icon": "star"
+        },
+        {
+          "label": "Add charm",
+          "icon": "layers"
+        }
+      ],
+      "swatches": [
+        "#D4AF37",
+        "#C9CCD1",
+        "#E8B4A0",
+        "#2F2F2F"
+      ],
+      "deck": [
+        {
+          "product": "pendant",
+          "label": "Pendant",
+          "result": "Mia",
+          "swatch": 0,
+          "chip": "Gold"
+        },
+        {
+          "product": "ring",
+          "label": "Ring",
+          "result": "Forever",
+          "swatch": 1,
+          "chip": "Silver"
+        },
+        {
+          "product": "locket",
+          "label": "Locket",
+          "result": "1998",
+          "swatch": 2,
+          "chip": "Rose gold"
+        },
+        {
+          "product": "bracelet",
+          "label": "Bracelet",
+          "result": "Sam",
+          "swatch": 0,
+          "chip": "Gold"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Personalize every piece.",
+    "Engraved, chosen, made to order."
+  ],
+  "products": [
+    {
+      "name": "Ring",
+      "image": "ring"
+    },
+    {
+      "name": "Pendant",
+      "image": "pendant"
+    },
+    {
+      "name": "Bracelet",
+      "image": "bracelet"
+    },
+    {
+      "name": "Earrings",
+      "image": "earrings"
+    },
+    {
+      "name": "Locket",
+      "image": "locket"
+    },
+    {
+      "name": "Keyring",
+      "image": "keyring"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell jewelry and accessories.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Customers engrave names and dates themselves, so we stopped chasing details by email.",
+      "preview": "ring",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Shoppers preview gold, silver and rose before they order, and returns dropped off.",
+      "preview": "pendant",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Our lockets sell as gifts. Seeing the engraving first makes buyers confident.",
+      "preview": "bracelet",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Every order reaches the bench with the exact text, font and metal.",
+      "preview": "earrings",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers engrave text?",
+      "a": "Yes. Shoppers add text in the fonts you allow and see it on the piece before they buy."
+    },
+    {
+      "q": "Can I offer different metals?",
+      "a": "Yes. Add metals as product options, each with its own price if you like."
+    },
+    {
+      "q": "Can I limit the number of characters?",
+      "a": "Yes. Set text limits so every engraving fits the piece."
+    },
+    {
+      "q": "Does my workshop get the details?",
+      "a": "Yes. Each order includes the text, font and options the shopper chose."
+    }
+  ]
+}
