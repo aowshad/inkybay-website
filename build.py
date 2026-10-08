@@ -3,6 +3,7 @@
     python3 build.py   ->  site/index.html                   (homepage)
                            site/features/<slug>/index.html   (one per src/features/<slug>.json)
                            site/404.html                     (the interactive 404; links start from SITE_BASE)
+                           site/partners/index.html          (src/partners.json + src/partners-directory.json)
                            site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
@@ -17,12 +18,16 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, re, html, pathlib, os
 import json
 from render_feature import render, ICON
-import render_industry, render_404
+import render_industry, render_404, render_partners
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
 # Only the 404 page uses it: GitHub Pages serves 404.html at any depth, so its links must start from the site root.
 SITE_BASE = os.environ.get("SITE_BASE", "/inkybay-website/")
+# where the forms post (a Formspree or Basin style URL). Empty: the forms say "Form not connected yet" and never pretend
+# to send. FORM_ENDPOINT serves the Partners and Contact forms, NEWSLETTER_ENDPOINT the newsletter sign-up.
+FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "")
+NEWSLETTER_ENDPOINT = os.environ.get("NEWSLETTER_ENDPOINT", "")
 ASSETS = ROOT / "src" / "assets"
 ARROW = '<svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg>'
 CHEV = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -38,6 +43,10 @@ def secondary(m):
     return f'<a class="btn btn--secondary" href="#" aria-label="{e}">{label(m.group(1))}</a>'
 def b64(path):
     return "data:image/webp;base64," + base64.b64encode((ASSETS / path).read_bytes()).decode()
+
+def secondary_html(text, href="#"):
+    e = html.escape(text, quote=True)
+    return f'<a class="btn btn--secondary" href="{html.escape(href, quote=True)}" aria-label="{e}">{label(text)}</a>'
 
 def primary_html(text, href="#"):
     e = html.escape(text, quote=True)
@@ -185,7 +194,9 @@ def build(t, root="", home="#", current=None):
     t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\|(.*?)\}\}", lambda m: primary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_PRIMARY:label|href}}
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
+    t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\|(.*?)\}\}", lambda m: secondary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_SECONDARY:label|href}}
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
+    t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
     for token, name in [("WORDMARK_LIT", "wordmark_lit.svg"), ("WORDMARK", "wordmark.svg"), ("LOGO_MARK", "logo_mark.svg"), ("LOGO_TYPE", "logo_type.svg")]:
         t = t.replace("{{%s}}" % token, (ASSETS / "brand" / name).read_text())
@@ -203,6 +214,7 @@ SITE = ROOT / "site"
 homepage = build((ROOT / "src" / "template.html").read_text())
 write(SITE / "index.html", homepage)
 write(SITE / "404.html", build(render_404.render(SITE_BASE), root=SITE_BASE, home=SITE_BASE))
+write(SITE / "partners" / "index.html", build(render_partners.render(), root="../", home="../"))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(SITE / "features" / j.stem / "index.html", build(render(j.stem), root="../../", home="../../", current=("features", j.stem)))
 for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists

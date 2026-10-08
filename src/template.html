@@ -2904,6 +2904,89 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       if (!reduce && !hinted) setTimeout(function () { if (!touched) hint(); }, 700);
     });
 
+    /* Forms (Partners, Contact, newsletter): one handler for every form.form[data-form]. It posts to data-endpoint
+       (FORM_ENDPOINT / NEWSLETTER_ENDPOINT from the build config) with fetch, validates in place with inline errors,
+       drops spam caught by the honeypot, and never pretends to send when no endpoint is set. */
+    document.querySelectorAll('form[data-form]').forEach(function (form) {
+      var endpoint = (form.getAttribute('data-endpoint') || '').trim();
+      var note = form.querySelector('.form__note'), status = form.querySelector('.form__status');
+      var submit = form.querySelector('[type="submit"]'), label = submit && submit.querySelector('[data-text]');
+      var fields = [].slice.call(form.querySelectorAll('[required], [data-url]')), tried = false;
+      if (!endpoint && note) note.hidden = false;
+      function valid(el) {
+        var v = (el.value || '').trim();
+        if (el.type === 'checkbox') return el.checked;
+        if (el.hasAttribute('data-url')) return !v || /^(https?:\/\/)?[^\s\/]+\.[^\s]{2,}$/i.test(v);
+        if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
+        return !!v;
+      }
+      function mark(el) {
+        var ok = valid(el), wrap = el.closest('.field'), err = wrap && wrap.querySelector('.field__err');
+        if (wrap) wrap.classList.toggle('is-invalid', !ok);
+        el.setAttribute('aria-invalid', String(!ok));
+        if (err) err.textContent = ok ? '' : el.getAttribute('data-err');
+        return ok;
+      }
+      function say(kind) {
+        if (!status) return;
+        status.className = 'form__status is-' + kind;
+        status.textContent = status.getAttribute('data-' + kind) || '';
+      }
+      fields.forEach(function (el) {
+        el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', function () { if (tried) mark(el); });
+      });
+      form.addEventListener('submit', function (e) {
+        e.preventDefault(); tried = true;
+        var bad = fields.filter(function (el) { return !mark(el); });
+        if (bad.length) { bad[0].focus(); return; }
+        var hp = form.querySelector('.form__hp input');
+        if (hp && hp.value) { say('ok'); form.reset(); return; }          /* a bot filled the honeypot: drop it quietly */
+        if (!endpoint) { say('off'); return; }                            /* not connected: say so, do not pretend */
+        var data = new FormData(form), site = form.querySelector('[data-url]');
+        if (site && site.value.trim() && !/^https?:\/\//i.test(site.value.trim())) data.set(site.name, 'https://' + site.value.trim());
+        data.delete('_gotcha');
+        submit.setAttribute('aria-busy', 'true'); var was = label ? label.textContent : '';
+        if (label) label.textContent = submit.getAttribute('data-sending');
+        fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
+          .then(function (r) { if (!r.ok) throw new Error(r.status); say('ok'); form.reset(); tried = false; })
+          .catch(function () { say('fail'); })
+          .then(function () { submit.removeAttribute('aria-busy'); if (label) label.textContent = was; });
+      });
+    });
+
+    /* Partner directory: type tabs with live counts, search by name and description, the first N then "Show more",
+       an empty state with "Clear filters"; newly shown cards fade and slide in */
+    document.querySelectorAll('.pdir').forEach(function (sec) {
+      var cards = [].slice.call(sec.querySelectorAll('.ptr')), tabs = [].slice.call(sec.querySelectorAll('.pdir__tab'));
+      var input = sec.querySelector('.pdir__search input'), more = sec.querySelector('.pdir__more'), empty = sec.querySelector('.pdir__empty');
+      var live = sec.querySelector('.pdir__live'), N = +sec.querySelector('.pdir__grid').getAttribute('data-visible') || 9;
+      var type = 'all', q = '', all = false, first = true;
+      function hit(c, t) { return (t === 'all' || c.getAttribute('data-type') === t) && (!q || c.getAttribute('data-q').indexOf(q) > -1); }
+      function apply() {
+        var shown = 0, matched = 0;
+        cards.forEach(function (c) {
+          var m = hit(c, type), show = m && (all || matched < N);
+          if (m) matched++;
+          var was = !c.hidden; c.hidden = !show;
+          if (show) { shown++; if (!was || !first) { c.classList.remove('is-in'); void c.offsetWidth; c.classList.add('is-in'); } }
+        });
+        tabs.forEach(function (t) {
+          var id = t.getAttribute('data-type');
+          t.querySelector('.pdir__count').textContent = cards.filter(function (c) { return hit(c, id); }).length;
+          t.setAttribute('aria-selected', String(id === type));
+        });
+        more.hidden = all || matched <= N;
+        empty.hidden = matched > 0;
+        if (!first) live.textContent = matched ? shown + ' of ' + matched + ' partners shown' : 'No partners match your filters';
+        first = false;
+      }
+      tabs.forEach(function (t) { t.addEventListener('click', function () { type = t.getAttribute('data-type'); all = false; apply(); }); });
+      input.addEventListener('input', function () { q = input.value.trim().toLowerCase(); all = false; apply(); });
+      more.querySelector('button').addEventListener('click', function () { all = true; apply(); });
+      sec.querySelector('.pdir__clear').addEventListener('click', function () { type = 'all'; q = ''; input.value = ''; all = false; apply(); input.focus(); });
+      apply();
+    });
+
     /* "Show more" buttons (industry merchants): reveal the rest of the list in the section */
     document.querySelectorAll('[data-show-more]').forEach(function (b) {
       b.addEventListener('click', function () { b.closest('.imer').classList.add('is-all'); });

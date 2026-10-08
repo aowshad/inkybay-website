@@ -1,0 +1,100 @@
+{
+  "partners": [
+    {
+      "name": "Northwind Apps",
+      "type": "app",
+      "description": "Order routing and print queue tools that pick up custom orders as soon as they come in.",
+      "url": "https://example.com",
+      "featured": true,
+      "demo": true
+    },
+    {
+      "name": "Lumen Order Tools",
+      "type": "app",
+      "description": "Bulk order editing and tagging for stores with many personalized products.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Brightside Print Sync",
+      "type": "app",
+      "description": "Sends finished design files to your print provider and tracks each job.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Pixel & Pine Studio",
+      "type": "service",
+      "description": "A small design studio that sets up customizable catalogues for apparel brands.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Harbor Lane Agency",
+      "type": "service",
+      "description": "Shopify agency for gift and merch stores, from store setup to launch.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Copperleaf Commerce",
+      "type": "service",
+      "description": "Freelance team that migrates stores and configures product options.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Juniper Themes",
+      "type": "theme",
+      "description": "Clean Shopify themes with product pages built around a live preview.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Quarry & Co Themes",
+      "type": "theme",
+      "description": "Bold themes for print shops and custom merch stores.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Saltmarsh Theme Works",
+      "type": "theme",
+      "description": "Lightweight themes tuned for fast product pages on mobile.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Fernhill Print Supply",
+      "type": "other",
+      "description": "Blank apparel and print supplies for custom product stores.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Cobalt Fulfilment",
+      "type": "other",
+      "description": "Print-on-demand fulfilment for personalized orders, shipped worldwide.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    },
+    {
+      "name": "Maple Row Packaging",
+      "type": "other",
+      "description": "Custom boxes and mailers for gift and merch brands.",
+      "url": "https://example.com",
+      "featured": false,
+      "demo": true
+    }
+  ]
+}

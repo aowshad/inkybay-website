@@ -127,6 +127,7 @@ async def check_page(slug, d):
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "404": await check_404(b)
+        if slug == "partners": await check_partners(b, path)
         await b.close()
 
 
@@ -139,6 +140,7 @@ def industry_slugs():
 def page_path(slug):
     if slug == "homepage": return ROOT / "site/index.html"
     if slug == "404": return ROOT / "site/404.html"
+    if slug == "partners": return ROOT / "site/partners/index.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
 
@@ -205,6 +207,42 @@ async def check_industry_hero(b, slug, path):
         if await pg.evaluate(FRONT) != lab: bad(slug, f"hero: clicking the '{lab}' tab does not bring it to the front")
     if errs: bad(slug, f"hero: JS errors {errs[:2]}")
     await pg.close()
+
+
+async def check_partners(b, path):
+    """Partners: tabs and search change the visible cards and counts; "Show more" reveals the rest; the form blocks an
+    empty submit with inline errors; external links open in a new tab; no overflow at 390px."""
+    slug = "partners"
+    for w in (1440, 390):
+        pg = await b.new_page(viewport={"width": w, "height": 900}); errs = []
+        pg.on("pageerror", lambda e: errs.append(str(e)))
+        await pg.goto(path.as_uri()); await pg.wait_for_timeout(400)
+        S = """(()=>{const v=[...document.querySelectorAll('.ptr')].filter(c=>!c.hidden);
+          return {shown:v.length, types:[...new Set(v.map(c=>c.dataset.type))], more:!document.querySelector('.pdir__more').hidden,
+                  empty:!document.querySelector('.pdir__empty').hidden,
+                  counts:Object.fromEntries([...document.querySelectorAll('.pdir__tab')].map(t=>[t.dataset.type, +t.querySelector('.pdir__count').textContent]))}})()"""
+        total = await pg.evaluate("document.querySelectorAll('.ptr').length"); vis = int(await pg.evaluate("+document.querySelector('.pdir__grid').dataset.visible"))
+        st = await pg.evaluate(S)
+        if total > vis and (st["shown"] != vis or not st["more"]): bad(slug, f"{w}px: expected {vis} cards and 'Show more' at first, got {st['shown']}")
+        await pg.click(".pdir__more button"); st = await pg.evaluate(S)
+        if st["shown"] != total or st["more"]: bad(slug, f"{w}px: 'Show more' does not reveal all {total} partners")
+        await pg.click('.pdir__tab[data-type="theme"]'); st = await pg.evaluate(S)
+        if st["types"] != ["theme"] or st["shown"] != st["counts"]["theme"]: bad(slug, f"{w}px: the Theme providers tab does not filter the cards ({st})")
+        await pg.click('.pdir__tab[data-type="all"]'); await pg.fill(".pdir__search input", "agency"); st = await pg.evaluate(S)
+        if not 0 < st["shown"] < total or st["counts"]["all"] != st["shown"]: bad(slug, f"{w}px: search does not filter cards and counts ({st})")
+        await pg.fill(".pdir__search input", "zzzz-no-match"); st = await pg.evaluate(S)
+        if st["shown"] or not st["empty"]: bad(slug, f"{w}px: no empty state when nothing matches")
+        await pg.click(".pdir__clear"); st = await pg.evaluate(S)
+        if st["empty"] or st["counts"]["all"] != total: bad(slug, f"{w}px: 'Clear filters' does not reset the directory")
+        ext = await pg.evaluate("""[...document.querySelectorAll('main a[href^="http"]')].filter(a=>a.target!=='_blank'||!/noopener/.test(a.rel)).map(a=>a.href)""")
+        if ext: bad(slug, f"{w}px: external links without target=_blank rel=noopener: {ext[:2]}")
+        await pg.locator(".form__submit").scroll_into_view_if_needed(); await pg.click(".form__submit"); await pg.wait_for_timeout(200)
+        f = await pg.evaluate("""(()=>({invalid:document.querySelectorAll('.form .field.is-invalid').length, errs:[...document.querySelectorAll('.form .field__err')].filter(e=>e.textContent.trim()).length,
+            status:document.querySelector('.form__status').textContent}))()""")
+        if f["invalid"] < 4 or f["errs"] < 4 or f["status"]: bad(slug, f"{w}px: an empty submit is not blocked with inline errors ({f})")
+        if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"{w}px: horizontal overflow")
+        if errs: bad(slug, f"{w}px: JS errors {errs[:2]}")
+        await pg.close()
 
 
 def serve_site():
@@ -339,11 +377,11 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = ["homepage", "404"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
+        args = ["homepage", "404", "partners"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug == "404":
+        if slug in ("404", "partners"):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))

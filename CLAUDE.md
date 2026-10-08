@@ -46,6 +46,8 @@ src/assets/               logos/, products/, people/, photos/, brand/ (SVG), her
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, feature and industry pages); SITE_BASE lives here
 render_404.py             renders the 404 from src/404.json (styles in src/404.css)
+render_partners.py        renders site/partners/ from src/partners.json (copy) + src/partners-directory.json (the list)
+src/forms.css             shared form styles (Partners, Contact, newsletter); the form JS is shared in the template
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
@@ -280,6 +282,37 @@ this page. Images are inlined, so nothing else depends on the depth. It has `noi
   from SITE_BASE, existing targets return 200, no relative asset paths), dragging, resizing, the warning showing and
   clearing, and no overflow at 390px.
 
+## Forms (shared)
+
+Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, control, `.field__err` with aria-live), a
+`.form__note`, a `.form__hp` honeypot and a `.form__status`; styles in `src/forms.css`, one handler in the template.
+- Endpoints come from the build config in build.py: `FORM_ENDPOINT` (Partners, Contact) and `NEWSLETTER_ENDPOINT`
+  (newsletter), e.g. a Formspree or Basin URL, set with `FORM_ENDPOINT=... python3 build.py` (and the same in the
+  Pages workflow when chosen). Both are empty for now: the form shows "Form not connected yet" up front and on submit,
+  and never pretends to send. No service has been picked.
+- Client-side validation with inline errors (required fields, email, optional `https://` website), focus on the first
+  error; a filled honeypot is dropped quietly; the submit button shows a loading state; success and error appear in
+  place via fetch (no reload).
+
+## Partners page
+
+`site/partners/`, built by `render_partners.py` from `src/partners.json` (all copy) and `src/partners-directory.json`
+(the list), styles in `src/partners.css` + `src/forms.css`. Reached from the Resources mega menu and the footer.
+1. Hero [white]: breadcrumb Home > Resources > Partners, two-tone H1 (H2 size), lead, "Become a partner" (to the form)
+   and "Browse partners" (to the directory); visual: six demo monogram tiles orbiting an InkyBay tile (90s, upright,
+   the core and chips float; static with reduced motion).
+2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts, a search on name and description,
+   3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
+   `featured` partner comes first with a brand border; the first 9, then "Show more partners"; an empty state with
+   "Clear filters". Filtering fades and slides cards in.
+3. Why partner [white]: four benefit columns (feature-page benefit style). 4. Who we partner with [dark]: one card per
+   type with who it is for and an example. 5. How it works [white]: Apply, We review, Get listed (no time promises).
+6. Partner form [tint]: see Forms. 7. FAQs [white]. 8. CTA, crowd marquee, footer.
+- Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, monogram tiles, links to example.com);
+  the benefits and FAQ answers are `"draft": true`. The consent checkbox's privacy policy link is `#` (no privacy page
+  yet). The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
+  overflow at 390px.
+
 ## Industry pages (one template)
 
 Built by `render_industry.py` from `src/industries/<slug>.json` to `site/industries/<slug>/` for every industry in
@@ -379,6 +412,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Partners page (render_partners.py, src/partners.json, src/partners-directory.json, src/partners.css) and the shared form setup (src/forms.css, one form handler in the template, FORM_ENDPOINT and NEWSLETTER_ENDPOINT in build.py, both empty: forms say "Form not connected yet"). Also {{BTN_SECONDARY:label|href}}. Decisions: the hero title uses the H2 size (two long lines at display size ran to seven lines); demo partners and draft benefits/FAQs are marked for replacement; Figma not readable, copy from the brief
 - 2026-10-08: Interactive 404 page (render_404.py, src/404.json, src/404.css, editor JS in the shared template, SITE_BASE in build.py, audit check_404 with a GitHub-Pages-like local server). Decisions: the homepage gets #features and #industries anchors for the 404's links (there are no Features or Industries index pages); Pricing points at #pricing like the navbar, flagged because no pricing page exists; the Figma frames could not be read (the Figma connector is not authorized), so the copy comes from the brief
 - 2026-10-08: Industry hero: colour-only deck, larger products (your changes, all eight pages): back cards lose their labels (the edges stay clickable), the progress line and the "Add text" step are gone (the text never sat perfectly on every product), the product photo grows from 72% to 96% of the card and may dip over the palette, and the story is now just the swatch click and tint (3.0s per card). With no option step the chip shows each card's own option statically; the unused "result" field is removed from the industry JSONs and the spec
 - 2026-10-08: How it works: new step card colours (your four flat colours replace the gradients); strokes recomputed as darker tones of each colour at the same 1.25 contrast, keeping each colour's own saturation so they stay as muted as the fills. No dark-mode values were given, so the cards use the same colours in both themes, as before

@@ -1,0 +1,182 @@
+{
+  "meta": {
+    "title": "Partners | InkyBay",
+    "description": "Apps, agencies and themes that work with InkyBay to help Shopify merchants sell custom products."
+  },
+  "hero": {
+    "title": [
+      "Grow with the InkyBay partner network.",
+      "Apps, agencies and themes, working together."
+    ],
+    "lead": "We work with apps, agencies and theme builders that help Shopify merchants sell custom products. Find a partner for your store, or join the network.",
+    "primary_cta": "Become a partner",
+    "secondary_cta": "Browse partners",
+    "chips": [
+      "App provider",
+      "Agency"
+    ]
+  },
+  "types": [
+    {
+      "id": "app",
+      "label": "App providers",
+      "badge": "App provider"
+    },
+    {
+      "id": "service",
+      "label": "Service providers",
+      "badge": "Service provider"
+    },
+    {
+      "id": "theme",
+      "label": "Theme providers",
+      "badge": "Theme provider"
+    },
+    {
+      "id": "other",
+      "label": "Others",
+      "badge": "Other"
+    }
+  ],
+  "directory": {
+    "heading": "Our partners",
+    "all": "All",
+    "search_label": "Search partners",
+    "search_placeholder": "Search partners",
+    "learn_more": "Learn more",
+    "show_more": "Show more partners",
+    "visible": 9,
+    "empty_title": "No partners match your filters.",
+    "empty_text": "Try another type or a different search.",
+    "clear": "Clear filters"
+  },
+  "benefits_heading": [
+    "Why partner with InkyBay.",
+    "Grow alongside our merchants."
+  ],
+  "benefits": [
+    {
+      "icon": "star",
+      "title": "Reach merchants",
+      "text": "Get in front of Shopify merchants who sell custom products.",
+      "draft": true
+    },
+    {
+      "icon": "layers",
+      "title": "Build integrations",
+      "text": "Connect your app or theme with the InkyBay product customizer.",
+      "draft": true
+    },
+    {
+      "icon": "chat",
+      "title": "Co-marketing",
+      "text": "Share launches, guides and stories with our audience.",
+      "draft": true
+    },
+    {
+      "icon": "wand",
+      "title": "Partner support",
+      "text": "Get help from our team when you work on a merchant project.",
+      "draft": true
+    }
+  ],
+  "who_heading": [
+    "Who we partner with.",
+    "Four ways to work together."
+  ],
+  "who": [
+    {
+      "type": "app",
+      "for": "Shopify apps that sit next to a product customizer, like order, print and marketing tools.",
+      "example": "An order-printing app that takes custom orders straight to production."
+    },
+    {
+      "type": "service",
+      "for": "Agencies and freelancers who build and grow Shopify stores.",
+      "example": "An agency setting up a merchant's customizable catalogue."
+    },
+    {
+      "type": "theme",
+      "for": "Theme developers whose themes show customizable products.",
+      "example": "A theme with product pages designed around a live preview."
+    },
+    {
+      "type": "other",
+      "for": "Print suppliers, fulfilment partners and other businesses around custom products.",
+      "example": "A print-on-demand supplier that fulfils custom orders."
+    }
+  ],
+  "steps_heading": [
+    "How it works.",
+    "Three steps to the directory."
+  ],
+  "steps": [
+    {
+      "title": "Apply",
+      "text": "Tell us about your business with the form on this page."
+    },
+    {
+      "title": "We review",
+      "text": "Our team looks at how you work with merchants and gets back to you."
+    },
+    {
+      "title": "Get listed",
+      "text": "Approved partners appear in the directory with their own card."
+    }
+  ],
+  "form": {
+    "heading": "Partner with InkyBay",
+    "lead": "Tell us about your business and how you work with merchants.",
+    "name": "Your name",
+    "email": "Email",
+    "website": "Company website",
+    "optional": "optional",
+    "type": "Partner type",
+    "type_placeholder": "Choose a type",
+    "type_options": [
+      "App provider",
+      "Service provider",
+      "Theme provider",
+      "Other"
+    ],
+    "message": "Message",
+    "message_placeholder": "Who you work with, and what you'd want from us.",
+    "consent": "I agree to the",
+    "privacy": "privacy policy",
+    "submit": "Send message",
+    "sending": "Sending",
+    "not_connected": "Form not connected yet. Your message can't be sent from this page for now.",
+    "success": "Thanks, your message is on its way. We'll reply by email.",
+    "error": "Something went wrong and your message wasn't sent. Please try again in a moment.",
+    "errors": {
+      "name": "Enter your name.",
+      "email": "Enter a valid email address.",
+      "website": "Enter a full address starting with https://",
+      "type": "Choose a partner type.",
+      "message": "Tell us a little about your business.",
+      "consent": "Please accept the privacy policy."
+    }
+  },
+  "faqs": [
+    {
+      "q": "Who can apply?",
+      "a": "App developers, agencies, freelancers, theme builders and other businesses that work with Shopify merchants.",
+      "draft": true
+    },
+    {
+      "q": "Does it cost anything to join?",
+      "a": "There is no cost to apply. We share the program details when we review your application.",
+      "draft": true
+    },
+    {
+      "q": "How do listings work?",
+      "a": "Approved partners get a card in the directory with their logo, type, a short description and a link to their site.",
+      "draft": true
+    },
+    {
+      "q": "How do I update my listing?",
+      "a": "Send us your changes with the form on this page and we'll update your card.",
+      "draft": true
+    }
+  ]
+}

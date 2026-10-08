@@ -1,0 +1,34 @@
+
+/* =========================================================
+   FORMS — shared by every form (Partners, Contact, newsletter). Markup: form.form[data-form][data-endpoint], .field,
+   .field__err, .form__note (shown when no endpoint), .form__hp (honeypot), .form__status. JS lives in the template.
+   ========================================================= */
+.form { display: grid; gap: var(--s-5); }
+.form__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+.form__note { padding: var(--s-3) var(--s-4); border-radius: 12px; color: #8A3B07; background: #FFF1E4; box-shadow: inset 0 0 0 1px #F6D6BA; }
+.form__note[hidden] { display: none; }
+.field { display: grid; gap: var(--s-2); }
+.field__label { font-weight: 500; }
+.field__opt { color: var(--ink-muted); font-weight: 400; }
+.field input:not([type="checkbox"]), .field select, .field textarea { width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 12px; font: inherit; color: var(--ink);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .2s ease; }
+.field textarea { resize: vertical; min-height: 128px; }
+.field input:focus, .field select:focus, .field textarea:focus { outline: none; box-shadow: inset 0 0 0 2px var(--brand-500); }
+.field__prefix { display: flex; align-items: stretch; border-radius: 12px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.field__prefix > span { display: grid; place-items: center; padding: 0 0 0 14px; color: var(--ink-muted); }
+.field__prefix input { box-shadow: none !important; background: transparent !important; padding-left: 2px !important; }
+.field__prefix:focus-within { box-shadow: inset 0 0 0 2px var(--brand-500); }
+.field.is-invalid input:not([type="checkbox"]), .field.is-invalid select, .field.is-invalid textarea, .field.is-invalid .field__prefix { box-shadow: inset 0 0 0 2px #D42427; }
+.field__err { font-size: 14px; line-height: 20px; color: #D42427; }
+.field__err:empty { display: none; }
+.field--check { grid-template-columns: auto 1fr; align-items: start; column-gap: var(--s-3); }
+.field--check input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--brand-600); }
+.field--check a { text-decoration: underline; text-underline-offset: 3px; }
+.field--check .field__err { grid-column: 1 / -1; }
+.form__hp { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+.form__foot { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-4); }
+.form__submit[aria-busy="true"] { opacity: .7; pointer-events: none; }
+.form__status { font-weight: 500; }
+.form__status.is-ok { color: #17803D; }
+.form__status.is-fail, .form__status.is-off { color: #B4232A; }
+@media (max-width: 600px) { .form__row { grid-template-columns: minmax(0, 1fr); } }
