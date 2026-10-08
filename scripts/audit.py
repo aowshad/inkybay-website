@@ -129,6 +129,7 @@ async def check_page(slug, d):
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
+        if slug == "blog": await check_blog(b)
         await b.close()
 
 
@@ -143,6 +144,7 @@ def page_path(slug):
     if slug == "404": return ROOT / "site/404.html"
     if slug == "partners": return ROOT / "site/partners/index.html"
     if slug == "contact": return ROOT / "site/contact/index.html"
+    if slug.startswith("blog"): return ROOT / "site/resources" / (slug.replace("blog", "blog", 1)) / "index.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
 
@@ -209,6 +211,68 @@ async def check_industry_hero(b, slug, path):
         if await pg.evaluate(FRONT) != lab: bad(slug, f"hero: clicking the '{lab}' tab does not bring it to the front")
     if errs: bad(slug, f"hero: JS errors {errs[:2]}")
     await pg.close()
+
+
+def blog_flagship():
+    """The newest featured post (the article the blog checks open)."""
+    import render_blog
+    D = render_blog.load(); f = [p for p in D["posts"] if p["featured"]] or D["posts"]
+    return f[0]["slug"]
+
+
+async def check_blog(b):
+    """Blog: thumbnails at their natural ratio, category/tag pills and pagination resolve, search finds "print" and shows
+    the empty state for "zzzz", the layout switch changes the columns, the TOC follows the section in view, the summary
+    button reveals the bullets, JSON-LD parses, no overflow at 390px."""
+    slug = "blog"; srv, base = serve_site(); B = base + "resources/blog/"
+    try:
+        pg = await b.new_page(viewport={"width": 1440, "height": 900}); errs = []
+        pg.on("pageerror", lambda e: errs.append(str(e)))
+        pages = [B, B + "category/print-prep/", B + "tag/b2b/", B + blog_flagship() + "/"]
+        hrefs = set()
+        for u in pages:
+            r = await pg.goto(u); await pg.wait_for_timeout(300)
+            if r.status != 200: bad(slug, f"{u[len(base):]} returns {r.status}"); continue
+            await pg.evaluate("window.scrollTo(0, document.body.scrollHeight)"); await pg.wait_for_timeout(500)   # load lazy thumbnails
+            ratio = await pg.evaluate("""[...document.querySelectorAll('main img[srcset]')].filter(i=>i.complete&&i.naturalWidth).map(i=>{const r=i.getBoundingClientRect();
+                return [i.getAttribute('src'), Math.abs((r.height/r.width)/(i.naturalHeight/i.naturalWidth)-1)]}).filter(x=>x[1]>.01)""")
+            if ratio: bad(slug, f"{u[len(base):]}: thumbnails not at their natural ratio: {ratio[:2]}")
+            ld = await pg.evaluate("""[...document.querySelectorAll('script[type="application/ld+json"]')].map(s=>{try{JSON.parse(s.textContent);return true}catch(e){return false}})""")
+            if not ld or not all(ld): bad(slug, f"{u[len(base):]}: JSON-LD missing or does not parse")
+            hrefs |= set(await pg.evaluate("""[...document.querySelectorAll('a.bpill, a.btag, a.bbar__pill, .bpage a')].map(a=>a.href)"""))
+        for h in sorted(hrefs):
+            st = (await pg.request.get(h)).status
+            if st != 200: bad(slug, f"link {h[len(base)-1:]} returns {st}")
+        # layout switch
+        await pg.goto(B); await pg.wait_for_timeout(400)
+        for v, n in (("2", 2), ("4", 4), ("list", 1), ("3", 3)):
+            await pg.click(f'.bview__btn[data-view="{v}"]'); await pg.wait_for_timeout(150)
+            cols = await pg.evaluate("getComputedStyle(document.querySelector('.bgrid')).gridTemplateColumns.split(' ').length")
+            if cols != n: bad(slug, f"layout '{v}' shows {cols} columns, expected {n}")
+        # search
+        for q, want in (("print", True), ("zzzz", False)):
+            await pg.goto(B + "search/?q=" + q); await pg.wait_for_timeout(900)
+            r = await pg.evaluate("[document.querySelectorAll('.bsearch-results .bcard').length, !document.querySelector('.bempty').hidden, document.querySelectorAll('.bsearch-results mark').length]")
+            if want and (r[0] == 0 or r[1] or r[2] == 0): bad(slug, f"search '{q}' finds nothing or does not highlight ({r})")
+            if not want and (r[0] or not r[1]): bad(slug, f"search '{q}' does not show the empty state ({r})")
+        # article: summary and TOC
+        await pg.goto(B + blog_flagship() + "/"); await pg.wait_for_timeout(400)
+        await pg.click(".bsum__btn"); await pg.wait_for_timeout(4500)
+        s_ = await pg.evaluate("[document.querySelector('.bsum').classList.contains('is-open'), document.querySelector('.bsum__list').getBoundingClientRect().height, document.querySelector('.bsum__btn').getAttribute('aria-expanded')]")
+        if not s_[0] or s_[1] < 40 or s_[2] != "true": bad(slug, f"the summary button does not reveal the bullets ({s_})")
+        hid = await pg.evaluate("[...document.querySelectorAll('.bbody h2[id]')].map(h=>h.id)")
+        if len(hid) >= 3:
+            await pg.evaluate(f"document.getElementById('{hid[2]}').scrollIntoView()"); await pg.evaluate("window.scrollBy(0, -140)"); await pg.wait_for_timeout(600)
+            act = await pg.evaluate("document.querySelector('.btoc--side a.is-active')?.getAttribute('href')")
+            if act != "#" + hid[2]: bad(slug, f"the table of contents does not highlight the section in view ({act} vs #{hid[2]})")
+        if errs: bad(slug, f"JS errors {errs[:2]}")
+        await pg.close()
+        for u in (B, B + blog_flagship() + "/", B + "search/?q=print"):
+            m = await b.new_page(viewport={"width": 390, "height": 844}); await m.goto(u); await m.wait_for_timeout(500)
+            if await m.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"390px: horizontal overflow on {u[len(base):]}")
+            await m.close()
+    finally:
+        srv.shutdown()
 
 
 async def check_contact(b, path):
@@ -425,11 +489,12 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = ["homepage", "404", "partners", "contact"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
+        args = (["homepage", "404", "partners", "contact"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
+                + industry_slugs() + ["blog", "blog/" + blog_flagship(), "blog/category/print-prep", "blog/tag/b2b"])
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in ("404", "partners", "contact"):
+        if slug in ("404", "partners", "contact") or slug.startswith("blog"):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))

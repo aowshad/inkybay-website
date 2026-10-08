@@ -393,6 +393,9 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   JSON-LD BlogPosting (articles), BreadcrumbList (all blog pages) and CollectionPage (listings); one H1 per page.
 - Small text: pills, tags, share buttons and the filter chip are 16px links; dates, reading times and labels are 14px
   metadata in non-paragraph elements.
+- Audit (`scripts/audit.py`, part of `--all`): thumbnails at their natural ratio, category/tag pills and pagination
+  resolve, search finds "print" and shows the empty state for "zzzz", the layout switch changes the columns, the
+  contents follow the section in view, the summary reveals the bullets, JSON-LD parses, no overflow at 390px.
 - Endpoints: the newsletter forms post to `NEWSLETTER_ENDPOINT` (see Forms); empty for now, so they say "Not connected
   yet". Draft / demo: the 14 posts and both authors are demo content; the promo cards and newsletter copy are draft.
 
@@ -495,6 +498,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Blog links, audit and docs: audit check_blog (thumbnail ratios, pill/tag/pagination links, search results and empty state, layout switch, contents highlight, summary reveal, JSON-LD, overflow at 390px) and four blog pages in --all; docs/writing-a-blog-post.md for writers. The Resources mega menu and footer already point to resources/blog/
 - 2026-10-08: Blog demo content: four categories (Print prep, Pricing and operations, Shopify and growth, InkyBay product), eight tags, two demo authors, 14 demo posts (302 to 702 words; two featured) including the flagship "What makes a file print-ready? A practical guide" with the resolution table, colour section, callout, merchant quote, lists, checklist and FAQ; 16:10 covers (soft brand gradient + one product, no text) made by scripts/make_blog_covers.py. Figma frames were not readable, so titles are our own
 - 2026-10-08: Blog content model and build (render_blog.py: front matter, validation, Python-Markdown, reading time, contents, responsive thumbnails, listing / category / tag / search / article pages, SEO tags and JSON-LD, search-index.json, feed.xml; sitemap.xml for the whole site; SITE_URL; requirements.txt pinned Markdown 3.7 + Pillow 11.3, installed by the Pages workflow; blog.css and blog JS). The brief's listing, result-page and article commits land here because one renderer builds them all. Decisions: Python-Markdown (small, well known, tables and heading ids built in); a small built-in front matter reader instead of a YAML library; the sticky sidebar scrolls inside itself when taller than the screen; pills, tags and share buttons are 16px, metadata 14px in non-paragraph elements; screen-reader-only headings are skipped by the heading reveal
 - 2026-10-08: New tee image (your 1600px photo; the old tee was a 400px source enlarged to 600 and looked soft). Same treatment as the library (trimmed, centred, 82% fill) but 1000x1000 because the tee is shown large; ~24 KB, so page weight barely changes. It replaces the tee everywhere it is used (mini UIs, How it works, zig-zags, decks, wheel, walls, 404)
