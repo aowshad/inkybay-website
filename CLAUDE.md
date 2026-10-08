@@ -339,6 +339,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Add industry page: Home & furniture
 - 2026-10-08: Add industry page: Sports & teamwear
 - 2026-10-08: Add industry page: Jewelry & accessories
 - 2026-10-08: Industry hero: customizing deck (story, rotation, tabs, hover/focus pause, swipe, arrow keys, live region, reduced motion; shared on-screen observer extended to .ishow). Decisions: back-card blur is 0.3px per step (0.8px blurred the tab labels); the leave animation eases each half separately (an expo curve over the whole 0.6s hid the lift and blur within 100ms); the glass panel and palette are 92% white on dark pages so they stay light

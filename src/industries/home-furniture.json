@@ -1,0 +1,180 @@
+{
+  "slug": "home-furniture",
+  "nav_label": "Home & furniture",
+  "meta": {
+    "title": "Personalized home decor for Shopify | InkyBay",
+    "description": "Sell blankets, clocks, frames and doormats that shoppers personalize with photos, names and colors, previewed before they buy."
+  },
+  "hero": {
+    "title": "Home decor made personal",
+    "lead": "Sell blankets, clocks, frames and doormats that shoppers personalize with photos, names and colors, previewed before they buy.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Add photo",
+          "icon": "image"
+        },
+        {
+          "label": "Add text",
+          "icon": "type"
+        },
+        {
+          "label": "Pick fabric",
+          "icon": "layers"
+        }
+      ],
+      "swatches": [
+        "#F4F1EE",
+        "#E9DCCB",
+        "#8A4B2A",
+        "#2F2F2F",
+        "#1F3A68",
+        "#17A673",
+        "#FFD982",
+        "#FF7500"
+      ],
+      "deck": [
+        {
+          "product": "blanket",
+          "label": "Blanket",
+          "result": "The Parkers",
+          "swatch": 4,
+          "chip": "King"
+        },
+        {
+          "product": "wall-clock",
+          "label": "Wall clock",
+          "result": "Home",
+          "swatch": 1,
+          "chip": "30 cm"
+        },
+        {
+          "product": "photoframe",
+          "label": "Photo frame",
+          "result": "Summer 26",
+          "swatch": 5,
+          "chip": "A4"
+        },
+        {
+          "product": "doormat",
+          "label": "Doormat",
+          "result": "Hello",
+          "swatch": 2,
+          "chip": "Large"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Make every home their own.",
+    "Photos, names and colors."
+  ],
+  "products": [
+    {
+      "name": "Blanket",
+      "image": "blanket"
+    },
+    {
+      "name": "Wall clock",
+      "image": "wall-clock"
+    },
+    {
+      "name": "Photo frame",
+      "image": "photoframe"
+    },
+    {
+      "name": "Doormat",
+      "image": "doormat"
+    },
+    {
+      "name": "Mug",
+      "image": "mug"
+    },
+    {
+      "name": "Notebook",
+      "image": "notebook"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell home and furniture.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Photo blankets are our bestseller. Shoppers upload a picture and see the result instantly.",
+      "preview": "blanket",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Family doormats with surnames sell all year, not just at the holidays.",
+      "preview": "wall-clock",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Customers pick the frame color and add their photo in one step.",
+      "preview": "photoframe",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Our wall clocks come with numbers, names or photos, all from one product.",
+      "preview": "doormat",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers upload their own photos?",
+      "a": "Yes. Shoppers upload images and place them on the product with a live preview."
+    },
+    {
+      "q": "Can I offer different sizes and materials?",
+      "a": "Yes. Add sizes and materials as options, each with its own price."
+    },
+    {
+      "q": "Can I check image quality?",
+      "a": "You can set the print areas and sizes shoppers design within, so every design fits."
+    },
+    {
+      "q": "Do I get print-ready files?",
+      "a": "Yes. Every order includes print-ready files and the design details."
+    }
+  ]
+}
