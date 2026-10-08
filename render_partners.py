@@ -139,7 +139,7 @@ def render():
       <div class="faq__intro">
         <h2 class="faq__title" id="faq-title">FAQs</h2>
         <p class="faq__lead">Common questions about the partner program.</p>
-        <div class="faq__help"><p>Still have questions?</p>{{{{BTN_SECONDARY:Talk to our team|#partner-form}}}}</div>
+        <div class="faq__help"><p>Still have questions?</p>{{{{BTN_SECONDARY:Talk to our team|contact/}}}}</div>
       </div>
       <ul class="faq__list">
 {faqs}

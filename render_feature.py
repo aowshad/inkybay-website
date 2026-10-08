@@ -39,6 +39,7 @@ ICON = {
     "chart": P('<path d="M4 20h16M7 16.5v-4M12 16.5V8M17 16.5V5"/>'),
     "play": P('<circle cx="12" cy="12" r="8.5"/><path d="M10.2 8.8v6.4l5-3.2-5-3.2z"/>'),
     "handshake": P('<path d="M2.5 11.5L6 8l3 1 2.5-1.5L14 8l3.5 0 4 3.5"/><path d="M6 8l-3.5 3.5 5.6 5.6c.8.8 2 .8 2.8 0L16 12c.7-.7.7-1.8 0-2.5L14 8M9 14.5l2-2M11.5 17l2-2"/>'),
+    "mail": P('<rect x="3.5" y="5.5" width="17" height="13" rx="2"/><path d="M4 7l8 6 8-6"/>'),
     "book": P('<path d="M5 4.5A1.5 1.5 0 0 1 6.5 3H19v15H6.5A1.5 1.5 0 0 0 5 19.5v-15z"/><path d="M5 19.5A1.5 1.5 0 0 0 6.5 21H19v-3M9 7h6"/>'),
 }
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
@@ -216,7 +217,7 @@ def render(slug):
       <div class="faq__intro">
         <h2 class="faq__title" id="faq-title">FAQs</h2>
         <p class="faq__lead">Common questions about {E(d["nav_label"].lower())}.</p>
-        <div class="faq__help"><p>Still have questions?</p>{{{{BTN_SECONDARY:Talk to our team}}}}</div>
+        <div class="faq__help"><p>Still have questions?</p>{{{{BTN_SECONDARY:Talk to our team|contact/}}}}</div>
       </div>
       <ul class="faq__list">
 {faqs}

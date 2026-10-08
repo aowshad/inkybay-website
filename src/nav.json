@@ -100,6 +100,12 @@
               "icon": "chat",
               "href": "#",
               "action": "live-chat"
+            },
+            {
+              "title": "Contact",
+              "short": "Write to our team.",
+              "icon": "mail",
+              "href": "contact/"
             }
           ]
         }
@@ -123,12 +129,6 @@
           "title": "Get help",
           "groups": [
             "Get help"
-          ],
-          "extra": [
-            {
-              "title": "Contact",
-              "href": "#"
-            }
           ]
         }
       ]

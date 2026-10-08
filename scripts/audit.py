@@ -128,6 +128,7 @@ async def check_page(slug, d):
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
+        if slug == "contact": await check_contact(b, path)
         await b.close()
 
 
@@ -141,6 +142,7 @@ def page_path(slug):
     if slug == "homepage": return ROOT / "site/index.html"
     if slug == "404": return ROOT / "site/404.html"
     if slug == "partners": return ROOT / "site/partners/index.html"
+    if slug == "contact": return ROOT / "site/contact/index.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
 
@@ -207,6 +209,52 @@ async def check_industry_hero(b, slug, path):
         if await pg.evaluate(FRONT) != lab: bad(slug, f"hero: clicking the '{lab}' tab does not bring it to the front")
     if errs: bad(slug, f"hero: JS errors {errs[:2]}")
     await pg.close()
+
+
+async def check_contact(b, path):
+    """Contact: each topic changes the placeholder and the visible fields; required fields block submit with errors;
+    the copy button works; both office clocks show a time and a badge; links in the page resolve; no overflow at 390."""
+    slug = "contact"
+    for w in (1440, 390):
+        ctx = await b.new_context(viewport={"width": w, "height": 900}, permissions=["clipboard-read", "clipboard-write"])
+        pg = await ctx.new_page(); errs = []
+        pg.on("pageerror", lambda e: errs.append(str(e)))
+        await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+        S = """(()=>({ph:document.querySelector('[name="message"]').placeholder, topic:document.querySelector('[name="topic"]').value,
+              hidden:[...document.querySelectorAll('.cform .cfx.is-hidden')].map(e=>e.dataset.f).sort()}))()"""
+        base = await pg.evaluate(S)
+        if base["hidden"] != ["best_time", "partner"]: bad(slug, f"{w}px: default state should show every field but 'Best time to talk' ({base['hidden']})")
+        seen = set()
+        for t in await pg.evaluate("[...document.querySelectorAll('.ctopic')].map(c=>c.dataset.topic)"):
+            await pg.click(f'.ctopic[data-topic="{t}"]'); await pg.wait_for_timeout(420); st = await pg.evaluate(S)
+            if t == "partners":
+                if "fields" not in st["hidden"] or "partner" in st["hidden"]: bad(slug, f"{w}px: Partnerships does not swap the form for the partner note")
+                continue
+            seen.add(st["ph"])
+            if st["ph"] == base["ph"] or not st["topic"]: bad(slug, f"{w}px: topic '{t}' does not change the placeholder / topic value")
+            if t == "demo" and "best_time" in st["hidden"]: bad(slug, f"{w}px: Book a demo does not show 'Best time to talk'")
+            if t == "billing" and "using" not in st["hidden"]: bad(slug, f"{w}px: Billing does not hide 'I'm using'")
+        if len(seen) < 4: bad(slug, f"{w}px: topics do not each have their own placeholder")
+        await pg.click('.ctopic[data-topic="setup"]'); await pg.wait_for_timeout(400)
+        await pg.locator(".cform .form__submit").scroll_into_view_if_needed(); await pg.click(".cform .form__submit"); await pg.wait_for_timeout(200)
+        f = await pg.evaluate("""(()=>({invalid:document.querySelectorAll('.cform .field.is-invalid').length, focused:document.activeElement && document.activeElement.getAttribute('aria-invalid'),
+            status:document.querySelector('.cform .form__status').textContent}))()""")
+        if f["invalid"] < 4 or f["focused"] != "true" or f["status"]: bad(slug, f"{w}px: an empty submit is not blocked with inline errors and focus on the first ({f})")
+        await pg.locator(".cch__copy").scroll_into_view_if_needed(); await pg.click(".cch__copy"); await pg.wait_for_timeout(250)
+        if not (await pg.text_content(".cch__copied")).strip(): bad(slug, f"{w}px: the copy button does not confirm")
+        if w == 1440:
+            try:
+                if (await pg.evaluate("navigator.clipboard.readText()")) != await pg.get_attribute(".cch__copy", "data-copy"): bad(slug, "the copy button does not copy the address")
+            except Exception: pass
+        clocks = await pg.evaluate("[...document.querySelectorAll('.coff')].map(o=>[o.querySelector('.coff__time').textContent, o.querySelector('.coff__badge').textContent])")
+        if len(clocks) != 2 or any(not __import__('re').match(r"^\d{1,2}:\d{2}\s?[AP]M$", t) or not b_ for t, b_ in clocks): bad(slug, f"{w}px: office clocks or badges missing ({clocks})")
+        links = await pg.evaluate("""[...document.querySelectorAll('main a[href]')].map(a=>a.getAttribute('href')).filter(h=>!/^(#|https?:|mailto:|tel:)/.test(h))""")
+        for h in links:
+            t = (path.parent / h.split("#")[0]).resolve(); t = t / "index.html" if h.split("#")[0].endswith("/") else t
+            if not t.exists(): bad(slug, f"{w}px: link {h} does not resolve")
+        if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"{w}px: horizontal overflow")
+        if errs: bad(slug, f"{w}px: JS errors {errs[:2]}")
+        await ctx.close()
 
 
 async def check_partners(b, path):
@@ -377,11 +425,11 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = ["homepage", "404", "partners"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
+        args = ["homepage", "404", "partners", "contact"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in ("404", "partners"):
+        if slug in ("404", "partners", "contact"):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))

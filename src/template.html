@@ -1938,7 +1938,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         <p class="faq__lead">Short answers to what merchants ask before they install.</p>
         <div class="faq__help">
           <p>Still have questions?</p>
-          {{BTN_SECONDARY:Talk to our team}}
+          {{BTN_SECONDARY:Talk to our team|contact/}}
         </div>
       </div>
       <ul class="faq__list">
@@ -2905,53 +2905,150 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     });
 
     /* Forms (Partners, Contact, newsletter): one handler for every form.form[data-form]. It posts to data-endpoint
-       (FORM_ENDPOINT / NEWSLETTER_ENDPOINT from the build config) with fetch, validates in place with inline errors,
-       drops spam caught by the honeypot, and never pretends to send when no endpoint is set. */
+       (FORM_ENDPOINT / NEWSLETTER_ENDPOINT from the build config) with fetch, validates in place with inline errors
+       (on blur once a field was touched, and on submit), drops spam caught by the honeypot, and never pretends to send
+       when no endpoint is set. A following template.form__done replaces the form on success ({name} = first name). */
     document.querySelectorAll('form[data-form]').forEach(function (form) {
       var endpoint = (form.getAttribute('data-endpoint') || '').trim();
       var note = form.querySelector('.form__note'), status = form.querySelector('.form__status');
       var submit = form.querySelector('[type="submit"]'), label = submit && submit.querySelector('[data-text]');
+      var done = form.parentNode.querySelector('template.form__done');
       var fields = [].slice.call(form.querySelectorAll('[required], [data-url]')), tried = false;
       if (!endpoint && note) note.hidden = false;
+      function active(el) { return !el.disabled && !el.closest('.cfx.is-hidden'); }
       function valid(el) {
         var v = (el.value || '').trim();
         if (el.type === 'checkbox') return el.checked;
-        if (el.hasAttribute('data-url')) return !v || /^(https?:\/\/)?[^\s\/]+\.[^\s]{2,}$/i.test(v);
+        if (el.hasAttribute('data-url')) return (!v && !el.required) || /^(https?:\/\/)?[^\s\/]+\.[^\s]{2,}$/i.test(v);
         if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
         return !!v;
       }
       function mark(el) {
-        var ok = valid(el), wrap = el.closest('.field'), err = wrap && wrap.querySelector('.field__err');
+        var ok = !active(el) || valid(el), wrap = el.closest('.field'), err = wrap && wrap.querySelector('.field__err');
         if (wrap) wrap.classList.toggle('is-invalid', !ok);
         el.setAttribute('aria-invalid', String(!ok));
         if (err) err.textContent = ok ? '' : el.getAttribute('data-err');
         return ok;
       }
+      form.validateAll = function () { fields.forEach(mark); };
       function say(kind) {
         if (!status) return;
         status.className = 'form__status is-' + kind;
         status.textContent = status.getAttribute('data-' + kind) || '';
+        var mail = status.getAttribute('data-fail-email');
+        if (kind === 'fail' && mail) { var a = document.createElement('a'); a.href = 'mailto:' + mail; a.textContent = mail; status.appendChild(document.createTextNode(' ')); status.appendChild(a); status.appendChild(document.createTextNode('.')); }
+      }
+      function succeed() {
+        if (!done) { say('ok'); form.reset(); tried = false; return; }
+        var first = ((form.querySelector('[name="name"]') || {}).value || '').trim().split(/\s+/)[0] || '';
+        var box = done.content.firstElementChild.cloneNode(true), t = box.querySelector('.cdone__title');
+        if (t) t.textContent = t.textContent.replace('{name}', first).replace(', .', '.');
+        form.hidden = true; form.parentNode.insertBefore(box, form); box.focus();
+        box.querySelector('.cdone__again').addEventListener('click', function () {
+          box.remove(); form.reset(); tried = false; form.hidden = false; status.textContent = ''; status.className = 'form__status';
+          form.dispatchEvent(new Event('form:reset')); var f = form.querySelector('input:not([type="hidden"]), button'); if (f) f.focus();
+        });
       }
       fields.forEach(function (el) {
-        el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', function () { if (tried) mark(el); });
+        var dirty = false;
+        el.addEventListener(el.type === 'checkbox' || el.tagName === 'SELECT' ? 'change' : 'input', function () { dirty = true; if (tried || el.closest('.field.is-invalid')) mark(el); });
+        el.addEventListener('blur', function () { if (dirty || tried) mark(el); });
       });
       form.addEventListener('submit', function (e) {
         e.preventDefault(); tried = true;
         var bad = fields.filter(function (el) { return !mark(el); });
         if (bad.length) { bad[0].focus(); return; }
         var hp = form.querySelector('.form__hp input');
-        if (hp && hp.value) { say('ok'); form.reset(); return; }          /* a bot filled the honeypot: drop it quietly */
+        if (hp && hp.value) { succeed(); return; }                       /* a bot filled the honeypot: drop it quietly */
         if (!endpoint) { say('off'); return; }                            /* not connected: say so, do not pretend */
-        var data = new FormData(form), site = form.querySelector('[data-url]');
-        if (site && site.value.trim() && !/^https?:\/\//i.test(site.value.trim())) data.set(site.name, 'https://' + site.value.trim());
+        var data = new FormData(form);
+        [].slice.call(form.querySelectorAll('[data-url]')).forEach(function (u) {
+          var v = u.value.trim(); if (v && !/^https?:\/\//i.test(v)) data.set(u.name, 'https://' + v);
+        });
         data.delete('_gotcha');
         submit.setAttribute('aria-busy', 'true'); var was = label ? label.textContent : '';
         if (label) label.textContent = submit.getAttribute('data-sending');
         fetch(endpoint, { method: 'POST', body: data, headers: { Accept: 'application/json' } })
-          .then(function (r) { if (!r.ok) throw new Error(r.status); say('ok'); form.reset(); tried = false; })
-          .catch(function () { say('fail'); })
+          .then(function (r) { if (!r.ok) throw new Error(r.status); succeed(); })
+          .catch(function () { say('fail'); })                             /* the input stays; the email is offered */
           .then(function () { submit.removeAttribute('aria-busy'); if (label) label.textContent = was; });
       });
+    });
+
+    /* Contact: topic chips (a radio group) reshape the form; message counter; copy-email button; office clocks
+       (Intl, each office's time zone, every 30s) with an open/closed badge; a dot travels the arc between offices */
+    document.querySelectorAll('.cform').forEach(function (form) {
+      var chips = [].slice.call(form.querySelectorAll('.ctopic')), topic = form.querySelector('[name="topic"]');
+      var msg = form.querySelector('[name="message"]'), count = form.querySelector('.cform__count'), max = +msg.getAttribute('maxlength');
+      var fx = function (k) { return form.querySelector('.cfx[data-f="' + k + '"]'); };
+      var defaultHidden = ['best_time', 'partner'];
+      function setFx(el, show) {
+        if (!el) return; el.classList.toggle('is-hidden', !show);
+        [].slice.call(el.querySelectorAll('input, select, textarea')).forEach(function (c) { if (c.name !== '_gotcha') c.disabled = !show; });
+        if (!show) [].slice.call(el.querySelectorAll('.field')).forEach(function (f) { f.classList.remove('is-invalid'); var e = f.querySelector('.field__err'); if (e) e.textContent = ''; });
+      }
+      function choose(chip) {
+        chips.forEach(function (c) { var on = c === chip; c.setAttribute('aria-checked', String(on)); c.tabIndex = on || (!chip && c === chips[0]) ? 0 : -1; });
+        var show = chip ? chip.getAttribute('data-show').split(' ').filter(Boolean) : [], hide = chip ? chip.getAttribute('data-hide').split(' ').filter(Boolean) : [];
+        var redirect = chip && chip.hasAttribute('data-redirect');
+        topic.value = chip ? chip.getAttribute('data-label') : '';
+        msg.placeholder = (chip && chip.getAttribute('data-placeholder')) || msg.getAttribute('data-default-placeholder');
+        ['name', 'email', 'phone', 'store', 'using', 'best_time', 'message', 'consent'].forEach(function (k) {
+          setFx(fx(k), show.indexOf(k) > -1 || (defaultHidden.indexOf(k) < 0 && hide.indexOf(k) < 0));
+        });
+        setFx(fx('partner'), !!redirect); setFx(fx('fields'), !redirect);
+      }
+      chips.forEach(function (c, i) {
+        c.addEventListener('click', function () { choose(c.getAttribute('aria-checked') === 'true' ? c : c); });
+        c.addEventListener('keydown', function (e) {
+          var k = e.key, n = k === 'ArrowRight' || k === 'ArrowDown' ? 1 : k === 'ArrowLeft' || k === 'ArrowUp' ? -1 : 0;
+          if (!n) return; e.preventDefault(); var t = chips[(i + n + chips.length) % chips.length]; t.focus(); choose(t);
+        });
+      });
+      function counter() { var n = msg.value.length; count.textContent = n + ' / ' + max; count.classList.toggle('is-near', n > max * .9); }
+      msg.addEventListener('input', counter);
+      form.addEventListener('form:reset', function () { choose(null); counter(); });
+      choose(null); counter();
+    });
+    document.querySelectorAll('.cch__copy').forEach(function (b) {
+      var out = b.querySelector('.cch__copied'), t = 0;
+      b.addEventListener('click', function () {
+        var text = b.getAttribute('data-copy');
+        function shown() { out.textContent = b.getAttribute('data-copied'); clearTimeout(t); t = setTimeout(function () { out.textContent = ''; }, 2000); }
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(shown, fallback); else fallback();
+        function fallback() {
+          var ta = document.createElement('textarea'); ta.value = text; ta.setAttribute('readonly', ''); ta.style.position = 'fixed'; ta.style.opacity = '0';
+          document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); shown();
+        }
+      });
+    });
+    (function () {
+      var offs = [].slice.call(document.querySelectorAll('.coff')); if (!offs.length) return;
+      var days = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat: 6, Sun: 7 };
+      function tick() {
+        var now = new Date();
+        offs.forEach(function (o) {
+          var tz = o.getAttribute('data-tz');
+          o.querySelector('.coff__time').textContent = new Intl.DateTimeFormat('en-US', { timeZone: tz, hour: 'numeric', minute: '2-digit' }).format(now);
+          var p = {}; new Intl.DateTimeFormat('en-US', { timeZone: tz, weekday: 'short', hour: '2-digit', minute: '2-digit', hourCycle: 'h23' }).formatToParts(now).forEach(function (x) { p[x.type] = x.value; });
+          var mins = (+p.hour % 24) * 60 + +p.minute, hm = function (s) { var a = s.split(':'); return +a[0] * 60 + +a[1]; };
+          var open = o.getAttribute('data-days').split(',').indexOf(String(days[p.weekday])) > -1 && mins >= hm(o.getAttribute('data-open')) && mins < hm(o.getAttribute('data-close'));
+          var b = o.querySelector('.coff__badge'); b.className = 'coff__badge ' + (open ? 'is-open' : 'is-closed');
+          b.textContent = b.getAttribute(open ? 'data-open-label' : 'data-closed-label');
+        });
+      }
+      tick(); setInterval(tick, 30000);
+    })();
+    document.querySelectorAll('.carc').forEach(function (arc) {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches, on = !('IntersectionObserver' in window), t0 = 0;
+      function place(svg, f) { var p = svg.querySelector('.carc__path'), d = svg.querySelector('.carc__dot'), L = p.getTotalLength(), pt = p.getPointAtLength(L * f); d.setAttribute('cx', pt.x); d.setAttribute('cy', pt.y); }
+      [].slice.call(arc.querySelectorAll('svg')).forEach(function (s) { place(s, .5); });
+      if (reduce) return;                                              /* static dot in the middle */
+      if (!on) new IntersectionObserver(function (es) { on = es[0].isIntersecting; }, { threshold: .1 }).observe(arc);
+      (function frame(now) {
+        if (on) { if (!t0) t0 = now; var f = ((now - t0) % 8000) / 8000; [].slice.call(arc.querySelectorAll('svg')).forEach(function (s) { if (s.getBoundingClientRect().width) place(s, f); }); }
+        requestAnimationFrame(frame);
+      })(0);
     });
 
     /* Partner directory: type tabs with live counts, search by name and description, the first N then "Show more",

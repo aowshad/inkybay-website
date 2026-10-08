@@ -4,6 +4,7 @@
                            site/features/<slug>/index.html   (one per src/features/<slug>.json)
                            site/404.html                     (the interactive 404; links start from SITE_BASE)
                            site/partners/index.html          (src/partners.json + src/partners-directory.json)
+                           site/contact/index.html           (src/contact.json)
                            site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
@@ -18,7 +19,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, re, html, pathlib, os
 import json
 from render_feature import render, ICON
-import render_industry, render_404, render_partners
+import render_industry, render_404, render_partners, render_contact
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -215,6 +216,7 @@ homepage = build((ROOT / "src" / "template.html").read_text())
 write(SITE / "index.html", homepage)
 write(SITE / "404.html", build(render_404.render(SITE_BASE), root=SITE_BASE, home=SITE_BASE))
 write(SITE / "partners" / "index.html", build(render_partners.render(), root="../", home="../"))
+write(SITE / "contact" / "index.html", build(render_contact.render("../"), root="../", home="../"))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(SITE / "features" / j.stem / "index.html", build(render(j.stem), root="../../", home="../../", current=("features", j.stem)))
 for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists

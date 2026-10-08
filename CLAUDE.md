@@ -47,6 +47,7 @@ src/products.json         product library: {"<name>": {"label", "industry"}} for
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, feature and industry pages); SITE_BASE lives here
 render_404.py             renders the 404 from src/404.json (styles in src/404.css)
 render_partners.py        renders site/partners/ from src/partners.json (copy) + src/partners-directory.json (the list)
+render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 src/forms.css             shared form styles (Partners, Contact, newsletter); the form JS is shared in the template
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
@@ -174,7 +175,8 @@ into the shared template. Never hand-write a menu in the template.
   Industry pages come later, so `industries/...` links 404 until they exist.
   Resources (groups: Learn, Grow with InkyBay, Get help; internal pages `resources/blog/`, `resources/case-studies/`,
   `resources/video-tutorials/`, `partners/`, `affiliate/` come later; Help center is external to docs.inkybay.com;
-  promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = Get help + Contact).
+  promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
+  Contact). Contact ("Write to our team.", icon mail) links to `contact/`.
 - Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
   title and a vertical list of items. Columns share the width evenly, so adding an item or a group needs no CSS change.
 - Video promo (`"visual": "video"`): `hero-editor.webp` as a full-bleed thumbnail (anchored to the top) under a light
@@ -290,9 +292,13 @@ Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, contr
   (newsletter), e.g. a Formspree or Basin URL, set with `FORM_ENDPOINT=... python3 build.py` (and the same in the
   Pages workflow when chosen). Both are empty for now: the form shows "Form not connected yet" up front and on submit,
   and never pretends to send. No service has been picked.
-- Client-side validation with inline errors (required fields, email, optional `https://` website), focus on the first
-  error; a filled honeypot is dropped quietly; the submit button shows a loading state; success and error appear in
-  place via fetch (no reload).
+- Client-side validation with inline errors (required fields, email, `https://` website fields), on blur once a field
+  was touched and on submit, with aria-invalid and focus on the first error; hidden or disabled fields are skipped; a
+  filled honeypot is dropped quietly; the submit button shows a loading state; the result appears in place via fetch
+  (no reload). A `template.form__done` after the form replaces it on success (`{name}` becomes the first name; "Send
+  another message" brings the form back); otherwise the status line says it. On failure the input stays and the
+  status offers `data-fail-email` as a mailto link.
+- Every "Talk to our team" button (homepage, feature, industry and partners FAQs) links to `contact/`.
 
 ## Partners page
 
@@ -312,6 +318,34 @@ Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, contr
   the benefits and FAQ answers are `"draft": true`. The consent checkbox's privacy policy link is `#` (no privacy page
   yet). The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
   overflow at 390px.
+
+## Contact page
+
+`site/contact/`, built by `render_contact.py` from `src/contact.json` (topics, fields, channels, offices, FAQs; nothing
+hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like talking to a person."
+1. Hero + form [white]. Left: breadcrumb, two-tone H1 "Have questions? / Talk to a real person.", lead, three channel
+   rows (Email support with a copy button, "Copied" for 2s, and a mailto link; Live chat with
+   `data-action="live-chat"`; Help center, external) and the response note. Right: the form card (white, radius 24,
+   soft shadow, 1px line, glass edge).
+   - Topic chips (a radio group, arrow keys move; none selected by default, all fields shown). Book a demo: shows "Best
+     time to talk"; Setup help: its own placeholder; Billing: hides "I'm using"; Partnerships: the form gives way to a
+     note and a button to `partners/#partner-form`; Something else: its own placeholder. Each topic sets the message
+     placeholder and the hidden `topic` field (sent with the payload). Fields come and go with height + fade (0.35s);
+     hidden fields are disabled so they are neither validated nor sent. The wrappers are `.cfx` (`.fx` is the homepage
+     features heading).
+   - Fields: Full name, Email address, Phone (optional, tel), Store URL (https:// inside the field), I'm using, Message
+     (counter, 1000 max), consent (privacy link `#` until a privacy page exists), honeypot, "Send message"; posts to
+     FORM_ENDPOINT (see Forms). Success replaces the form: a drawn check, "Thanks, <first name>. We got your message.",
+     what happens next, "Send another message". Error keeps the input and offers support@inkybay.com.
+2. Offices [dark]: two cards (US HQ, Bangladesh development office) with a dashed brand-gradient arc between them and a
+   dot travelling it (8s loop, only on screen; static with reduced motion; vertical on phones). Each card: live local
+   time (Intl.DateTimeFormat in the office's time zone, every 30s), an Open now / Closed badge from the JSON hours,
+   the address (Google Maps search, new tab) and a tel: link. No embedded maps.
+3. FAQs [white]. 4. CTA, crowd marquee, footer.
+Phones: form first, then the channels; topic chips scroll sideways with snap; office cards stack.
+- Draft (to confirm): the response note and the success "what happens next" (both promise replies within 2 hours
+  during business hours), the business hours (Mon-Fri 09:00-18:00 local) and the FAQ answers. The audit checks every
+  topic's placeholder and fields, blocked empty submits, the copy button, both clocks and badges, links and overflow.
 
 ## Industry pages (one template)
 
@@ -412,6 +446,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Contact page (render_contact.py, src/contact.json, src/contact.css, contact JS in the template, audit check_contact); the shared form handler gains blur validation, a success template that replaces the form, and an email fallback on errors; Resources > Get help gets a Contact item and every "Talk to our team" button links to contact/. Fixes found while building: the field wrappers were renamed .cfx because .fx is the homepage features heading (its script crashed the page), and .form[hidden] now really hides the form on success. Figma not readable; copy from the brief
 - 2026-10-08: Partners page (render_partners.py, src/partners.json, src/partners-directory.json, src/partners.css) and the shared form setup (src/forms.css, one form handler in the template, FORM_ENDPOINT and NEWSLETTER_ENDPOINT in build.py, both empty: forms say "Form not connected yet"). Also {{BTN_SECONDARY:label|href}}. Decisions: the hero title uses the H2 size (two long lines at display size ran to seven lines); demo partners and draft benefits/FAQs are marked for replacement; Figma not readable, copy from the brief
 - 2026-10-08: Interactive 404 page (render_404.py, src/404.json, src/404.css, editor JS in the shared template, SITE_BASE in build.py, audit check_404 with a GitHub-Pages-like local server). Decisions: the homepage gets #features and #industries anchors for the 404's links (there are no Features or Industries index pages); Pricing points at #pricing like the navbar, flagged because no pricing page exists; the Figma frames could not be read (the Figma connector is not authorized), so the copy comes from the brief
 - 2026-10-08: Industry hero: colour-only deck, larger products (your changes, all eight pages): back cards lose their labels (the edges stay clickable), the progress line and the "Add text" step are gone (the text never sat perfectly on every product), the product photo grows from 72% to 96% of the card and may dip over the palette, and the story is now just the swatch click and tint (3.0s per card). With no option step the chip shows each card's own option statically; the unused "result" field is removed from the industry JSONs and the spec
