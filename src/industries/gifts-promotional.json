@@ -1,0 +1,180 @@
+{
+  "slug": "gifts-promotional",
+  "nav_label": "Gifts & promotional",
+  "meta": {
+    "title": "Personalized gifts and merch for Shopify | InkyBay",
+    "description": "Sell mugs, keyrings, tumblers and more that shoppers personalize with names, photos and logos, for one gift or a thousand."
+  },
+  "hero": {
+    "title": "Gifts and merch with a personal touch",
+    "lead": "Sell mugs, keyrings, tumblers and more that shoppers personalize with names, photos and logos, for one gift or a thousand.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Add name",
+          "icon": "type"
+        },
+        {
+          "label": "Upload photo",
+          "icon": "image"
+        },
+        {
+          "label": "Add gift box",
+          "icon": "star"
+        }
+      ],
+      "swatches": [
+        "#FFFFFF",
+        "#2F2F2F",
+        "#FF7500",
+        "#E5380F",
+        "#1F3A68",
+        "#17A673",
+        "#FFD982",
+        "#FFD0E6"
+      ],
+      "deck": [
+        {
+          "product": "mug",
+          "label": "Mug",
+          "result": "Alex",
+          "swatch": 2,
+          "chip": "Gift box"
+        },
+        {
+          "product": "keyring",
+          "label": "Keyring",
+          "result": "Home",
+          "swatch": 4,
+          "chip": "Metal"
+        },
+        {
+          "product": "tumbler",
+          "label": "Tumbler",
+          "result": "Coffee club",
+          "swatch": 1,
+          "chip": "500 ml"
+        },
+        {
+          "product": "photoframe",
+          "label": "Photo frame",
+          "result": "Best day",
+          "swatch": 5,
+          "chip": "A5"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Personal gifts, branded merch.",
+    "One piece or a thousand."
+  ],
+  "products": [
+    {
+      "name": "Mug",
+      "image": "mug"
+    },
+    {
+      "name": "Keyring",
+      "image": "keyring"
+    },
+    {
+      "name": "Tumbler",
+      "image": "tumbler"
+    },
+    {
+      "name": "Photo frame",
+      "image": "photoframe"
+    },
+    {
+      "name": "Notebook",
+      "image": "notebook"
+    },
+    {
+      "name": "Water bottle",
+      "image": "water-bottle"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell gifts and promotional.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Name mugs sell every day, and holiday weeks are effortless now.",
+      "preview": "mug",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Companies order branded merch with their logo and get bulk pricing instantly.",
+      "preview": "keyring",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Shoppers add a gift box at checkout, and the price updates on its own.",
+      "preview": "tumbler",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Photo keyrings went from a side item to our top product.",
+      "preview": "photoframe",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers add names and photos?",
+      "a": "Yes. Shoppers add text and upload photos with a live preview."
+    },
+    {
+      "q": "Can I sell to companies in bulk?",
+      "a": "Yes. Quantity discounts and quote requests handle big orders."
+    },
+    {
+      "q": "Can I charge for gift wrapping?",
+      "a": "Yes. Add it as an option with its own price."
+    },
+    {
+      "q": "Do I get print-ready files?",
+      "a": "Yes. Every order includes print-ready files and the design details."
+    }
+  ]
+}
