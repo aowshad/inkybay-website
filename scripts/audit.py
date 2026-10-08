@@ -1,7 +1,7 @@
 """Audit feature pages before committing.
 
     python3 scripts/audit.py <slug> [<slug> ...]     # check JSON + built page(s)
-    python3 scripts/audit.py --all                   # every page in src/features + the homepage
+    python3 scripts/audit.py --all                   # the homepage, every feature page and every industry page
 
 Exit code 0 = pass, 1 = fail. Never commit a page that fails.
 Setup once:  pip install playwright && python3 -m playwright install chromium
@@ -71,7 +71,7 @@ def check_json(slug):
 
 async def check_page(slug, d):
     from playwright.async_api import async_playwright
-    path = ROOT / "site" / ("index.html" if slug == "homepage" else f"features/{slug}/index.html")
+    path = page_path(slug)
     if not path.exists():
         return bad(slug, f"not built: run python3 build.py ({path.relative_to(ROOT)})")
     async with async_playwright() as p:
@@ -92,7 +92,7 @@ async def check_page(slug, d):
                     await pg.locator("h2.h-anim").nth(k).scroll_into_view_if_needed(); await pg.wait_for_timeout(120)
                 await pg.wait_for_timeout(900)
                 r = await pg.evaluate("""(()=>{const W=document.documentElement.clientWidth;
-                  const small=[...document.querySelectorAll('main p, main li, main a, main button')].filter(el=>!el.closest('.mui,.crumbs,.fcomp')
+                  const small=[...document.querySelectorAll('main p, main li, main a, main button')].filter(el=>!el.closest('.mui,.crumbs,.fcomp,.icardx__tab,.icardx__chip,.ipanel,.ipalette')
                     && el.textContent.trim() && parseFloat(getComputedStyle(el).fontSize)<16).map(el=>el.className||el.tagName);
                   const anim=[...document.querySelectorAll('h2.h-anim')], shown=anim.filter(x=>x.classList.contains('is-in')).length;
                   return {overflow: document.documentElement.scrollWidth > W, small:[...new Set(small)].slice(0,4), reveal:[shown, anim.length]}})()""")
@@ -125,7 +125,74 @@ async def check_page(slug, d):
                     if h["bad"]: bad(slug, f"{tag}: hero {h['bad']} does not overlap the photo or stage edge")
                 await pg.close()
         await check_menus(b, slug, path)
+        if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         await b.close()
+
+
+def industry_slugs():
+    """Industries in _index.json that have a page (src/industries/<slug>.json)."""
+    idx = json.loads((ROOT / "src/industries/_index.json").read_text())["industries"]
+    return [i["slug"] for i in idx if (ROOT / f"src/industries/{i['slug']}.json").exists()]
+
+
+def page_path(slug):
+    if slug == "homepage": return ROOT / "site/index.html"
+    if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
+    return ROOT / f"site/features/{slug}/index.html"
+
+
+def check_industry_json(slug):
+    """Industry page content (src/industries/<slug>.json): see CLAUDE.md "Industry pages"."""
+    d = json.loads((ROOT / f"src/industries/{slug}.json").read_text())
+    known = json.loads((ROOT / "src/products.json").read_text())
+    for k in ("hero", "products_heading", "products", "products_cta", "stats_heading", "stats_lead", "stats", "merchants_heading", "merchants", "faqs"):
+        if k not in d: bad(slug, f"missing '{k}'")
+    st = d["hero"]["stage"]
+    if not 3 <= len(st["deck"]) <= 5: bad(slug, f"hero deck: {len(st['deck'])} cards (need 3-5)")
+    if len(st["actions"]) != 3: bad(slug, "hero: exactly 3 panel actions")
+    for a in st["actions"]:
+        if a["icon"] not in ICON: bad(slug, f"hero: unknown icon '{a['icon']}'")
+    for c in st["deck"]:
+        if not 0 <= c["swatch"] < len(st["swatches"]): bad(slug, f"hero: '{c['label']}' swatch {c['swatch']} out of range")
+    imgs = [c["product"] for c in st["deck"]] + [p["image"] for p in d["products"]] + [m["preview"] for m in d["merchants"]]
+    for i in imgs:
+        if i not in known or not (ROOT / f"src/assets/products/{i}.webp").exists(): bad(slug, f"product image '{i}' is not in src/products.json")
+    if len(d["stats"]) != 3: bad(slug, "stats: exactly 3")
+    if not 3 <= len(d["faqs"]) <= 5: bad(slug, "faqs: 3-5")
+    for f in d["faqs"]:
+        if len(f["a"]) > 200: bad(slug, f"faq answer over 200 chars: {f['a'][:40]}...")
+    for h in ("products_heading", "stats_heading", "merchants_heading"):
+        if len(d[h]) != 2: bad(slug, f"{h} must have exactly two lines")
+    if "—" in json.dumps(d, ensure_ascii=False): bad(slug, "em dash found; use a comma or a full stop")
+    return d
+
+
+async def check_industry_hero(b, slug, path):
+    """The customizing deck (docs/industry-hero-spec.md): panel, palette and chip overlap the front card's edges;
+    the result text sits inside the product's bounding box (from the image's alpha)."""
+    for w in (1440, 390):
+        pg = await b.new_page(viewport={"width": w, "height": 900})
+        await pg.emulate_media(reduced_motion="reduce")      # the settled, customized first card
+        await pg.goto(path.as_uri()); await pg.wait_for_timeout(700)
+        r = await pg.evaluate("""(async()=>{const box=e=>e.getBoundingClientRect();
+          const edge=(q,r)=>{const touch=!(q.right<r.left||q.left>r.right||q.bottom<r.top||q.top>r.bottom), inside=q.left>=r.left&&q.right<=r.right&&q.top>=r.top&&q.bottom<=r.bottom; return touch&&!inside};
+          const front=document.querySelector('.icardx[data-front]'); if(!front) return {missing:true};
+          const C=box(front), out=[];
+          for (const [name, el] of [['panel', document.querySelector('.ipanel')], ['palette', document.querySelector('.ipalette')], ['chip', front.querySelector('.icardx__chip')]])
+            if (!el || !edge(box(el), C)) out.push(name);
+          const img=front.querySelector('.icardx__img'); await img.decode().catch(()=>{});
+          const cv=document.createElement('canvas'); cv.width=img.naturalWidth; cv.height=img.naturalHeight; const g=cv.getContext('2d'); g.drawImage(img,0,0);
+          const a=g.getImageData(0,0,cv.width,cv.height).data; let x0=1e9,y0=1e9,x1=-1,y1=-1;
+          for(let y=0;y<cv.height;y+=2) for(let x=0;x<cv.width;x+=2){ if(a[(y*cv.width+x)*4+3]>40){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; } }
+          const I=box(img), sx=I.width/cv.width, sy=I.height/cv.height, P={left:I.left+x0*sx, right:I.left+x1*sx, top:I.top+y0*sy, bottom:I.top+y1*sy};
+          const T=box(front.querySelector('.icardx__text'));
+          const textIn = T.width>0 && T.left>=P.left-1 && T.right<=P.right+1 && T.top>=P.top-1 && T.bottom<=P.bottom+1;
+          return {detached: out, textIn, overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth}})()""")
+        if r.get("missing"): bad(slug, f"hero {w}px: no front card"); await pg.close(); continue
+        if r["detached"]: bad(slug, f"hero {w}px: {r['detached']} do not overlap the front card's edge")
+        if not r["textIn"]: bad(slug, f"hero {w}px: result text is not inside the product's bounding box")
+        if r["overflow"]: bad(slug, f"hero {w}px: horizontal overflow")
+        await pg.close()
 
 
 def nav_expected():
@@ -188,12 +255,15 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = ["homepage"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
+        args = ["homepage"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        d = None if slug == "homepage" else check_json(slug)
-        asyncio.run(check_page(slug, d))
+        if slug in industry_slugs():
+            check_industry_json(slug); asyncio.run(check_page(slug, None))
+        else:
+            d = None if slug == "homepage" else check_json(slug)
+            asyncio.run(check_page(slug, d))
     if problems:
         print("FAIL\n  " + "\n  ".join(problems)); sys.exit(1)
     print(f"PASS: {', '.join(args)}")

@@ -1,0 +1,202 @@
+{
+  "slug": "fashion-apparel",
+  "nav_label": "Fashion & apparel",
+  "meta": {
+    "title": "Custom apparel for Shopify | InkyBay",
+    "description": "Sell tees, hoodies, onesies and more that shoppers personalize themselves, with live previews on every side and print-ready files for every order."
+  },
+  "hero": {
+    "title": "Custom apparel your customers design",
+    "lead": "Sell tees, hoodies, onesies and more that shoppers personalize themselves, with live previews on every side and print-ready files for every order.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Add text",
+          "icon": "type"
+        },
+        {
+          "label": "Upload image",
+          "icon": "image"
+        },
+        {
+          "label": "Change color",
+          "icon": "sliders"
+        }
+      ],
+      "swatches": [
+        "#F4F1EE",
+        "#2F2F2F",
+        "#1F3A68",
+        "#FF7500",
+        "#E5380F",
+        "#17A673",
+        "#FFD982",
+        "#BFE0FF"
+      ],
+      "deck": [
+        {
+          "product": "hoodie",
+          "label": "Hoodie",
+          "result": "Your name",
+          "swatch": 3,
+          "chip": "Size · L"
+        },
+        {
+          "product": "tee",
+          "label": "T-shirt",
+          "result": "RIVERS 10",
+          "swatch": 2,
+          "chip": "Size · M"
+        },
+        {
+          "product": "baby-onesie",
+          "label": "Baby onesie",
+          "result": "Mia",
+          "swatch": 7,
+          "chip": "0-3 months"
+        },
+        {
+          "product": "cap",
+          "label": "Cap",
+          "result": "AB",
+          "swatch": 1,
+          "chip": "One size"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Customize every piece you sell.",
+    "From basics to bestsellers."
+  ],
+  "products": [
+    {
+      "name": "T-shirt",
+      "image": "tee"
+    },
+    {
+      "name": "Hoodie",
+      "image": "hoodie"
+    },
+    {
+      "name": "Baby onesie",
+      "image": "baby-onesie"
+    },
+    {
+      "name": "Bandana",
+      "image": "bandana"
+    },
+    {
+      "name": "Socks",
+      "image": "socks"
+    },
+    {
+      "name": "Cap",
+      "image": "cap"
+    },
+    {
+      "name": "Tote bag",
+      "image": "tote-bag"
+    },
+    {
+      "name": "Sneakers",
+      "image": "sneakers"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell fashion and apparel.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Our customers design their own kits, and every order arrives ready to print.",
+      "preview": "tee",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Parents add a name and a date in seconds, and every gift order comes in ready to print.",
+      "preview": "hoodie",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "We launch limited designs and let fans remix them. The editor does the heavy lifting.",
+      "preview": "baby-onesie",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Embroidered caps were our hardest product to sell online. Now shoppers preview them first.",
+      "preview": "bandana",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Germany",
+      "quote": "Bandanas, socks and totes all run from one setup, with the same clean files for our printer.",
+      "preview": "socks",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Netherlands",
+      "quote": "Sneaker customization looked impossible until we tried it. Shoppers love picking every color.",
+      "preview": "cap",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers design the front and back of a shirt?",
+      "a": "Yes. Every side you set up, like front, back and sleeves, gets its own print area and preview."
+    },
+    {
+      "q": "Can I sell team jerseys with names and numbers?",
+      "a": "Yes. Shoppers add names and numbers in the editor, and each order includes the details for production."
+    },
+    {
+      "q": "Can I offer embroidery and printing on the same product?",
+      "a": "Yes. Add several printing methods to one product and give each its own pricing."
+    },
+    {
+      "q": "Do I get print-ready files?",
+      "a": "Yes. Every custom order comes with print-ready files and the full design details."
+    }
+  ]
+}

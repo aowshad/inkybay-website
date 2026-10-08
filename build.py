@@ -3,6 +3,7 @@
     python3 build.py   ->  site/index.html                   (homepage)
                            site/features/<slug>/index.html   (one per src/features/<slug>.json)
                            site/404.html                     (copy of the homepage for now)
+                           site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
 under /inkybay-website/, so never start a link with "/"): every link is <root><path>, where <root> is "" on the
@@ -16,6 +17,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, re, html, pathlib
 import json
 from render_feature import render, ICON
+import render_industry
 
 ROOT = pathlib.Path(__file__).parent
 ASSETS = ROOT / "src" / "assets"
@@ -178,6 +180,7 @@ def build(t, root="", home="#", current=None):
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
     t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
+    t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\|(.*?)\}\}", lambda m: primary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_PRIMARY:label|href}}
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{CHEVRON}}", CHEV)
@@ -199,3 +202,6 @@ write(SITE / "index.html", homepage)
 write(SITE / "404.html", homepage)
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(SITE / "features" / j.stem / "index.html", build(render(j.stem), root="../../", home="../../", current=("features", j.stem)))
+for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists
+    if (ROOT / "src" / "industries" / f'{ind["slug"]}.json').exists():
+        write(SITE / "industries" / ind["slug"] / "index.html", build(render_industry.render(ind["slug"]), root="../../", home="../../", current=("industries", ind["slug"])))

@@ -37,6 +37,10 @@ src/nav.json              every navbar mega menu: items, groups, promos, footer 
 src/industries/_index.json  the eight industries (slug, title, short, icon): single source for the mega menu,
                           the wheel's industry order and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
+render_industry.py        renders an industry page (same shell) from src/industries/<slug>.json
+src/industry.css          styles for the shared industry-page template
+src/industries/<slug>.json  content for one industry page (hero deck, products, stats, merchants, FAQs)
+docs/industry-hero-spec.md  the industry hero ("customizing deck") spec
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
@@ -252,6 +256,26 @@ from `_index.json`, write the rest, run `python3 build.py`. Do not add page-spec
 section type, add it to the template for all pages.
 
 
+## Industry pages (one template)
+
+Built by `render_industry.py` from `src/industries/<slug>.json` to `site/industries/<slug>/` for every industry in
+`_index.json` that has a JSON file. Same shell as the feature pages. Sections, in order:
+
+| # | Section | JSON key | Background |
+|---|---|---|---|
+| 1 | Hero: breadcrumb Home > Industries > title, H1, lead, two buttons, proof pill, the customizing deck | `hero` (`stage`) | white |
+| 2 | Products: two-tone heading (one tone on tint), 4-up cards (image + name), CTA text + primary button | `products_heading`, `products`, `products_cta` | tint |
+| 3 | Stats: heading + lead left, three stats right with hairlines; whole numbers count up (shared `.stat__num`), decimals static; hover sweeps a light across the digits | `stats_heading`, `stats_lead`, `stats` | white |
+| 4 | Merchants: two cards per row (one on phones): store preview, name + country, quote, "Visit store"; the first `merchants_visible`, then "Show more stores" (shared `[data-show-more]` JS) | `merchants_heading`, `merchants`, `merchants_visible` | dark |
+| 5 | Testimonials: the homepage reviews section, same markup and shared JS | from the homepage | tint |
+| 6 | FAQs | `faqs` | white |
+| 7 | CTA, crowd marquee, footer | from the homepage | dark |
+
+Primary buttons with a link use `{{BTN_PRIMARY:label|href}}`. The hero follows `docs/industry-hero-spec.md`
+(card deck, static glass panel and palette); without JS or with reduced motion the first card shows its customized
+state. The audit checks the JSON and that the panel, palette and chip overlap the front card and the result text sits
+inside the product's bounding box.
+
 ## Writing a feature page (playbook)
 
 All nine feature pages are built from `src/features/<slug>.json`. For a new feature, add it to `_index.json`, copy an
@@ -303,6 +327,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Industry page template (render_industry.py, src/industry.css, build.py writes site/industries/<slug>/, shared "Show more" JS, audit checks for industry JSON and the hero deck). Ported from the kit's reference onto the current codebase; the hero is the deck from docs/industry-hero-spec.md (static here, motion next commit). Back-card tabs follow the spec's 14px strip with 11px labels. Only fashion-apparel is built in this step
 - 2026-10-08: Mobile menu sheet: balanced, easier to scan. Sub-items sat 8px left of their section labels (the compact-navbar padding beat the sheet rule and a generic ul rule removed the sub-list indent); now everything shares one left edge, sub-items get their menu icons and full-ink 16px titles in 48px rows, sections get 52px rows with hairlines, the current page is highlighted, and the sheet is an accordion so it stays short
 - 2026-10-08: Remove Beauty & cosmetics (your call): the industry leaves src/industries/_index.json, so the Industries mega menu and its mobile sub-list list eight industries; its unused droplet icon is gone. This replaces the earlier "To fix later" note about Beauty & cosmetics images
 - 2026-10-08: Wheel: one card per product (your call; replaces the one-card-per-industry rule). 25 static cards from src/products.json, labelled with the product and linking to its industry page, interleaved round-robin by industry with a build-time check that neighbours differ; the crossfade (JS, CSS, stagger) and the industries' products field are gone; cards return to the locked 232px/22px size now that labels are short; the step shrinks automatically if the product count would close the circle. Checked at 390/768/1440/1920px: 32.8px (20px on phones) gaps, no title cut off, no on-screen pops, 25 x next returns to the start, prev, pause and play work. To fix later: add Beauty & cosmetics product images (jar, lipstick, gift box) to src/assets/products/ and to products.json with industry beauty-cosmetics; their cards appear automatically

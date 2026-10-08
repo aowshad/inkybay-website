@@ -2660,6 +2660,11 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       });
       window.addEventListener('resize', function () { if (window.innerWidth <= 960) close(); });
     })();
+    /* "Show more" buttons (industry merchants): reveal the rest of the list in the section */
+    document.querySelectorAll('[data-show-more]').forEach(function (b) {
+      b.addEventListener('click', function () { b.closest('.imer').classList.add('is-all'); });
+    });
+
     /* Mobile sheet: accordion, one section open at a time */
     var sheetToggles = [].slice.call(document.querySelectorAll('.sheet-toggle'));
     sheetToggles.forEach(function (b) {
