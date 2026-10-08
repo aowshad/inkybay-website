@@ -845,16 +845,16 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .steps.has-active .step.is-active { flex-grow: 2.3; }
 
 .step__vis {
-  /* each step has its own soft gradient (from Figma "Frame 2147239317"), fading to white toward the bottom-right */
+  /* each step has its own flat colour with a matching darker stroke (all four strokes at the same 1.25 contrast) */
   position: relative; height: 340px; overflow: hidden; border-radius: var(--r-lg);
-  background: linear-gradient(to bottom right, var(--step-c, #FFD8B4) 0%, #FFFFFF 100%);
-  box-shadow: inset 0 0 0 1px var(--step-line, #EBBE96);
+  background: var(--step-c, #F5EAE1);
+  box-shadow: inset 0 0 0 1px var(--step-line, #E9D0BC);
   display: grid; place-items: center;
 }
-.step:nth-child(1) .step__vis { --step-c: #FFFDD1; --step-line: #D2CC94; }   /* 01 Install: butter (same as 04) */
-.step:nth-child(2) .step__vis { --step-c: #FFD8B4; --step-line: #F0C196; }   /* 02 Embed: peach */
-.step:nth-child(3) .step__vis { --step-c: #BBEBFC; --step-line: #98D5EE; }   /* 03 Product setup: sky */
-.step:nth-child(4) .step__vis { --step-c: #FFFDD1; --step-line: #D2CC94; }   /* 04 Start selling: butter */
+.step:nth-child(1) .step__vis { --step-c: #F5F2E8; --step-line: #E2DABD; }   /* 01 Install */
+.step:nth-child(2) .step__vis { --step-c: #F5EAE1; --step-line: #E9D0BC; }   /* 02 Embed */
+.step:nth-child(3) .step__vis { --step-c: #E7F1F4; --step-line: #C2DCE3; }   /* 03 Product setup */
+.step:nth-child(4) .step__vis { --step-c: #F0EEE5; --step-line: #DBD7C1; }   /* 04 Start selling */
 .step__open {
   position: absolute; top: var(--s-3); right: var(--s-3); width: 28px; height: 28px; border-radius: 50%;
   display: grid; place-items: center; background: rgba(255,255,255,.85); color: #2F2F2F;
