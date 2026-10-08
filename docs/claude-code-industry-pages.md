@@ -1,4 +1,4 @@
-# Prompt: build the nine industry pages
+# Prompt: build the industry pages (eight; Beauty & cosmetics was dropped)
 
 Copy this kit's folders into the repo first (see the chat), then paste this into Claude Code.
 
@@ -58,7 +58,7 @@ Commit: "Industry hero: customizing deck".
 
 STEP 3 - The nine pages, one commit each, in this order:
   fashion-apparel, jewelry-accessories, sports-teamwear, home-furniture,
-  printing-packaging, gifts-promotional, beauty-cosmetics, footwear-bags,
+  printing-packaging, gifts-promotional, footwear-bags,
   gadgets-electronics
 For each: build, audit <slug> must PASS. If a JSON has "needs_images",
 build it anyway with the listed stand-ins and tell me what is missing.

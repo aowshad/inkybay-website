@@ -41,6 +41,7 @@ render_industry.py        renders an industry page (same shell) from src/industr
 src/industry.css          styles for the shared industry-page template
 src/industries/<slug>.json  content for one industry page (hero deck, products, stats, merchants, FAQs)
 docs/industry-hero-spec.md  the industry hero ("customizing deck") spec
+docs/claude-code-industry-pages.md  the prompt the industry pages were built from
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
 build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
@@ -273,6 +274,21 @@ Built by `render_industry.py` from `src/industries/<slug>.json` to `site/industr
 
 Primary buttons with a link use `{{BTN_PRIMARY:label|href}}`.
 
+**JSON schema** (`src/industries/<slug>.json`, the single source of copy for the page):
+- `slug`, `nav_label`, `meta {title, description}`
+- `hero {title, lead, primary_cta, secondary_cta, stage}`; `stage {actions: [3 x {label, icon}], swatches: [hex],
+  deck: [3-5 x {product, label, result, swatch (index into swatches), chip}]}`
+- `products_heading` (2 lines), `products: [{name, image}]`, `products_cta {text, label, href}`
+- `stats_heading` (2 lines), `stats_lead`, `stats: [3 x {value, suffix, label}]` (a value with a "." stays static)
+- `merchants_heading` (2 lines), `merchants: [{name, country, quote, preview, url}]`, `merchants_visible`
+- `faqs: [3-5 x {q, a}]` (answers max 200 chars); optional `needs_images` (what is missing; stand-ins are used)
+Every `product`, `image` and `preview` is a key in `src/products.json`.
+
+**Products**: cards show the product image and name only (no tags); the CTA under them links to the demo store.
+**Merchants**: store preview window, store name and country, quote, "Visit store"; no avatar, no category. Two per row
+(one on phones); the rest behind "Show more stores". Store names marked "Store name (draft)" and the `#demo-store` link
+are placeholders until real ones are supplied.
+
 **Industry hero: the customizing deck** (`docs/industry-hero-spec.md`, data in `hero.stage`): 3-5 product cards
 (4:5, radius 24, white in both themes) stacked so each back card is 14px higher and 4% narrower and shows its label as
 a tab (11px). The editor panel (right) and palette (bottom-left) are frosted glass, light in both themes (more opaque
@@ -339,6 +355,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Industry pages: docs and cleanup. The kit's reference renderer and CSS are deleted (ported into render_industry.py and src/industry.css). The kit's beauty-cosmetics page is not added: Beauty & cosmetics is not an InkyBay industry (your call on 2026-10-08), so eight industry pages exist. Open: the demo store URL (#demo-store on every page) and every merchant named "Store name (draft)"
 - 2026-10-08: Add industry page: Gadgets & electronics (built with stand-in images; needs: Phone case and charger images would make this page stronger.)
 - 2026-10-08: Add industry page: Footwear & bags
 - 2026-10-08: Add industry page: Gifts & promotional
