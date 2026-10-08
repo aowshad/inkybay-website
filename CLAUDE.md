@@ -34,7 +34,7 @@ src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs a
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
 src/nav.json              every navbar mega menu: items, groups, promos, footer columns (see Mega menu)
-src/industries/_index.json  the nine industries (slug, title, short, icon): single source for the mega menu,
+src/industries/_index.json  the eight industries (slug, title, short, icon): single source for the mega menu,
                           the wheel's industry order and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
@@ -301,6 +301,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Remove Beauty & cosmetics (your call): the industry leaves src/industries/_index.json, so the Industries mega menu and its mobile sub-list list eight industries; its unused droplet icon is gone. This replaces the earlier "To fix later" note about Beauty & cosmetics images
 - 2026-10-08: Wheel: one card per product (your call; replaces the one-card-per-industry rule). 25 static cards from src/products.json, labelled with the product and linking to its industry page, interleaved round-robin by industry with a build-time check that neighbours differ; the crossfade (JS, CSS, stagger) and the industries' products field are gone; cards return to the locked 232px/22px size now that labels are short; the step shrinks automatically if the product count would close the circle. Checked at 390/768/1440/1920px: 32.8px (20px on phones) gaps, no title cut off, no on-screen pops, 25 x next returns to the start, prev, pause and play work. To fix later: add Beauty & cosmetics product images (jar, lipstick, gift box) to src/assets/products/ and to products.json with industry beauty-cosmetics; their cards appear automatically
 - 2026-10-07: Product copy matches the new products: advanced-product-setup wall heading "Apparel to wall clocks." (the pet bowl is gone), ready-made-templates "Frames, mugs and more." and its lead (no greeting card any more)
 - 2026-10-07: Remove unused product images: card, drawstring, handbag, necklace, petbowl, phone, photo, pillow, pumpkin, puzzle, tote, wallart (each removed only after checking nothing references it: no image path in the repo, no product wall, zig-zag photo or industry uses it) and their src/products.json entries
