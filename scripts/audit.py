@@ -1,7 +1,7 @@
 """Audit feature pages before committing.
 
     python3 scripts/audit.py <slug> [<slug> ...]     # check JSON + built page(s)
-    python3 scripts/audit.py --all                   # the homepage, every feature page and every industry page
+    python3 scripts/audit.py --all                   # the homepage, the 404, every feature page and every industry page
 
 Exit code 0 = pass, 1 = fail. Never commit a page that fails.
 Setup once:  pip install playwright && python3 -m playwright install chromium
@@ -92,7 +92,7 @@ async def check_page(slug, d):
                     await pg.locator("h2.h-anim").nth(k).scroll_into_view_if_needed(); await pg.wait_for_timeout(120)
                 await pg.wait_for_timeout(900)
                 r = await pg.evaluate("""(()=>{const W=document.documentElement.clientWidth;
-                  const small=[...document.querySelectorAll('main p, main li, main a, main button')].filter(el=>!el.closest('.mui,.crumbs,.fcomp,.icardx__tab,.icardx__chip,.ipanel,.ipalette')
+                  const small=[...document.querySelectorAll('main p, main li, main a, main button')].filter(el=>!el.closest('.mui,.crumbs,.fcomp,.icardx__tab,.icardx__chip,.ipanel,.ipalette,.ed')
                     && el.textContent.trim() && parseFloat(getComputedStyle(el).fontSize)<16).map(el=>el.className||el.tagName);
                   const anim=[...document.querySelectorAll('h2.h-anim')], shown=anim.filter(x=>x.classList.contains('is-in')).length;
                   return {overflow: document.documentElement.scrollWidth > W, small:[...new Set(small)].slice(0,4), reveal:[shown, anim.length]}})()""")
@@ -126,6 +126,7 @@ async def check_page(slug, d):
                 await pg.close()
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
+        if slug == "404": await check_404(b)
         await b.close()
 
 
@@ -137,6 +138,7 @@ def industry_slugs():
 
 def page_path(slug):
     if slug == "homepage": return ROOT / "site/index.html"
+    if slug == "404": return ROOT / "site/404.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
 
@@ -205,6 +207,78 @@ async def check_industry_hero(b, slug, path):
     await pg.close()
 
 
+def serve_site():
+    """A local stand-in for GitHub Pages: site/ under SITE_BASE, and 404.html (status 404) for any missing path."""
+    import http.server, threading, os
+    base = os.environ.get("SITE_BASE", "/inkybay-website/"); site = ROOT / "site"
+    class H(http.server.BaseHTTPRequestHandler):
+        def log_message(self, *a): pass
+        def do_GET(self):
+            path = self.path.split("?")[0].split("#")[0]; f = None
+            if path.startswith(base):
+                f = site / path[len(base):]
+                if f.is_dir(): f = f / "index.html"
+            ok = f is not None and f.is_file()
+            body = (f if ok else site / "404.html").read_bytes()
+            self.send_response(200 if ok else 404); self.send_header("Content-Type", "text/html; charset=utf-8")
+            self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
+    srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
+    threading.Thread(target=srv.serve_forever, daemon=True).start()
+    return srv, f"http://127.0.0.1:{srv.server_port}{base}"
+
+
+async def check_404(b):
+    """The interactive 404: served at any depth with working links; the layer drags and resizes; the warning shows
+    when it leaves the print area and clears when it is back; nothing overflows at 390px."""
+    srv, base = serve_site(); slug = "404"
+    try:
+        hrefs = None
+        for depth in ("nope/", "a/b/c", "x/y/z/w.html"):
+            pg = await b.new_page(viewport={"width": 1440, "height": 900})
+            r = await pg.goto(base + depth)
+            if r.status != 404 or not await pg.locator(".ed").count(): bad(slug, f"{depth}: missing URL does not show the 404 editor (status {r.status})")
+            links = await pg.evaluate("""[...document.querySelectorAll('a[href]')].filter(a=>!a.getAttribute('href').startsWith('#')).map(a=>a.href).filter(h=>h.startsWith(location.origin))""")
+            srcs = await pg.evaluate("""[...document.querySelectorAll('[src]')].map(e=>e.getAttribute('src')).filter(s=>!/^(data:|https?:)/.test(s))""")
+            if srcs: bad(slug, f"{depth}: relative asset paths {srcs[:2]}")
+            if any(not l.startswith(base) for l in links): bad(slug, f"{depth}: a link leaves SITE_BASE: {[l for l in links if not l.startswith(base)][:2]}")
+            if hrefs is None: hrefs = sorted(set(links))
+            elif sorted(set(links)) != hrefs: bad(slug, f"{depth}: links differ by depth (relative links)")
+            await pg.close()
+        pg = await b.new_page(viewport={"width": 1440, "height": 900})
+        for u in sorted({h.split("#")[0] for h in hrefs or []}):
+            target = ROOT / "site" / u[len(base):]
+            if target.is_dir(): target = target / "index.html"
+            if target.is_file():
+                st = (await pg.request.get(u)).status
+                if st != 200: bad(slug, f"link {u[len(base)-1:]} returns {st}")
+        await pg.close()
+        for w in (1440, 390):
+            pg = await b.new_page(viewport={"width": w, "height": 900})
+            await pg.add_init_script("try{localStorage.setItem('ib404-hinted','1')}catch(e){}")
+            await pg.goto(base + "nope/"); await pg.locator(".ed__canvas").scroll_into_view_if_needed(); await pg.wait_for_timeout(500)
+            v = lambda k: pg.evaluate(f"parseFloat(getComputedStyle(document.querySelector('.ed__layer')).getPropertyValue('--{k}'))")
+            async def drag(sel, dx, dy):
+                bx = await pg.locator(sel).bounding_box(); x, y = bx["x"] + bx["width"] / 2, bx["y"] + bx["height"] / 2
+                await pg.mouse.move(x, y); await pg.mouse.down()
+                for k in range(1, 9): await pg.mouse.move(x + dx * k / 8, y + dy * k / 8)
+                await pg.mouse.up(); await pg.wait_for_timeout(350)
+            x0 = await v("x"); await drag(".ed__text", 24, 8)
+            if abs(await v("x") - x0) < .01: bad(slug, f"{w}px: dragging the layer does not move it")
+            s0 = await v("s"); await drag(".ed__h--se", 20, 14)
+            if await v("s") <= s0: bad(slug, f"{w}px: dragging a corner handle does not resize the layer")
+            await pg.click(".ed__reset"); await pg.wait_for_timeout(300)     # back to the start size before the out-and-back test
+            pw = (await pg.locator(".ed__pa").bounding_box())["width"]
+            await drag(".ed__text", pw * .9, 0)
+            out = await pg.evaluate("[document.querySelector('.ed').classList.contains('is-out'), +getComputedStyle(document.querySelector('.ed__warn')).opacity]")
+            if not (out[0] and out[1] > .9): bad(slug, f"{w}px: the 'Outside print area' warning does not show when the layer leaves the print area")
+            await drag(".ed__text", -pw * .9, 0)
+            if await pg.evaluate("document.querySelector('.ed').classList.contains('is-out')"): bad(slug, f"{w}px: the warning does not clear when the layer is back inside")
+            if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"{w}px: horizontal overflow")
+            await pg.close()
+    finally:
+        srv.shutdown()
+
+
 def nav_expected():
     """{menu id: number of links} from src/nav.json (grid items from their index file, or the sum of group items)."""
     out = {}
@@ -265,11 +339,13 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = ["homepage"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
+        args = ["homepage", "404"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_")) + industry_slugs()
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in industry_slugs():
+        if slug == "404":
+            asyncio.run(check_page(slug, None))
+        elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))
         else:
             d = None if slug == "homepage" else check_json(slug)

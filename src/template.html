@@ -1639,7 +1639,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     </div>
   </section>
   <!-- ===== SECTION 03 · FEATURES ===== -->
-  <section class="features" aria-labelledby="features-title">
+  <section class="features" id="features" aria-labelledby="features-title">
     <div class="container">
       <h2 class="features__title" id="features-title" aria-label="Everything you need for product customization">
         <span class="line" aria-hidden="true">Everything you need<span class="fx__for-d"> for</span></span>
@@ -1692,7 +1692,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     </div>
   </section>
   <!-- ===== SECTION 04 · INDUSTRIES ===== -->
-  <section class="industries" aria-labelledby="industries-title">
+  <section class="industries" id="industries" aria-labelledby="industries-title">
     <div class="container industries__head">
       <h2 class="industries__title" id="industries-title"><span class="h-line h-inline">Custom products</span> <span class="h-line h-inline h-muted">for every business.</span></h2>
       <p class="industries__lead">Turn any product into a personalized experience with a powerful, flexible customization solution.</p>
@@ -2750,6 +2750,158 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         requestAnimationFrame(tick);
       }
       requestAnimationFrame(tick);
+    });
+
+    /* 404 editor: the "404" is a text layer in a mini InkyBay editor (see render_404.py). Drag to move, corner handles
+       resize (aspect kept), the top handle rotates (snaps to 45deg steps), double-click / double-tap edits the text;
+       swatches, weights and product tabs restyle it; a warning shows while any part leaves the print area. */
+    document.querySelectorAll('.ed').forEach(function (ed) {
+      var canvas = ed.querySelector('.ed__canvas'), pa = ed.querySelector('.ed__pa'), layer = ed.querySelector('.ed__layer');
+      var text = ed.querySelector('.ed__text'), live = ed.querySelector('.ed__live'), size = ed.querySelector('.ed__size');
+      var tabs = [].slice.call(ed.querySelectorAll('.ed__tab')), imgs = [].slice.call(ed.querySelectorAll('.ed__img'));
+      var sws = [].slice.call(ed.querySelectorAll('.ed__sw')), wts = [].slice.call(ed.querySelectorAll('.ed__wt'));
+      var cursor = ed.querySelector('.ed__cursor');
+      var areas = JSON.parse(ed.getAttribute('data-areas')), START = ed.getAttribute('data-text'), MAX = +ed.getAttribute('data-max');
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var init = { x: .5, y: .5, s: .3, rot: 0, c: sws[0].getAttribute('data-c'), w: 700, p: 0, t: START };
+      var st = JSON.parse(JSON.stringify(init)), touched = false, hintRun = null;
+
+      function say(msg) { live.textContent = ''; setTimeout(function () { live.textContent = msg; }, 30); }
+      function render() {
+        layer.style.setProperty('--x', st.x); layer.style.setProperty('--y', st.y); layer.style.setProperty('--s', st.s);
+        layer.style.setProperty('--rot', st.rot + 'deg'); layer.style.setProperty('--c', st.c); layer.style.setProperty('--w', st.w);
+        if (text.textContent !== st.t && text.getAttribute('contenteditable') !== 'true') text.textContent = st.t;
+        var a = areas[st.p];
+        pa.style.setProperty('--l', a[0]); pa.style.setProperty('--t', a[1]); pa.style.setProperty('--r', a[2]); pa.style.setProperty('--b', a[3]);
+        imgs.forEach(function (im, i) { im.classList.toggle('is-on', i === st.p); });
+        tabs.forEach(function (t, i) { t.setAttribute('aria-selected', String(i === st.p)); });
+        sws.forEach(function (s) { var on = s.getAttribute('data-c') === st.c; s.classList.toggle('is-on', on); s.setAttribute('aria-pressed', String(on)); });
+        wts.forEach(function (b) { b.setAttribute('aria-pressed', String(+b.getAttribute('data-w') === st.w)); });
+        size.textContent = 'Size ' + Math.round(st.s * 100) + '%';
+        requestAnimationFrame(check);
+      }
+      /* outside the print area? the layer's rotated corners against the print area's box */
+      var wasOut = false;
+      function check() {
+        var P = pa.getBoundingClientRect(), L = layer.getBoundingClientRect();
+        var w = layer.offsetWidth, h = layer.offsetHeight, cx = L.left + L.width / 2, cy = L.top + L.height / 2, r = st.rot * Math.PI / 180;
+        var out = [[-1, -1], [1, -1], [1, 1], [-1, 1]].some(function (k) {
+          var x = cx + (k[0] * w / 2) * Math.cos(r) - (k[1] * h / 2) * Math.sin(r), y = cy + (k[0] * w / 2) * Math.sin(r) + (k[1] * h / 2) * Math.cos(r);
+          return x < P.left - .5 || x > P.right + .5 || y < P.top - .5 || y > P.bottom + .5;
+        });
+        ed.classList.toggle('is-out', out);
+        if (out !== wasOut) { wasOut = out; say(out ? 'Outside print area' : 'Back inside the print area'); }
+      }
+      function first() {                      /* any real interaction ends the hint for good */
+        if (touched) return; touched = true; stopHint();
+        try { localStorage.setItem('ib404-hinted', '1'); } catch (e) {}
+      }
+      function select(on) { ed.classList.toggle('is-off', !on); }
+
+      /* pointer: drag the layer, resize from a corner, rotate from the top handle */
+      var drag = null, lastTap = 0;
+      layer.addEventListener('pointerdown', function (e) {
+        if (text.getAttribute('contenteditable') === 'true') return;
+        e.preventDefault(); first(); select(true);
+        var P = pa.getBoundingClientRect(), L = layer.getBoundingClientRect(), mode = e.target.getAttribute('data-h') || 'move';
+        var cx = L.left + L.width / 2, cy = L.top + L.height / 2;
+        drag = { mode: mode, id: e.pointerId, x0: e.clientX, y0: e.clientY, sx: st.x, sy: st.y, s0: st.s, cx: cx, cy: cy, pw: P.width, ph: P.height,
+                 d0: Math.hypot(e.clientX - cx, e.clientY - cy) || 1 };
+        layer.setPointerCapture(e.pointerId);
+      });
+      layer.addEventListener('pointermove', function (e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        if (drag.mode === 'move') {
+          st.x = Math.max(-.4, Math.min(1.4, drag.sx + (e.clientX - drag.x0) / drag.pw));
+          st.y = Math.max(-.4, Math.min(1.4, drag.sy + (e.clientY - drag.y0) / drag.ph));
+        } else if (drag.mode === 'rot') {
+          var a = Math.atan2(e.clientY - drag.cy, e.clientX - drag.cx) * 180 / Math.PI + 90, snap = Math.round(a / 45) * 45;
+          st.rot = Math.round(Math.abs(a - snap) < 6 ? snap : a);
+        } else {
+          st.s = Math.max(.12, Math.min(.95, drag.s0 * Math.hypot(e.clientX - drag.cx, e.clientY - drag.cy) / drag.d0));
+        }
+        render();
+      });
+      function end(e) {
+        if (!drag || e.pointerId !== drag.id) return;
+        var moved = Math.hypot(e.clientX - drag.x0, e.clientY - drag.y0) > 3, mode = drag.mode; drag = null;
+        if (moved) say(mode === 'move' ? 'Moved' : mode === 'rot' ? 'Rotated to ' + st.rot + ' degrees' : 'Size ' + Math.round(st.s * 100) + ' percent');
+        else if (mode === 'move' && e.pointerType !== 'mouse') {          /* double-tap edits on touch */
+          if (e.timeStamp - lastTap < 320) editText(); lastTap = e.timeStamp;
+        }
+      }
+      layer.addEventListener('pointerup', end); layer.addEventListener('pointercancel', end);
+      layer.addEventListener('dblclick', editText);
+      canvas.addEventListener('pointerdown', function (e) { if (!layer.contains(e.target)) { first(); select(false); } });
+
+      /* text editing: max MAX characters; Enter or blur finishes; empty restores the start text */
+      function editText() {
+        first(); select(true);
+        text.setAttribute('contenteditable', 'true'); text.focus();
+        var r = document.createRange(); r.selectNodeContents(text); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      }
+      text.addEventListener('keydown', function (e) {
+        if (text.getAttribute('contenteditable') !== 'true') return;
+        if (e.key === 'Enter' || e.key === 'Escape') { e.preventDefault(); text.blur(); }
+        e.stopPropagation();
+      });
+      text.addEventListener('input', function () {
+        if (text.textContent.length > MAX) { text.textContent = text.textContent.slice(0, MAX); var r = document.createRange(); r.selectNodeContents(text); r.collapse(false); var s = window.getSelection(); s.removeAllRanges(); s.addRange(r); }
+        requestAnimationFrame(check);
+      });
+      text.addEventListener('blur', function () {
+        text.removeAttribute('contenteditable');
+        st.t = text.textContent.trim().replace(/\s+/g, ' ').slice(0, MAX) || START; text.textContent = st.t;
+        render(); say('Text set to ' + st.t);
+      });
+
+      /* toolbar and tabs */
+      sws.forEach(function (b) { b.addEventListener('click', function () { first(); st.c = b.getAttribute('data-c'); render(); say('Colour: ' + b.getAttribute('aria-label')); }); });
+      wts.forEach(function (b) { b.addEventListener('click', function () { first(); st.w = +b.getAttribute('data-w'); render(); say('Weight: ' + b.textContent); }); });
+      tabs.forEach(function (t, i) { t.addEventListener('click', function () { first(); st.p = i; render(); say('Product: ' + t.textContent); }); });
+      ed.querySelector('.ed__reset').addEventListener('click', function () { first(); st = JSON.parse(JSON.stringify(init)); select(true); render(); say('Reset'); });
+
+      /* keyboard on the canvas: arrows move 4px (Shift 16px), + / - resize, R rotates 15deg, Escape deselects */
+      canvas.addEventListener('keydown', function (e) {
+        if (text.getAttribute('contenteditable') === 'true') return;
+        var P = pa.getBoundingClientRect(), step = e.shiftKey ? 16 : 4, k = e.key, done = true;
+        if (k === 'ArrowLeft') st.x -= step / P.width; else if (k === 'ArrowRight') st.x += step / P.width;
+        else if (k === 'ArrowUp') st.y -= step / P.height; else if (k === 'ArrowDown') st.y += step / P.height;
+        else if (k === '+' || k === '=') st.s = Math.min(.95, st.s * 1.1); else if (k === '-' || k === '_') st.s = Math.max(.12, st.s / 1.1);
+        else if (k === 'r' || k === 'R') st.rot = (st.rot + 15) % 360;
+        else if (k === 'Escape') { select(false); say('Deselected'); }
+        else if (k === 'Enter') editText();
+        else done = false;
+        if (!done) return;
+        e.preventDefault(); first();
+        if (k !== 'Escape' && k !== 'Enter') { select(true); render(); say(k.indexOf('Arrow') === 0 ? 'Moved' : (k === 'r' || k === 'R') ? 'Rotated to ' + st.rot + ' degrees' : 'Size ' + Math.round(st.s * 100) + ' percent'); }
+      });
+
+      render();
+
+      /* first visit: a 2.5s hint (a cursor drags the layer a little and resizes it), never again after an interaction */
+      var hinted = false; try { hinted = localStorage.getItem('ib404-hinted') === '1'; } catch (e) {}
+      function stopHint() { if (hintRun) { cancelAnimationFrame(hintRun.raf); hintRun = null; ed.classList.remove('is-hinting'); st = JSON.parse(JSON.stringify(init)); render(); } }
+      function hint() {
+        var C = canvas.getBoundingClientRect(), L0 = layer.getBoundingClientRect(), P = pa.getBoundingClientRect();
+        var mid = [L0.left + L0.width / 2 - C.left, L0.top + L0.height / 2 - C.top], corner = [L0.right - C.left, L0.bottom - C.top];
+        var dx = Math.min(36, P.width * .12), t0 = 0;
+        ed.classList.add('is-hinting'); hintRun = {};
+        function frame(now) {
+          if (!hintRun) return; if (!t0) t0 = now; var t = (now - t0) / 1000, e = function (v) { v = Math.max(0, Math.min(1, v)); return v < .5 ? 2 * v * v : 1 - Math.pow(-2 * v + 2, 2) / 2; };
+          var cx, cy;
+          if (t < .4) { cx = mid[0]; cy = mid[1] + 30 * (1 - e(t / .4)); }
+          else if (t < 1.1) { var p = e((t - .4) / .7); st.x = init.x + p * dx / P.width; cx = mid[0] + p * dx; cy = mid[1]; }
+          else if (t < 1.4) { var q = e((t - 1.1) / .3); cx = mid[0] + dx + q * (corner[0] - mid[0]); cy = mid[1] + q * (corner[1] - mid[1]); }
+          else if (t < 2.1) { var z = e((t - 1.4) / .7); st.s = init.s * (1 + .15 * z); cx = corner[0] + dx + z * 14; cy = corner[1] + z * 10; }
+          else { cx = corner[0] + dx + 14; cy = corner[1] + 10; }
+          cursor.style.setProperty('--cx', cx + 'px'); cursor.style.setProperty('--cy', cy + 'px'); render();
+          if (t >= 2.5) { ed.classList.remove('is-hinting'); hintRun = null; return; }
+          hintRun.raf = requestAnimationFrame(frame);
+        }
+        hintRun.raf = requestAnimationFrame(frame);
+      }
+      if (!reduce && !hinted) setTimeout(function () { if (!touched) hint(); }, 700);
     });
 
     /* "Show more" buttons (industry merchants): reveal the rest of the list in the section */

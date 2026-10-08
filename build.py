@@ -2,7 +2,7 @@
 
     python3 build.py   ->  site/index.html                   (homepage)
                            site/features/<slug>/index.html   (one per src/features/<slug>.json)
-                           site/404.html                     (copy of the homepage for now)
+                           site/404.html                     (the interactive 404; links start from SITE_BASE)
                            site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
@@ -14,12 +14,15 @@ The navbar mega menus, their mobile sheet sub-lists and promos come from src/nav
 src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head, navbar, CTA,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
 """
-import base64, re, html, pathlib
+import base64, re, html, pathlib, os
 import json
 from render_feature import render, ICON
-import render_industry
+import render_industry, render_404
 
 ROOT = pathlib.Path(__file__).parent
+# where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
+# Only the 404 page uses it: GitHub Pages serves 404.html at any depth, so its links must start from the site root.
+SITE_BASE = os.environ.get("SITE_BASE", "/inkybay-website/")
 ASSETS = ROOT / "src" / "assets"
 ARROW = '<svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg>'
 CHEV = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -64,7 +67,7 @@ def link(item, base, root):
     """href and extra attributes. Internal links are relative to the page's folder (<root> + path)."""
     if item.get("external"):
         return item["href"], ' target="_blank" rel="noopener"'
-    href = item.get("href") or f'{base}{item["slug"]}/'
+    href = item["href"] if "href" in item else f'{base}{item["slug"]}/'   # an empty href is the page root
     if href.startswith(("#", "http", "mailto:")): return href, ""
     return root + href, ""
 
@@ -199,7 +202,7 @@ def write(path, t):
 SITE = ROOT / "site"
 homepage = build((ROOT / "src" / "template.html").read_text())
 write(SITE / "index.html", homepage)
-write(SITE / "404.html", homepage)
+write(SITE / "404.html", build(render_404.render(SITE_BASE), root=SITE_BASE, home=SITE_BASE))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(SITE / "features" / j.stem / "index.html", build(render(j.stem), root="../../", home="../../", current=("features", j.stem)))
 for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists

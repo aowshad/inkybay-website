@@ -29,7 +29,7 @@ chosen stack until it matches the build, and only then create new pages. Do not 
 site/                     build output, not in git (.gitignore); python3 build.py regenerates it, Actions deploys it
   index.html              the homepage, one self-contained file
   features/<slug>/index.html  one page per src/features/<slug>.json (clean URL: features/<slug>/)
-  404.html                copy of the homepage for now
+  404.html                the interactive 404 (every link starts from SITE_BASE)
 src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
 src/feature.css           styles for the shared feature-page template
 src/features/<slug>.json  content for one feature page (the schema every feature page follows)
@@ -44,7 +44,8 @@ docs/industry-hero-spec.md  the industry hero ("customizing deck") spec
 docs/claude-code-industry-pages.md  the prompt the industry pages were built from
 src/assets/               logos/, products/, people/, photos/, brand/ (SVG), heroes/ (feature hero photos), hero-editor.webp, cta-products.webp
 src/products.json         product library: {"<name>": {"label", "industry"}} for every src/assets/products/<name>.webp
-build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, every feature page)
+build.py                  python3 build.py  ->  regenerates site/ (homepage, 404, feature and industry pages); SITE_BASE lives here
+render_404.py             renders the 404 from src/404.json (styles in src/404.css)
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
@@ -142,8 +143,7 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 - Social links are text; drop in official icons from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
-- `site/404.html` is a copy of the homepage with relative links, so its links only work when it is served from the
-  site root; give it root-safe links when it becomes a real 404 page.
+- There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
 - Fonts load from Google Fonts in the build; self-host Geist and Inter in production.
 
 ## Suggested next steps
@@ -194,7 +194,7 @@ into the shared template. Never hand-write a menu in the template.
   default `object-position`. Below 1360px the promo hides (it would squeeze the items); below 1100px the grid drops to
   two columns; on phones the menu sheet shows each menu as a collapsible list.
 - Links are relative to the page's own folder, because the site is served under `/inkybay-website/` (never start an
-  internal link with `/`): every link is `<root><path>`, where `<root>` is `""` on the homepage and `../../` on a
+  internal link with `/`; the only exception is the 404 page, whose links start from `SITE_BASE`, see "404 page"): every link is `<root><path>`, where `<root>` is `""` on the homepage and `../../` on a
   feature page (e.g. `../../features/<slug>/`). The homepage logo is `#`; feature pages link home with `../../`
   (logos and breadcrumb, via `{{HOME}}`).
 
@@ -256,6 +256,29 @@ To add a feature page: copy `src/features/advanced-product-setup.json`, take the
 from `_index.json`, write the rest, run `python3 build.py`. Do not add page-specific CSS; if a feature needs a new
 section type, add it to the template for all pages.
 
+
+## 404 page ("the 404 is a design project")
+
+`site/404.html`, built by `render_404.py` from `src/404.json` (copy, products, print areas, swatches) with
+`src/404.css`. GitHub Pages serves it for any missing URL at any depth, so its links cannot be relative: build.py's
+`SITE_BASE` ("/inkybay-website/" now; `SITE_BASE=/ python3 build.py` on a custom domain) is the root of every link on
+this page. Images are inlined, so nothing else depends on the depth. It has `noindex` and nothing links to it.
+- Left (5 cols): "Status 404" label, two-tone H1, lead, "Back to homepage", helpful links (Features and Industries go to
+  the homepage sections `#features` / `#industries`; Pricing goes to `#pricing`, which does not exist yet; Help center
+  is external).
+- Right (7 cols): a mini InkyBay editor (glass card, light in both themes): product tabs (T-shirt, Mug, Cap) and Reset;
+  a canvas with the product, a dashed print area and the "404" text layer (Geist 700), selected with an editor-blue box,
+  four corner handles and a rotate handle; a toolbar with six swatches, Regular/Bold and a size readout.
+- Drag moves the layer; a corner resizes it (aspect kept); the top handle rotates (snaps to 45deg steps); double-click
+  or double-tap edits the text (max 8 characters; empty restores "404"); tabs switch product (the layer keeps its place
+  in the print area, products crossfade). If any corner leaves the print area, the box turns red and an "Outside print
+  area" chip shows. Keyboard on the canvas: arrows 4px (Shift 16px), +/- resize, R rotates 15deg, Esc deselects, Enter
+  edits; changes are announced politely. A 2.5s first-visit hint (cursor drags and resizes the layer, "Drag, resize or
+  recolor me") never runs again after an interaction (localStorage). Reduced motion: no hint, no crossfades.
+  Phones: the editor stacks under the text, handles have 32px touch targets, the toolbar wraps to two rows.
+- The audit serves site/ like GitHub Pages (missing paths return 404.html) and checks three depths (same links, all
+  from SITE_BASE, existing targets return 200, no relative asset paths), dragging, resizing, the warning showing and
+  clearing, and no overflow at 390px.
 
 ## Industry pages (one template)
 
@@ -356,6 +379,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Interactive 404 page (render_404.py, src/404.json, src/404.css, editor JS in the shared template, SITE_BASE in build.py, audit check_404 with a GitHub-Pages-like local server). Decisions: the homepage gets #features and #industries anchors for the 404's links (there are no Features or Industries index pages); Pricing points at #pricing like the navbar, flagged because no pricing page exists; the Figma frames could not be read (the Figma connector is not authorized), so the copy comes from the brief
 - 2026-10-08: Industry hero: colour-only deck, larger products (your changes, all eight pages): back cards lose their labels (the edges stay clickable), the progress line and the "Add text" step are gone (the text never sat perfectly on every product), the product photo grows from 72% to 96% of the card and may dip over the palette, and the story is now just the swatch click and tint (3.0s per card). With no option step the chip shows each card's own option statically; the unused "result" field is removed from the industry JSONs and the spec
 - 2026-10-08: How it works: new step card colours (your four flat colours replace the gradients); strokes recomputed as darker tones of each colour at the same 1.25 contrast, keeping each colour's own saturation so they stay as muted as the fills. No dark-mode values were given, so the cards use the same colours in both themes, as before
 - 2026-10-08: Industry pages: docs and cleanup. The kit's reference renderer and CSS are deleted (ported into render_industry.py and src/industry.css). The kit's beauty-cosmetics page is not added: Beauty & cosmetics is not an InkyBay industry (your call on 2026-10-08), so eight industry pages exist. Open: the demo store URL (#demo-store on every page) and every merchant named "Store name (draft)"
