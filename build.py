@@ -73,7 +73,8 @@ def nav_item(item, base, root, current):
     ext = EXT if item.get("external") else ""
     desk = (f'<li><a class="mega__item" href="{href}"{extra}{act}{cur}><span class="mega__icon">{ICON[item["icon"]]}</span>'
             f'<span><span class="mega__title">{html.escape(item["title"])}{ext}</span><span class="mega__desc">{html.escape(item["short"])}</span></span></a></li>')
-    mob = f'<li><a href="{href}"{extra}{act}{cur}>{html.escape(item["title"])}{ext}</a></li>'
+    mob = (f'<li><a class="sheet-link" href="{href}"{extra}{act}{cur}><span class="sheet-link__icon">{ICON[item["icon"]]}</span>'
+           f'<span class="sheet-link__title">{html.escape(item["title"])}{ext}</span></a></li>')
     return desk, mob
 
 def render_nav(root, current):
