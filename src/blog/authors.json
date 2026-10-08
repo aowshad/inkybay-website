@@ -1,0 +1,18 @@
+{
+  "authors": [
+    {
+      "slug": "maya-lindqvist",
+      "name": "Maya Lindqvist (demo)",
+      "role": "Content lead",
+      "bio": "Maya writes about running custom product stores, from pricing to production. Demo author: replace with a real profile.",
+      "demo": true
+    },
+    {
+      "slug": "daniel-okafor",
+      "name": "Daniel Okafor (demo)",
+      "role": "Print specialist",
+      "bio": "Daniel has prepared files for print shops for years and helps merchants avoid reprints. Demo author: replace with a real profile.",
+      "demo": true
+    }
+  ]
+}

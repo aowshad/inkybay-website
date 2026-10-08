@@ -5,6 +5,8 @@
                            site/404.html                     (the interactive 404; links start from SITE_BASE)
                            site/partners/index.html          (src/partners.json + src/partners-directory.json)
                            site/contact/index.html           (src/contact.json)
+                           site/resources/blog/...           (render_blog.py: listing, categories, tags, search, articles, RSS)
+                           site/sitemap.xml                  (every page but the 404 and search)
                            site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
@@ -19,7 +21,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, re, html, pathlib, os
 import json
 from render_feature import render, ICON
-import render_industry, render_404, render_partners, render_contact
+import render_industry, render_404, render_partners, render_contact, render_blog
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -29,6 +31,8 @@ SITE_BASE = os.environ.get("SITE_BASE", "/inkybay-website/")
 # to send. FORM_ENDPOINT serves the Partners and Contact forms, NEWSLETTER_ENDPOINT the newsletter sign-up.
 FORM_ENDPOINT = os.environ.get("FORM_ENDPOINT", "")
 NEWSLETTER_ENDPOINT = os.environ.get("NEWSLETTER_ENDPOINT", "")
+# the public address of the site, for canonical URLs, Open Graph, RSS and the sitemap
+SITE_URL = os.environ.get("SITE_URL", "https://aowshad.github.io" + SITE_BASE)
 ASSETS = ROOT / "src" / "assets"
 ARROW = '<svg viewBox="0 0 24 24" fill="none"><path d="M14.4301 6L20.5001 12.07L14.4301 18.14" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/><path d="M4 12.07H20.83" stroke="#FD7807" stroke-width="1.5" stroke-miterlimit="10" stroke-linejoin="round"/></svg>'
 CHEV = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L10 12.5L15 7.5" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg>'
@@ -222,3 +226,12 @@ for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.n
 for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists
     if (ROOT / "src" / "industries" / f'{ind["slug"]}.json').exists():
         write(SITE / "industries" / ind["slug"] / "index.html", build(render_industry.render(ind["slug"]), root="../../", home="../../", current=("industries", ind["slug"])))
+blog_pages = render_blog.build_all(build, write, SITE, SITE_URL, (ROOT / "src" / "template.html").read_text())
+
+# sitemap.xml for the whole site: every built page except the 404 and search results
+lastmod = dict(blog_pages)
+urls = sorted(str(f.parent.relative_to(SITE)).replace(".", "") + "/" for f in SITE.rglob("index.html"))
+urls = [u.lstrip("/") for u in urls if "/search/" not in "/" + u]
+sm = "".join(f"<url><loc>{html.escape(SITE_URL + u)}</loc>" + (f"<lastmod>{lastmod[u]}</lastmod>" if lastmod.get(u) else "") + "</url>" for u in urls)
+(SITE / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + sm + "</urlset>\n")
+print(f"ok -> sitemap.xml ({len(urls)} URLs)")

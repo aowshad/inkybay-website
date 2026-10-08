@@ -1,0 +1,81 @@
+{
+  "hero": {
+    "title": [
+      "The InkyBay blog.",
+      "Ideas for stores that sell custom."
+    ],
+    "lead": "Practical guides on print prep, pricing, growth and getting the most out of InkyBay.",
+    "search_label": "Search articles",
+    "search_placeholder": "Search articles",
+    "search_hint": "Press / to search"
+  },
+  "featured_label": "Featured",
+  "latest": "Latest articles",
+  "results": {
+    "category": "Category",
+    "tag": "Tag",
+    "search": "Search results",
+    "articles": "articles",
+    "article": "article",
+    "remove": "Remove filter",
+    "related_tags": "Related tags",
+    "empty": "No articles match",
+    "suggest": "Try one of these categories",
+    "clear": "Clear search",
+    "searching": "Searching"
+  },
+  "article": {
+    "written_by": "Written by",
+    "updated": "Updated",
+    "summary_title": "Key takeaways",
+    "summarize": "Summarize this article",
+    "hide": "Hide summary",
+    "toc": "On this page",
+    "tags": "Tags",
+    "share": "Share this article",
+    "copy_link": "Copy link",
+    "copied": "Link copied",
+    "about_author": "About the author",
+    "keep_reading": "Keep reading",
+    "prev": "Previous article",
+    "next": "Next article"
+  },
+  "newsletter": {
+    "title": [
+      "Stay in the loop.",
+      "One useful email a month."
+    ],
+    "lead": "Guides on print prep, pricing and growing a custom product store. No spam, unsubscribe any time.",
+    "email": "Your email address",
+    "button": "Subscribe",
+    "sending": "Subscribing",
+    "error": "Enter a valid email address.",
+    "consent": "By subscribing you agree to receive emails from InkyBay. You can unsubscribe at any time.",
+    "success": "You're subscribed. Look out for the next issue.",
+    "fail": "Something went wrong. Please try again in a moment.",
+    "not_connected": "Not connected yet: sign-ups aren't saved from this page for now.",
+    "draft": true
+  },
+  "promo_news": {
+    "title": "Get the InkyBay newsletter",
+    "text": "Practical tips for custom product stores, once a month.",
+    "draft": true
+  },
+  "promo_install": {
+    "title": "Sell custom products with InkyBay",
+    "items": [
+      "21-day free trial",
+      "No coding required",
+      "Live design editor"
+    ],
+    "button": "Install on Shopify",
+    "href": "#",
+    "draft": true
+  },
+  "meta": {
+    "title": "Blog | InkyBay",
+    "description": "Practical guides on print prep, pricing, growth and getting the most out of InkyBay.",
+    "feed_title": "The InkyBay blog",
+    "publisher": "InkyBay"
+  }
+}

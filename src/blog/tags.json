@@ -1,0 +1,36 @@
+{
+  "tags": [
+    {
+      "slug": "shopify",
+      "name": "Shopify"
+    },
+    {
+      "slug": "design",
+      "name": "Design"
+    },
+    {
+      "slug": "tips",
+      "name": "Tips"
+    },
+    {
+      "slug": "pricing",
+      "name": "Pricing"
+    },
+    {
+      "slug": "printing",
+      "name": "Printing"
+    },
+    {
+      "slug": "growth",
+      "name": "Growth"
+    },
+    {
+      "slug": "email",
+      "name": "Email"
+    },
+    {
+      "slug": "b2b",
+      "name": "B2B"
+    }
+  ]
+}

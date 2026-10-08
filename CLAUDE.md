@@ -48,6 +48,10 @@ build.py                  python3 build.py  ->  regenerates site/ (homepage, 404
 render_404.py             renders the 404 from src/404.json (styles in src/404.css)
 render_partners.py        renders site/partners/ from src/partners.json (copy) + src/partners-directory.json (the list)
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
+render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
+src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
+src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers
+requirements.txt          build dependencies: Markdown 3.7 and Pillow 11.3 (the Pages workflow installs them)
 src/forms.css             shared form styles (Partners, Contact, newsletter); the form JS is shared in the template
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
@@ -350,6 +354,48 @@ Phones: form first, then the channels; topic chips scroll sideways with snap; of
   during business hours), the business hours (Mon-Fri 09:00-18:00 local) and the FAQ answers. The audit checks every
   topic's placeholder and fields, blocked empty submits, the copy button, both clocks and badges, links and overflow.
 
+## Blog
+
+Built by `render_blog.py` (Python-Markdown for posts, Pillow for thumbnails; both pinned in `requirements.txt`), styles
+in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writing-a-blog-post.md`.
+- URLs (relative links like every page): `resources/blog/` (+ `page/<n>/`), `resources/blog/category/<slug>/`
+  (+ `page/<n>/`), `resources/blog/tag/<slug>/` (+ `page/<n>/`), `resources/blog/search/?q=` (client-side),
+  `resources/blog/<post-slug>/`. Also `resources/blog/search-index.json`, `resources/blog/feed.xml` (RSS 2.0) and
+  `sitemap.xml` for the whole site (every page but the 404 and search). `SITE_URL` in build.py makes the absolute URLs.
+- A post is `src/blog/posts/<slug>.md`: front matter (title, slug, excerpt max 160, one category, tags, author, date,
+  updated, featured, thumbnail, thumbnail_alt, summary 3-5 bullets, optional seo_title / seo_description) + Markdown.
+  The build stops with a clear message on an unknown category, tag or author, a missing thumbnail_alt, a duplicate
+  slug, an excerpt over 160 characters or a bad date. Reading time is words / 225, rounded up.
+- Categories (`categories.json`: slug, name, description) and tags (`tags.json`: slug, name) must exist before a post
+  uses them. Authors in `authors.json` (name, role, bio, optional avatar).
+- Thumbnails: `src/assets/blog/`, 16:10 recommended (1600x1000); the build makes 640/960/1440 WebP versions with
+  width/height and srcset, warns (does not fail) on another ratio, and never crops: every thumbnail renders at its own
+  ratio (`height: auto`, no `object-fit: cover`); grid rows align to the top.
+- Listing: two-tone hero with a search field ("/" focuses it), the newest one or two featured posts, "Latest
+  articles" on tint with a sticky category bar (All + categories with counts, real links; as many as fit, the rest in a
+  "More" popover with a filter box; on phones it scrolls with snap) and a layout switch (grid 2/3/4 or list, grid 3 by
+  default, remembered in localStorage; hidden on phones, which show one column), 12 posts per page with numbered
+  pagination (rel prev/next), then the newsletter (dark).
+- Result pages (category, tag, search) share one layout: breadcrumb, label, H1, count, description (categories),
+  a removable filter chip, "Related tags" on tags, the same grid and pagination. Search matches title, excerpt,
+  category and tags (case- and accent-insensitive), highlights matches with <mark>, updates as you type (150ms) and
+  keeps `?q=` in the URL; empty state with popular categories and "Clear search"; search pages are noindex.
+- Article: a 2px reading progress bar (body only); breadcrumb, category pill, H1, meta (author, date, updated,
+  reading time); the thumbnail at its own ratio (eager, fetchpriority high); "Key takeaways" (the bullets are in the
+  HTML; the button reveals them with a 0.6s shimmer and a typing effect; reduced motion shows them at once; without JS
+  they are simply shown; never labelled AI); body at 19px / 1.7 / 68ch with copy-link anchors on h2/h3, scrolling
+  tables, callouts (`> [!NOTE]`), quotes, captioned images and checklists; tags, share links (copy, X, LinkedIn,
+  Facebook, email; plain URLs, no third-party scripts), author box, "Keep reading" (same category first, then shared
+  tags), previous / next. Desktop sidebar (sticky): "On this page" (h2 + h3, the section in view highlighted), then
+  the newsletter and "Sell custom products with InkyBay" promos; it scrolls inside itself when taller than the screen.
+  Tablet and phone: the contents become a disclosure above the body and the promos follow the article.
+- SEO: unique title and description (seo_* overrides), canonical, Open Graph and Twitter tags (thumbnail as image),
+  JSON-LD BlogPosting (articles), BreadcrumbList (all blog pages) and CollectionPage (listings); one H1 per page.
+- Small text: pills, tags, share buttons and the filter chip are 16px links; dates, reading times and labels are 14px
+  metadata in non-paragraph elements.
+- Endpoints: the newsletter forms post to `NEWSLETTER_ENDPOINT` (see Forms); empty for now, so they say "Not connected
+  yet". Draft / demo: the 14 posts and both authors are demo content; the promo cards and newsletter copy are draft.
+
 ## Industry pages (one template)
 
 Built by `render_industry.py` from `src/industries/<slug>.json` to `site/industries/<slug>/` for every industry in
@@ -449,6 +495,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Blog content model and build (render_blog.py: front matter, validation, Python-Markdown, reading time, contents, responsive thumbnails, listing / category / tag / search / article pages, SEO tags and JSON-LD, search-index.json, feed.xml; sitemap.xml for the whole site; SITE_URL; requirements.txt pinned Markdown 3.7 + Pillow 11.3, installed by the Pages workflow; blog.css and blog JS). The brief's listing, result-page and article commits land here because one renderer builds them all. Decisions: Python-Markdown (small, well known, tables and heading ids built in); a small built-in front matter reader instead of a YAML library; the sticky sidebar scrolls inside itself when taller than the screen; pills, tags and share buttons are 16px, metadata 14px in non-paragraph elements; screen-reader-only headings are skipped by the heading reveal
 - 2026-10-08: New tee image (your 1600px photo; the old tee was a 400px source enlarged to 600 and looked soft). Same treatment as the library (trimmed, centred, 82% fill) but 1000x1000 because the tee is shown large; ~24 KB, so page weight barely changes. It replaces the tee everywhere it is used (mini UIs, How it works, zig-zags, decks, wheel, walls, 404)
 - 2026-10-08: Partners: real partner logos (13 supplied logos in src/assets/partners/, 192px WebP, assigned at random to the 12 demo partners and the hero orbit; monogram tiles stay as the fallback). Flagged: the logos are real apps while the names are still fictional demo names
 - 2026-10-08: Contact page (render_contact.py, src/contact.json, src/contact.css, contact JS in the template, audit check_contact); the shared form handler gains blur validation, a success template that replaces the form, and an email fallback on errors; Resources > Get help gets a Contact item and every "Talk to our team" button links to contact/. Fixes found while building: the field wrappers were renamed .cfx because .fx is the homepage features heading (its script crashed the page), and .form[hidden] now really hides the form on success. Figma not readable; copy from the brief

@@ -1,0 +1,24 @@
+{
+  "categories": [
+    {
+      "slug": "print-prep",
+      "name": "Print prep",
+      "description": "Files, resolution, colour and everything that gets a design from the screen onto the product."
+    },
+    {
+      "slug": "pricing-operations",
+      "name": "Pricing and operations",
+      "description": "Pricing custom products, protecting margins and running production smoothly."
+    },
+    {
+      "slug": "shopify-growth",
+      "name": "Shopify and growth",
+      "description": "Selling more custom products on Shopify: marketing, photos, seasons and repeat buyers."
+    },
+    {
+      "slug": "inkybay-product",
+      "name": "InkyBay product",
+      "description": "How to get the most out of InkyBay, from print areas to templates and quotes."
+    }
+  ]
+}

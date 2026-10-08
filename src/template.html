@@ -2539,7 +2539,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     (function () {
       /* plain-text h2s, or h2s made only of plain <span class="h-line"> lines (two-tone headings) */
       var heads = [].slice.call(document.querySelectorAll('main h2, .endzone h2')).filter(function (h) {
-        if (!h.textContent.trim().length) return false;
+        if (!h.textContent.trim().length || h.classList.contains('sr-only')) return false;   /* nothing to reveal on a screen-reader-only heading */
         return [].every.call(h.children, function (c) { return c.classList.contains('h-line') && c.children.length === 0; });
       });
       if (!heads.length || reduceMotion || !('IntersectionObserver' in window)) return;
@@ -3083,6 +3083,163 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       sec.querySelector('.pdir__clear').addEventListener('click', function () { type = 'all'; q = ''; input.value = ''; all = false; apply(); input.focus(); });
       apply();
     });
+
+    /* Blog: "/" focuses the search, the layout switch (remembered), the category bar's "More" popover, client-side
+       search (search-index.json), and on articles the reading progress bar, the summary reveal, the table-of-contents
+       highlight and copy-link buttons. Everything else (filters, pagination) is plain links. */
+    (function () {
+      var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var store = { get: function (k) { try { return localStorage.getItem(k); } catch (e) { return null; } }, set: function (k, v) { try { localStorage.setItem(k, v); } catch (e) {} } };
+      var search = document.querySelector('.bsearch__input');
+      if (search) document.addEventListener('keydown', function (e) {
+        var t = e.target, typing = t && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName));
+        if (e.key === '/' && !typing && !e.metaKey && !e.ctrlKey && !e.altKey) { e.preventDefault(); search.focus(); }
+      });
+
+      /* layout switch: grid 2 / 3 / 4 / list, remembered per browser */
+      var grids = [].slice.call(document.querySelectorAll('.bgrid:not([data-fixed])')), views = [].slice.call(document.querySelectorAll('.bview__btn'));
+      function setView(v) {
+        grids.forEach(function (g) { g.setAttribute('data-view', v); });
+        views.forEach(function (b) { b.setAttribute('aria-pressed', String(b.getAttribute('data-view') === v)); });
+      }
+      if (views.length) {
+        var saved = store.get('ib-blog-view'); if (saved && /^(2|3|4|list)$/.test(saved)) setView(saved);
+        views.forEach(function (b) { b.addEventListener('click', function () { var v = b.getAttribute('data-view'); setView(v); store.set('ib-blog-view', v); }); });
+      }
+
+      /* category bar: as many pills as fit on one line, the rest behind "More" (a popover with a filter box) */
+      document.querySelectorAll('.bbar').forEach(function (bar) {
+        var list = bar.querySelector('.bbar__list'), items = [].slice.call(list.children), btn = bar.querySelector('.bbar__more-btn'), pop = bar.querySelector('.bbar__pop');
+        var q = pop.querySelector('.bbar__q'), all = [].slice.call(pop.querySelectorAll('.bbar__all li'));
+        function fit() {
+          items.forEach(function (li) { li.hidden = false; }); btn.hidden = true;
+          if (window.innerWidth <= 600) { btn.hidden = items.length < 2; return; }
+          if (list.scrollWidth <= list.clientWidth + 1) return;
+          btn.hidden = false;
+          for (var i = items.length - 1; i > 0 && list.scrollWidth > list.clientWidth + 1; i--) {
+            if (items[i].querySelector('.is-active')) continue;
+            items[i].hidden = true;
+          }
+        }
+        function open(on) { pop.hidden = !on; btn.setAttribute('aria-expanded', String(on)); if (on) { q.value = ''; filter(); q.focus(); } }
+        function filter() { var v = q.value.trim().toLowerCase(); all.forEach(function (li) { li.hidden = v && li.textContent.toLowerCase().indexOf(v) < 0; }); }
+        btn.addEventListener('click', function (e) { e.stopPropagation(); open(pop.hidden); });
+        q.addEventListener('input', filter);
+        document.addEventListener('click', function (e) { if (!pop.hidden && !bar.querySelector('.bbar__more').contains(e.target)) open(false); });
+        document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !pop.hidden) { open(false); btn.focus(); } });
+        fit(); window.addEventListener('resize', fit);
+        if (document.fonts && document.fonts.ready) document.fonts.ready.then(fit);
+      });
+
+      /* search page: client-side, accent- and case-insensitive, highlights, debounced, query kept in the URL */
+      var res = document.querySelector('.bsearch-results .bgrid');
+      if (res) {
+        var root = res.getAttribute('data-root'), idx = null, timer = 0;
+        var input = document.querySelector('.bres--search .bsearch__input'), h1 = document.querySelector('.bres__q'), count = document.querySelector('.bres--search .bres__count');
+        var chips = document.querySelector('.bres--search .bchips'), chipText = chips.querySelector('.bchip--q span'), empty = document.querySelector('.bempty');
+        var norm = function (s) { return (s || '').normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase(); };
+        var esc = function (s) { return s.replace(/[&<>"]/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]; }); };
+        function mark(text, words) {
+          var n = norm(text), out = '', i = 0, hits = [];
+          words.forEach(function (w) { var at = 0, k; while (w && (k = n.indexOf(w, at)) > -1) { hits.push([k, k + w.length]); at = k + w.length; } });
+          hits.sort(function (a, b) { return a[0] - b[0]; });
+          hits.forEach(function (h) { if (h[0] < i) return; out += esc(text.slice(i, h[0])) + '<mark>' + esc(text.slice(h[0], h[1])) + '</mark>'; i = h[1]; });
+          return out + esc(text.slice(i));
+        }
+        function cardHTML(p, words) {
+          var srcset = p.thumb.files.map(function (f) { return root + f[2] + ' ' + f[0] + 'w'; }).join(', '), mid = p.thumb.files[Math.min(1, p.thumb.files.length - 1)];
+          return '<li class="bcard"><a class="bcard__media" href="' + root + p.url + '" tabindex="-1" aria-hidden="true"><img class="bcard__img" src="' + root + mid[2] + '" srcset="' + srcset +
+            '" sizes="(max-width: 600px) 100vw, (max-width: 1100px) 50vw, 33vw" width="' + p.thumb.w + '" height="' + p.thumb.h + '" alt="' + esc(p.alt) + '" loading="lazy" decoding="async"></a>' +
+            '<div class="bcard__body"><a class="bpill" href="' + root + 'resources/blog/category/' + p.category_slug + '/">' + esc(p.category) + '</a>' +
+            '<h2 class="bcard__title"><a href="' + root + p.url + '">' + mark(p.title, words) + '</a></h2><p class="bcard__excerpt">' + mark(p.excerpt, words) + '</p>' +
+            '<div class="bcard__meta"><time datetime="' + p.date + '">' + esc(p.date_label) + '</time><span aria-hidden="true">·</span><span>' + p.minutes + ' min read</span></div></div></li>';
+        }
+        function run() {
+          var raw = input.value.trim(), words = norm(raw).split(/\s+/).filter(Boolean);
+          var url = new URL(location.href); if (raw) url.searchParams.set('q', raw); else url.searchParams.delete('q'); history.replaceState(null, '', url);
+          h1.textContent = raw ? '“' + raw + '”' : '…'; chips.hidden = !raw; chipText.textContent = raw;
+          document.title = (raw ? 'Search: ' + raw : 'Search the blog') + ' | InkyBay';
+          var hits = !words.length ? idx : idx.filter(function (p) {
+            var hay = norm([p.title, p.excerpt, p.category, p.tags.join(' ')].join(' '));
+            return words.every(function (w) { return hay.indexOf(w) > -1; });
+          });
+          res.innerHTML = hits.map(function (p) { return cardHTML(p, words); }).join('');
+          count.textContent = hits.length + (hits.length === 1 ? ' article' : ' articles');
+          empty.hidden = hits.length > 0; empty.querySelector('.bempty__title span').textContent = raw;
+        }
+        input.value = new URLSearchParams(location.search).get('q') || '';
+        input.addEventListener('input', function () { clearTimeout(timer); timer = setTimeout(run, 150); });
+        input.closest('form').addEventListener('submit', function (e) { e.preventDefault(); clearTimeout(timer); run(); });
+        empty.querySelector('.bempty__clear').addEventListener('click', function () { input.value = ''; run(); input.focus(); });
+        chips.querySelector('.bchip--q').addEventListener('click', function (e) { e.preventDefault(); input.value = ''; run(); input.focus(); });
+        fetch(res.getAttribute('data-index')).then(function (r) { return r.json(); }).then(function (d) { idx = d; run(); })
+          .catch(function () { count.textContent = 'Search is not available right now.'; });
+      }
+
+      /* article: reading progress (through the body only) */
+      var body = document.querySelector('.bbody'), bar = document.querySelector('.bprogress i');
+      if (body && bar) {
+        var prog = function () {
+          var r = body.getBoundingClientRect(), total = r.height - window.innerHeight * .6;
+          bar.style.transform = 'scaleX(' + Math.max(0, Math.min(1, (window.innerHeight * .4 - r.top) / Math.max(1, total))) + ')';
+        };
+        prog(); window.addEventListener('scroll', prog, { passive: true }); window.addEventListener('resize', prog);
+      }
+
+      /* "Key takeaways": the bullets are in the HTML; the button reveals them with a short shimmer and typing */
+      document.querySelectorAll('.bsum').forEach(function (box) {
+        var btn = box.querySelector('.bsum__btn'), label = btn.querySelector('span'), show = label.textContent, hide = btn.getAttribute('data-hide');
+        var lis = [].slice.call(box.querySelectorAll('.bsum__list li')), texts = lis.map(function (li) { return li.textContent; }), busy = false;
+        box.classList.add('is-ready');
+        function done() { busy = false; box.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); label.textContent = hide; }
+        btn.addEventListener('click', function () {
+          if (busy) return;
+          if (box.classList.contains('is-open')) { box.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); label.textContent = show; return; }
+          if (reduce) { done(); return; }
+          busy = true; box.classList.add('is-shimmer');
+          setTimeout(function () {
+            box.classList.remove('is-shimmer'); box.classList.add('is-open');
+            lis.forEach(function (li) { li.classList.add('is-typing'); });
+            (function type(k) {
+              if (k >= lis.length) { done(); return; }
+              var li = lis[k], full = texts[k], n = 0, step = Math.max(1, Math.ceil(full.length / 18));
+              li.textContent = ''; li.classList.remove('is-typing');
+              (function tick() { n = Math.min(full.length, n + step); li.textContent = full.slice(0, n); if (n < full.length) setTimeout(tick, 22); else setTimeout(function () { type(k + 1); }, 90); })();
+            })(0);
+          }, 600);
+        });
+      });
+
+      /* table of contents: highlight the section in view */
+      var tocLinks = [].slice.call(document.querySelectorAll('.btoc a[href^="#"]'));
+      if (tocLinks.length && 'IntersectionObserver' in window) {
+        var heads = [].slice.call(document.querySelectorAll('.bbody h2[id], .bbody h3[id]')), visible = {};
+        var activate = function (id) { tocLinks.forEach(function (a) { var on = a.getAttribute('href') === '#' + id; a.classList.toggle('is-active', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); };
+        var io = new IntersectionObserver(function (es) {
+          es.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
+          var first = heads.filter(function (h) { return visible[h.id]; })[0];
+          if (first) activate(first.id);
+          else { var above = heads.filter(function (h) { return h.getBoundingClientRect().top < 120; }).pop(); activate(above ? above.id : heads[0].id); }   /* above every heading: the first one */
+        }, { rootMargin: '-90px 0px -55% 0px' });
+        heads.forEach(function (h) { io.observe(h); });
+      }
+
+      /* copy links: heading anchors and the share row */
+      function copy(text, done) {
+        if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(text).then(done, fallback); else fallback();
+        function fallback() { var ta = document.createElement('textarea'); ta.value = text; ta.style.position = 'fixed'; ta.style.opacity = '0'; document.body.appendChild(ta); ta.select(); try { document.execCommand('copy'); } catch (e) {} ta.remove(); done(); }
+      }
+      document.querySelectorAll('[data-copy-link]').forEach(function (a) {
+        a.addEventListener('click', function (e) {
+          e.preventDefault(); var url = location.href.split('#')[0] + a.getAttribute('href'); history.replaceState(null, '', a.getAttribute('href'));
+          copy(url, function () { a.classList.add('is-copied'); setTimeout(function () { a.classList.remove('is-copied'); }, 1500); });
+        });
+      });
+      document.querySelectorAll('[data-copy-url]').forEach(function (b) {
+        var ok = b.parentNode.querySelector('.bshare__ok');
+        b.addEventListener('click', function () { copy(b.getAttribute('data-copy-url'), function () { ok.textContent = ok.getAttribute('data-copied'); setTimeout(function () { ok.textContent = ''; }, 2000); }); });
+      });
+    })();
 
     /* "Show more" buttons (industry merchants): reveal the rest of the list in the section */
     document.querySelectorAll('[data-show-more]').forEach(function (b) {
