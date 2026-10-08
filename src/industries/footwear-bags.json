@@ -1,0 +1,172 @@
+{
+  "slug": "footwear-bags",
+  "nav_label": "Footwear & bags",
+  "meta": {
+    "title": "Custom shoes and bags for Shopify | InkyBay",
+    "description": "Let shoppers recolor parts, add initials and upload designs for sneakers, backpacks and totes, previewed from every angle."
+  },
+  "hero": {
+    "title": "Shoes and bags made to order",
+    "lead": "Let shoppers recolor parts, add initials and upload designs for sneakers, backpacks and totes, previewed from every angle.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Recolor part",
+          "icon": "sliders"
+        },
+        {
+          "label": "Add initials",
+          "icon": "type"
+        },
+        {
+          "label": "Upload design",
+          "icon": "image"
+        }
+      ],
+      "swatches": [
+        "#F4F1EE",
+        "#2F2F2F",
+        "#E5380F",
+        "#FF7500",
+        "#1F3A68",
+        "#17A673",
+        "#FFD982",
+        "#BFE0FF"
+      ],
+      "deck": [
+        {
+          "product": "sneakers",
+          "label": "Sneakers",
+          "result": "AB",
+          "swatch": 2,
+          "chip": "Size · 42"
+        },
+        {
+          "product": "backpack",
+          "label": "Backpack",
+          "result": "JAY",
+          "swatch": 4,
+          "chip": "Large"
+        },
+        {
+          "product": "tote-bag",
+          "label": "Tote bag",
+          "result": "Market",
+          "swatch": 3,
+          "chip": "Canvas"
+        },
+        {
+          "product": "socks",
+          "label": "Socks",
+          "result": "Run club",
+          "swatch": 1,
+          "chip": "Size · M"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Every pair, every bag, unique.",
+    "Colors, initials and designs."
+  ],
+  "products": [
+    {
+      "name": "Sneakers",
+      "image": "sneakers"
+    },
+    {
+      "name": "Backpack",
+      "image": "backpack"
+    },
+    {
+      "name": "Tote bag",
+      "image": "tote-bag"
+    },
+    {
+      "name": "Socks",
+      "image": "socks"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell footwear and bags.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Shoppers recolor every part of the sneaker and order with confidence.",
+      "preview": "sneakers",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Monogrammed backpacks sell as gifts all year.",
+      "preview": "backpack",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Totes with custom prints are our easiest add-on sale.",
+      "preview": "tote-bag",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Our makers get the exact colors and initials with every order.",
+      "preview": "socks",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can shoppers recolor parts of a product?",
+      "a": "Yes. Set up parts as options, and shoppers pick a color for each one."
+    },
+    {
+      "q": "Can shoppers add initials or a monogram?",
+      "a": "Yes. Shoppers add text in the fonts and limits you choose."
+    },
+    {
+      "q": "Can I offer sizes?",
+      "a": "Yes. Add sizes as variants, with stock tracked for each."
+    },
+    {
+      "q": "Do makers get the details?",
+      "a": "Yes. Each order includes the colors, text and files the shopper chose."
+    }
+  ]
+}

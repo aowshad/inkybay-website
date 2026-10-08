@@ -339,6 +339,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Add industry page: Footwear & bags
 - 2026-10-08: Add industry page: Gifts & promotional
 - 2026-10-08: Add industry page: Printing & packaging (built with stand-in images; needs: More packaging products (boxes, labels, mailers) would make this page stronger.)
 - 2026-10-08: Industry hero: fit the result text to the product. The audit caught "Studio Nine" spilling past the narrow notebook on printing-packaging; the deck now centres each card's text on the product's real outline (from the image's alpha) and shrinks it to 80% of the product's width, instead of shortening the copy
