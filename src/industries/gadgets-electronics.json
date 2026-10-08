@@ -39,28 +39,24 @@
         {
           "product": "airpod",
           "label": "Earbuds case",
-          "result": "JAY",
           "swatch": 3,
           "chip": "Matte"
         },
         {
           "product": "laptop-bag",
           "label": "Laptop sleeve",
-          "result": "Acme",
           "swatch": 2,
           "chip": "14 inch"
         },
         {
           "product": "backpack",
           "label": "Backpack",
-          "result": "Tech",
           "swatch": 1,
           "chip": "Large"
         },
         {
           "product": "water-bottle",
           "label": "Water bottle",
-          "result": "Desk",
           "swatch": 4,
           "chip": "500 ml"
         }

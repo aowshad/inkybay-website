@@ -168,11 +168,10 @@ def check_industry_json(slug):
 
 
 async def check_industry_hero(b, slug, path):
-    """The customizing deck (docs/industry-hero-spec.md): panel, palette and chip overlap the front card's edges;
-    the result text sits inside the product's bounding box (from the image's alpha)."""
+    """The customizing deck (docs/industry-hero-spec.md): panel, palette and chip overlap the front card's edges."""
     for w in (1440, 390):
         pg = await b.new_page(viewport={"width": w, "height": 900})
-        await pg.emulate_media(reduced_motion="reduce")      # the settled, customized first card
+        await pg.emulate_media(reduced_motion="reduce")      # the settled, coloured first card
         await pg.goto(path.as_uri()); await pg.wait_for_timeout(700)
         r = await pg.evaluate("""(async()=>{const box=e=>e.getBoundingClientRect();
           const edge=(q,r)=>{const touch=!(q.right<r.left||q.left>r.right||q.bottom<r.top||q.top>r.bottom), inside=q.left>=r.left&&q.right<=r.right&&q.top>=r.top&&q.bottom<=r.bottom; return touch&&!inside};
@@ -180,17 +179,9 @@ async def check_industry_hero(b, slug, path):
           const C=box(front), out=[];
           for (const [name, el] of [['panel', document.querySelector('.ipanel')], ['palette', document.querySelector('.ipalette')], ['chip', front.querySelector('.icardx__chip')]])
             if (!el || !edge(box(el), C)) out.push(name);
-          const img=front.querySelector('.icardx__img'); await img.decode().catch(()=>{});
-          const cv=document.createElement('canvas'); cv.width=img.naturalWidth; cv.height=img.naturalHeight; const g=cv.getContext('2d'); g.drawImage(img,0,0);
-          const a=g.getImageData(0,0,cv.width,cv.height).data; let x0=1e9,y0=1e9,x1=-1,y1=-1;
-          for(let y=0;y<cv.height;y+=2) for(let x=0;x<cv.width;x+=2){ if(a[(y*cv.width+x)*4+3]>40){ if(x<x0)x0=x; if(x>x1)x1=x; if(y<y0)y0=y; if(y>y1)y1=y; } }
-          const I=box(img), sx=I.width/cv.width, sy=I.height/cv.height, P={left:I.left+x0*sx, right:I.left+x1*sx, top:I.top+y0*sy, bottom:I.top+y1*sy};
-          const T=box(front.querySelector('.icardx__text'));
-          const textIn = T.width>0 && T.left>=P.left-1 && T.right<=P.right+1 && T.top>=P.top-1 && T.bottom<=P.bottom+1;
-          return {detached: out, textIn, overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth}})()""")
+          return {detached: out, overflow: document.documentElement.scrollWidth > document.documentElement.clientWidth}})()""")
         if r.get("missing"): bad(slug, f"hero {w}px: no front card"); await pg.close(); continue
         if r["detached"]: bad(slug, f"hero {w}px: {r['detached']} do not overlap the front card's edge")
-        if not r["textIn"]: bad(slug, f"hero {w}px: result text is not inside the product's bounding box")
         if r["overflow"]: bad(slug, f"hero {w}px: horizontal overflow")
         await pg.close()
     # interaction (motion on): the loop advances on its own when not hovered; each tab brings its card to the front

@@ -2660,16 +2660,16 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       });
       window.addEventListener('resize', function () { if (window.innerWidth <= 960) close(); });
     })();
-    /* Industry hero: the customizing deck (docs/industry-hero-spec.md). Each front card is customized by the cursor
-       (text, swatch, option), then the deck rotates: the front card goes to the back. Runs only while on screen
+    /* Industry hero: the customizing deck (docs/industry-hero-spec.md). The cursor recolours each front card (picks its
+       swatch; the product tints), then the deck rotates: the front card goes to the back. Runs only while on screen
        (.mui-live, shared observer) and not hovered or focused; tabs, swipe and arrow keys drive it. */
     document.querySelectorAll('.ishow').forEach(function (show) {
       var deck = show.querySelector('.ideck'), cards = [].slice.call(deck.querySelectorAll('.icardx'));
-      var rows = [].slice.call(show.querySelectorAll('.ipanel__row')), sws = [].slice.call(show.querySelectorAll('.ipalette__sw'));
+      var sws = [].slice.call(show.querySelectorAll('.ipalette__sw'));
       var cursor = show.querySelector('.icursor'), live = show.querySelector('.ishow__live');
       var N = cards.length, order = cards.map(function (c, i) { return i; });
       var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-      var T = { row1: 0, text: 600, toSwatch: 1600, swatch: 2200, toRow3: 2800, chip: 3200, hold: 3600, rotate: 4200 }, SETTLE = 600;
+      var T = { toSwatch: 400, swatch: 1000, rotate: 3000 }, SETTLE = 600;
       var t = 0, last = 0, fired = {}, paused = false, rotating = 0;
 
       /* tint: the product image's own alpha is the mask, so the background never tints (no second download) */
@@ -2678,31 +2678,6 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         function set() { tint.style.webkitMaskImage = tint.style.maskImage = 'url("' + img.src + '")'; tint.classList.add('has-mask'); }
         if (img.complete) set(); else img.addEventListener('load', set);
       });
-
-      /* result text: centred on the product's own outline (from the image's alpha) and shrunk to fit 80% of its width,
-         so narrow products (a notebook, a bottle) never have text spilling past their edges */
-      function outline(img) {
-        if (img._box !== undefined) return img._box;
-        try {
-          var n = 120, cv = document.createElement('canvas'); cv.width = cv.height = n;
-          var g = cv.getContext('2d'); g.drawImage(img, 0, 0, n, n);
-          var a = g.getImageData(0, 0, n, n).data, x0 = n, y0 = n, x1 = -1, y1 = -1;
-          for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (a[(y * n + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
-          img._box = x1 < 0 ? null : { cx: (x0 + x1 + 1) / 2 / n, cy: (y0 + y1 + 1) / 2 / n, w: (x1 - x0 + 1) / n };
-        } catch (e) { img._box = null; }
-        return img._box;
-      }
-      function fit(c) {
-        var img = c.querySelector('.icardx__img'), txt = c.querySelector('.icardx__text'), b = outline(img);
-        if (!b || !img.clientWidth) return;
-        txt.style.left = (b.cx * 100) + '%'; txt.style.top = (b.cy * 100) + '%'; txt.style.maxWidth = 'none'; txt.style.fontSize = '';
-        var max = b.w * img.clientWidth * .8, w = txt.scrollWidth;
-        if (w > max) txt.style.fontSize = (parseFloat(getComputedStyle(txt).fontSize) * max / w) + 'px';
-      }
-      function fitAll() { cards.forEach(function (c) { var img = c.querySelector('.icardx__img'); if (img.complete) fit(c); else img.addEventListener('load', function () { fit(c); }); }); }
-      fitAll();
-      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
-      window.addEventListener('resize', fitAll);
 
       function front() { return cards[order[0]]; }
       function layout() {
@@ -2714,8 +2689,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         });
         live.textContent = front().getAttribute('aria-label');
       }
-      function customize(c, on) {
-        ['is-text', 'is-tint', 'is-chip'].forEach(function (k) { c.classList.toggle(k, on); });
+      function colour(c, on) {
+        c.classList.toggle('is-tint', on);
         if (on) sws.forEach(function (s, i) { s.classList.toggle('is-on', i === +c.getAttribute('data-swatch')); });
       }
       function at(el) {                       /* cursor tip on the target's centre, in the stage's pixels */
@@ -2724,22 +2699,20 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         cursor.style.setProperty('--y', (r.top + r.height * .5 - s.top) + 'px');
       }
       function click() { cursor.classList.add('is-click'); setTimeout(function () { cursor.classList.remove('is-click'); }, 160); }
-      function hot(i) { rows.forEach(function (r, k) { r.classList.toggle('is-hot', k === i); }); }
-      function story() { t = -SETTLE; fired = {}; front().querySelector('.icardx__prog i').style.transform = 'scaleX(0)'; }
+      function story() { t = -SETTLE; fired = {}; }
 
       /* bring card k to the front; the cards in front of it go to the back, the old front card with the leave animation */
-      function goTo(k, instant) {
+      function goTo(k) {
         var i = order.indexOf(k); if (i <= 0) return;
         var leaving = front();
-        customize(leaving, false); hot(-1);
-        leaving.querySelector('.icardx__prog i').style.transform = 'scaleX(0)';
+        colour(leaving, false);
         order = order.slice(i).concat(order.slice(0, i));
-        if (!instant && !reduce) {
+        if (!reduce) {
           leaving.classList.add('is-leaving'); clearTimeout(rotating);
           rotating = setTimeout(function () { leaving.classList.remove('is-leaving'); }, 650);
         }
         layout();
-        if (reduce) customize(front(), true); else story();
+        if (reduce) colour(front(), true); else story();
       }
       function next() { goTo(order[1]); }
       function prev() { goTo(order[N - 1]); }
@@ -2761,8 +2734,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       show.addEventListener('focusout', function (e) { if (!show.contains(e.relatedTarget)) paused = false; });
 
       layout();
-      if (reduce) return;                      /* first card stays customized; tabs switch instantly */
-      customize(front(), false); story();
+      if (reduce) return;                      /* first card stays coloured; tabs switch instantly */
+      colour(front(), false); story();
       function tick(now) {
         var run = show.classList.contains('mui-live') && !paused;
         show.classList.toggle('is-playing', run);
@@ -2770,22 +2743,11 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         last = now;
         if (run) {
           var c = front();
-          var ev = function (name, fn) { if (t >= T[name] && !fired[name]) { fired[name] = 1; fn(); } };
-          ev('row1', function () { at(rows[0]); });
-          ev('text', function () { click(); hot(0); c.classList.add('is-text'); });
-          ev('toSwatch', function () { hot(-1); at(sws[+c.getAttribute('data-swatch')]); });
-          ev('swatch', function () { click(); customizeSwatch(c); });
-          ev('toRow3', function () { at(rows[2]); });
-          ev('chip', function () { click(); hot(2); c.classList.add('is-chip'); });
-          ev('hold', function () { hot(-1); });
-          if (t >= 0) c.querySelector('.icardx__prog i').style.transform = 'scaleX(' + Math.min(1, t / T.rotate) + ')';
+          if (t >= T.toSwatch && !fired.to) { fired.to = 1; at(sws[+c.getAttribute('data-swatch')]); }
+          if (t >= T.swatch && !fired.sw) { fired.sw = 1; click(); colour(c, true); }
           if (t >= T.rotate) next();
         }
         requestAnimationFrame(tick);
-      }
-      function customizeSwatch(c) {
-        sws.forEach(function (s, i) { s.classList.toggle('is-on', i === +c.getAttribute('data-swatch')); });
-        c.classList.add('is-tint');
       }
       requestAnimationFrame(tick);
     });

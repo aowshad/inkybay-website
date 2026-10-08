@@ -35,28 +35,24 @@
         {
           "product": "pendant",
           "label": "Pendant",
-          "result": "Mia",
           "swatch": 0,
           "chip": "Gold"
         },
         {
           "product": "ring",
           "label": "Ring",
-          "result": "Forever",
           "swatch": 1,
           "chip": "Silver"
         },
         {
           "product": "locket",
           "label": "Locket",
-          "result": "1998",
           "swatch": 2,
           "chip": "Rose gold"
         },
         {
           "product": "bracelet",
           "label": "Bracelet",
-          "result": "Sam",
           "swatch": 0,
           "chip": "Gold"
         }

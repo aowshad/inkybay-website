@@ -39,28 +39,24 @@
         {
           "product": "hoodie",
           "label": "Hoodie",
-          "result": "Your name",
           "swatch": 3,
           "chip": "Size · L"
         },
         {
           "product": "tee",
           "label": "T-shirt",
-          "result": "RIVERS 10",
           "swatch": 2,
           "chip": "Size · M"
         },
         {
           "product": "baby-onesie",
           "label": "Baby onesie",
-          "result": "Mia",
           "swatch": 7,
           "chip": "0-3 months"
         },
         {
           "product": "cap",
           "label": "Cap",
-          "result": "AB",
           "swatch": 1,
           "chip": "One size"
         }

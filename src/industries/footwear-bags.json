@@ -39,28 +39,24 @@
         {
           "product": "sneakers",
           "label": "Sneakers",
-          "result": "AB",
           "swatch": 2,
           "chip": "Size · 42"
         },
         {
           "product": "backpack",
           "label": "Backpack",
-          "result": "JAY",
           "swatch": 4,
           "chip": "Large"
         },
         {
           "product": "tote-bag",
           "label": "Tote bag",
-          "result": "Market",
           "swatch": 3,
           "chip": "Canvas"
         },
         {
           "product": "socks",
           "label": "Socks",
-          "result": "Run club",
           "swatch": 1,
           "chip": "Size · M"
         }

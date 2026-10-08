@@ -277,7 +277,7 @@ Primary buttons with a link use `{{BTN_PRIMARY:label|href}}`.
 **JSON schema** (`src/industries/<slug>.json`, the single source of copy for the page):
 - `slug`, `nav_label`, `meta {title, description}`
 - `hero {title, lead, primary_cta, secondary_cta, stage}`; `stage {actions: [3 x {label, icon}], swatches: [hex],
-  deck: [3-5 x {product, label, result, swatch (index into swatches), chip}]}`
+  deck: [3-5 x {product, label, swatch (index into swatches), chip}]}`
 - `products_heading` (2 lines), `products: [{name, image}]`, `products_cta {text, label, href}`
 - `stats_heading` (2 lines), `stats_lead`, `stats: [3 x {value, suffix, label}]` (a value with a "." stays static)
 - `merchants_heading` (2 lines), `merchants: [{name, country, quote, preview, url}]`, `merchants_visible`
@@ -290,19 +290,20 @@ Every `product`, `image` and `preview` is a key in `src/products.json`.
 are placeholders until real ones are supplied.
 
 **Industry hero: the customizing deck** (`docs/industry-hero-spec.md`, data in `hero.stage`): 3-5 product cards
-(4:5, radius 24, white in both themes) stacked so each back card is 14px higher and 4% narrower and shows its label as
-a tab (11px). The editor panel (right) and palette (bottom-left) are frosted glass, light in both themes (more opaque
-on a dark page), and never move. Each front card's story runs 4.8s: the cursor clicks the first action (the `result`
-text appears on the product, centred on the product's own outline from its alpha and shrunk to fit 80% of its width), a swatch (a multiply tint masked by the product image's own alpha, opacity .35), then the
-third action (the chip rolls to `chip`); the progress line fills; then the deck rotates (0.6s): the front card lifts
-12px, tilts back, blurs to 10px and fades while it moves to the back (each half of that animation eases on its own so
-it stays visible), and the next card sharpens forward (back cards carry a slight 0.3px-per-step blur that keeps the tabs
-readable). Runs only while on screen (the shared `.mui-live` observer) and pauses on hover or focus. Tabs (buttons,
-"Show <label>"), arrow keys and swipe change cards; the deck is an `aria-roledescription="carousel"` with a polite live
-region. Phones: two back tabs, one palette row. Reduced motion and no JS: no cursor, blur or rotation; the first card
-is shown customized and tabs switch instantly. The audit checks the JSON and that the panel, palette and chip overlap the front card and the result text sits
-inside the product's bounding box (from the image's alpha), that the deck advances on its own and that every visible tab
-brings its card to the front.
+(4:5, radius 24, white in both themes) stacked so each back card is 14px higher and 4% narrower; back cards show only
+their top edge (no label, no progress line) and that edge is the button that brings the card forward. The front card
+shows its label top-left, a large product photo (its box 96% of the card width, allowed to dip over the palette) and its
+`chip`, static. The editor panel (right) and palette (bottom-left) are frosted glass, light in both themes (more opaque
+on a dark page), and never move. The only animated customization is colour (no text step, no option step): each front
+card's story runs 3.0s: the cursor glides to the card's swatch and clicks it, the product tints (a multiply overlay
+masked by the image's own alpha, opacity .35), then the deck rotates (0.6s): the front card lifts 12px, tilts back,
+blurs to 10px and fades while it moves to the back (each half of that animation eases on its own so it stays visible),
+and the next card sharpens forward (back cards carry a slight 0.3px-per-step blur). Runs only while on screen (the
+shared `.mui-live` observer) and pauses on hover or focus. Tabs (buttons, "Show <label>"), arrow keys and swipe change
+cards; the deck is an `aria-roledescription="carousel"` with a polite live region. Phones: two back tabs, one palette
+row. Reduced motion and no JS: no cursor, blur or rotation; the first card is shown coloured and tabs switch instantly.
+The audit checks the JSON, that the panel, palette and chip overlap the front card, that the deck advances on its own
+and that every visible tab brings its card to the front.
 
 ## Writing a feature page (playbook)
 
@@ -355,6 +356,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: Industry hero: colour-only deck, larger products (your changes, all eight pages): back cards lose their labels (the edges stay clickable), the progress line and the "Add text" step are gone (the text never sat perfectly on every product), the product photo grows from 72% to 96% of the card and may dip over the palette, and the story is now just the swatch click and tint (3.0s per card). With no option step the chip shows each card's own option statically; the unused "result" field is removed from the industry JSONs and the spec
 - 2026-10-08: How it works: new step card colours (your four flat colours replace the gradients); strokes recomputed as darker tones of each colour at the same 1.25 contrast, keeping each colour's own saturation so they stay as muted as the fills. No dark-mode values were given, so the cards use the same colours in both themes, as before
 - 2026-10-08: Industry pages: docs and cleanup. The kit's reference renderer and CSS are deleted (ported into render_industry.py and src/industry.css). The kit's beauty-cosmetics page is not added: Beauty & cosmetics is not an InkyBay industry (your call on 2026-10-08), so eight industry pages exist. Open: the demo store URL (#demo-store on every page) and every merchant named "Store name (draft)"
 - 2026-10-08: Add industry page: Gadgets & electronics (built with stand-in images; needs: Phone case and charger images would make this page stronger.)

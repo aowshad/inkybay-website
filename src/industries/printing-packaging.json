@@ -39,28 +39,24 @@
         {
           "product": "notebook",
           "label": "Notebook",
-          "result": "Studio Nine",
           "swatch": 3,
           "chip": "Qty · 100"
         },
         {
           "product": "tote-bag",
           "label": "Tote bag",
-          "result": "Fresh Market",
           "swatch": 2,
           "chip": "Qty · 250"
         },
         {
           "product": "mug",
           "label": "Mug",
-          "result": "Acme Co",
           "swatch": 4,
           "chip": "Qty · 50"
         },
         {
           "product": "tee",
           "label": "T-shirt",
-          "result": "Staff",
           "swatch": 1,
           "chip": "Qty · 25"
         }

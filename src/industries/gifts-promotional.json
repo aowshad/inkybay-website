@@ -39,28 +39,24 @@
         {
           "product": "mug",
           "label": "Mug",
-          "result": "Alex",
           "swatch": 2,
           "chip": "Gift box"
         },
         {
           "product": "keyring",
           "label": "Keyring",
-          "result": "Home",
           "swatch": 4,
           "chip": "Metal"
         },
         {
           "product": "tumbler",
           "label": "Tumbler",
-          "result": "Coffee club",
           "swatch": 1,
           "chip": "500 ml"
         },
         {
           "product": "photoframe",
           "label": "Photo frame",
-          "result": "Best day",
           "swatch": 5,
           "chip": "A5"
         }

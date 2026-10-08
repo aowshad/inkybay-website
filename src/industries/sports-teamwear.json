@@ -39,28 +39,24 @@
         {
           "product": "tee",
           "label": "T-shirt",
-          "result": "RIVERS 10",
           "swatch": 0,
           "chip": "Size · L"
         },
         {
           "product": "cap",
           "label": "Cap",
-          "result": "RFC",
           "swatch": 1,
           "chip": "One size"
         },
         {
           "product": "water-bottle",
           "label": "Water bottle",
-          "result": "Coach K",
           "swatch": 3,
           "chip": "750 ml"
         },
         {
           "product": "hoodie",
           "label": "Hoodie",
-          "result": "Team 23",
           "swatch": 0,
           "chip": "Size · M"
         }

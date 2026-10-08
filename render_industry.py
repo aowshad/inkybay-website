@@ -12,18 +12,19 @@ CURSOR = ('<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 3.5l13.5 8.2-
 
 
 def deck(st):
-    """The hero's customizing deck: product cards (front + back tabs), static editor panel and palette, cursor."""
+    """The hero's customizing deck: product cards (front card labelled; back cards show only their edges), static editor
+    panel and palette, and a cursor that recolours each front card."""
     cards = []
     for k, c in enumerate(st["deck"]):
-        first = k == 0     # without JS (and with reduced motion) the first card shows its customized state
+        first = k == 0     # without JS (and with reduced motion) the first card shows its colour
         cards.append(
-            f'<div class="icardx{" is-text is-tint is-chip" if first else ""}"{" data-front" if first else ""} data-k="{k}" data-slot="{k}" data-swatch="{c["swatch"]}" '
+            f'<div class="icardx{" is-tint" if first else ""}"{" data-front" if first else ""} data-k="{k}" data-slot="{k}" data-swatch="{c["swatch"]}" '
             f'style="--slot:{k};--tint-c:{E(st["swatches"][c["swatch"]])}" role="group" aria-roledescription="slide" aria-label="{E(c["label"])}">'
-            f'<button class="icardx__tab" type="button" aria-label="Show {E(c["label"])}" tabindex="-1">{E(c["label"])}</button>'
-            f'<span class="icardx__label">{E(c["label"])}</span><span class="icardx__prog" aria-hidden="true"><i></i></span>'
+            f'<button class="icardx__tab" type="button" aria-label="Show {E(c["label"])}" tabindex="-1"></button>'
+            f'<span class="icardx__label">{E(c["label"])}</span>'
             f'<div class="icardx__media"><img class="icardx__img" src="{{{{IMG:products/{c["product"]}.webp}}}}" alt="" width="600" height="600" decoding="async">'
-            f'<span class="icardx__tint" aria-hidden="true"></span><span class="icardx__text">{E(c["result"])}</span></div>'
-            f'<span class="icardx__chip chip"><span class="icardx__roll"><i>Pick an option</i><i>{E(c["chip"])}</i></span></span>'
+            f'<span class="icardx__tint" aria-hidden="true"></span></div>'
+            f'<span class="icardx__chip chip">{E(c["chip"])}</span>'
             f'</div>')
     rows = "".join(f'<li class="ipanel__row" data-row="{k}"><span>{E(a["label"])}</span><span class="ipanel__icon">{ICON[a["icon"]]}</span></li>'
                    for k, a in enumerate(st["actions"]))

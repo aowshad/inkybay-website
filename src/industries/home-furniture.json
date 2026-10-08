@@ -39,28 +39,24 @@
         {
           "product": "blanket",
           "label": "Blanket",
-          "result": "The Parkers",
           "swatch": 4,
           "chip": "King"
         },
         {
           "product": "wall-clock",
           "label": "Wall clock",
-          "result": "Home",
           "swatch": 1,
           "chip": "30 cm"
         },
         {
           "product": "photoframe",
           "label": "Photo frame",
-          "result": "Summer 26",
           "swatch": 5,
           "chip": "A4"
         },
         {
           "product": "doormat",
           "label": "Doormat",
-          "result": "Hello",
           "swatch": 2,
           "chip": "Large"
         }
