@@ -1,0 +1,173 @@
+{
+  "slug": "printing-packaging",
+  "nav_label": "Printing & packaging",
+  "meta": {
+    "title": "Custom printing and packaging for Shopify | InkyBay",
+    "description": "Let customers upload artwork, add text and choose materials for notebooks, bags and branded items, with print-ready files for every order."
+  },
+  "hero": {
+    "title": "Print jobs your customers design themselves",
+    "lead": "Let customers upload artwork, add text and choose materials for notebooks, bags and branded items, with print-ready files for every order.",
+    "primary_cta": "Start free trial",
+    "secondary_cta": "Try live demo",
+    "stage": {
+      "actions": [
+        {
+          "label": "Upload artwork",
+          "icon": "image"
+        },
+        {
+          "label": "Add text",
+          "icon": "type"
+        },
+        {
+          "label": "Pick paper",
+          "icon": "file"
+        }
+      ],
+      "swatches": [
+        "#F4F1EE",
+        "#2F2F2F",
+        "#1F3A68",
+        "#FF7500",
+        "#E5380F",
+        "#17A673",
+        "#FFD982",
+        "#E9DCCB"
+      ],
+      "deck": [
+        {
+          "product": "notebook",
+          "label": "Notebook",
+          "result": "Studio Nine",
+          "swatch": 3,
+          "chip": "Qty · 100"
+        },
+        {
+          "product": "tote-bag",
+          "label": "Tote bag",
+          "result": "Fresh Market",
+          "swatch": 2,
+          "chip": "Qty · 250"
+        },
+        {
+          "product": "mug",
+          "label": "Mug",
+          "result": "Acme Co",
+          "swatch": 4,
+          "chip": "Qty · 50"
+        },
+        {
+          "product": "tee",
+          "label": "T-shirt",
+          "result": "Staff",
+          "swatch": 1,
+          "chip": "Qty · 25"
+        }
+      ]
+    }
+  },
+  "products_heading": [
+    "Every print job, self-serve.",
+    "Upload, preview, order."
+  ],
+  "products": [
+    {
+      "name": "Notebook",
+      "image": "notebook"
+    },
+    {
+      "name": "Tote bag",
+      "image": "tote-bag"
+    },
+    {
+      "name": "Mug",
+      "image": "mug"
+    },
+    {
+      "name": "T-shirt",
+      "image": "tee"
+    }
+  ],
+  "products_cta": {
+    "text": "See every product in action in our demo store.",
+    "label": "Explore the demo store",
+    "href": "#demo-store"
+  },
+  "stats_heading": [
+    "Trusted worldwide.",
+    "Every single day."
+  ],
+  "stats_lead": "Apparel brands, print shops and merch stores run their custom orders on InkyBay.",
+  "stats": [
+    {
+      "value": "10,000",
+      "suffix": "+",
+      "label": "Shopify merchants use InkyBay"
+    },
+    {
+      "value": "50,000",
+      "suffix": "+",
+      "label": "products customized every day"
+    },
+    {
+      "value": "4.6",
+      "suffix": "",
+      "label": "average rating on the Shopify App Store"
+    }
+  ],
+  "merchants_visible": 4,
+  "merchants_heading": [
+    "Stores that sell printing and packaging.",
+    "Built on InkyBay."
+  ],
+  "merchants": [
+    {
+      "name": "Store name (draft)",
+      "country": "United States",
+      "quote": "Clients upload their logo and approve the proof before they pay. No more back-and-forth.",
+      "preview": "notebook",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "United Kingdom",
+      "quote": "Bulk orders come in with quantities and artwork attached.",
+      "preview": "tote-bag",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Canada",
+      "quote": "Our team prints straight from the files InkyBay sends.",
+      "preview": "mug",
+      "url": "#"
+    },
+    {
+      "name": "Store name (draft)",
+      "country": "Australia",
+      "quote": "Custom notebooks used to take three emails. Now they take one order.",
+      "preview": "tee",
+      "url": "#"
+    }
+  ],
+  "faqs": [
+    {
+      "q": "Can customers upload their own artwork?",
+      "a": "Yes. Customers upload files and place them on the product before ordering."
+    },
+    {
+      "q": "Can I price by quantity?",
+      "a": "Yes. Quantity discounts and option pricing apply automatically."
+    },
+    {
+      "q": "Can customers request a quote for big jobs?",
+      "a": "Yes. Turn on quote requests for products that need a custom price."
+    },
+    {
+      "q": "Do I get print-ready files?",
+      "a": "Yes. Every order includes print-ready files and the full details."
+    }
+  ],
+  "needs_images": "More packaging products (boxes, labels, mailers) would make this page stronger."
+}
