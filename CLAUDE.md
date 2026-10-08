@@ -66,7 +66,8 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
 ## Product images
 
 `src/assets/products/<name>.webp`: transparent, 600x600, WebP quality ~82, the product trimmed and centred so it fills
-82% of the frame (so every product reads at the same size). Keys are lowercase and hyphenated (`water-bottle`). Every
+82% of the frame (so every product reads at the same size). Exception: `tee.webp` is 1000x1000, because it is shown large (the 404
+editor, industry decks, How it works); it is still only ~24 KB. Keys are lowercase and hyphenated (`water-bottle`). Every
 image has an entry in `src/products.json` with its `label` (shown on product-wall cards, e.g. "Mug") and its
 `industry` (a slug from `src/industries/_index.json`); every product with an industry gets a card on the homepage wheel.
 Never delete an image that something still references.
@@ -448,6 +449,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-08: New tee image (your 1600px photo; the old tee was a 400px source enlarged to 600 and looked soft). Same treatment as the library (trimmed, centred, 82% fill) but 1000x1000 because the tee is shown large; ~24 KB, so page weight barely changes. It replaces the tee everywhere it is used (mini UIs, How it works, zig-zags, decks, wheel, walls, 404)
 - 2026-10-08: Partners: real partner logos (13 supplied logos in src/assets/partners/, 192px WebP, assigned at random to the 12 demo partners and the hero orbit; monogram tiles stay as the fallback). Flagged: the logos are real apps while the names are still fictional demo names
 - 2026-10-08: Contact page (render_contact.py, src/contact.json, src/contact.css, contact JS in the template, audit check_contact); the shared form handler gains blur validation, a success template that replaces the form, and an email fallback on errors; Resources > Get help gets a Contact item and every "Talk to our team" button links to contact/. Fixes found while building: the field wrappers were renamed .cfx because .fx is the homepage features heading (its script crashed the page), and .form[hidden] now really hides the form on success. Figma not readable; copy from the brief
 - 2026-10-08: Partners page (render_partners.py, src/partners.json, src/partners-directory.json, src/partners.css) and the shared form setup (src/forms.css, one form handler in the template, FORM_ENDPOINT and NEWSLETTER_ENDPOINT in build.py, both empty: forms say "Form not connected yet"). Also {{BTN_SECONDARY:label|href}}. Decisions: the hero title uses the H2 size (two long lines at display size ran to seven lines); demo partners and draft benefits/FAQs are marked for replacement; Figma not readable, copy from the brief
