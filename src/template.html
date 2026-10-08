@@ -2679,6 +2679,31 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         if (img.complete) set(); else img.addEventListener('load', set);
       });
 
+      /* result text: centred on the product's own outline (from the image's alpha) and shrunk to fit 80% of its width,
+         so narrow products (a notebook, a bottle) never have text spilling past their edges */
+      function outline(img) {
+        if (img._box !== undefined) return img._box;
+        try {
+          var n = 120, cv = document.createElement('canvas'); cv.width = cv.height = n;
+          var g = cv.getContext('2d'); g.drawImage(img, 0, 0, n, n);
+          var a = g.getImageData(0, 0, n, n).data, x0 = n, y0 = n, x1 = -1, y1 = -1;
+          for (var y = 0; y < n; y++) for (var x = 0; x < n; x++) if (a[(y * n + x) * 4 + 3] > 40) { if (x < x0) x0 = x; if (x > x1) x1 = x; if (y < y0) y0 = y; if (y > y1) y1 = y; }
+          img._box = x1 < 0 ? null : { cx: (x0 + x1 + 1) / 2 / n, cy: (y0 + y1 + 1) / 2 / n, w: (x1 - x0 + 1) / n };
+        } catch (e) { img._box = null; }
+        return img._box;
+      }
+      function fit(c) {
+        var img = c.querySelector('.icardx__img'), txt = c.querySelector('.icardx__text'), b = outline(img);
+        if (!b || !img.clientWidth) return;
+        txt.style.left = (b.cx * 100) + '%'; txt.style.top = (b.cy * 100) + '%'; txt.style.maxWidth = 'none'; txt.style.fontSize = '';
+        var max = b.w * img.clientWidth * .8, w = txt.scrollWidth;
+        if (w > max) txt.style.fontSize = (parseFloat(getComputedStyle(txt).fontSize) * max / w) + 'px';
+      }
+      function fitAll() { cards.forEach(function (c) { var img = c.querySelector('.icardx__img'); if (img.complete) fit(c); else img.addEventListener('load', function () { fit(c); }); }); }
+      fitAll();
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(fitAll);
+      window.addEventListener('resize', fitAll);
+
       function front() { return cards[order[0]]; }
       function layout() {
         order.forEach(function (k, slot) {
