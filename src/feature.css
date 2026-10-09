@@ -7,7 +7,7 @@
 .fhero { padding-block: var(--s-12) var(--section-y); }
 .fhero__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-12); align-items: center; }
 .fhero__text { grid-column: 1 / span 5; display: grid; gap: var(--s-6); justify-items: start; }
-.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.crumbs { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
 .crumbs a { color: var(--ink-muted); transition: color .2s ease; }
 .crumbs a:hover { color: var(--ink); }
 .crumbs svg { width: 14px; height: 14px; opacity: .6; }
@@ -136,7 +136,7 @@
 .att--r  { right: -2.2em; top: 50%; transform: translateY(-50%); }
 .chip {
   display: inline-flex; align-items: center; gap: .55em; white-space: nowrap;
-  padding: .65em 1.05em; border-radius: 999px; font-size: 1em; font-weight: 500; color: #2F2F2F; line-height: 1.35;
+  padding: .65em 1.05em; border-radius: 999px; font-size: max(var(--t-small), 1em); font-weight: 500; color: #2F2F2F; line-height: 1.35;   /* chips never under 14px */
   background: rgba(255, 255, 255, .92); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
   box-shadow: inset 0 0 0 1px rgba(255,255,255,.9), 0 .9em 2em -1em rgba(80, 20, 0, .55);
 }

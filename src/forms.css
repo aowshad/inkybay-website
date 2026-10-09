@@ -14,6 +14,7 @@
 .field input:not([type="checkbox"]), .field select, .field textarea { width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 12px; font: inherit; color: var(--ink);
   background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .2s ease; }
 .field textarea { resize: vertical; min-height: 128px; }
+.field input::placeholder, .field textarea::placeholder { font-size: var(--t-small); }   /* placeholders may be 14px; the typed value stays 16px (iOS zooms inputs under 16px) */
 .form__one { display: grid; }
 /* select: our own chevron with room on the right, so the arrow never touches the border */
 .field select { -webkit-appearance: none; appearance: none; padding-right: 44px; cursor: pointer;
@@ -26,7 +27,7 @@
 .field__prefix input { box-shadow: none !important; background: transparent !important; padding-left: 2px !important; }
 .field__prefix:focus-within { box-shadow: inset 0 0 0 2px var(--brand-500); }
 .field.is-invalid input:not([type="checkbox"]), .field.is-invalid select, .field.is-invalid textarea, .field.is-invalid .field__prefix { box-shadow: inset 0 0 0 2px #D42427; }
-.field__err { font-size: 14px; line-height: 20px; color: #D42427; }
+.field__err { font-size: var(--t-small); line-height: var(--t-small-lh); color: #D42427; }
 .field__err:empty { display: none; }
 .field--check { grid-template-columns: 22px 1fr; align-items: center; column-gap: var(--s-3); cursor: pointer; }
 /* checkbox: a crisp 22px box with our own check mark */

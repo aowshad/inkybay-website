@@ -25,7 +25,7 @@
   background: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 30px 60px -30px rgba(60, 25, 5, .5); }
 .porbit__core svg { width: 55%; height: auto; }
-.porbit__chip { position: absolute; font-size: clamp(11px, 3cqw, 15px); }
+.porbit__chip { position: absolute; font-size: var(--t-small); }
 .porbit__chip--1 { left: 0; top: 3%; }   /* corners: outside the tiles' path */
 .porbit__chip--2 { right: 0; bottom: 3%; }
 @media (prefers-reduced-motion: no-preference) {
@@ -46,7 +46,7 @@
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); transition: background-color .2s ease, color .2s ease; }
 .pdir__tab:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--tint-line)); }
 .pdir__tab[aria-selected="true"] { background: var(--ink); color: var(--bg); box-shadow: none; }
-.pdir__count { min-width: 22px; padding: 0 6px; border-radius: 999px; font-size: 14px; line-height: 20px; text-align: center; font-variant-numeric: tabular-nums;
+.pdir__count { min-width: 22px; padding: 0 6px; border-radius: 999px; font-size: var(--t-small); line-height: var(--t-small-lh); text-align: center; font-variant-numeric: tabular-nums;
   background: color-mix(in srgb, var(--brand-500) 14%, transparent); color: var(--brand-700); }
 .pdir__tab[aria-selected="true"] .pdir__count { background: rgba(255, 255, 255, .2); color: inherit; }
 .pdir__search input { width: min(320px, 100%); height: 44px; padding: 0 16px; border-radius: 12px; border: 0; font: inherit; color: var(--ink);
@@ -62,7 +62,7 @@
 .ptr__logo { width: 52px; height: 52px; border-radius: 14px; font-size: 18px; }
 .ptr__head { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2) var(--s-3); }
 .ptr__name { font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; }
-.ptr__badge { font-size: 14px; line-height: 20px; padding: 2px 10px; border-radius: 999px; color: var(--ink-muted); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.ptr__badge { font-size: var(--t-small); line-height: var(--t-small-lh); padding: 2px 10px; border-radius: 999px; color: var(--ink-muted); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 .ptr__text { color: var(--ink-muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
 .ptr__link { justify-self: start; display: inline-flex; align-items: center; gap: 6px; font-weight: 500; color: var(--ink); }
 .ptr__link:hover { color: var(--brand-600); }
@@ -79,11 +79,11 @@
 .pjoin__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-10); align-items: start; }
 .pjoin__intro { grid-column: 1 / span 5; display: grid; gap: var(--s-4); align-content: start; }
 .pjoin__intro .fsec__title { text-align: left; }
-.pjoin__label { margin-top: var(--s-6); font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-700); }
+.pjoin__label { margin-top: var(--s-6); font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-700); }
 .psteps { list-style: none; margin: 0; padding: 0; display: grid; }
 .pstep { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--s-4); padding-bottom: var(--s-5); }
 .pstep:not(:last-child)::before { content: ""; position: absolute; left: 15.5px; top: 36px; bottom: 4px; width: 1px; background: var(--tint-line); }   /* the thread between steps */
-.pstep__num { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; line-height: 1; font-weight: 600; color: var(--brand-700);
+.pstep__num { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: var(--t-small); line-height: 1; font-weight: 600; color: var(--brand-700);
   background: var(--bg); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 40%, var(--tint-line)); font-variant-numeric: tabular-nums; }
 .pstep h3 { font-size: 16px; line-height: 24px; font-weight: 500; padding-top: 4px; }
 .pstep p { color: var(--ink-muted); }

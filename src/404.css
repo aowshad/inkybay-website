@@ -20,10 +20,10 @@
 :root[data-theme="dark"] .ed { background: rgba(255, 255, 255, .94); }
 .ed__bar { display: flex; align-items: center; justify-content: space-between; gap: var(--s-4); padding: var(--s-3) var(--s-4); border-bottom: 1px solid var(--line); }
 .ed__tabs { display: flex; gap: var(--s-1); padding: 4px; border-radius: 12px; background: #F4F2EF; }
-.ed__tab { padding: 6px 14px; border-radius: 8px; font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); transition: background-color .2s ease, color .2s ease; }
+.ed__tab { padding: 6px 14px; border-radius: 8px; font-size: 16px; line-height: 22px; font-weight: 500; color: var(--ink-muted); transition: background-color .2s ease, color .2s ease; }
 .ed__tab[aria-selected="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(13, 18, 28, .1); }
 .ed__tab:focus-visible, .ed__reset:focus-visible, .ed__sw:focus-visible, .ed__wt:focus-visible { outline: 2px solid var(--ed-blue); outline-offset: 2px; }
-.ed__reset { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); padding: 6px 4px; }
+.ed__reset { font-size: 16px; line-height: 22px; font-weight: 500; color: var(--ink-muted); padding: 6px 4px; }
 .ed__reset:hover { color: var(--brand-600); }
 
 /* canvas: the product, its dashed print area, and the layer inside it */
@@ -55,7 +55,7 @@
 .ed.is-off .ed__layer { outline-color: transparent; }
 .ed.is-off .ed__h, .ed.is-off .ed__rot { display: none; }
 .ed__warn { position: absolute; left: var(--s-4); top: var(--s-4); z-index: 3; display: inline-flex; align-items: center; gap: 8px;
-  padding: 6px 12px; border-radius: 999px; background: var(--ed-red); color: #fff; font-size: 14px; line-height: 20px; font-weight: 500; white-space: nowrap;
+  padding: 6px 12px; border-radius: 999px; background: var(--ed-red); color: #fff; font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; white-space: nowrap;
   opacity: 0; translate: 0 -6px; pointer-events: none; transition: opacity .25s ease, translate .25s ease; box-shadow: 0 8px 20px -8px rgba(212, 36, 39, .6); }
 .ed__warn::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: #fff; }
 .ed.is-out .ed__warn { opacity: 1; translate: 0 0; }
@@ -66,17 +66,17 @@
 .ed__sw { width: 28px; height: 28px; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .16); transition: box-shadow .2s ease; }
 .ed__sw.is-on { box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .16), 0 0 0 2px #fff, 0 0 0 4px var(--brand-500); }
 .ed__wts { display: flex; gap: var(--s-1); padding: 4px; border-radius: 12px; background: #F4F2EF; }
-.ed__wt { padding: 4px 12px; border-radius: 8px; font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.ed__wt { padding: 4px 12px; border-radius: 8px; font-size: 16px; line-height: 22px; color: var(--ink-muted); }
 .ed__wt[data-w="500"] { font-weight: 500; } .ed__wt[data-w="700"] { font-weight: 700; }
 .ed__wt[aria-pressed="true"] { background: #fff; color: var(--ink); box-shadow: 0 1px 3px rgba(13, 18, 28, .1); }
-.ed__size { font-size: 14px; line-height: 20px; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.ed__size { font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 
 /* first-visit hint: a cursor drags and resizes the layer, with a short line of text */
 .ed__cursor { position: absolute; left: 0; top: 0; z-index: 4; width: 22px; height: 22px; pointer-events: none; opacity: 0;
   transform: translate(var(--cx, 0), var(--cy, 0)); filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .25)); transition: opacity .3s ease; }
 .ed__cursor svg { display: block; width: 100%; height: 100%; }
 .ed__hint { position: absolute; left: 50%; bottom: var(--s-4); translate: -50% 0; z-index: 3; padding: 6px 12px; border-radius: 999px; pointer-events: none;
-  background: rgba(27, 31, 39, .86); color: #fff; font-size: 14px; line-height: 20px; white-space: nowrap; opacity: 0; transition: opacity .3s ease; }
+  background: rgba(27, 31, 39, .86); color: #fff; font-size: var(--t-small); line-height: var(--t-small-lh); white-space: nowrap; opacity: 0; transition: opacity .3s ease; }
 .ed.is-hinting .ed__cursor, .ed.is-hinting .ed__hint { opacity: 1; }
 
 @media (prefers-reduced-motion: reduce) { .ed__img, .ed__pa, .ed__warn { transition: none; } }

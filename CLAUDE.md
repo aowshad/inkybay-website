@@ -88,7 +88,16 @@ features, industries, partners, contact, blog listing); blog article H1 44 (`--t
 fluid to 32 on phones (`--t-h2`, `--t-h2-lh` 1.15, -0.025em, weight 500; the muted part of two-tone headings keeps the
 same size and weight). Card and step titles (H3) weight 500. Lead 18/24, body 16/24. The homepage features heading keeps
 its own stacked phone size.
-**Floor**: paragraph text never below 16px; section sub headings are 18px.
+**Type floor (the 14px allowlist)**: 16px is the minimum for everything, and nothing is ever under 14px. 14px
+(`--t-small`, 14/20, or the `.t-small` utility) is allowed ONLY for: form helper text (placeholders via `::placeholder`
+only, hints, inline errors, character counters, consent text); meta (breadcrumbs, dates, reading time, author line,
+counts); small labels (badges, category pills, tags, filter tabs and their counts, chips inside visuals, small section
+labels); the blog table of contents and its label; captions under images and tables; the footer legal row; mega menu
+descriptions. 16px or more ALWAYS for body text, FAQ answers, buttons, nav links, card titles, form labels and typed
+input values (iOS Safari zooms on inputs under 16px), pagination numbers and links in running text. Text inside
+aria-hidden illustrations (mini UIs, How it works scenes, the industry deck's editor panel) is drawn like a picture
+and is exempt, but chips on visuals keep 14px. The audit enforces all of this (`SMALL_ALLOW` in scripts/audit.py).
+Section sub headings are 18px.
 **Colour**: brand `#F58220` / `#FF7500` / `#E5380F` / red `#D42427`, brand gradient, frame gradient,
 `--tint #FFF7F0`, `--editor-blue #1C8CF0` (only for editor-selection visuals). Neutrals are tokens with dark overrides.
 **Theme**: follows the device (`prefers-color-scheme`). There is no toggle. Industries and the CTA+footer zone are always dark.
@@ -413,8 +422,7 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   Tablet and phone: the contents become a disclosure above the body and the promos follow the article.
 - SEO: unique title and description (seo_* overrides), canonical, Open Graph and Twitter tags (thumbnail as image),
   JSON-LD BlogPosting (articles), BreadcrumbList (all blog pages) and CollectionPage (listings); one H1 per page.
-- Small text: pills, tags, share buttons and the filter chip are 16px links; dates, reading times and labels are 14px
-  metadata in non-paragraph elements.
+- Small text follows the 14px allowlist (Type floor above).
 - Audit (`scripts/audit.py`, part of `--all`): thumbnails at their natural ratio, category/tag pills and pagination
   resolve, search finds "print" and shows the empty state for "zzzz", the layout switch changes the columns, the
   contents follow the section in view, the summary reveals the bullets, JSON-LD parses, no overflow at 390px.
@@ -505,7 +513,7 @@ python3 build.py
 python3 scripts/audit.py <slug>        # must print PASS (use --all for every page and the homepage)
 ```
 The audit checks the JSON rules above, then opens the built page at 390, 768 and 1440px in light and dark mode:
-no JS errors, no horizontal overflow, no text under 16px, every heading reveals, every chip and badge overlaps its
+no JS errors, no horizontal overflow, no text outside the 14px allowlist (Type floor), every heading reveals, every chip and badge overlaps its
 card's edge, the product wall shows every product, no two-tone heading line wraps at 1440px, no mega-menu
 description is cut off, and (for a hero showcase) the photo loads and the hero UI and chips overlap the photo's or the
 stage's edge at every width and mode. On every page it also opens each mega menu from `nav.json` at 1366 and 1440px:
@@ -520,6 +528,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Type: explicit 14px allowlist. --t-small (14/20) and .t-small; every 14px in the CSS now uses the token; the 404 editor's tab, weight and Reset buttons go to 16px (buttons are always 16); chips on visuals never go under 14px (the partner orbit chips were 15px and the deck label and chip 10 to 11px on phones); placeholders are 14px while typed values stay 16px. The audit checks every visible text node against the allowlist, fails anything under 14px and any input under 16px. Decision: text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is treated like text in an image and exempt; raising it would mean redesigning ~40 illustration parts
 - 2026-10-09: Type scale: lighter, smaller headings. --t-h2 48 (32 on phones) at 1.15 and weight 500 for every H2 and H3; new --t-h1-inner (56/500) for inner-page hero H1s and --t-h1-article (44/500); hard-coded 600 card and step titles drop to 500; the homepage hero H1 is unchanged. Checked at 1440 and 390: H2 48/500 everywhere, no two-tone line wraps at 1440
 - 2026-10-09: Contact: the partnership topic shows a one-line helper under the dropdown with a "Become a partner" link instead of the note card (your call)
 - 2026-10-09: Fix: the office cards stack from 900px (was 760px) and their header wraps; with the flags, the Bangladesh header overflowed at 768px (the previous commit was pushed with that failing audit by mistake)

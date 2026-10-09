@@ -26,7 +26,7 @@
 .icardx__tab:hover { background: color-mix(in srgb, var(--brand-500) 10%, transparent); }
 .icardx__tab:focus-visible { outline: 2px solid var(--brand-500); outline-offset: -2px; }
 .icardx[data-front] .icardx__tab { visibility: hidden; }
-.icardx__label { position: absolute; left: 6.5cqw; top: 6cqw; font-size: clamp(11px, 4.5cqw, 16px); line-height: 1.4; font-weight: 500; color: var(--ink); }
+.icardx__label { position: absolute; left: 6.5cqw; top: 6cqw; font-size: clamp(14px, 4.5cqw, 16px); line-height: 1.4; font-weight: 500; color: var(--ink); }
 .icardx:not([data-front]) .icardx__label { opacity: 0; }
 
 .icardx__media { position: absolute; left: 2cqw; top: 15cqw; width: 96cqw; aspect-ratio: 1; }   /* large product; may dip over the palette */
@@ -34,7 +34,7 @@
 /* tint: a soft multiply overlay masked by the product's own alpha (mask set from the img by JS), so the background never tints */
 .icardx__tint { position: absolute; inset: 0; background: var(--tint-c, transparent); mix-blend-mode: multiply; opacity: 0;
   -webkit-mask-size: contain; mask-size: contain; -webkit-mask-repeat: no-repeat; mask-repeat: no-repeat; -webkit-mask-position: center; mask-position: center; }
-.icardx__chip { position: absolute; right: -5cqw; bottom: 9cqw; font-size: clamp(10px, 4cqw, 15px); }
+.icardx__chip { position: absolute; right: -5cqw; bottom: 9cqw; font-size: var(--t-small); }
 .icardx:not([data-front]) .icardx__chip { opacity: 0; }
 
 /* coloured state (the story turns it on; reduced motion shows the first card coloured) */

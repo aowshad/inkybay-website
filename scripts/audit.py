@@ -23,6 +23,30 @@ problems = []
 def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 
 
+# The 14px rule (CLAUDE.md "Type"): text under 16px only on the allowlist, never under 14px; inputs never under 16px.
+# Text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is drawn like a picture and is exempt, except
+# chips, which keep 14px. The allowlist is the token users plus these components.
+SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
+               ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .porbit__chip, .icardx__label, "
+               ".mega__desc, .mega__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
+               ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip")
+SMALL_TEXT_JS = """window.smallText = function () {
+  const ALLOW = %s, bad = [];
+  for (const e of document.querySelectorAll('body *')) {
+    if (e.closest('svg, template, .sr-only, script, style')) continue;
+    if (![...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) continue;
+    const r = e.getBoundingClientRect(); if (!r.width || !r.height) continue;
+    const fs = parseFloat(getComputedStyle(e).fontSize);
+    const pic = e.closest('[aria-hidden="true"]') && !e.closest('.chip, .porbit__chip, .icardx__label');
+    if (pic || fs >= 16) continue;
+    if (fs < 13.95 || !e.closest(ALLOW)) bad.push((e.className && typeof e.className === 'string' ? e.className : e.tagName) + ' ' + Math.round(fs * 10) / 10 + 'px');
+  }
+  for (const e of document.querySelectorAll('input:not([type=checkbox]):not([type=radio]):not([type=hidden]):not([name=_gotcha]), select, textarea'))
+    if (e.getBoundingClientRect().width && parseFloat(getComputedStyle(e).fontSize) < 16) bad.push('input ' + (e.name || e.type) + ' under 16px');
+  return [...new Set(bad)];
+};""" % json.dumps(SMALL_ALLOW)
+
+
 def check_json(slug):
     p = ROOT / "src" / "features" / f"{slug}.json"
     if not p.exists():
@@ -91,15 +115,15 @@ async def check_page(slug, d):
                 for k in range(await pg.locator("h2.h-anim").count()):   # bring every heading on screen once
                     await pg.locator("h2.h-anim").nth(k).scroll_into_view_if_needed(); await pg.wait_for_timeout(120)
                 await pg.wait_for_timeout(900)
+                await pg.evaluate(SMALL_TEXT_JS)
                 r = await pg.evaluate("""(()=>{const W=document.documentElement.clientWidth;
-                  const small=[...document.querySelectorAll('main p, main li, main a, main button')].filter(el=>!el.closest('.mui,.crumbs,.fcomp,.icardx__tab,.icardx__chip,.ipanel,.ipalette,.ed')
-                    && el.textContent.trim() && parseFloat(getComputedStyle(el).fontSize)<16).map(el=>el.className||el.tagName);
+                  const small=smallText();
                   const anim=[...document.querySelectorAll('h2.h-anim')], shown=anim.filter(x=>x.classList.contains('is-in')).length;
                   return {overflow: document.documentElement.scrollWidth > W, small:[...new Set(small)].slice(0,4), reveal:[shown, anim.length]}})()""")
                 tag = f"{scheme} {w}px"
                 if errs: bad(slug, f"{tag}: JS errors {errs[:2]}")
                 if r["overflow"]: bad(slug, f"{tag}: horizontal overflow")
-                if r["small"]: bad(slug, f"{tag}: text under 16px: {r['small']}")
+                if r["small"]: bad(slug, f"{tag}: text under 16px outside the 14px allowlist (or under 14px): {r['small'][:4]}")
                 if r["reveal"][0] != r["reveal"][1]: bad(slug, f"{tag}: {r['reveal'][1]-r['reveal'][0]} headings did not reveal")
                 if d and w == 1440 and scheme == "light":
                     # attachments overlap the main card's edge (checked once each row is on screen)
