@@ -330,6 +330,9 @@ keeps one field per row.
    their own row, consent, and "Send message" (a primary button with the arrow). See Forms.
 5. FAQs [white]. 6. CTA, crowd marquee, footer.
 (There is no "Who we partner with" section any more; your call.)
+- Dark mode: both tint sections (directory and Partner with InkyBay) use the project's warm blacks, not the cool page
+  black: cards and the form card #1E150E, fields and step circles #261B13, white 10% hairlines, and the warm accent
+  #FFB46B for the How it works label, step numbers and tab counts (the red brand-700 loses contrast on dark).
 - Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
 - Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
   supplied partner logos assigned at random, so names and logos do not belong together yet;
@@ -509,6 +512,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Partners dark mode uses the project's warm blacks (your call): cards, form card, fields and step circles move from the cool #0F1013 family to #1E150E / #261B13 like the merchant cards and dark bands, accents from red #E5380F to #FFB46B; light mode unchanged
 - 2026-10-09: Contact heading is now "Have questions? / Let's Talk" (your wording)
 - 2026-10-09: 404 simplified (your changes): heading "404 / Page not found", no "Status 404" label, no helpful links, no CTA section; the cap becomes a tote bag (flat front, print area 31-69% across, 48-84% down) so the text sits balanced
 - 2026-10-09: Partners and forms polish (your changes): one-line hero heading; "Who we partner with" removed; How it works and the form merged into one "Partner with InkyBay" section (steps small on the left, form card on the right; name + email in one row, website, type and message each on their own row); every partner card has the same hover lift instead of the first one looking permanently hovered; shared form fixes on every form: a proper select chevron, a custom checkbox, the primary arrow on submit buttons, and the "Form not connected yet" note hidden

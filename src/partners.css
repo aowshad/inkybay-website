@@ -101,3 +101,22 @@
   .pdir__search, .pdir__search input { width: 100%; }
   }
 @media (prefers-reduced-motion: reduce) { .ptr.is-in { animation: none; } }
+
+/* dark mode: the tint sections use the project's warm blacks (like the dark bands and merchant cards), not the cool
+   page black, and the warm accent #FFB46B instead of the red brand-700, which loses contrast on dark */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) :is(.pdir, .pjoin) { --bg: #1E150E; --surface: #261B13; --line: rgba(255, 255, 255, .1); --tint-line: rgba(255, 255, 255, .1); }
+  :root:not([data-theme="light"]) :is(.pjoin__label, .pstep__num, .pdir__count) { color: #FFB46B; }
+  :root:not([data-theme="light"]) .pstep__num { background: #261B13; box-shadow: inset 0 0 0 1px rgba(255, 180, 107, .35); }
+  :root:not([data-theme="light"]) .pdir__count { background: rgba(255, 117, 0, .16); }
+  :root:not([data-theme="light"]) .pdir__tab[aria-selected="true"] .pdir__count { color: inherit; background: rgba(0, 0, 0, .1); }
+  :root:not([data-theme="light"]) .pjoin__trust svg { color: #FFB46B; }
+  :root:not([data-theme="light"]) .ptr__badge { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+}
+:root[data-theme="dark"] :is(.pdir, .pjoin) { --bg: #1E150E; --surface: #261B13; --line: rgba(255, 255, 255, .1); --tint-line: rgba(255, 255, 255, .1); }
+:root[data-theme="dark"] :is(.pjoin__label, .pstep__num, .pdir__count) { color: #FFB46B; }
+:root[data-theme="dark"] .pstep__num { background: #261B13; box-shadow: inset 0 0 0 1px rgba(255, 180, 107, .35); }
+:root[data-theme="dark"] .pdir__count { background: rgba(255, 117, 0, .16); }
+:root[data-theme="dark"] .pdir__tab[aria-selected="true"] .pdir__count { color: inherit; background: rgba(0, 0, 0, .1); }
+:root[data-theme="dark"] .pjoin__trust svg { color: #FFB46B; }
+:root[data-theme="dark"] .ptr__badge { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
