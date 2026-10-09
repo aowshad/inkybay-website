@@ -355,8 +355,9 @@ hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like 
      chosen name with a remove button) in one row; Message alone (counter, 1000 max); consent (privacy link `#` until a
      privacy page exists); honeypot; "Send message" (primary, with the arrow). The form posts multipart to FORM_ENDPOINT
      (see Forms) with the topic in the payload.
-   - Each topic sets the message placeholder; "App or theme partnership" also shows a short note with a button to
-     `partners/#partner-form` (the form stays). The old topic chips, Phone, "I'm using" and "Best time to talk" are gone.
+   - Each topic sets the message placeholder; "App or theme partnership" also shows one line of helper text under the
+     dropdown, "Want to be listed in our partner directory? Become a partner", linking to `partners/#partner-form`
+     (no card; the form stays). The old topic chips, Phone, "I'm using" and "Best time to talk" are gone.
    - Success replaces the form: a drawn check, "Thanks, <first name>. We got your message.", what happens next, "Send
      another message". Error keeps the input and offers support@inkybay.com.
 2. Offices [dark]: two cards (US HQ, Bangladesh development office) with a dashed brand-gradient arc between them and a
@@ -369,7 +370,7 @@ hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like 
 Phones: form first, then the channels; the two-field rows stack; office cards stack.
 - Draft (to confirm): the response note and the success "what happens next" (both promise replies within 2 hours
   during business hours), the business hours (Mon-Fri 09:00-18:00 local) and the FAQ answers. The audit checks every
-  topic's placeholder and the partner note, the file picker and its size limit, blocked empty submits, the copy button, both clocks and badges, links and overflow.
+  topic's placeholder and the partner helper, the file picker and its size limit, blocked empty submits, the copy button, both clocks and badges, links and overflow.
 
 ## Blog
 
@@ -515,6 +516,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Contact: the partnership topic shows a one-line helper under the dropdown with a "Become a partner" link instead of the note card (your call)
 - 2026-10-09: Fix: the office cards stack from 900px (was 760px) and their header wraps; with the flags, the Bangladesh header overflowed at 768px (the previous commit was pushed with that failing audit by mistake)
 - 2026-10-09: Contact offices show the US and Bangladesh flags before the names (your call); drawn as small inline SVGs because emoji flags do not render on Windows
 - 2026-10-09: Contact form reorganised (your sequence): name + email, store URL, "What can we help with?" dropdown (nine topics) + file upload (10 MB, multipart), message. Topic chips, Phone, "I'm using" and "Best time to talk" removed; Store URL is now optional because guest-post and link-exchange senders may not have a store; the partnership topic shows a link to the partner form instead of replacing the form. Shared form fields now align to the top of their row

@@ -285,9 +285,9 @@ async def check_contact(b, path):
         pg.on("pageerror", lambda e: errs.append(str(e)))
         await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
         S = """(()=>({ph:document.querySelector('[name="message"]').placeholder, topic:document.querySelector('[name="topic"]').value,
-              note:!document.querySelector('.cform .cfx[data-f="partner"]').hidden}))()"""
+              note:!document.querySelector('.cform .chelp').hidden}))()"""
         base = await pg.evaluate(S)
-        if base["note"]: bad(slug, f"{w}px: the partner note shows before a topic is chosen")
+        if base["note"]: bad(slug, f"{w}px: the partner helper shows before a topic is chosen")
         opts = await pg.evaluate("[...document.querySelectorAll('[name=topic] option')].filter(o=>o.value).map(o=>[o.value, o.hasAttribute('data-partner')])")
         if len(opts) < 5: bad(slug, f"{w}px: 'What can we help with?' has {len(opts)} options")
         seen = set()
@@ -295,7 +295,7 @@ async def check_contact(b, path):
             await pg.select_option('[name="topic"]', val); await pg.wait_for_timeout(120); st = await pg.evaluate(S)
             seen.add(st["ph"])
             if st["ph"] == base["ph"] or st["topic"] != val: bad(slug, f"{w}px: topic '{val}' does not set its placeholder / value")
-            if st["note"] != partner: bad(slug, f"{w}px: the partner note is {'missing' if partner else 'shown'} for '{val}'")
+            if st["note"] != partner: bad(slug, f"{w}px: the partner helper is {'missing' if partner else 'shown'} for '{val}'")
         if len(seen) < len(opts): bad(slug, f"{w}px: topics do not each have their own placeholder")
         # file: the chosen name shows; an oversized file is rejected inline
         await pg.set_input_files(".cfile__input", files=[{"name": "big.pdf", "mimeType": "application/pdf", "buffer": b"0" * (11 * 1024 * 1024)}])

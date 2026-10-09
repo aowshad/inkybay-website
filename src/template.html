@@ -2915,7 +2915,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       var done = form.parentNode.querySelector('template.form__done');
       var fields = [].slice.call(form.querySelectorAll('[required], [data-url], [data-maxsize]')), tried = false;
       /* the "Form not connected yet" note stays hidden for now; a submit without an endpoint still says so in the status line */
-      function active(el) { return !el.disabled && !el.closest('.cfx.is-hidden'); }
+      function active(el) { return !el.disabled; }
       function valid(el) {
         var v = (el.value || '').trim();
         if (el.type === 'checkbox') return el.checked;
@@ -2976,18 +2976,18 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       });
     });
 
-    /* Contact: "What can we help with?" sets the message placeholder (and shows the partner note for partnerships);
+    /* Contact: "What can we help with?" sets the message placeholder (and shows a one-line partner helper for partnerships);
        the file picker shows the chosen file's name; message counter; copy-email button; office clocks (Intl, each
        office's time zone, every 30s) with an open/closed badge; a dot travels the arc between offices */
     document.querySelectorAll('.cform').forEach(function (form) {
-      var topic = form.querySelector('[name="topic"]'), note = form.querySelector('.cfx[data-f="partner"]');
+      var topic = form.querySelector('[name="topic"]'), note = form.querySelector('.chelp');
       var msg = form.querySelector('[name="message"]'), count = form.querySelector('.cform__count'), max = +msg.getAttribute('maxlength');
       var file = form.querySelector('.cfile__input'), fname = form.querySelector('.cfile__name'), fclear = form.querySelector('.cfile__clear');
       function pick() {
         var o = topic.options[topic.selectedIndex];
         msg.placeholder = (o && o.getAttribute('data-message')) || msg.getAttribute('data-default-placeholder');
         var show = !!(o && o.hasAttribute('data-partner'));
-        if (note && note.hidden === show) { note.hidden = !show; note.classList.toggle('is-in', show); }
+        if (note) note.hidden = !show;
       }
       function showFile() {
         var f = file.files[0]; fname.textContent = f ? f.name : fname.getAttribute('data-empty');

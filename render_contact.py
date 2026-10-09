@@ -13,6 +13,7 @@ COPY = ('<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width
         'aria-hidden="true"><rect x="8.5" y="8.5" width="11" height="11" rx="2"/><path d="M15.5 8.5V6a1.5 1.5 0 0 0-1.5-1.5H6A1.5 1.5 0 0 0 4.5 6v8A1.5 1.5 0 0 0 6 15.5h2.5"/></svg>')
 CHECK = ('<svg class="cdone__check" viewBox="0 0 52 52" aria-hidden="true"><circle cx="26" cy="26" r="24" fill="none" stroke-width="2.5"/>'
          '<path d="M15 27l7 7 15-15" fill="none" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>')
+ARROW_S = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
 FLAGS = {
     "us": '<svg class="coff__flag" viewBox="0 0 28 20" role="img" aria-label="United States flag"><rect width="28" height="20" fill="#fff"/><rect y="0.000" width="28" height="1.538" fill="#B22234"/><rect y="3.077" width="28" height="1.538" fill="#B22234"/><rect y="6.154" width="28" height="1.538" fill="#B22234"/><rect y="9.231" width="28" height="1.538" fill="#B22234"/><rect y="12.308" width="28" height="1.538" fill="#B22234"/><rect y="15.385" width="28" height="1.538" fill="#B22234"/><rect y="18.462" width="28" height="1.538" fill="#B22234"/><rect width="11.2" height="10.77" fill="#3C3B6E"/><circle cx="1.40" cy="1.20" r=".42" fill="#fff"/><circle cx="3.50" cy="1.20" r=".42" fill="#fff"/><circle cx="5.60" cy="1.20" r=".42" fill="#fff"/><circle cx="7.70" cy="1.20" r=".42" fill="#fff"/><circle cx="9.80" cy="1.20" r=".42" fill="#fff"/><circle cx="2.35" cy="3.30" r=".42" fill="#fff"/><circle cx="4.45" cy="3.30" r=".42" fill="#fff"/><circle cx="6.55" cy="3.30" r=".42" fill="#fff"/><circle cx="8.65" cy="3.30" r=".42" fill="#fff"/><circle cx="1.40" cy="5.40" r=".42" fill="#fff"/><circle cx="3.50" cy="5.40" r=".42" fill="#fff"/><circle cx="5.60" cy="5.40" r=".42" fill="#fff"/><circle cx="7.70" cy="5.40" r=".42" fill="#fff"/><circle cx="9.80" cy="5.40" r=".42" fill="#fff"/><circle cx="2.35" cy="7.50" r=".42" fill="#fff"/><circle cx="4.45" cy="7.50" r=".42" fill="#fff"/><circle cx="6.55" cy="7.50" r=".42" fill="#fff"/><circle cx="8.65" cy="7.50" r=".42" fill="#fff"/><circle cx="1.40" cy="9.60" r=".42" fill="#fff"/><circle cx="3.50" cy="9.60" r=".42" fill="#fff"/><circle cx="5.60" cy="9.60" r=".42" fill="#fff"/><circle cx="7.70" cy="9.60" r=".42" fill="#fff"/><circle cx="9.80" cy="9.60" r=".42" fill="#fff"/></svg>',
     "bd": '<svg class="coff__flag" viewBox="0 0 28 20" role="img" aria-label="Bangladesh flag"><rect width="28" height="20" fill="#006A4E"/><circle cx="12.6" cy="10" r="5.6" fill="#F42A41"/></svg>',
@@ -45,7 +46,6 @@ def render(root):
 
     err = lambda k: f'<span class="field__err" id="cf-{k}-err" aria-live="polite"></span>'
     req = lambda k: f'data-err="{E(fl[k]["error"])}" aria-describedby="cf-{k}-err"'
-    fx = lambda key, inner, hidden=False: f'<div class="cfx{" is-hidden" if hidden else ""}" data-f="{key}"><div class="cfx__in">{inner}</div></div>'
     o = f'<span class="field__opt">({E(f["optional"])})</span>'
 
     h = f["help"]
@@ -61,13 +61,13 @@ def render(root):
               <label class="field"><span class="field__label">{E(fl["store"]["label"])} {o}</span><span class="field__prefix"><span aria-hidden="true">https://</span><input name="store" type="text" inputmode="url" autocomplete="url" data-url {req("store")}></span>{err("store")}</label>
             </div>
             <div class="form__row">
-              <label class="field"><span class="field__label">{E(h["label"])}</span><select name="topic" required data-err="{E(h["error"])}" aria-describedby="cf-topic-err"><option value="">{E(h["placeholder"])}</option>{helps}</select>{err("topic")}</label>
+              <label class="field"><span class="field__label">{E(h["label"])}</span><select name="topic" required data-err="{E(h["error"])}" aria-describedby="cf-topic-err cf-topic-help"><option value="">{E(h["placeholder"])}</option>{helps}</select>{err("topic")}
+                <span class="chelp" id="cf-topic-help" hidden>{E(f["partner_note"])} <a href="{E(root + f["partner_href"])}">{E(f["partner_button"])}{ARROW_S}</a></span></label>
               <div class="field cfile"><span class="field__label" id="cf-file-label">{E(fi["label"])} {o}</span>
                 <label class="cfile__box"><input class="cfile__input" name="attachment" type="file" accept="{E(fi["accept"])}" data-maxsize="{fi["max_mb"] * 1024 * 1024}" data-err="{E(fi["error"])}" aria-labelledby="cf-file-label" aria-describedby="cf-file-hint cf-file-err">
                   <span class="cfile__btn">{ICON["file"]}<span class="cfile__name" data-empty="{E(fi["button"])}">{E(fi["button"])}</span></span><button class="cfile__clear" type="button" aria-label="Remove file" hidden>×</button></label>
                 <span class="cfile__hint" id="cf-file-hint">{E(fi["hint"])}</span>{err("file")}</div>
             </div>
-            <div class="cfx" data-f="partner" hidden><div class="cfx__in">{f'<div class="cpartner"><p>{E(f["partner_note"])}</p><a class="btn btn--secondary" href="{E(root + f["partner_href"])}">{E(f["partner_button"])}</a></div>'}</div></div>
             <label class="field"><span class="field__label cform__msg-label">{E(fl["message"]["label"])}<span class="cform__count" aria-hidden="true">0 / {fl["message"]["max"]}</span></span><textarea name="message" rows="5" maxlength="{fl["message"]["max"]}" required placeholder="{E(f["default_placeholder"])}" data-default-placeholder="{E(f["default_placeholder"])}" {req("message")}></textarea>{err("message")}</label>
             <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
             <label class="field field--check"><input name="consent" type="checkbox" required {req("consent")}><span>{E(fl["consent"]["label"])} <a href="#">{E(fl["consent"]["link"])}</a></span>{err("consent")}</label>

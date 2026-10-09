@@ -43,8 +43,8 @@
   },
   "form": {
     "default_placeholder": "How can we help? A sentence or two about your store helps.",
-    "partner_note": "Partners have their own form too, if you'd like to be listed in our directory.",
-    "partner_button": "Go to the partner form",
+    "partner_note": "Want to be listed in our partner directory?",
+    "partner_button": "Become a partner",
     "partner_href": "partners/#partner-form",
     "fields": {
       "name": {
