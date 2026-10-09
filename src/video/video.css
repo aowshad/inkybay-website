@@ -3,7 +3,7 @@
    scene, editor blue only for selection boxes. Products sit on a soft contact shadow and catch a little of the glow. */
 :root {
   --brand-500: #F58220; --brand-600: #FF7500; --brand-700: #E5380F; --editor-blue: #1C8CF0;
-  --ink: #1B1714; --ink-muted: #6E6660; --navy: #1F3A68; --green: #17A673;
+  --ink: #1B1714; --ink-muted: #6E6660; --navy: #1F3A68; --green: #17A673; --ink-green: #0E5A3A;   /* --green is the UI check; printed green ink is the darker --ink-green so it holds on light fabric */
   --ease-expo: cubic-bezier(.16, 1, .3, 1); --ease-inout: cubic-bezier(.65, 0, .35, 1);
 }
 * { box-sizing: border-box; margin: 0; }
