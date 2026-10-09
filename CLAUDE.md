@@ -70,8 +70,8 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
 ## Product images
 
 `src/assets/products/<name>.webp`: transparent, 600x600, WebP quality ~82, the product trimmed and centred so it fills
-82% of the frame (so every product reads at the same size). Exception: `tee.webp` is 1000x1000, because it is shown large (the 404
-editor, industry decks, How it works); it is still only ~24 KB. Keys are lowercase and hyphenated (`water-bottle`). Every
+82% of the frame (so every product reads at the same size). Exceptions: `tee.webp` and `mug.webp` are 1000x1000, because
+they are shown large (the 404 editor, industry decks, How it works, the hero video); each is still only ~24 KB. Keys are lowercase and hyphenated (`water-bottle`). Every
 image has an entry in `src/products.json` with its `label` (shown on product-wall cards, e.g. "Mug") and its
 `industry` (a slug from `src/industries/_index.json`); every product with an industry gets a card on the homepage wheel.
 Never delete an image that something still references.
@@ -550,6 +550,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: New mug image (your higher-resolution mug2.png from products-new): trimmed, centred, 82% fill, 1000x1000 like the tee (24 KB, smaller than the old 600px mug). It replaces the mug everywhere; the 404 mug print area still sits inside the new body
 - 2026-10-09: Partners: type, directory and rhythm fixes. Headings follow the new scale, hero chips 14px, the directory shows 6 then "Show more partners", filter tabs and counts use the blog pill style, the form has example placeholders, and "Why partner with InkyBay" is now a dark band (white, tint, dark, tint, white, dark)
 - 2026-10-09: Themed scrollbars: one global rule set in the template (thin, rounded, ink-based thumb that adapts to every theme zone; 6px for inner scrollers), plus an edge fade on the phone category bar
 - 2026-10-09: Blog article: calmer pills (one 14px muted style for pills, tags and the category bar; active filter inverted), a better Key takeaways card (surface card, preview line, numbered points with optional "Read section" links via {text, section} summary items), a cleaner contents list (h2 entries, active section's h3s expand, one sliding 2px indicator), quotes and callouts without one-sided accents (new rule and audit check), body H2 28/500 and H3 22/500, a 14px meta row with thin separators; the newsletter and install promo cards are removed from the article (markup, CSS, blog.json fields)
