@@ -42,7 +42,7 @@
     "search_placeholder": "Search partners",
     "learn_more": "Learn more",
     "show_more": "Show more partners",
-    "visible": 9,
+    "visible": 6,
     "empty_title": "No partners match your filters.",
     "empty_text": "Try another type or a different search.",
     "clear": "Clear filters"
@@ -122,7 +122,10 @@
       "type": "Choose a partner type.",
       "message": "Tell us a little about your business.",
       "consent": "Please accept the privacy policy."
-    }
+    },
+    "name_placeholder": "Jane Cooper",
+    "email_placeholder": "jane@studio.com",
+    "website_placeholder": "yourstore.com"
   },
   "faqs": [
     {

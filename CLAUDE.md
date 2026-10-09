@@ -339,21 +339,24 @@ keeps one field per row.
    size, no second line), lead, "Become a partner" (to the form) and "Browse partners" (to the directory); visual: the
    first six partners' logo tiles orbiting an InkyBay tile (90s, upright, the core and chips float; static with
    reduced motion).
-2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts, a search on name and description,
+2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts (the blog pill style: 14px, muted on
+   surface, hairline, active inverted), a search on name and description,
    3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
    `featured` partner is listed first but looks like every other card. Every card lifts with a brand edge on hover or
-   keyboard focus. The first 9, then "Show more partners"; an empty state with "Clear filters". Filtering fades and
+   keyboard focus. The first 6, then "Show more partners"; an empty state with "Clear filters". Filtering fades and
    slides cards in.
-3. Why partner [white]: four benefit columns (feature-page benefit style).
+3. Why partner [dark]: four benefit columns (feature-page benefit style) on a dark band, so the page reads white,
+   tint, dark, tint, white, dark.
 4. Partner with InkyBay [tint]: one section, one heading. Left (5 cols): the heading, lead, "How it works" in small
    type (Apply, We review, Get listed; numbered circles joined by a thread; no time promises) and a one-line trust note.
-   Right (7 cols): the form card: name and email side by side, then company website, partner type and message each on
+   Right (7 cols): the form card (example placeholders "Jane Cooper", "jane@studio.com", "yourstore.com" at 14px;
+   labels stay 16px above the fields): name and email side by side, then company website, partner type and message each on
    their own row, consent, and "Send message" (a primary button with the arrow). See Forms.
 5. FAQs [white]. 6. CTA, crowd marquee, footer.
 (There is no "Who we partner with" section any more; your call.)
 - Dark mode: both tint sections (directory and Partner with InkyBay) use the project's warm blacks, not the cool page
   black: cards and the form card #1E150E, fields and step circles #261B13, white 10% hairlines, and the warm accent
-  #FFB46B for the How it works label, step numbers and tab counts (the red brand-700 loses contrast on dark).
+  #FFB46B for the How it works label and step numbers (the red brand-700 loses contrast on dark).
 - Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
 - Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
   supplied partner logos assigned at random, so names and logos do not belong together yet;
@@ -547,6 +550,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Partners: type, directory and rhythm fixes. Headings follow the new scale, hero chips 14px, the directory shows 6 then "Show more partners", filter tabs and counts use the blog pill style, the form has example placeholders, and "Why partner with InkyBay" is now a dark band (white, tint, dark, tint, white, dark)
 - 2026-10-09: Themed scrollbars: one global rule set in the template (thin, rounded, ink-based thumb that adapts to every theme zone; 6px for inner scrollers), plus an edge fade on the phone category bar
 - 2026-10-09: Blog article: calmer pills (one 14px muted style for pills, tags and the category bar; active filter inverted), a better Key takeaways card (surface card, preview line, numbered points with optional "Read section" links via {text, section} summary items), a cleaner contents list (h2 entries, active section's h3s expand, one sliding 2px indicator), quotes and callouts without one-sided accents (new rule and audit check), body H2 28/500 and H3 22/500, a 14px meta row with thin separators; the newsletter and install promo cards are removed from the article (markup, CSS, blog.json fields)
 - 2026-10-09: Type: explicit 14px allowlist. --t-small (14/20) and .t-small; every 14px in the CSS now uses the token; the 404 editor's tab, weight and Reset buttons go to 16px (buttons are always 16); chips on visuals never go under 14px (the partner orbit chips were 15px and the deck label and chip 10 to 11px on phones); placeholders are 14px while typed values stay 16px. The audit checks every visible text node against the allowlist, fails anything under 14px and any input under 16px. Decision: text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is treated like text in an image and exempt; raising it would mean redesigning ~40 illustration parts

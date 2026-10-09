@@ -92,8 +92,8 @@ def render():
     </div>
   </section>
 
-  <!-- 3 · WHY PARTNER (white) -->
-  <section class="fsec" aria-labelledby="p-why">
+  <!-- 3 · WHY PARTNER (dark: the page reads white, tint, dark, tint, white, dark) -->
+  <section class="fsec fsec--dark" aria-labelledby="p-why">
     <div class="container">
       <div class="fsec__head">{heading(c["benefits_heading"], id_="p-why")}</div>
       <ul class="fben__grid">{benefits}</ul>
@@ -113,12 +113,12 @@ def render():
       <div class="pjoin__card">
         <form class="form" data-form="partner" data-endpoint="{{{{FORM_ENDPOINT}}}}" method="post" novalidate>
           <div class="form__row">
-            <label class="field"><span class="field__label">{E(f["name"])}</span><input name="name" type="text" autocomplete="name" required data-err="{E(f["errors"]["name"])}" aria-describedby="pf-name-err">{err("name")}</label>
-            <label class="field"><span class="field__label">{E(f["email"])}</span><input name="email" type="email" autocomplete="email" required data-err="{E(f["errors"]["email"])}" aria-describedby="pf-email-err">{err("email")}</label>
+            <label class="field"><span class="field__label">{E(f["name"])}</span><input name="name" type="text" autocomplete="name" placeholder="{E(f["name_placeholder"])}" required data-err="{E(f["errors"]["name"])}" aria-describedby="pf-name-err">{err("name")}</label>
+            <label class="field"><span class="field__label">{E(f["email"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" placeholder="{E(f["email_placeholder"])}" required data-err="{E(f["errors"]["email"])}" aria-describedby="pf-email-err">{err("email")}</label>
           </div>
           <div class="form__one">
             <label class="field"><span class="field__label">{E(f["website"])} <span class="field__opt">({E(f["optional"])})</span></span>
-              <span class="field__prefix"><span aria-hidden="true">https://</span><input name="website" type="text" inputmode="url" autocomplete="url" data-url data-err="{E(f["errors"]["website"])}" aria-describedby="pf-website-err"></span>{err("website")}</label>
+              <span class="field__prefix"><span aria-hidden="true">https://</span><input name="website" type="text" inputmode="url" autocomplete="url" placeholder="{E(f["website_placeholder"])}" data-url data-err="{E(f["errors"]["website"])}" aria-describedby="pf-website-err"></span>{err("website")}</label>
           </div>
           <div class="form__one">
             <label class="field"><span class="field__label">{E(f["type"])}</span><select name="type" required data-err="{E(f["errors"]["type"])}" aria-describedby="pf-type-err"><option value="">{E(f["type_placeholder"])}</option>{opts}</select>{err("type")}</label>
