@@ -160,7 +160,8 @@
         "open": "09:00",
         "close": "18:00",
         "draft": true
-      }
+      },
+      "flag": "us"
     },
     {
       "name": "Bangladesh",
@@ -180,7 +181,8 @@
         "open": "09:00",
         "close": "18:00",
         "draft": true
-      }
+      },
+      "flag": "bd"
     }
   ],
   "offices_labels": {

@@ -360,7 +360,8 @@ hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like 
    - Success replaces the form: a drawn check, "Thanks, <first name>. We got your message.", what happens next, "Send
      another message". Error keeps the input and offers support@inkybay.com.
 2. Offices [dark]: two cards (US HQ, Bangladesh development office) with a dashed brand-gradient arc between them and a
-   dot travelling it (8s loop, only on screen; static with reduced motion; vertical on phones). Each card: live local
+   dot travelling it (8s loop, only on screen; static with reduced motion; vertical on phones). Each card: its country's
+   flag before the name (inline SVG from `flag` in the JSON, not emoji, which Windows does not render), live local
    time (Intl.DateTimeFormat in the office's time zone, every 30s), an Open now / Closed badge from the JSON hours,
    the address (Google Maps search, new tab) and a tel: link. No embedded maps.
 3. FAQs [white]. 4. CTA, crowd marquee, footer.
@@ -513,6 +514,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Contact offices show the US and Bangladesh flags before the names (your call); drawn as small inline SVGs because emoji flags do not render on Windows
 - 2026-10-09: Contact form reorganised (your sequence): name + email, store URL, "What can we help with?" dropdown (nine topics) + file upload (10 MB, multipart), message. Topic chips, Phone, "I'm using" and "Best time to talk" removed; Store URL is now optional because guest-post and link-exchange senders may not have a store; the partnership topic shows a link to the partner form instead of replacing the form. Shared form fields now align to the top of their row
 - 2026-10-09: Partners dark mode uses the project's warm blacks (your call): cards, form card, fields and step circles move from the cool #0F1013 family to #1E150E / #261B13 like the merchant cards and dark bands, accents from red #E5380F to #FFB46B; light mode unchanged
 - 2026-10-09: Contact heading is now "Have questions? / Let's Talk" (your wording)
