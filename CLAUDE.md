@@ -225,6 +225,48 @@ Section sub headings are 18px.
 4. Start the inner pages (Features, Industries, Pricing, Resources) with the same kit.
 
 
+## Hero video
+
+The homepage hero shows a 10s looping promo inside the comet-ring frame (16:9). Source: `src/video/hero-promo.html`,
+rendered by `scripts/render_video.py` to `src/assets/video/hero-promo.mp4`, `.webm` and `.webp` (the poster);
+build.py copies that folder to `site/assets/video/` (video is never base64-inlined).
+- Story (one master clock, Web Animations API, `window.seek(t)` renders any frame exactly): 0-1.6s "Design it." lands
+  letter by letter and a hoodie rises; 1.6-3.6s the editor: a selection box draws round the print area, "Add Text"
+  types on, a swatch rail slides in and the ink wipes orange, navy, dark green; 3.6-6.0s match cuts on the print area
+  (tee, mug, cap, tote, 0.55s each, the design holds still, each product settles from 6deg) with "One design. Every
+  product."; 6.0-8.2s the tote slides left, the order card rises ("New order #1042", "Custom tote bag", "$24.00") and
+  "Print-ready files", "Sent to production" pop with drawn checks; 8.2-10s everything clears through a circle from the
+  logo, the InkyBay mark and logotype resolve with "Product customizer for Shopify", and the last 0.6s return to frame 0.
+- Art direction (src/video/video.css): 1920x1080 canvas, warm #FFF7F0-to-white ground, one soft brand glow drifting
+  (the only linear motion), ~2.5% grain; Geist 600 for hero words (210-220px, -0.04em), Inter 500 40px for lines,
+  sentence case, 1-5 words on screen, each readable for 0.8s or more; brand orange is the one accent per scene, editor
+  blue only for selection boxes, one ink per beat (printed green is the dark #0E5A3A, the light UI green washed out on
+  white fabric); products on a soft contact shadow with a glow reflection clipped to them, no hard drop shadows; one
+  primary motion at a time, expo-out entrances, ease-in-out moves, a slow push-in with type slower than products, no
+  change faster than 3 times a second.
+- Text on products is never placed by guess: `src/video/print-areas.json` holds each product's measured print area
+  (quad in 0-1 image coordinates, curve, maxLines, ink), checked by `scripts/check_print_areas.py` (every quad pixel on
+  the product, a debug sheet); `src/video/print-text.js` fits the text to the box with 8% padding, maps it to the quad
+  with matrix3d, wraps it on the mug's curve, clips it to the product's alpha and gives it a printed look (multiply,
+  0.92 opacity, a 0.3px blur, the fabric's shading in soft-light). The homepage visuals use the same two files.
+- Re-render: `python3 scripts/render_video.py` (needs ffmpeg: `brew install ffmpeg`). It renders 60 fps at 2x,
+  blends pairs into 30 fps, downsizes to 1600x900, and refuses to encode if any frame fails a check (text off its
+  product, anything clipping the edge, first and last frames more than 1% apart). `--check` runs the checks on all 300
+  frames, `--sheet out.png` writes 8 frames, `--frames DIR` re-encodes frames kept from a failed encode. Style frames:
+  `python3 scripts/render_style_frames.py` (src/video/style-frames.html).
+- Size budget: each video under 2.5 MB at 1600x900, no audio (H.264 High yuv420p +faststart at a CRF, VP9 two-pass
+  constrained quality; the CRF goes up before anything else changes); the poster is WebP q82.
+- Swapping in a designer-made video: replace the three files in `src/assets/video/` with the same names, 1600x900
+  (16:9), muted, seamless loop, under 2.5 MB each, poster = the first frame; then `python3 build.py` and the audit.
+- Accessibility: `autoplay muted loop playsinline preload="metadata"`, an aria-label describing the film, and a 40px
+  glass pause/play button in the frame's bottom-right (motion longer than 5s); it pauses off screen and in a hidden tab
+  and resumes unless the visitor paused it. Reduced motion, Save-Data and 2g keep the poster until play is pressed (an
+  inline script removes autoplay before the first frame). The poster is preloaded on the homepage only
+  (`{{HERO_PRELOAD}}`, it is the LCP image). The audit checks muted, loop, playsinline, the poster, the button, reduced
+  motion, that no video is inlined and that nothing overflows at 390px.
+- Poster: frame 0 as the brief asks, which is the empty warm ground before "Design it." lands; the 1.5s frame would
+  make a stronger poster (your call).
+
 ## Mega menu
 
 One data-driven component. `src/nav.json` lists every menu (`{"menus": [...]}`) in navbar order; build.py renders the
@@ -601,6 +643,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Document the hero video: a Hero video section (story, art direction, the print-area method and files, how to re-render, how to swap in a designer-made video with the same three file names and size, the 2.5 MB budget, accessibility, the poster decision)
 - 2026-10-09: Document the new homepage visuals: audit check_home_visuals (rail cards and links from _index.json, vignette UI and chip overlap at 1440 and 390px measured at a settled moment, rail titles not cut off, print text on product alpha, only the active Features visual animating, reduced motion still) and the playbook's audit description. Found by these checks and fixed before the rail commit: three vignettes with narrow products, a chip shifted by its own font size (--vc is now a registered length), titles cut off at 360px
 - 2026-10-09: Feature rail: nine feature vignettes. Cards are built from src/features/_index.json (the hardcoded eight are gone; Unlimited product options is the ninth) with a "Learn more" link each; vignettes in src/rail-vignettes.html loop only while their card is on screen. The card sizing and scroll distance need no change for nine cards (both follow the track width); checked pinned at 1440 and as a swipe rail at 390, light and dark. Decisions: the notebook gets a measured print area (front cover); the 8 old rail mini UIs move to src/mini-uis.html so the 19 feature, industry, partner and contact pages render identical markup; the link is ink with a brand arrow (brand-700 text is under 4.5:1 at 16px)
 - 2026-10-09: Homepage hero: promo video. The editor screenshot is replaced by the video (16:9, autoplay muted loop playsinline, preload metadata, poster preloaded as the LCP image) inside the same comet-ring frame; a 40px glass pause/play button; pauses off screen and in a hidden tab, resumes unless paused; reduced motion, Save-Data and 2g keep the poster until play. hero-editor.webp stays (mega-menu promo, feature-page fallback). The audit checks the video attributes, poster, button, reduced motion, no inlined video and 390px
