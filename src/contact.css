@@ -33,22 +33,31 @@
 /* the form card: white, radius 24, soft shadow, a light glass edge */
 .ccard { --surface-in: #F7F6F4; position: relative; padding: var(--s-8); border-radius: 24px; background: var(--bg);
   box-shadow: inset 0 0 0 1px var(--line), inset 0 1px 0 rgba(255, 255, 255, .7), 0 40px 80px -48px rgba(60, 25, 5, .35); }
-.ctopics { display: grid; gap: var(--s-3); }
-.ctopics__label { font-weight: 500; }
-.ctopics__list { display: flex; flex-wrap: wrap; gap: var(--s-2); }
-.ctopic { padding: 8px 14px; border-radius: 999px; font-weight: 500; color: var(--ink); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line);
-  transition: background-color .2s ease, color .2s ease, box-shadow .2s ease; }
-.ctopic:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--line)); }
-.ctopic[aria-checked="true"] { background: var(--ink); color: var(--bg); box-shadow: none; }
-.ctopic:focus-visible { outline: 2px solid var(--brand-500); outline-offset: 2px; }
 /* fields that come and go: height + fade (0.35s), no jump */
 .cfx { display: grid; grid-template-rows: 1fr; opacity: 1; transition: grid-template-rows .35s var(--ease-expo), opacity .35s ease; }
 .cfx__in { min-height: 0; overflow: hidden; }
 .cfx.is-hidden { grid-template-rows: 0fr; opacity: 0; }
+.cfx[hidden] { display: none; }   /* the partner note leaves the layout entirely when hidden */
+.cfx.is-in { animation: cfx-in .35s var(--ease-expo); }
+@keyframes cfx-in { from { opacity: 0; transform: translateY(-6px); } }
 .cfields__in { display: grid; gap: var(--s-5); padding: 2px; margin: -2px; }   /* room for the focus ring inside the clip */
 .form__row > .cfx .cfx__in, .cfields__in > .cfx .cfx__in { padding: 2px; margin: -2px; }
-.form__row:has(> .cfx.is-hidden + .cfx.is-hidden) { display: none; }
 .cpartner { display: grid; justify-items: start; gap: var(--s-4); padding: var(--s-5); border-radius: 16px; background: #FFF4EA; color: #6B3A12; }
+/* file upload: a dashed drop box with the chosen file's name */
+.cfile__box { position: relative; display: flex; align-items: center; min-height: 48px; border-radius: 12px; cursor: pointer;
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .2s ease; }
+.cfile__box:hover { box-shadow: inset 0 0 0 1px var(--brand-500); }
+.cfile__box:focus-within { box-shadow: inset 0 0 0 2px var(--brand-500); }
+.cfile__input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+.cfile__btn { display: flex; align-items: center; gap: 10px; min-width: 0; padding: 0 14px; color: var(--ink-muted); pointer-events: none; }
+.cfile__btn svg { flex: none; width: 20px; height: 20px; color: var(--brand-600); }
+.cfile__name { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.cfile.has-file .cfile__name { color: var(--ink); font-weight: 500; }
+.cfile__clear { position: relative; z-index: 1; margin-left: auto; margin-right: 8px; width: 32px; height: 32px; flex: none; border-radius: 8px; font-size: 20px; line-height: 1; color: var(--ink-muted); }
+.cfile__clear:hover { background: var(--bg); color: var(--ink); }
+.cfile__hint { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
+.cfile.is-invalid .cfile__box { box-shadow: inset 0 0 0 2px #D42427; }
+.cpartner { margin-top: calc(var(--s-1) * -1); }
 .cform__msg-label { display: flex; justify-content: space-between; gap: var(--s-4); }
 .cform__count { font-weight: 400; color: var(--ink-muted); font-variant-numeric: tabular-nums; }
 .cform__count.is-near { color: #B4232A; }
@@ -104,9 +113,5 @@
 @media (max-width: 600px) {
   .chero { padding-top: calc(var(--nav-h) + var(--s-10)); }
   .ccard { padding: var(--s-5); }
-  .ctopics__list { flex-wrap: nowrap; overflow-x: auto; scroll-snap-type: x mandatory; margin-inline: calc(var(--s-5) * -1); padding: 2px var(--s-5); scrollbar-width: none; }
-  .ctopics__list::-webkit-scrollbar { display: none; }
-  .ctopic { flex: none; scroll-snap-align: start; }
-  .coff { padding: var(--s-6); }
-  .coff__time { font-size: 40px; }
+        .coff__time { font-size: 40px; }
 }

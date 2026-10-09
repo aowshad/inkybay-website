@@ -39,41 +39,36 @@ def render(root):
         return (f'<li class="cch__row"><span class="cch__icon">{ICON[ch["icon"]]}</span><div class="cch__body"><span class="cch__title">{E(ch["title"])}</span>'
                 f'<div class="cch__act">{action}</div></div></li>')
 
-    def opt(x): return f'<option value="{E(x)}">{E(x)}</option>'
     err = lambda k: f'<span class="field__err" id="cf-{k}-err" aria-live="polite"></span>'
     req = lambda k: f'data-err="{E(fl[k]["error"])}" aria-describedby="cf-{k}-err"'
-    topics = "".join(f'<button class="ctopic" type="button" role="radio" aria-checked="false" tabindex="{0 if k == 0 else -1}" data-topic="{E(t["id"])}" '
-                     f'data-label="{E(t["label"])}" data-placeholder="{E(t["placeholder"])}" data-show="{E(" ".join(t["show"]))}" data-hide="{E(" ".join(t["hide"]))}"'
-                     f'{" data-redirect" if t.get("redirect") else ""}>{E(t["label"])}</button>' for k, t in enumerate(f["topics"]))
     fx = lambda key, inner, hidden=False: f'<div class="cfx{" is-hidden" if hidden else ""}" data-f="{key}"><div class="cfx__in">{inner}</div></div>'
     o = f'<span class="field__opt">({E(f["optional"])})</span>'
 
+    h = f["help"]
+    helps = "".join(f'<option value="{E(o["label"])}" data-message="{E(o["message"])}"{" data-partner" if o.get("partner") else ""}>{E(o["label"])}</option>' for o in h["options"])
+    fi = fl["file"]
     form = f"""<div class="ccard">
-          <form class="form cform" data-form="contact" data-endpoint="{{{{FORM_ENDPOINT}}}}" method="post" novalidate>
-            <input type="hidden" name="topic" value="">
-            <p class="form__note" hidden>{E(f["not_connected"])}</p>
-            <div class="ctopics"><span class="ctopics__label" id="ct-label">{E(f["topics_label"])}</span>
-              <div class="ctopics__list" role="radiogroup" aria-labelledby="ct-label">{topics}</div></div>
-            {fx("partner", f'<div class="cpartner"><p>{E(f["partner_note"])}</p><a class="btn btn--secondary" href="{E(root + f["partner_href"])}">{E(f["partner_button"])}</a></div>', True)}
-            <div class="cfx cfields" data-f="fields"><div class="cfx__in cfields__in">
-              <div class="form__row">
-                {fx("name", f'<label class="field"><span class="field__label">{E(fl["name"]["label"])}</span><input name="name" type="text" autocomplete="name" required {req("name")}>{err("name")}</label>')}
-                {fx("email", f'<label class="field"><span class="field__label">{E(fl["email"]["label"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" required {req("email")}>{err("email")}</label>')}
-              </div>
-              <div class="form__row">
-                {fx("phone", f'<label class="field"><span class="field__label">{E(fl["phone"]["label"])} {o}</span><input name="phone" type="tel" inputmode="tel" autocomplete="tel"></label>')}
-                {fx("store", f'<label class="field"><span class="field__label">{E(fl["store"]["label"])}</span><span class="field__prefix"><span aria-hidden="true">https://</span><input name="store" type="text" inputmode="url" autocomplete="url" required data-url {req("store")}></span>{err("store")}</label>')}
-              </div>
-              <div class="form__row">
-                {fx("using", f'<label class="field"><span class="field__label">{E(fl["using"]["label"])}</span><select name="using" required {req("using")}><option value="">{E(fl["using"]["placeholder"])}</option>{"".join(opt(x) for x in fl["using"]["options"])}</select>{err("using")}</label>')}
-                {fx("best_time", f'<label class="field"><span class="field__label">{E(fl["best_time"]["label"])}</span><select name="best_time" required {req("best_time")}><option value="">{E(fl["best_time"]["placeholder"])}</option>{"".join(opt(x) for x in fl["best_time"]["options"])}</select>{err("best_time")}</label>', True)}
-              </div>
-              {fx("message", f'<label class="field"><span class="field__label cform__msg-label">{E(fl["message"]["label"])}<span class="cform__count" aria-hidden="true">0 / {fl["message"]["max"]}</span></span><textarea name="message" rows="5" maxlength="{fl["message"]["max"]}" required placeholder="{E(f["default_placeholder"])}" data-default-placeholder="{E(f["default_placeholder"])}" {req("message")}></textarea>{err("message")}</label>')}
-              <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
-              {fx("consent", f'<label class="field field--check"><input name="consent" type="checkbox" required {req("consent")}><span>{E(fl["consent"]["label"])} <a href="#">{E(fl["consent"]["link"])}</a></span>{err("consent")}</label>')}
-              <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(f["submit"])}</span></button>
-                <p class="form__status" role="status" aria-live="polite" data-ok="" data-fail="{E(f["error"])}" data-fail-email="{E(f["error_email"])}" data-off="{E(f["not_connected"])}"></p></div>
-            </div></div>
+          <form class="form cform" data-form="contact" data-endpoint="{{{{FORM_ENDPOINT}}}}" method="post" enctype="multipart/form-data" novalidate>
+            <div class="form__row">
+              <label class="field"><span class="field__label">{E(fl["name"]["label"])}</span><input name="name" type="text" autocomplete="name" required {req("name")}>{err("name")}</label>
+              <label class="field"><span class="field__label">{E(fl["email"]["label"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" required {req("email")}>{err("email")}</label>
+            </div>
+            <div class="form__one">
+              <label class="field"><span class="field__label">{E(fl["store"]["label"])} {o}</span><span class="field__prefix"><span aria-hidden="true">https://</span><input name="store" type="text" inputmode="url" autocomplete="url" data-url {req("store")}></span>{err("store")}</label>
+            </div>
+            <div class="form__row">
+              <label class="field"><span class="field__label">{E(h["label"])}</span><select name="topic" required data-err="{E(h["error"])}" aria-describedby="cf-topic-err"><option value="">{E(h["placeholder"])}</option>{helps}</select>{err("topic")}</label>
+              <div class="field cfile"><span class="field__label" id="cf-file-label">{E(fi["label"])} {o}</span>
+                <label class="cfile__box"><input class="cfile__input" name="attachment" type="file" accept="{E(fi["accept"])}" data-maxsize="{fi["max_mb"] * 1024 * 1024}" data-err="{E(fi["error"])}" aria-labelledby="cf-file-label" aria-describedby="cf-file-hint cf-file-err">
+                  <span class="cfile__btn">{ICON["file"]}<span class="cfile__name" data-empty="{E(fi["button"])}">{E(fi["button"])}</span></span><button class="cfile__clear" type="button" aria-label="Remove file" hidden>×</button></label>
+                <span class="cfile__hint" id="cf-file-hint">{E(fi["hint"])}</span>{err("file")}</div>
+            </div>
+            <div class="cfx" data-f="partner" hidden><div class="cfx__in">{f'<div class="cpartner"><p>{E(f["partner_note"])}</p><a class="btn btn--secondary" href="{E(root + f["partner_href"])}">{E(f["partner_button"])}</a></div>'}</div></div>
+            <label class="field"><span class="field__label cform__msg-label">{E(fl["message"]["label"])}<span class="cform__count" aria-hidden="true">0 / {fl["message"]["max"]}</span></span><textarea name="message" rows="5" maxlength="{fl["message"]["max"]}" required placeholder="{E(f["default_placeholder"])}" data-default-placeholder="{E(f["default_placeholder"])}" {req("message")}></textarea>{err("message")}</label>
+            <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
+            <label class="field field--check"><input name="consent" type="checkbox" required {req("consent")}><span>{E(fl["consent"]["label"])} <a href="#">{E(fl["consent"]["link"])}</a></span>{err("consent")}</label>
+            <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(f["submit"])}</span></button>
+              <p class="form__status" role="status" aria-live="polite" data-ok="" data-fail="{E(f["error"])}" data-fail-email="{E(f["error_email"])}" data-off="{E(f["not_connected"])}"></p></div>
           </form>
           <template class="form__done"><div class="cdone" tabindex="-1">{CHECK}<h2 class="cdone__title">{E(f["success_title"])}</h2><p class="cdone__next">{E(f["success_next"]["text"])}</p>
             <button class="cdone__again" type="button">{E(f["success_again"])}</button></div></template>

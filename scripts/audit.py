@@ -285,25 +285,27 @@ async def check_contact(b, path):
         pg.on("pageerror", lambda e: errs.append(str(e)))
         await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
         S = """(()=>({ph:document.querySelector('[name="message"]').placeholder, topic:document.querySelector('[name="topic"]').value,
-              hidden:[...document.querySelectorAll('.cform .cfx.is-hidden')].map(e=>e.dataset.f).sort()}))()"""
+              note:!document.querySelector('.cform .cfx[data-f="partner"]').hidden}))()"""
         base = await pg.evaluate(S)
-        if base["hidden"] != ["best_time", "partner"]: bad(slug, f"{w}px: default state should show every field but 'Best time to talk' ({base['hidden']})")
+        if base["note"]: bad(slug, f"{w}px: the partner note shows before a topic is chosen")
+        opts = await pg.evaluate("[...document.querySelectorAll('[name=topic] option')].filter(o=>o.value).map(o=>[o.value, o.hasAttribute('data-partner')])")
+        if len(opts) < 5: bad(slug, f"{w}px: 'What can we help with?' has {len(opts)} options")
         seen = set()
-        for t in await pg.evaluate("[...document.querySelectorAll('.ctopic')].map(c=>c.dataset.topic)"):
-            await pg.click(f'.ctopic[data-topic="{t}"]'); await pg.wait_for_timeout(420); st = await pg.evaluate(S)
-            if t == "partners":
-                if "fields" not in st["hidden"] or "partner" in st["hidden"]: bad(slug, f"{w}px: Partnerships does not swap the form for the partner note")
-                continue
+        for val, partner in opts:
+            await pg.select_option('[name="topic"]', val); await pg.wait_for_timeout(120); st = await pg.evaluate(S)
             seen.add(st["ph"])
-            if st["ph"] == base["ph"] or not st["topic"]: bad(slug, f"{w}px: topic '{t}' does not change the placeholder / topic value")
-            if t == "demo" and "best_time" in st["hidden"]: bad(slug, f"{w}px: Book a demo does not show 'Best time to talk'")
-            if t == "billing" and "using" not in st["hidden"]: bad(slug, f"{w}px: Billing does not hide 'I'm using'")
-        if len(seen) < 4: bad(slug, f"{w}px: topics do not each have their own placeholder")
-        await pg.click('.ctopic[data-topic="setup"]'); await pg.wait_for_timeout(400)
+            if st["ph"] == base["ph"] or st["topic"] != val: bad(slug, f"{w}px: topic '{val}' does not set its placeholder / value")
+            if st["note"] != partner: bad(slug, f"{w}px: the partner note is {'missing' if partner else 'shown'} for '{val}'")
+        if len(seen) < len(opts): bad(slug, f"{w}px: topics do not each have their own placeholder")
+        # file: the chosen name shows; an oversized file is rejected inline
+        await pg.set_input_files(".cfile__input", files=[{"name": "big.pdf", "mimeType": "application/pdf", "buffer": b"0" * (11 * 1024 * 1024)}])
+        name = await pg.text_content(".cfile__name")
+        if name.strip() != "big.pdf": bad(slug, f"{w}px: the file picker does not show the chosen file ({name})")
+        await pg.select_option('[name="topic"]', "")
         await pg.locator(".cform .form__submit").scroll_into_view_if_needed(); await pg.click(".cform .form__submit"); await pg.wait_for_timeout(200)
-        f = await pg.evaluate("""(()=>({invalid:document.querySelectorAll('.cform .field.is-invalid').length, focused:document.activeElement && document.activeElement.getAttribute('aria-invalid'),
-            status:document.querySelector('.cform .form__status').textContent}))()""")
-        if f["invalid"] < 4 or f["focused"] != "true" or f["status"]: bad(slug, f"{w}px: an empty submit is not blocked with inline errors and focus on the first ({f})")
+        f = await pg.evaluate("""(()=>({invalid:[...document.querySelectorAll('.cform .field.is-invalid')].length, file:document.querySelector('.cfile').classList.contains('is-invalid'),
+            focused:document.activeElement && document.activeElement.getAttribute('aria-invalid'), status:document.querySelector('.cform .form__status').textContent}))()""")
+        if f["invalid"] < 5 or not f["file"] or f["focused"] != "true" or f["status"]: bad(slug, f"{w}px: an empty submit is not blocked with inline errors and focus on the first ({f})")
         await pg.locator(".cch__copy").scroll_into_view_if_needed(); await pg.click(".cch__copy"); await pg.wait_for_timeout(250)
         if not (await pg.text_content(".cch__copied")).strip(): bad(slug, f"{w}px: the copy button does not confirm")
         if w == 1440:

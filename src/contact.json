@@ -42,51 +42,8 @@
     "draft": true
   },
   "form": {
-    "topics_label": "What's it about?",
-    "topics": [
-      {
-        "id": "demo",
-        "label": "Book a demo",
-        "placeholder": "Tell us about your store and what you'd like to see in the demo.",
-        "show": [
-          "best_time"
-        ],
-        "hide": []
-      },
-      {
-        "id": "setup",
-        "label": "Setup help",
-        "placeholder": "Which product are you setting up, and where are you stuck?",
-        "show": [],
-        "hide": []
-      },
-      {
-        "id": "billing",
-        "label": "Billing",
-        "placeholder": "What's your billing question about? Your store URL helps us find your account.",
-        "show": [],
-        "hide": [
-          "using"
-        ]
-      },
-      {
-        "id": "partners",
-        "label": "Partnerships",
-        "placeholder": "",
-        "show": [],
-        "hide": [],
-        "redirect": true
-      },
-      {
-        "id": "other",
-        "label": "Something else",
-        "placeholder": "What would you like to talk about?",
-        "show": [],
-        "hide": []
-      }
-    ],
     "default_placeholder": "How can we help? A sentence or two about your store helps.",
-    "partner_note": "Partnerships have their own form on the Partners page, so the right people see it.",
+    "partner_note": "Partners have their own form too, if you'd like to be listed in our directory.",
     "partner_button": "Go to the partner form",
     "partner_href": "partners/#partner-form",
     "fields": {
@@ -98,33 +55,10 @@
         "label": "Email address",
         "error": "Enter a valid email address."
       },
-      "phone": {
-        "label": "Phone",
-        "optional": true
-      },
       "store": {
         "label": "Store URL",
-        "error": "Enter your store address, like yourstore.myshopify.com"
-      },
-      "using": {
-        "label": "I'm using",
-        "placeholder": "Choose one",
-        "options": [
-          "Shopify",
-          "Shopify Plus",
-          "Other"
-        ],
-        "error": "Choose what you're using."
-      },
-      "best_time": {
-        "label": "Best time to talk",
-        "placeholder": "Choose a time",
-        "options": [
-          "Morning",
-          "Afternoon",
-          "Any time"
-        ],
-        "error": "Choose a time that suits you."
+        "optional": true,
+        "error": "Enter a full address, like yourstore.myshopify.com"
       },
       "message": {
         "label": "Message",
@@ -135,6 +69,15 @@
         "label": "I agree to the",
         "link": "privacy policy",
         "error": "Please accept the privacy policy."
+      },
+      "file": {
+        "label": "Attach a file",
+        "optional": true,
+        "button": "Choose a file",
+        "hint": "Screenshot, PDF or ZIP, up to 10 MB",
+        "max_mb": 10,
+        "accept": "image/*,.pdf,.zip",
+        "error": "That file is over 10 MB. Try a smaller one or a link instead."
       }
     },
     "optional": "optional",
@@ -148,7 +91,51 @@
     },
     "success_again": "Send another message",
     "error": "Something went wrong and your message wasn't sent. Your text is still here: try again, or email us at",
-    "error_email": "support@inkybay.com"
+    "error_email": "support@inkybay.com",
+    "help": {
+      "label": "What can we help with?",
+      "placeholder": "Choose a topic",
+      "error": "Choose what you need help with.",
+      "options": [
+        {
+          "label": "App support or bug",
+          "message": "What happened, and where? The steps to reproduce it help us fix it faster."
+        },
+        {
+          "label": "Setup and configuration",
+          "message": "Which product are you setting up, and where are you stuck?"
+        },
+        {
+          "label": "Plans and billing",
+          "message": "What's your billing question about?"
+        },
+        {
+          "label": "Feature request",
+          "message": "What would you like InkyBay to do, and how would it help your store?"
+        },
+        {
+          "label": "Custom development",
+          "message": "Tell us what you'd like built and when you need it."
+        },
+        {
+          "label": "App or theme partnership",
+          "message": "Tell us about your app or theme and how it works with InkyBay.",
+          "partner": true
+        },
+        {
+          "label": "Guest post",
+          "message": "Which topic would you like to write about? Links to past articles help."
+        },
+        {
+          "label": "Link exchange",
+          "message": "Which page would you like to link to, and where would our link go?"
+        },
+        {
+          "label": "Something else",
+          "message": "What would you like to talk about?"
+        }
+      ]
+    }
   },
   "offices_heading": [
     "Two offices.",

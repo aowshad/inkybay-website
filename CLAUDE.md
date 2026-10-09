@@ -348,25 +348,26 @@ hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like 
    rows (Email support with a copy button, "Copied" for 2s, and a mailto link; Live chat with
    `data-action="live-chat"`; Help center, external) and the response note. Right: the form card (white, radius 24,
    soft shadow, 1px line, glass edge).
-   - Topic chips (a radio group, arrow keys move; none selected by default, all fields shown). Book a demo: shows "Best
-     time to talk"; Setup help: its own placeholder; Billing: hides "I'm using"; Partnerships: the form gives way to a
-     note and a button to `partners/#partner-form`; Something else: its own placeholder. Each topic sets the message
-     placeholder and the hidden `topic` field (sent with the payload). Fields come and go with height + fade (0.35s);
-     hidden fields are disabled so they are neither validated nor sent. The wrappers are `.cfx` (`.fx` is the homepage
-     features heading).
-   - Fields: Full name, Email address, Phone (optional, tel), Store URL (https:// inside the field), I'm using, Message
-     (counter, 1000 max), consent (privacy link `#` until a privacy page exists), honeypot, "Send message"; posts to
-     FORM_ENDPOINT (see Forms). Success replaces the form: a drawn check, "Thanks, <first name>. We got your message.",
-     what happens next, "Send another message". Error keeps the input and offers support@inkybay.com.
+   - Fields, in this order (your call): Full name and Email address in one row; Store URL alone (optional, https://
+     inside the field); "What can we help with?" (a required dropdown: App support or bug, Setup and configuration,
+     Plans and billing, Feature request, Custom development, App or theme partnership, Guest post, Link exchange,
+     Something else) and "Attach a file" (optional; screenshot, PDF or ZIP up to 10 MB, checked before sending; shows the
+     chosen name with a remove button) in one row; Message alone (counter, 1000 max); consent (privacy link `#` until a
+     privacy page exists); honeypot; "Send message" (primary, with the arrow). The form posts multipart to FORM_ENDPOINT
+     (see Forms) with the topic in the payload.
+   - Each topic sets the message placeholder; "App or theme partnership" also shows a short note with a button to
+     `partners/#partner-form` (the form stays). The old topic chips, Phone, "I'm using" and "Best time to talk" are gone.
+   - Success replaces the form: a drawn check, "Thanks, <first name>. We got your message.", what happens next, "Send
+     another message". Error keeps the input and offers support@inkybay.com.
 2. Offices [dark]: two cards (US HQ, Bangladesh development office) with a dashed brand-gradient arc between them and a
    dot travelling it (8s loop, only on screen; static with reduced motion; vertical on phones). Each card: live local
    time (Intl.DateTimeFormat in the office's time zone, every 30s), an Open now / Closed badge from the JSON hours,
    the address (Google Maps search, new tab) and a tel: link. No embedded maps.
 3. FAQs [white]. 4. CTA, crowd marquee, footer.
-Phones: form first, then the channels; topic chips scroll sideways with snap; office cards stack.
+Phones: form first, then the channels; the two-field rows stack; office cards stack.
 - Draft (to confirm): the response note and the success "what happens next" (both promise replies within 2 hours
   during business hours), the business hours (Mon-Fri 09:00-18:00 local) and the FAQ answers. The audit checks every
-  topic's placeholder and fields, blocked empty submits, the copy button, both clocks and badges, links and overflow.
+  topic's placeholder and the partner note, the file picker and its size limit, blocked empty submits, the copy button, both clocks and badges, links and overflow.
 
 ## Blog
 
@@ -512,6 +513,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Contact form reorganised (your sequence): name + email, store URL, "What can we help with?" dropdown (nine topics) + file upload (10 MB, multipart), message. Topic chips, Phone, "I'm using" and "Best time to talk" removed; Store URL is now optional because guest-post and link-exchange senders may not have a store; the partnership topic shows a link to the partner form instead of replacing the form. Shared form fields now align to the top of their row
 - 2026-10-09: Partners dark mode uses the project's warm blacks (your call): cards, form card, fields and step circles move from the cool #0F1013 family to #1E150E / #261B13 like the merchant cards and dark bands, accents from red #E5380F to #FFB46B; light mode unchanged
 - 2026-10-09: Contact heading is now "Have questions? / Let's Talk" (your wording)
 - 2026-10-09: 404 simplified (your changes): heading "404 / Page not found", no "Status 404" label, no helpful links, no CTA section; the cap becomes a tote bag (flat front, print area 31-69% across, 48-84% down) so the text sits balanced

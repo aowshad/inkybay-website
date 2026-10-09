@@ -2913,12 +2913,13 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       var note = form.querySelector('.form__note'), status = form.querySelector('.form__status');
       var submit = form.querySelector('[type="submit"]'), label = submit && submit.querySelector('[data-text]');
       var done = form.parentNode.querySelector('template.form__done');
-      var fields = [].slice.call(form.querySelectorAll('[required], [data-url]')), tried = false;
+      var fields = [].slice.call(form.querySelectorAll('[required], [data-url], [data-maxsize]')), tried = false;
       /* the "Form not connected yet" note stays hidden for now; a submit without an endpoint still says so in the status line */
       function active(el) { return !el.disabled && !el.closest('.cfx.is-hidden'); }
       function valid(el) {
         var v = (el.value || '').trim();
         if (el.type === 'checkbox') return el.checked;
+        if (el.type === 'file') return !el.files.length || el.files[0].size <= +el.getAttribute('data-maxsize');
         if (el.hasAttribute('data-url')) return (!v && !el.required) || /^(https?:\/\/)?[^\s\/]+\.[^\s]{2,}$/i.test(v);
         if (el.type === 'email') return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v);
         return !!v;
@@ -2975,40 +2976,30 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       });
     });
 
-    /* Contact: topic chips (a radio group) reshape the form; message counter; copy-email button; office clocks
-       (Intl, each office's time zone, every 30s) with an open/closed badge; a dot travels the arc between offices */
+    /* Contact: "What can we help with?" sets the message placeholder (and shows the partner note for partnerships);
+       the file picker shows the chosen file's name; message counter; copy-email button; office clocks (Intl, each
+       office's time zone, every 30s) with an open/closed badge; a dot travels the arc between offices */
     document.querySelectorAll('.cform').forEach(function (form) {
-      var chips = [].slice.call(form.querySelectorAll('.ctopic')), topic = form.querySelector('[name="topic"]');
+      var topic = form.querySelector('[name="topic"]'), note = form.querySelector('.cfx[data-f="partner"]');
       var msg = form.querySelector('[name="message"]'), count = form.querySelector('.cform__count'), max = +msg.getAttribute('maxlength');
-      var fx = function (k) { return form.querySelector('.cfx[data-f="' + k + '"]'); };
-      var defaultHidden = ['best_time', 'partner'];
-      function setFx(el, show) {
-        if (!el) return; el.classList.toggle('is-hidden', !show);
-        [].slice.call(el.querySelectorAll('input, select, textarea')).forEach(function (c) { if (c.name !== '_gotcha') c.disabled = !show; });
-        if (!show) [].slice.call(el.querySelectorAll('.field')).forEach(function (f) { f.classList.remove('is-invalid'); var e = f.querySelector('.field__err'); if (e) e.textContent = ''; });
+      var file = form.querySelector('.cfile__input'), fname = form.querySelector('.cfile__name'), fclear = form.querySelector('.cfile__clear');
+      function pick() {
+        var o = topic.options[topic.selectedIndex];
+        msg.placeholder = (o && o.getAttribute('data-message')) || msg.getAttribute('data-default-placeholder');
+        var show = !!(o && o.hasAttribute('data-partner'));
+        if (note && note.hidden === show) { note.hidden = !show; note.classList.toggle('is-in', show); }
       }
-      function choose(chip) {
-        chips.forEach(function (c) { var on = c === chip; c.setAttribute('aria-checked', String(on)); c.tabIndex = on || (!chip && c === chips[0]) ? 0 : -1; });
-        var show = chip ? chip.getAttribute('data-show').split(' ').filter(Boolean) : [], hide = chip ? chip.getAttribute('data-hide').split(' ').filter(Boolean) : [];
-        var redirect = chip && chip.hasAttribute('data-redirect');
-        topic.value = chip ? chip.getAttribute('data-label') : '';
-        msg.placeholder = (chip && chip.getAttribute('data-placeholder')) || msg.getAttribute('data-default-placeholder');
-        ['name', 'email', 'phone', 'store', 'using', 'best_time', 'message', 'consent'].forEach(function (k) {
-          setFx(fx(k), show.indexOf(k) > -1 || (defaultHidden.indexOf(k) < 0 && hide.indexOf(k) < 0));
-        });
-        setFx(fx('partner'), !!redirect); setFx(fx('fields'), !redirect);
+      function showFile() {
+        var f = file.files[0]; fname.textContent = f ? f.name : fname.getAttribute('data-empty');
+        file.closest('.cfile').classList.toggle('has-file', !!f); fclear.hidden = !f;
       }
-      chips.forEach(function (c, i) {
-        c.addEventListener('click', function () { choose(c.getAttribute('aria-checked') === 'true' ? c : c); });
-        c.addEventListener('keydown', function (e) {
-          var k = e.key, n = k === 'ArrowRight' || k === 'ArrowDown' ? 1 : k === 'ArrowLeft' || k === 'ArrowUp' ? -1 : 0;
-          if (!n) return; e.preventDefault(); var t = chips[(i + n + chips.length) % chips.length]; t.focus(); choose(t);
-        });
-      });
+      topic.addEventListener('change', pick);
+      file.addEventListener('change', showFile);
+      fclear.addEventListener('click', function (e) { e.preventDefault(); file.value = ''; showFile(); file.dispatchEvent(new Event('change')); });
       function counter() { var n = msg.value.length; count.textContent = n + ' / ' + max; count.classList.toggle('is-near', n > max * .9); }
       msg.addEventListener('input', counter);
-      form.addEventListener('form:reset', function () { choose(null); counter(); });
-      choose(null); counter();
+      form.addEventListener('form:reset', function () { pick(); showFile(); counter(); });
+      pick(); showFile(); counter();
     });
     document.querySelectorAll('.cch__copy').forEach(function (b) {
       var out = b.querySelector('.cch__copied'), t = 0;

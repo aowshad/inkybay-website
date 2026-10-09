@@ -5,10 +5,10 @@
    ========================================================= */
 .form { display: grid; gap: var(--s-5); }
 .form[hidden] { display: none; }   /* success replaces the form in place */
-.form__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); }
+.form__row { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--s-5); align-items: start; }
 .form__note { padding: var(--s-3) var(--s-4); border-radius: 12px; color: #8A3B07; background: #FFF1E4; box-shadow: inset 0 0 0 1px #F6D6BA; }
 .form__note, .form__note[hidden] { display: none; }   /* "Form not connected yet": hidden for now (your call) */
-.field { display: grid; gap: var(--s-2); }
+.field { display: grid; gap: var(--s-2); align-content: start; }   /* controls keep their height when the row is taller */
 .field__label { font-weight: 500; }
 .field__opt { color: var(--ink-muted); font-weight: 400; }
 .field input:not([type="checkbox"]), .field select, .field textarea { width: 100%; min-height: 48px; padding: 12px 14px; border: 0; border-radius: 12px; font: inherit; color: var(--ink);
