@@ -50,7 +50,7 @@ render_partners.py        renders site/partners/ from src/partners.json (copy) +
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
-src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers
+src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers on _bg.webp (your background)
 requirements.txt          build dependencies: Markdown 3.7 and Pillow 11.3 (the Pages workflow installs them)
 src/forms.css             shared form styles (Partners, Contact, newsletter); the form JS is shared in the template
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
@@ -419,6 +419,10 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
 - Thumbnails: `src/assets/blog/`, 16:10 recommended (1600x1000); the build makes 640/960/1440 WebP versions with
   width/height and srcset, warns (does not fail) on another ratio, and never crops: every thumbnail renders at its own
   ratio (`height: auto`, no `object-fit: cover`); grid rows align to the top.
+  Demo covers (`scripts/make_blog_covers.py`): the background is a setting (`--bg`, default `src/assets/blog/_bg.webp`,
+  your 1600x1000 image), cover-fitted; the post's `cover_product` is trimmed to its outline, fits a square 62% of the
+  frame height (so tall and wide products read the same size), centred, with a soft shadow from its own alpha; no text.
+  The script checks 1600x1000, the margin on every side and the product/background contrast (`--sheet` writes a grid).
 - Listing: two-tone hero with a search field ("/" focuses it), the newest one or two featured posts, "Latest
   articles" on tint with a sticky category bar (All + categories with counts, real links; as many as fit, the rest in a
   "More" popover with a filter box; on phones it scrolls with snap) and a layout switch (grid 2/3/4 or list, grid 3 by
@@ -556,6 +560,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Blog thumbnails: new background. Your blog-bg.png (1600x1000, 16:10) is src/assets/blog/_bg.webp (q85) and the default --bg of scripts/make_blog_covers.py, replacing the generated gradients; all 14 covers regenerated at 1600x1000 with the same products (file names, alt text and front matter unchanged; the build makes the 640/960/1440 versions). Decision: products fit a 62% square rather than a fixed 62% height, because height-only made the cap, mug and frame look far bigger than the bottle and sock. Every product keeps 190px+ margin; the lowest contrast is the white sock (2.1:1), which still reads on the dark ground. The background's INKYBAY letters sit behind the lower edge of each product
 - 2026-10-09: Video style frames: the tote's print reads "Add Text" in a dark green (#0E5A3A, --ink-green) instead of the light UI green, which washed out on the white fabric (your call); the swatch rail's green matches. The UI check circles keep #17A673
 - 2026-10-09: Video: style frames (open "Design it.", the editor moment on the hoodie, the order card on the tote) from src/video/video.css and style-frames.html, rendered by scripts/render_style_frames.py. Look: warm #FFF7F0-to-white ground, one soft brand glow, ~2.5% grain, Geist 600 hero words at 210px, Inter 500 40px lines, orange as the one accent, editor blue only for the selection box, products on a soft contact shadow with a glow reflection clipped to the product. Your fix: 40px between the order card and its two chips
 - 2026-10-09: Video: measured print areas (src/video/print-areas.json for hoodie, tee, mug, cap and tote bag, measured from each image's alpha; src/video/print-text.js places text by fit-to-box, a matrix3d perspective quad, a cylinder curve on the mug, a clip to the product's alpha and a printed look; scripts/check_print_areas.py checks every quad pixel is on the product and writes the debug sheet). Text is never placed by guess again. The cap holds one line; the mug quad was measured on the new 1000px mug
