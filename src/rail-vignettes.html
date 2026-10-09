@@ -1,0 +1,123 @@
+<!-- Feature rail vignettes: one per feature in src/features/_index.json, keyed by slug. build.py puts each into its rail
+     card's media box. A vignette is one product (src/assets/products/), one small UI overlapping the product's edge and
+     one chip; styles and loops (.vg) live in the template. Text on products uses data-print (print areas). -->
+
+<!-- vig:advanced-product-setup -->
+<div class="vg vg--setup" aria-hidden="true" style="--u: 15em">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/tee.webp}}" alt="" width="1000" height="1000">
+    <span class="hv-area vg1__a" style="left: 37%; top: 25%; width: 26%; height: 22%; --d: .1s"></span>
+    <span class="hv-area vg1__a" style="left: 12%; top: 22%; width: 9%; height: 11%; --d: .45s"></span>
+    <span class="hv-area vg1__a" style="left: 79%; top: 22%; width: 9%; height: 11%; --d: .6s"></span>
+  </div>
+  <div class="hv-glass vg__ui vg1__tabs"><i></i><span>Front</span><span>Back</span><span>Left</span><span>Right</span></div>
+  <span class="hchip vg__chip">4 print areas</span>
+</div>
+
+<!-- vig:custom-quote-requests -->
+<div class="vg vg--quote" aria-hidden="true" style="--u: 13em; --ux: 14cqh; --cx: 26cqh">
+  <div class="vg__sq">
+    <img class="vg__img vg2__back" data-copy-src alt="" width="600" height="600" style="transform: translate(-17%, -5%) scale(.84); opacity: .5">
+    <img class="vg__img vg2__back" data-copy-src alt="" width="600" height="600" style="transform: translate(-8%, -2.5%) scale(.92); opacity: .78">
+    <img class="vg__img" src="{{IMG:products/tote-bag.webp}}" alt="" width="600" height="600">
+  </div>
+  <div class="hv-glass vg__ui vg2__chat">
+    <p class="vg2__in">Quote for 250 bags?</p>
+    <p class="vg2__reply"><span class="vg2__dots"><i></i><i></i><i></i></span><span class="vg2__out"><span class="hv-ok">{{HV_CHECK}}</span>Quote sent</span></p>
+  </div>
+  <span class="hchip vg__chip">250 bags</span>
+</div>
+
+<!-- vig:font-clipart-library -->
+<div class="vg vg--fonts" aria-hidden="true" style="--u: 9.3em">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/hoodie.webp}}" alt="" width="600" height="600">
+    <div class="vg3__f" data-print="Your name" data-product="hoodie" data-color="#1F2937"></div>
+    <div class="vg3__f" data-print="Your name" data-product="hoodie" data-color="#1F2937" data-font="Georgia, 'Times New Roman', serif"></div>
+    <div class="vg3__f" data-print="Your name" data-product="hoodie" data-color="#1F2937" data-font="'Snell Roundhand', 'Segoe Script', 'Brush Script MT', cursive" data-weight="400"></div>
+    <span class="vg3__star"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></span>
+  </div>
+  <div class="hv-glass vg__ui vg3__tiles">
+    <span style="--k: 0"><svg viewBox="0 0 24 24" style="color: #1F2937"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></span>
+    <span style="--k: 1"><svg viewBox="0 0 24 24" style="color: #D42427"><path fill="currentColor" d="M12 20.5s-7.5-4.6-7.5-10.1A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg></span>
+    <span style="--k: 2"><svg viewBox="0 0 24 24" style="color: #F58220"><path fill="currentColor" d="M13.5 2.5L5 13.5h6l-1 8 8.5-11h-6z"/></svg></span>
+  </div>
+  <span class="hchip vg__chip">Font <span class="hroll"><span><i>Sans</i><i>Serif</i><i>Script</i></span></span></span>
+</div>
+
+<!-- vig:multiple-printing-methods -->
+<div class="vg vg--methods" aria-hidden="true" style="--u: 9.3em; --uy: 20cqh">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/cap.webp}}" alt="" width="600" height="600">
+    <div class="vg4__m" data-print="Studio" data-product="cap" data-color="#1F3A68"></div>
+    <div class="vg4__m vg4__stitch" data-print="Studio" data-product="cap" data-color="#1F3A68"></div>
+    <div class="vg4__m" data-print="Studio" data-product="cap" data-color="#E5380F"></div>
+  </div>
+  <div class="hv-glass vg__ui vg4__ui"><i></i>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M7 9V4h10v5M7 17H5a1.5 1.5 0 0 1-1.5-1.5v-5A1.5 1.5 0 0 1 5 9h14a1.5 1.5 0 0 1 1.5 1.5v5A1.5 1.5 0 0 1 19 17h-2M7 14h10v6H7z"/></svg></span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M18.5 3.5L6 16M17 5l2 2M6 16l-2 4.5L8.5 18"/><path d="M9 21c3-3 6-2 9-5" stroke-dasharray="1.5 2"/></svg></span>
+    <span><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><rect x="3.5" y="5" width="17" height="11" rx="1.5"/><path d="M7 19.5h10M3.5 9.5h17"/></svg></span>
+  </div>
+  <span class="hchip vg__chip">Method <span class="hroll"><span><i>DTG</i><i>Embroidery</i><i>Screen print</i></span></span></span>
+</div>
+
+<!-- vig:smart-add-on-pricing -->
+<div class="vg vg--addons" aria-hidden="true" style="--u: 11.5em">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/mug.webp}}" alt="" width="1000" height="1000"></div>
+  <div class="hv-glass vg__ui vg5__ui">
+    <div class="hv-glass__h">Add-ons</div>
+    <div class="hv-row vg5__r" style="--k: 0">Back print<b>+$2.00</b></div>
+    <div class="hv-row vg5__r" style="--k: 1">Gold foil<b>+$2.50</b></div>
+    <div class="hv-row vg5__r" style="--k: 2">Gift box<b>+$2.00</b></div>
+  </div>
+  <span class="hchip hchip--brand vg__chip">Total <span class="hroll"><span><i>$18.00</i><i>$20.00</i><i>$22.50</i><i>$24.50</i></span></span></span>
+</div>
+
+<!-- vig:ready-made-templates -->
+<div class="vg vg--tpl" aria-hidden="true" style="--u: 12em; --uy: 8cqh; --ux: 15cqh">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/notebook.webp}}" alt="" width="600" height="600">
+    <div class="vg6__design" data-print="Field notes" data-product="notebook" data-color="#E5380F"></div>
+  </div>
+  <div class="vg__ui vg6__fan">
+    <span class="vg6__t" style="--k: 0; --c: #E5380F"><b>Field notes</b><s></s></span>
+    <span class="vg6__t" style="--k: 1; --c: #1F3A68"><b>Sketch</b><s></s></span>
+    <span class="vg6__t" style="--k: 2; --c: #17A673"><b>Daily plan</b><s></s></span>
+  </div>
+  <span class="hchip vg__chip"><span class="hchip__ok">{{HV_CHECK}}</span>Template applied</span>
+</div>
+
+<!-- vig:inventory-management -->
+<div class="vg vg--stock" aria-hidden="true" style="--u: 11em; --ux: 15cqh; --cx: 36cqh">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/socks.webp}}" alt="" width="600" height="600"></div>
+  <div class="hv-glass vg__ui vg7__ui">
+    <div class="hv-glass__h">Stock<span>Crew socks</span></div>
+    <p class="vg7__n"><span class="hroll"><span><i>164</i><i>96</i><i>42</i><i>18</i></span></span> left</p>
+    <div class="vg7__bar"><i></i></div>
+  </div>
+  <span class="hchip vg__chip vg7__chip"><span class="hroll"><span><i>In stock</i><i>Low stock</i><i>Unavailable</i></span></span></span>
+</div>
+
+<!-- vig:quantity-discounts -->
+<div class="vg vg--qty" aria-hidden="true" style="--u: 9.5em">
+  <div class="vg__sq">
+    <img class="vg__img vg8__m" data-copy-src alt="" width="1000" height="1000" style="--x: -24%; --y: -9%; --k: 0">
+    <img class="vg__img vg8__m" data-copy-src alt="" width="1000" height="1000" style="--x: 22%; --y: -10%; --k: 1">
+    <img class="vg__img vg8__m" data-copy-src alt="" width="1000" height="1000" style="--x: 2%; --y: -19%; --k: 2">
+    <img class="vg__img vg8__main" src="{{IMG:products/mug.webp}}" alt="" width="1000" height="1000">
+  </div>
+  <div class="hv-glass vg__ui vg8__ui">
+    <div class="hv-glass__h">Unit price<span>Qty <span class="hroll"><span><i>1</i><i>4</i></span></span></span></div>
+    <p class="vg8__price"><span class="hroll"><span><i>$12.00</i><i>$9.60</i></span></span></p>
+  </div>
+  <span class="hchip hchip--brand vg__chip vg8__badge">20% off</span>
+</div>
+
+<!-- vig:unlimited-product-options -->
+<div class="vg vg--opts" aria-hidden="true" style="--u: 11em; --uy: 10cqh">
+  <div class="vg__sq"><img class="vg__img" src="{{IMG:products/backpack.webp}}" alt="" width="600" height="600"></div>
+  <div class="hv-glass vg__ui vg9__ui">
+    <div class="hv-glass__h">Options<span>Backpack</span></div>
+    <div class="hv-row vg9__r" style="--k: 0">Color<span class="vg9__sw"><i style="--c: #1F3A68"></i><i style="--c: #E5380F"></i><i style="--c: #17A673"></i></span></div>
+    <div class="hv-row vg9__r" style="--k: 1">Strap<span>Padded</span></div>
+    <div class="hv-row vg9__r" style="--k: 2">Patch<span>Star</span></div>
+    <div class="hv-row vg9__r" style="--k: 3">Name<span>Ava</span></div>
+  </div>
+  <span class="hchip hchip--brand vg__chip">+12 options</span>
+</div>

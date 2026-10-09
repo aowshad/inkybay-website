@@ -196,11 +196,31 @@ PRINT_TEXT_JS = (ROOT / "src" / "video" / "print-text.js").read_text()
 PRINT_AREAS = json.dumps({k: v for k, v in json.loads((ROOT / "src" / "video" / "print-areas.json").read_text()).items() if not k.startswith("_")}, separators=(",", ":"))
 HV_CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg>'
 
+RAIL_ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
+
+
+def feature_rail(root):
+    """The "Customize without limits" rail: one card per feature in src/features/_index.json (mega-menu order) with its
+    title, short line, a "Learn more" link and the slug's vignette from src/rail-vignettes.html."""
+    feats = json.loads((ROOT / "src" / "features" / "_index.json").read_text())["features"]
+    vig = dict(re.findall(r"<!-- vig:([a-z0-9-]+) -->\n(.*?)(?=\n<!-- vig:|\Z)", (ROOT / "src" / "rail-vignettes.html").read_text(), re.S))
+    missing = [f["slug"] for f in feats if f["slug"] not in vig]
+    assert not missing, f"src/rail-vignettes.html has no vignette for: {missing}"
+    cards = []
+    for f in feats:
+        t, href = html.escape(f["title"]), f'{root}features/{f["slug"]}/'
+        cards.append(f'<article class="fcard">\n            <div><h3 class="fcard__title">{t}</h3><p class="fcard__text">{html.escape(f["short"])}</p>'
+                     f'<a class="fcard__link" href="{href}">Learn more<span class="sr-only"> about {t}</span>{RAIL_ARROW}</a></div>\n'
+                     f'            <div class="fcard__media vg-host">\n{vig[f["slug"]].strip()}\n            </div>\n          </article>')
+    return "\n          ".join(cards)
+
+
 def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
     t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
+    t = t.replace("{{FEATURE_RAIL}}", feature_rail(root))
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\|(.*?)\}\}", lambda m: primary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_PRIMARY:label|href}}
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\|(.*?)\}\}", lambda m: secondary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_SECONDARY:label|href}}

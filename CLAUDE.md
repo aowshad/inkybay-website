@@ -37,7 +37,8 @@ src/nav.json              every navbar mega menu: items, groups, promos, footer 
 src/industries/_index.json  the eight industries (slug, title, short, icon): single source for the mega menu,
                           the wheel's industry order and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
-src/mini-uis.html         the setup, design and files mini UIs feature pages reuse (no longer on the homepage)
+src/mini-uis.html         the mini UIs feature pages reuse that are no longer on the homepage (setup ... templates)
+src/rail-vignettes.html   the feature rail's nine vignettes, one per slug in src/features/_index.json
 render_industry.py        renders an industry page (same shell) from src/industries/<slug>.json
 src/industry.css          styles for the shared industry-page template
 src/industries/<slug>.json  content for one industry page (hero deck, products, stats, merchants, FAQs)
@@ -165,6 +166,20 @@ Section sub headings are 18px.
    nothing pops on screen. 1.6 deg/s; pause eases to a stop. Pause/play plus prev/next steps. Flat track on phones.
 5. **Reveal**: in-flow statement; words sharpen with a 5-word soft edge as it passes through the viewport.
 6. **Feature rail** ("Customize without limits"): pinned; vertical scroll drives the horizontal track 1:1; cards always 16:10, one full plus half the next; title one line, description reserves two lines, so every media box is identical; progress bar, no numbers. Native swipe rail under 960px.
+   The cards come from `src/features/_index.json` (all nine, mega-menu order; build.py `{{FEATURE_RAIL}}`): title,
+   `short` as the description and a "Learn more" link to `features/<slug>/` (ink, brand arrow). Each media box holds a
+   vignette from `src/rail-vignettes.html` (one block per slug; the build fails if one is missing): a soft stage, one
+   product, one small glass UI over the product's right edge and one chip over its lower-left edge, sized from the box
+   height so it scales as one picture (the product shifts left on narrow boxes so the UI fits). Loops of 4.5-4.8s run
+   only while the card is in the viewport (`.fcard.is-live`); the base styles are each final state (reduced motion).
+   Vignettes: setup (tee, print areas draw, Front/Back/Left/Right tabs, "4 print areas"), quotes (three totes, "Quote
+   for 250 bags?" then "Quote sent"), fonts (hoodie text cycles Sans, Serif, Script; a star lands on the sleeve),
+   printing methods (cap logo printed, embroidered, screen printed; rolling Method chip), add-ons (mug, three add-ons
+   snap on, total $18.00 to $24.50), templates (notebook, three templates fan out, one settles on the cover), inventory
+   (socks, 164 to 18, Low stock then Unavailable), quantity discounts (one mug becomes four, $12.00 to $9.60, 20% off),
+   options (backpack, rows add up, +12 options). Text on products uses the print areas (the notebook cover was added).
+   The rail's old mini UIs moved to `src/mini-uis.html` for the feature pages. Phones: card titles are
+   min(22px, 5.6vw) so the longest stays on one line at 360px.
 7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The "See full case study"
    underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
@@ -581,6 +596,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Feature rail: nine feature vignettes. Cards are built from src/features/_index.json (the hardcoded eight are gone; Unlimited product options is the ninth) with a "Learn more" link each; vignettes in src/rail-vignettes.html loop only while their card is on screen. The card sizing and scroll distance need no change for nine cards (both follow the track width); checked pinned at 1440 and as a swipe rail at 390, light and dark. Decisions: the notebook gets a measured print area (front cover); the 8 old rail mini UIs move to src/mini-uis.html so the 19 feature, industry, partner and contact pages render identical markup; the link is ink with a brand arrow (brand-700 text is under 4.5:1 at 16px)
 - 2026-10-09: Homepage hero: promo video. The editor screenshot is replaced by the video (16:9, autoplay muted loop playsinline, preload metadata, poster preloaded as the LCP image) inside the same comet-ring frame; a 40px glass pause/play button; pauses off screen and in a hidden tab, resumes unless paused; reduced motion, Save-Data and 2g keep the poster until play. hero-editor.webp stays (mega-menu promo, feature-page fallback). The audit checks the video attributes, poster, button, reduced motion, no inlined video and 390px
 - 2026-10-09: Video: animation, renderer and assets. src/video/hero-promo.html (10.0s seamless loop: open, editor, every product, order, close) and scripts/render_video.py; all 300 frames pass the checks (text on product alpha, nothing clips the edge, loop diff 0.03%). hero-promo.mp4 1.16 MB (H.264 High, CRF 20), hero-promo.webm 0.40 MB (VP9 two-pass, CRF 32), poster 5 KB, all 1600x900, no audio. Decisions: the design reads "Add Text" (the editor's own default layer; your tote correction) and is typed then wiped orange, navy, dark green; the logotype's own "Product Customizer" subtitle is cropped so it does not repeat the closing line; x264 cannot pair CRF with two passes, so H.264 is one pass at a CRF and VP9 is two-pass; the poster is frame 0 as briefed (the empty ground; the 1.5s frame would be stronger)
 - 2026-10-09: Homepage features: product cause-and-effect visuals (hoodie setup, tee design, mug order), 7s stories synced to the progress line's own clock, print text from print-areas.json, reduced motion still. Decisions: there is no back photo of the hoodie, so the back turn shows the front photo mirrored with a "Back" tag; the old three mini UIs move to src/mini-uis.html so the feature pages render unchanged (checked: identical markup on all 18 feature, industry and partner pages); print-text.js gains layer, maxLines and letters options; the audit holds .hchip to the 14px floor
