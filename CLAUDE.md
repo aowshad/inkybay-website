@@ -341,7 +341,7 @@ keeps one field per row.
 
 `site/contact/`, built by `render_contact.py` from `src/contact.json` (topics, fields, channels, offices, FAQs; nothing
 hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like talking to a person."
-1. Hero + form [white]. Left: breadcrumb, two-tone H1 "Have questions? / Talk to a real person.", lead, three channel
+1. Hero + form [white]. Left: breadcrumb, two-tone H1 "Have questions? / Let's Talk" (capital T is your call; the rest of the site uses sentence case), lead, three channel
    rows (Email support with a copy button, "Copied" for 2s, and a mailto link; Live chat with
    `data-action="live-chat"`; Help center, external) and the response note. Right: the form card (white, radius 24,
    soft shadow, 1px line, glass edge).
@@ -509,6 +509,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Contact heading is now "Have questions? / Let's Talk" (your wording)
 - 2026-10-09: 404 simplified (your changes): heading "404 / Page not found", no "Status 404" label, no helpful links, no CTA section; the cap becomes a tote bag (flat front, print area 31-69% across, 48-84% down) so the text sits balanced
 - 2026-10-09: Partners and forms polish (your changes): one-line hero heading; "Who we partner with" removed; How it works and the form merged into one "Partner with InkyBay" section (steps small on the left, form card on the right; name + email in one row, website, type and message each on their own row); every partner card has the same hover lift instead of the first one looking permanently hovered; shared form fixes on every form: a proper select chevron, a custom checkbox, the primary arrow on submit buttons, and the "Form not connected yet" note hidden
 - 2026-10-08: Blog links, audit and docs: audit check_blog (thumbnail ratios, pill/tag/pagination links, search results and empty state, layout switch, contents highlight, summary reveal, JSON-LD, overflow at 390px) and four blog pages in --all; docs/writing-a-blog-post.md for writers. The Resources mega menu and footer already point to resources/blog/
