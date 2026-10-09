@@ -33,7 +33,10 @@
   --t-display: clamp(36px, 1.6rem + 3.4vw, 64px);   /* 64 on desktop (>=1130px), ~39 on phones */
   --t-display-lh: 1.125;
   --t-display-track: -0.03125em;
-  --t-h2: clamp(32px, 1.6rem + 2vw, 56px);
+  --t-h2: clamp(32px, 1.4rem + 1.8vw, 48px);   /* section headings: 48 on desktop, 32 on phones */
+  --t-h2-lh: 1.15;
+  --t-h1-inner: clamp(36px, 1.6rem + 2.4vw, 56px);   /* inner-page hero H1 (features, industries, partners, contact, blog) */
+  --t-h1-article: clamp(32px, 1.4rem + 1.6vw, 44px); /* blog article H1 */
   --t-h3: clamp(22px, 1.2rem + .5vw, 28px);
   --t-lead: 18px;  --t-lead-lh: 24px;
   --t-body: 16px;  --t-body-lh: 24px;
@@ -116,6 +119,7 @@ a { color: inherit; text-decoration: none; }
 button { font: inherit; color: inherit; background: none; border: 0; padding: 0; cursor: pointer; }
 :focus-visible { outline: 2px solid var(--brand-500); outline-offset: 3px; border-radius: 6px; }
 h1, h2, h3 { font-family: var(--font-head); margin: 0; font-weight: 600; color: var(--ink); }
+h2, h3 { font-weight: 500; }   /* section and card headings are lighter; the homepage hero H1 keeps 600 */
 p { margin: 0; }
 
 .container {
@@ -443,7 +447,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 .features__title {
   text-align: center;
-  font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em;
+  font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em;
   margin-bottom: var(--head-gap);
 }
 .features__title .line { display: block; }
@@ -606,7 +610,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .industries__head { text-align: center; margin-bottom: var(--head-gap); }
 .industries__title {
   color: var(--ind-ink);
-  font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em;
+  font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em;
   margin-bottom: var(--s-3); text-wrap: balance;
 }
 .industries__lead {
@@ -648,7 +652,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .icard__ph svg { width: 40px; height: 40px; }
 .icard__ph span { font-size: 12px; line-height: 16px; color: #A08572; }
 .icard__body { padding: var(--s-4) var(--s-1) 0; display: grid; gap: 2px; min-width: 0; }
-.icard__title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.icard__title { font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; color: var(--ink); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .icard__link {
   margin-top: auto; padding-top: var(--s-3);
   display: inline-flex; align-items: center; gap: 6px;
@@ -706,7 +710,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   padding-block: var(--section-y);                         /* same rhythm as every other section */
 }
 .rail__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-8); }
-.rail__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; text-wrap: balance; }
+.rail__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; text-wrap: balance; }
 .rail__bar { flex: none; width: 200px; height: 4px; border-radius: 4px; background: var(--line); overflow: hidden; margin-bottom: .6em; }
 .rail__bar i { display: block; height: 100%; width: 100%; background: var(--brand-grad); transform-origin: left; transform: scaleX(0); border-radius: inherit; }
 
@@ -720,7 +724,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--line);
   display: flex; flex-direction: column; gap: var(--s-6);
 }
-.fcard__title { font-size: 24px; line-height: 32px; font-weight: 600; letter-spacing: -0.015em; margin-bottom: var(--s-1);
+.fcard__title { font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.015em; margin-bottom: var(--s-1);
   white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .fcard__text { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh);
   min-height: calc(var(--t-lead-lh) * 2);                 /* always reserve two lines: every card's media box is the same size */
@@ -745,7 +749,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    TESTIMONIALS — rating summary + equal-height review slider
    ========================================================= */
 .reviews { background: var(--tint); padding-block: var(--section-y); position: relative; isolation: isolate; }
-.reviews__title { text-align: center; font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-wrap: balance; }
+.reviews__title { text-align: center; font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-wrap: balance; }
 .reviews__grid {
   display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-4);
   grid-template-areas: "sum sum sum sl sl sl sl sl sl sl sl sl" "ctl ctl ctl sl sl sl sl sl sl sl sl sl";
@@ -834,7 +838,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    HOW IT WORKS — hover a step: it widens, others yield, its note fades in
    ========================================================= */
 .how { padding-block: var(--section-y); }
-.how__title { text-align: center; font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--s-16); text-wrap: balance; }
+.how__title { text-align: center; font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; margin-bottom: var(--s-16); text-wrap: balance; }
 .steps { display: flex; gap: var(--s-4); list-style: none; margin: 0; padding: 0; }
 
 .step {
@@ -867,7 +871,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .step__cap { padding: var(--s-4) var(--s-1) 0; overflow: hidden; }
 .step__row { display: flex; align-items: baseline; gap: var(--s-2); white-space: nowrap; }
 .step__num { font-size: 16px; line-height: 24px; color: var(--brand-600); font-weight: 600; font-variant-numeric: tabular-nums; }
-.step__title { font-size: 20px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+.step__title { font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; }
 .step__text {
   width: 360px; max-width: 100vw;               /* fixed measure: no re-wrapping while the card widens */
   margin-top: var(--s-1); color: var(--ink-muted); font-size: var(--t-body); line-height: var(--t-body-lh);
@@ -985,7 +989,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .faq { padding-block: var(--section-y); }
 .faq__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
 .faq__intro { grid-column: 1 / span 4; position: sticky; top: calc(var(--nav-h) + var(--s-8)); display: grid; gap: var(--s-4); }
-.faq__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; }   /* same H2 as every other section */
+.faq__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; }   /* same H2 as every other section */
 .faq__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
 .faq__help { margin-top: var(--s-6); padding-top: var(--s-6); border-top: 1px solid var(--line); display: grid; gap: var(--s-3); justify-items: start; }
 .faq__help p { font-weight: 500; color: var(--ink); }
@@ -1050,7 +1054,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 .cta__card > .ring { --ring-w: 1px; }
 .cta__text { grid-column: 1 / span 6; display: grid; gap: var(--s-4); justify-items: start; position: relative; z-index: 1; }
-.cta__title { color: var(--ink); font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; text-wrap: balance; }
+.cta__title { color: var(--ink); font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; text-wrap: balance; }
 .cta__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
 .cta__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); margin-top: var(--s-4); }
 .cta__actions .btn--secondary { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
@@ -1136,7 +1140,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    ========================================================= */
 .why { position: relative; padding-block: var(--section-y); background: var(--tint); }
 .why__head { display: flex; align-items: flex-end; justify-content: space-between; gap: var(--s-8); margin-bottom: var(--head-gap); }
-.why__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; }
+.why__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; }
 .why__sub { margin-top: var(--s-3); color: var(--ink); font-size: var(--t-lead); line-height: var(--t-lead-lh); font-weight: 500; }
 .why__lead { margin-top: var(--s-2); color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 60ch; }
 .why__body { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: center; }
@@ -1224,7 +1228,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
    CASE STUDY — one story card + three overview stats (shares the tint band with Reviews)
    ========================================================= */
 .case { background: var(--tint); padding-top: var(--section-y); }
-.case__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-align: center; text-wrap: balance; }
+.case__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; margin-bottom: var(--head-gap); text-align: center; text-wrap: balance; }
 .case__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--gutter); align-items: stretch; }
 .story {
   grid-column: 1 / span 8; position: relative; overflow: hidden;
@@ -1310,7 +1314,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 .mega__img { display: block; width: calc(100% + var(--s-6) * 2); max-width: none; margin: 0 calc(var(--s-6) * -1) var(--s-1); height: auto; aspect-ratio: 16 / 10; object-fit: cover;
   -webkit-mask-image: linear-gradient(#000 70%, transparent); mask-image: linear-gradient(#000 70%, transparent); }   /* image melts into the card */
-.mega__promo-title { font-family: var(--font-head); font-weight: 600; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
+.mega__promo-title { font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
 .mega__promo-text { color: rgba(255, 255, 255, .7); }
 .mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
 .mega__groups { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--s-4); }   /* one column per group, any number */

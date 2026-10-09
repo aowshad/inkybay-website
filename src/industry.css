@@ -100,7 +100,7 @@
   background: radial-gradient(70% 70% at 50% 55%, #FFFFFF 0%, transparent 70%), #FFF1E4; }
 .ipcard__img img { width: 86%; height: 86%; object-fit: contain; transition: transform .7s var(--ease-expo); }
 .ipcard:hover .ipcard__img img { transform: scale(1.05) rotate(-2deg); }
-.ipcard__name { padding-inline: var(--s-2); font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.ipcard__name { padding-inline: var(--s-2); font-size: 18px; line-height: 26px; font-weight: 500; letter-spacing: -0.01em; }
 .iprod__cta { margin-top: var(--head-gap); display: grid; justify-items: center; gap: var(--s-4); text-align: center; }
 .iprod__cta p { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
 
@@ -141,7 +141,7 @@
 .imwin__lines u { display: block; margin-top: 4px; width: 60%; height: 18px; border-radius: 6px; background: var(--brand-grad); }
 .imcard__body { padding: var(--s-6); display: grid; gap: var(--s-4); }
 .imcard__head { display: flex; align-items: baseline; justify-content: space-between; gap: var(--s-4); }
-.imcard__name { font-size: 20px; line-height: 28px; font-weight: 600; color: #fff; }
+.imcard__name { font-size: 20px; line-height: 28px; font-weight: 500; color: #fff; }
 .imcard__where { color: rgba(255, 255, 255, .6); }
 .imcard__quote { color: rgba(255, 255, 255, .78); }
 .imcard .story__link { color: #fff; justify-self: start; }

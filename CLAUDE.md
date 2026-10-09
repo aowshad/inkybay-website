@@ -83,7 +83,11 @@ Never delete an image that something still references.
 `--head-gap` 64 / 40 (section heading block to its content).
 **Type**: Geist for headings only, Inter for everything else. **No monospace anywhere**, including chip and mini-UI text:
 a font-name roll uses "Display", never "Mono".
-Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lead 18/24, body 16/24.
+Display 64/72 (`--t-display`, the homepage hero H1 only, weight 600). Inner-page hero H1 56 (`--t-h1-inner`, weight 500:
+features, industries, partners, contact, blog listing); blog article H1 44 (`--t-h1-article`, 500). H2 48 on desktop,
+fluid to 32 on phones (`--t-h2`, `--t-h2-lh` 1.15, -0.025em, weight 500; the muted part of two-tone headings keeps the
+same size and weight). Card and step titles (H3) weight 500. Lead 18/24, body 16/24. The homepage features heading keeps
+its own stacked phone size.
 **Floor**: paragraph text never below 16px; section sub headings are 18px.
 **Colour**: brand `#F58220` / `#FF7500` / `#E5380F` / red `#D42427`, brand gradient, frame gradient,
 `--tint #FFF7F0`, `--editor-blue #1C8CF0` (only for editor-selection visuals). Neutrals are tokens with dark overrides.
@@ -130,7 +134,7 @@ Display 64/72 (`--t-display`), H2 56 (`--t-h2`, 1.17 line-height, -0.025em), lea
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); each frame has its own nature photo (`photos/why-1..4`) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
-11. **FAQ** (heading "FAQs", same 56px H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
+11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
 12. **Crowd marquee** (dark zone, between CTA and footer): "Built for merchants [4 round faces] and shoppers [4 soft-square faces]",
    Geist 120px, 48s loop, edge fades, pauses on hover. Faces sit on colour chips (warm for merchants, cool for shoppers) with a
    dark stroke so stacked avatars separate; crops are centred on the detected head; the star separator has equal word-sized space each side; a hovered face lifts. JS repeats the set until it overfills, then duplicates it for a gap-free -50% loop.
@@ -516,6 +520,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Type scale: lighter, smaller headings. --t-h2 48 (32 on phones) at 1.15 and weight 500 for every H2 and H3; new --t-h1-inner (56/500) for inner-page hero H1s and --t-h1-article (44/500); hard-coded 600 card and step titles drop to 500; the homepage hero H1 is unchanged. Checked at 1440 and 390: H2 48/500 everywhere, no two-tone line wraps at 1440
 - 2026-10-09: Contact: the partnership topic shows a one-line helper under the dropdown with a "Become a partner" link instead of the note card (your call)
 - 2026-10-09: Fix: the office cards stack from 900px (was 760px) and their header wraps; with the flags, the Bangladesh header overflowed at 768px (the previous commit was pushed with that failing audit by mistake)
 - 2026-10-09: Contact offices show the US and Bangladesh flags before the names (your call); drawn as small inline SVGs because emoji flags do not render on Windows

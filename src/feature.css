@@ -12,7 +12,7 @@
 .crumbs a:hover { color: var(--ink); }
 .crumbs svg { width: 14px; height: 14px; opacity: .6; }
 .crumbs [aria-current] { color: var(--ink); font-weight: 500; }
-.fhero__title { font-size: var(--t-display); line-height: var(--t-display-lh); letter-spacing: var(--t-display-track); font-weight: 600; text-wrap: balance; }
+.fhero__title { font-size: var(--t-h1-inner); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; }
 .fhero__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 46ch; }
 .fhero__actions { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 .fhero__vis { grid-column: 7 / span 6; }
@@ -55,7 +55,7 @@
 .fsec--tint { background: var(--tint); overflow-x: clip; }
 .fsec__head { margin-bottom: var(--head-gap); display: grid; gap: var(--s-3); }
 .fsec__head--center { text-align: center; justify-items: center; }
-.fsec__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; text-wrap: balance; }
+.fsec__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; text-wrap: balance; }
 .fsec__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 52ch; }
 
 /* ---- benefits: open columns, a hairline on top that fills with brand on hover */
@@ -67,7 +67,7 @@
 .fben__item:hover::after { transform: scaleX(1); }
 .fben__icon { width: 24px; height: 24px; color: var(--brand-600); }
 .fben__icon svg { width: 100%; height: 100%; }
-.fben__item h3 { font-size: 20px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; margin-top: var(--s-2); }
+.fben__item h3 { font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; margin-top: var(--s-2); }
 .fben__item p { color: var(--ink-muted); }
 
 /* ---- cards (capabilities) */
@@ -76,7 +76,7 @@
 .fcardx:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 35%, var(--line)), 0 18px 36px -28px rgba(229, 56, 15, .45); }
 .ficon { width: 40px; height: 40px; border-radius: var(--r-md); display: grid; place-items: center; background: color-mix(in srgb, var(--brand-500) 12%, var(--bg)); color: var(--brand-600); }
 .ficon svg { width: 20px; height: 20px; }
-.fcardx h3 { font-size: 18px; line-height: 26px; font-weight: 600; letter-spacing: -0.01em; }
+.fcardx h3 { font-size: 18px; line-height: 26px; font-weight: 500; letter-spacing: -0.01em; }
 .fcardx p { color: var(--ink-muted); }
 .fcap__grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); list-style: none; margin: 0; padding: 0; }
 
