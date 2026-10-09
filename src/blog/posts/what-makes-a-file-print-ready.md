@@ -12,11 +12,11 @@ thumbnail: what-makes-a-file-print-ready.webp
 thumbnail_alt: "A white T-shirt on a soft orange background"
 cover_product: tee
 summary:
-  - "Resolution is measured at print size: aim for 300 PPI on the product, not on screen."
-  - "Vector artwork scales cleanly; photos need enough pixels for the size they print at."
-  - "Screens show RGB, presses print CMYK or inks: expect bright colours to shift."
-  - "Keep text and key details inside the safe area, away from seams and edges."
-  - "A short checklist before production saves most reprints."
+  - {text: "Resolution is measured at print size: aim for 300 PPI on the product, not on screen.", section: resolution-pixels-at-the-size-you-print}
+  - {text: "Vector artwork scales cleanly; photos need enough pixels for the size they print at.", section: vector-beats-pixels-when-it-can}
+  - {text: "Screens show RGB, presses print CMYK or inks: expect bright colours to shift.", section: colour-what-you-see-is-not-what-you-print}
+  - {text: "Keep text and key details inside the safe area, away from seams and edges.", section: safe-areas-bleed-and-seams}
+  - {text: "A short checklist before production saves most reprints.", section: a-pre-production-checklist}
 demo: true
 ---
 
@@ -56,7 +56,7 @@ Screens mix red, green and blue light (RGB). Most printing mixes cyan, magenta, 
 
 Every product has edges that the printer cannot hit exactly. Keep important parts of the design inside the **safe area**, and extend background colour past the edge into the **bleed** so no white gap shows after trimming. On garments, avoid seams, collars and zips: text that runs into a seam will never print straight.
 
-> "We used to fix files by hand every morning. Once shoppers could only place designs inside the print area, the morning fixes stopped."
+> We used to fix files by hand every morning. Once shoppers could only place designs inside the print area, the morning fixes stopped.
 >
 > **Store owner (demo)**, custom team apparel
 

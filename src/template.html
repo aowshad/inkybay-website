@@ -3183,10 +3183,11 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         prog(); window.addEventListener('scroll', prog, { passive: true }); window.addEventListener('resize', prog);
       }
 
-      /* "Key takeaways": the bullets are in the HTML; the button reveals them with a short shimmer and typing */
+      /* "Key takeaways": the points are in the HTML; the button reveals them (a 0.6s shimmer, then the numbered points
+         one by one with a short typing effect); reduced motion shows them at once */
       document.querySelectorAll('.bsum').forEach(function (box) {
         var btn = box.querySelector('.bsum__btn'), label = btn.querySelector('span'), show = label.textContent, hide = btn.getAttribute('data-hide');
-        var lis = [].slice.call(box.querySelectorAll('.bsum__list li')), texts = lis.map(function (li) { return li.textContent; }), busy = false;
+        var lis = [].slice.call(box.querySelectorAll('.bsum__list li')), texts = lis.map(function (li) { return li.querySelector('.bsum__text').textContent; }), busy = false;
         box.classList.add('is-ready');
         function done() { busy = false; box.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); label.textContent = hide; }
         btn.addEventListener('click', function () {
@@ -3196,30 +3197,41 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           busy = true; box.classList.add('is-shimmer');
           setTimeout(function () {
             box.classList.remove('is-shimmer'); box.classList.add('is-open');
-            lis.forEach(function (li) { li.classList.add('is-typing'); });
-            (function type(k) {
+            lis.forEach(function (li) { li.classList.add('is-waiting'); li.classList.remove('is-in'); });
+            (function next(k) {
               if (k >= lis.length) { done(); return; }
-              var li = lis[k], full = texts[k], n = 0, step = Math.max(1, Math.ceil(full.length / 18));
-              li.textContent = ''; li.classList.remove('is-typing');
-              (function tick() { n = Math.min(full.length, n + step); li.textContent = full.slice(0, n); if (n < full.length) setTimeout(tick, 22); else setTimeout(function () { type(k + 1); }, 90); })();
+              var li = lis[k], t = li.querySelector('.bsum__text'), full = texts[k], n = 0, step = Math.max(1, Math.ceil(full.length / 16));
+              t.textContent = ''; li.classList.remove('is-waiting'); li.classList.add('is-in');
+              (function tick() { n = Math.min(full.length, n + step); t.textContent = full.slice(0, n); if (n < full.length) setTimeout(tick, 20); else setTimeout(function () { next(k + 1); }, 80); })();
             })(0);
           }, 600);
         });
       });
 
-      /* table of contents: highlight the section in view */
-      var tocLinks = [].slice.call(document.querySelectorAll('.btoc a[href^="#"]'));
-      if (tocLinks.length && 'IntersectionObserver' in window) {
-        var heads = [].slice.call(document.querySelectorAll('.bbody h2[id], .bbody h3[id]')), visible = {};
-        var activate = function (id) { tocLinks.forEach(function (a) { var on = a.getAttribute('href') === '#' + id; a.classList.toggle('is-active', on); if (on) a.setAttribute('aria-current', 'location'); else a.removeAttribute('aria-current'); }); };
-        var io = new IntersectionObserver(function (es) {
-          es.forEach(function (e) { visible[e.target.id] = e.isIntersecting; });
-          var first = heads.filter(function (h) { return visible[h.id]; })[0];
-          if (first) activate(first.id);
-          else { var above = heads.filter(function (h) { return h.getBoundingClientRect().top < 120; }).pop(); activate(above ? above.id : heads[0].id); }   /* above every heading: the first one */
-        }, { rootMargin: '-90px 0px -55% 0px' });
-        heads.forEach(function (h) { io.observe(h); });
-      }
+      /* table of contents: h2 entries; the active section's h3s expand under it; one 2px indicator slides to the active entry */
+      document.querySelectorAll('.btoc--side').forEach(function (toc) {
+        var track = toc.querySelector('.btoc__track'), ind = toc.querySelector('.btoc__ind'), links = [].slice.call(toc.querySelectorAll('a[href^="#"]'));
+        var heads = [].slice.call(document.querySelectorAll('.bbody h2[id], .bbody h3[id]')); if (!heads.length) return;
+        var current = null;
+        function activate(id) {
+          if (id === current) return; current = id;
+          var a = links.filter(function (l) { return l.getAttribute('href') === '#' + id; })[0]; if (!a) return;
+          var sec = a.closest('li[data-sec]');
+          [].slice.call(track.querySelectorAll('li[data-sec]')).forEach(function (li) { li.classList.toggle('is-open', li === sec); });
+          links.forEach(function (l) { var on = l === a; l.classList.toggle('is-active', on); if (on) l.setAttribute('aria-current', 'location'); else l.removeAttribute('aria-current'); });
+          var tr = track.getBoundingClientRect(), r = a.getBoundingClientRect();
+          ind.style.transform = 'translateY(' + (r.top - tr.top) + 'px)'; ind.style.height = r.height + 'px'; ind.style.opacity = '1';
+          var side = toc.closest('.bart__side');                      /* keep the active entry in view when the contents scroll */
+          if (side && side.scrollHeight > side.clientHeight) { var sr = side.getBoundingClientRect(); if (r.top < sr.top || r.bottom > sr.bottom) side.scrollTop += r.top - sr.top - sr.height / 3; }
+        }
+        function update() {
+          var pick = heads[0];
+          var line = Math.max(180, window.innerHeight * .45);   /* the current section: the last heading in the top 45% of the screen */
+          heads.forEach(function (h) { if (h.getBoundingClientRect().top <= line) pick = h; });
+          activate(pick.id);
+        }
+        update(); window.addEventListener('scroll', update, { passive: true }); window.addEventListener('resize', function () { current = null; update(); });
+      });
 
       /* copy links: heading anchors and the share row */
       function copy(text, done) {

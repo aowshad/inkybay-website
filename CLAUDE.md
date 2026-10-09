@@ -92,7 +92,7 @@ its own stacked phone size.
 (`--t-small`, 14/20, or the `.t-small` utility) is allowed ONLY for: form helper text (placeholders via `::placeholder`
 only, hints, inline errors, character counters, consent text); meta (breadcrumbs, dates, reading time, author line,
 counts); small labels (badges, category pills, tags, filter tabs and their counts, chips inside visuals, small section
-labels); the blog table of contents and its label; captions under images and tables; the footer legal row; mega menu
+labels); the blog table of contents and its label; captions under images and tables and quote sources; the footer legal row; mega menu
 descriptions. 16px or more ALWAYS for body text, FAQ answers, buttons, nav links, card titles, form labels and typed
 input values (iOS Safari zooms on inputs under 16px), pagination numbers and links in running text. Text inside
 aria-hidden illustrations (mini UIs, How it works scenes, the industry deck's editor panel) is drawn like a picture
@@ -152,6 +152,9 @@ Section sub headings are 18px.
 ## Rules that must survive the rebuild
 
 - Every section uses `--section-y` and `--head-gap`; no ad-hoc paddings.
+- No "AI-template" styling: never a coloured border on one side of a rounded card or quote, and never a gradient
+  ring around a card. Quotes use a large soft quotation mark; cards use a full 1px hairline. The audit fails a
+  border-left/right of 2px or more that differs from the other sides on a rounded element.
 - Respect `prefers-reduced-motion` everywhere (autoplay off, reveals static, rings hidden).
 - Autoplay pauses on hover, on keyboard focus (`:focus-visible` only, so a mouse click never freezes it) and when offscreen.
 - Sliders and progress indicators never show numbers (screen-reader labels may).
@@ -411,15 +414,26 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   a removable filter chip, "Related tags" on tags, the same grid and pagination. Search matches title, excerpt,
   category and tags (case- and accent-insensitive), highlights matches with <mark>, updates as you type (150ms) and
   keeps `?q=` in the URL; empty state with popular categories and "Clear search"; search pages are noindex.
-- Article: a 2px reading progress bar (body only); breadcrumb, category pill, H1, meta (author, date, updated,
-  reading time); the thumbnail at its own ratio (eager, fetchpriority high); "Key takeaways" (the bullets are in the
-  HTML; the button reveals them with a 0.6s shimmer and a typing effect; reduced motion shows them at once; without JS
-  they are simply shown; never labelled AI); body at 19px / 1.7 / 68ch with copy-link anchors on h2/h3, scrolling
-  tables, callouts (`> [!NOTE]`), quotes, captioned images and checklists; tags, share links (copy, X, LinkedIn,
-  Facebook, email; plain URLs, no third-party scripts), author box, "Keep reading" (same category first, then shared
-  tags), previous / next. Desktop sidebar (sticky): "On this page" (h2 + h3, the section in view highlighted), then
-  the newsletter and "Sell custom products with InkyBay" promos; it scrolls inside itself when taller than the screen.
-  Tablet and phone: the contents become a disclosure above the body and the promos follow the article.
+- Article: a 2px reading progress bar (body only); breadcrumb, category pill, H1 (44/500), meta row (author, date,
+  updated, reading time; 14px muted with thin 1px separators); the thumbnail at its own ratio (eager, fetchpriority
+  high); "Key takeaways"; body at 19px / 1.7 / 68ch (H2 28/500, H3 22/500) with copy-link anchors, scrolling tables,
+  callouts (`> [!NOTE]`, a full hairline card), quotes (a large soft quotation mark, 22/500, the source 14px muted
+  below; no box and no side border), captioned images and checklists; tags, share links (copy, X, LinkedIn, Facebook,
+  email; plain URLs, no third-party scripts), author box, "Keep reading" (same category first, then shared tags),
+  previous / next. No promo cards on the article.
+- Key takeaways: a soft `--surface` card with a 1px `--line` (no gradient ring). Collapsed: a sparkle in a small
+  brand-tinted square, "Key takeaways", a muted "N points · 1 min read", the first point as a one-line faded preview,
+  and "Summarize this article". Expanded: a 0.6s shimmer, then numbered points (17px, number in a small circle) appear
+  one by one with a short typing effect; a point with a `section` links to it ("Read section", 14px). The text is in
+  the HTML from the start; reduced motion shows it at once; without JS it is simply shown; never labelled AI.
+  Front matter: a summary item is a plain string or `{text: "...", section: heading-id}` (the build fails on an
+  unknown heading id).
+- Table of contents (desktop, sticky, max-height 100vh minus the navbar and 48px, scrolls inside): "On this page"
+  then only the h2 entries; the active section's h3s expand under it; 14px links, 8px rhythm, no boxes; a 1px track on
+  the left with one 2px brand indicator that slides to the active entry. Tablet and phone: an "On this page"
+  disclosure above the body.
+- Pills, tags and the category bar share one calm style: 14px, weight 400, `--ink-muted` on `--surface` with a 1px
+  `--line`, radius 999; hover: `--ink` and a slightly darker border; the active filter is inverted (ink background).
 - SEO: unique title and description (seo_* overrides), canonical, Open Graph and Twitter tags (thumbnail as image),
   JSON-LD BlogPosting (articles), BreadcrumbList (all blog pages) and CollectionPage (listings); one H1 per page.
 - Small text follows the 14px allowlist (Type floor above).
@@ -427,7 +441,7 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   resolve, search finds "print" and shows the empty state for "zzzz", the layout switch changes the columns, the
   contents follow the section in view, the summary reveals the bullets, JSON-LD parses, no overflow at 390px.
 - Endpoints: the newsletter forms post to `NEWSLETTER_ENDPOINT` (see Forms); empty for now, so they say "Not connected
-  yet". Draft / demo: the 14 posts and both authors are demo content; the promo cards and newsletter copy are draft.
+  yet". Draft / demo: the 14 posts and both authors are demo content; the newsletter copy is draft.
 
 ## Industry pages (one template)
 
@@ -528,6 +542,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Blog article: calmer pills (one 14px muted style for pills, tags and the category bar; active filter inverted), a better Key takeaways card (surface card, preview line, numbered points with optional "Read section" links via {text, section} summary items), a cleaner contents list (h2 entries, active section's h3s expand, one sliding 2px indicator), quotes and callouts without one-sided accents (new rule and audit check), body H2 28/500 and H3 22/500, a 14px meta row with thin separators; the newsletter and install promo cards are removed from the article (markup, CSS, blog.json fields)
 - 2026-10-09: Type: explicit 14px allowlist. --t-small (14/20) and .t-small; every 14px in the CSS now uses the token; the 404 editor's tab, weight and Reset buttons go to 16px (buttons are always 16); chips on visuals never go under 14px (the partner orbit chips were 15px and the deck label and chip 10 to 11px on phones); placeholders are 14px while typed values stay 16px. The audit checks every visible text node against the allowlist, fails anything under 14px and any input under 16px. Decision: text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is treated like text in an image and exempt; raising it would mean redesigning ~40 illustration parts
 - 2026-10-09: Type scale: lighter, smaller headings. --t-h2 48 (32 on phones) at 1.15 and weight 500 for every H2 and H3; new --t-h1-inner (56/500) for inner-page hero H1s and --t-h1-article (44/500); hard-coded 600 card and step titles drop to 500; the homepage hero H1 is unchanged. Checked at 1440 and 390: H2 48/500 everywhere, no two-tone line wraps at 1440
 - 2026-10-09: Contact: the partnership topic shows a one-line helper under the dropdown with a "Become a partner" link instead of the note card (your call)

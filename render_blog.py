@@ -52,6 +52,8 @@ def scalar(v):
     if len(v) >= 2 and v[0] == v[-1] and v[0] in "\"'": return v[1:-1]
     if v in ("true", "false"): return v == "true"
     if v.startswith("[") and v.endswith("]"): return [scalar(x) for x in v[1:-1].split(",") if x.strip()]
+    if v.startswith("{") and v.endswith("}"):                 # an inline mapping: {text: "...", section: some-heading-id}
+        return {m.group(1): scalar(m.group(2)) for m in re.finditer(r'(\w+):\s*("(?:[^"\\]|\\.)*"|[^,}]+)', v[1:-1])}
     return v
 
 
@@ -300,6 +302,11 @@ def build_all(build, write, site, site_url, home):
     for p in D["posts"]:
         p["thumb"] = thumbs(p, site)
         p["html"], p["toc"] = md_html(p["body"])
+        ids = {t["id"] for t in p["toc"]} | {c["id"] for t in p["toc"] for c in t["children"]}
+        p["summary_items"] = [it if isinstance(it, dict) else {"text": it} for it in p["summary"]]
+        for it in p["summary_items"]:
+            if not it.get("text"): fail(f"{p['slug']}: a summary item has no text")
+            if it.get("section") and it["section"] not in ids: fail(f"{p['slug']}: summary section '{it['section']}' is not a heading id in the post")
     (site / "assets").mkdir(parents=True, exist_ok=True)
     (site / "assets" / "inkybay-logo.svg").write_text((ROOT / "src/assets/brand/logo_mark.svg").read_text())
     pub = {"@type": "Organization", "name": copy["meta"]["publisher"], "logo": {"@type": "ImageObject", "url": site_url + "assets/inkybay-logo.svg"}}
@@ -417,7 +424,7 @@ def build_all(build, write, site, site_url, home):
         path = p["url"]; root = depth_root(path); cat = D["C"][p["category"]]; au = D["authors"][p["author"]]
         related = sorted([q for q in allp if q is not p], key=lambda q: (q["category"] != p["category"], -len(set(q["tags"]) & set(p["tags"])), allp.index(q)))[:3]
         newer = allp[i - 1] if i > 0 else None; older = allp[i + 1] if i + 1 < len(allp) else None
-        toc_items = "".join(f'<li><a href="#{t["id"]}">{E(t["name"])}</a>' + (("<ol>" + "".join(f'<li><a href="#{c["id"]}">{E(c["name"])}</a></li>' for c in t["children"]) + "</ol>") if t["children"] else "") + "</li>" for t in p["toc"])
+        toc_items = "".join(f'<li data-sec="{t["id"]}"><a href="#{t["id"]}">{E(t["name"])}</a>' + (("<ol class=\"btoc__sub\">" + "".join(f'<li><a href="#{c["id"]}">{E(c["name"])}</a></li>' for c in t["children"]) + "</ol>") if t["children"] else "") + "</li>" for t in p["toc"])
         toc = f'<ol class="btoc__list">{toc_items}</ol>'
         url_abs = site_url + path
         share = [("X", f"https://twitter.com/intent/tweet?url={quote(url_abs, safe='')}&text={quote(p['title'], safe='')}"),
@@ -428,15 +435,17 @@ def build_all(build, write, site, site_url, home):
                       + "".join(f'<a class="bshare__btn" href="{E(u)}"{"" if n == "Email" else NEW_TAB}>{E(n)}</a>' for n, u in share)
                       + f'<span class="bshare__ok" aria-live="polite" data-copied="{E(a["copied"])}"></span>')
         avatar = f'<img class="bauthor__avatar" src="{root}{au["avatar"]}" alt="" width="40" height="40">' if au.get("avatar") else f'<span class="bauthor__avatar" aria-hidden="true">{E(au["name"][:1])}</span>'
-        meta = (f'<p class="bmeta">{avatar}<span>{E(a["written_by"])} <strong>{E(au["name"])}</strong></span><span aria-hidden="true">·</span>'
+        SEP = '<span class="bmeta__sep" aria-hidden="true"></span>'
+        meta = (f'<div class="bmeta">{avatar}<span>{E(a["written_by"])} <strong>{E(au["name"])}</strong></span>{SEP}'
                 f'<time datetime="{p["date"]}">{fmt_date(p["date"])}</time>'
-                + (f'<span aria-hidden="true">·</span><span>{E(a["updated"])} <time datetime="{p["updated"]}">{fmt_date(p["updated"])}</time></span>' if p.get("updated") else "")
-                + f'<span aria-hidden="true">·</span><span>{p["minutes"]} min read</span></p>')
-        bullets = "".join(f"<li>{E(s)}</li>" for s in p["summary"])
-        pi = copy["promo_install"]; pn = copy["promo_news"]
-        promos = (f'<div class="bpromo bpromo--news"><p class="bpromo__title">{E(pn["title"])}</p><p>{E(pn["text"])}</p>{news_form(copy["newsletter"], "bp")}</div>'
-                  f'<div class="bpromo bpromo--install"><p class="bpromo__title">{E(pi["title"])}</p><ul class="bpromo__list">{"".join(f"<li>{E(x)}</li>" for x in pi["items"])}</ul>'
-                  f'{{{{BTN_PRIMARY:{pi["button"]}|{pi["href"]}}}}}</div>')
+                + (f'{SEP}<span>{E(a["updated"])} <time datetime="{p["updated"]}">{fmt_date(p["updated"])}</time></span>' if p.get("updated") else "")
+                + f'{SEP}<span>{p["minutes"]} min read</span></div>')
+        items = p["summary_items"]
+        bullets = "".join(f'<li><span class="bsum__n" aria-hidden="true">{k + 1}</span><div><p class="bsum__text">{E(it["text"])}</p>'
+                          + (f'<a class="bsum__go" href="#{E(it["section"])}">{E(a["read_section"])}</a>' if it.get("section") else "") + "</div></li>"
+                          for k, it in enumerate(items))
+        sum_words = sum(len(it["text"].split()) for it in items)
+        sum_meta = f'{len(items)} points · {max(1, math.ceil(sum_words / 225))} min read'
         nav_pn = ('<nav class="bpn" aria-label="More articles">'
                   + (f'<a class="bpn__link bpn__link--prev" href="{root}{older["url"]}"><span>{E(a["prev"])}</span>{E(older["title"])}</a>' if older else "<span></span>")
                   + (f'<a class="bpn__link bpn__link--next" href="{root}{newer["url"]}"><span>{E(a["next"])}</span>{E(newer["title"])}</a>' if newer else "<span></span>") + "</nav>")
@@ -451,9 +460,12 @@ def build_all(build, write, site, site_url, home):
           {meta}
         </header>
         <figure class="bart__fig">{img_tag(p, root, "(max-width: 960px) 100vw, 760px", eager=True, cls="bart__img")}</figure>
-        <section class="bsum" aria-labelledby="b-sum"><div class="bsum__head"><h2 class="bsum__title" id="b-sum">{E(a["summary_title"])}</h2>
-          <button class="bsum__btn" type="button" aria-expanded="false" aria-controls="b-sum-list" data-hide="{E(a["hide"])}">{SPARKLE}<span>{E(a["summarize"])}</span></button></div>
-          <ul class="bsum__list" id="b-sum-list">{bullets}</ul></section>
+        <section class="bsum" aria-labelledby="b-sum">
+          <div class="bsum__head"><span class="bsum__icon" aria-hidden="true">{SPARKLE}</span>
+            <div class="bsum__intro"><h2 class="bsum__title" id="b-sum">{E(a["summary_title"])}</h2><p class="bsum__meta">{sum_meta}</p></div>
+            <button class="bsum__btn" type="button" aria-expanded="false" aria-controls="b-sum-list" data-hide="{E(a["hide"])}"><span>{E(a["summarize"])}</span></button></div>
+          <p class="bsum__peek" aria-hidden="true">{E(items[0]["text"])}</p>
+          <ol class="bsum__list" id="b-sum-list">{bullets}</ol></section>
         <details class="btoc btoc--inline"><summary>{E(a["toc"])}</summary><nav aria-label="Table of contents">{toc}</nav></details>
         <div class="bbody">{p["html"]}</div>
         <footer class="bart__foot">
@@ -462,9 +474,8 @@ def build_all(build, write, site, site_url, home):
           <div class="bauthor">{avatar}<div><div class="bauthor__label">{E(a["about_author"])}</div><p class="bauthor__name">{E(au["name"])} <span>· {E(au["role"])}</span></p><p class="bauthor__bio">{E(au["bio"])}</p></div></div>
         </footer>
       </div>
-      <aside class="bart__side" aria-label="On this page and more">
-        <nav class="btoc btoc--side" aria-label="Table of contents"><p class="btoc__title">{E(a["toc"])}</p>{toc}</nav>
-        <div class="bpromos">{promos}</div>
+      <aside class="bart__side" aria-label="On this page">
+        <nav class="btoc btoc--side" aria-label="Table of contents"><p class="btoc__title">{E(a["toc"])}</p><div class="btoc__track">{toc}<span class="btoc__ind" aria-hidden="true"></span></div></nav>
       </aside>
     </div>
   </article>

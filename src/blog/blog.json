@@ -38,7 +38,8 @@
     "about_author": "About the author",
     "keep_reading": "Keep reading",
     "prev": "Previous article",
-    "next": "Next article"
+    "next": "Next article",
+    "read_section": "Read section"
   },
   "newsletter": {
     "title": [
@@ -54,22 +55,6 @@
     "success": "You're subscribed. Look out for the next issue.",
     "fail": "Something went wrong. Please try again in a moment.",
     "not_connected": "Not connected yet: sign-ups aren't saved from this page for now.",
-    "draft": true
-  },
-  "promo_news": {
-    "title": "Get the InkyBay newsletter",
-    "text": "Practical tips for custom product stores, once a month.",
-    "draft": true
-  },
-  "promo_install": {
-    "title": "Sell custom products with InkyBay",
-    "items": [
-      "21-day free trial",
-      "No coding required",
-      "Live design editor"
-    ],
-    "button": "Install on Shopify",
-    "href": "#",
     "draft": true
   },
   "meta": {

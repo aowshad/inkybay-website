@@ -29,7 +29,8 @@ def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
                ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .porbit__chip, .icardx__label, "
                ".mega__desc, .mega__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
-               ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip")
+               ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
+               ".bbar__pill, .brel__label, .bcall__title, .bquote p + p")
 SMALL_TEXT_JS = """window.smallText = function () {
   const ALLOW = %s, bad = [];
   for (const e of document.querySelectorAll('body *')) {
@@ -119,10 +120,14 @@ async def check_page(slug, d):
                 r = await pg.evaluate("""(()=>{const W=document.documentElement.clientWidth;
                   const small=smallText();
                   const anim=[...document.querySelectorAll('h2.h-anim')], shown=anim.filter(x=>x.classList.contains('is-in')).length;
-                  return {overflow: document.documentElement.scrollWidth > W, small:[...new Set(small)].slice(0,4), reveal:[shown, anim.length]}})()""")
+                  const oneSided=[...document.querySelectorAll('body *')].filter(el=>{const c=getComputedStyle(el); if(!parseFloat(c.borderTopLeftRadius)&&!parseFloat(c.borderTopRightRadius)) return false;
+                    const w=k=>c['border'+k+'Style']==='none'?0:parseFloat(c['border'+k+'Width']); const L=w('Left'),R=w('Right'),T=w('Top'),B=w('Bottom');
+                    return (L>=2&&(L!==T||L!==B||L!==R))||(R>=2&&(R!==T||R!==B||R!==L));}).map(el=>el.className||el.tagName).slice(0,3);
+                  return {overflow: document.documentElement.scrollWidth > W, small:[...new Set(small)].slice(0,4), reveal:[shown, anim.length], oneSided}})()""")
                 tag = f"{scheme} {w}px"
                 if errs: bad(slug, f"{tag}: JS errors {errs[:2]}")
                 if r["overflow"]: bad(slug, f"{tag}: horizontal overflow")
+                if r["oneSided"]: bad(slug, f"{tag}: a one-sided accent border on a rounded element (CLAUDE.md: no AI-template styling): {r['oneSided']}")
                 if r["small"]: bad(slug, f"{tag}: text under 16px outside the 14px allowlist (or under 14px): {r['small'][:4]}")
                 if r["reveal"][0] != r["reveal"][1]: bad(slug, f"{tag}: {r['reveal'][1]-r['reveal'][0]} headings did not reveal")
                 if d and w == 1440 and scheme == "light":
