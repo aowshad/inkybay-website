@@ -271,11 +271,12 @@ section type, add it to the template for all pages.
 `site/404.html`, built by `render_404.py` from `src/404.json` (copy, products, print areas, swatches) with
 `src/404.css`. GitHub Pages serves it for any missing URL at any depth, so its links cannot be relative: build.py's
 `SITE_BASE` ("/inkybay-website/" now; `SITE_BASE=/ python3 build.py` on a custom domain) is the root of every link on
-this page. Images are inlined, so nothing else depends on the depth. It has `noindex` and nothing links to it.
-- Left (5 cols): "Status 404" label, two-tone H1, lead, "Back to homepage", helpful links (Features and Industries go to
-  the homepage sections `#features` / `#industries`; Pricing goes to `#pricing`, which does not exist yet; Help center
-  is external).
-- Right (7 cols): a mini InkyBay editor (glass card, light in both themes): product tabs (T-shirt, Mug, Cap) and Reset;
+this page. Images are inlined, so nothing else depends on the depth. It has `noindex` and nothing links to it. It has
+no CTA section (render_404.py removes it from the shared tail); the crowd marquee and footer stay.
+- Left (5 cols): H1 on two lines, "404" (ink) over "Page not found" (muted), at display size; the lead and "Back to
+  homepage". No status label and no helpful links (your call).
+- Right (7 cols): a mini InkyBay editor (glass card, light in both themes): product tabs (T-shirt, Mug, Tote bag; the
+  tote replaced the cap because its flat front holds text well) and Reset;
   a canvas with the product, a dashed print area and the "404" text layer (Geist 700), selected with an editor-blue box,
   four corner handles and a rotate handle; a toolbar with six swatches, Regular/Bold and a size readout.
 - Drag moves the layer; a corner resizes it (aspect kept); the top handle rotates (snaps to 45deg steps); double-click
@@ -508,6 +509,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: 404 simplified (your changes): heading "404 / Page not found", no "Status 404" label, no helpful links, no CTA section; the cap becomes a tote bag (flat front, print area 31-69% across, 48-84% down) so the text sits balanced
 - 2026-10-09: Partners and forms polish (your changes): one-line hero heading; "Who we partner with" removed; How it works and the form merged into one "Partner with InkyBay" section (steps small on the left, form card on the right; name + email in one row, website, type and message each on their own row); every partner card has the same hover lift instead of the first one looking permanently hovered; shared form fixes on every form: a proper select chevron, a custom checkbox, the primary arrow on submit buttons, and the "Form not connected yet" note hidden
 - 2026-10-08: Blog links, audit and docs: audit check_blog (thumbnail ratios, pill/tag/pagination links, search results and empty state, layout switch, contents highlight, summary reveal, JSON-LD, overflow at 390px) and four blog pages in --all; docs/writing-a-blog-post.md for writers. The Resources mega menu and footer already point to resources/blog/
 - 2026-10-08: Blog demo content: four categories (Print prep, Pricing and operations, Shopify and growth, InkyBay product), eight tags, two demo authors, 14 demo posts (302 to 702 words; two featured) including the flagship "What makes a file print-ready? A practical guide" with the resolution table, colour section, callout, merchant quote, lists, checklist and FAQ; 16:10 covers (soft brand gradient + one product, no text) made by scripts/make_blog_covers.py. Figma frames were not readable, so titles are our own

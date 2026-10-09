@@ -2,41 +2,84 @@
   "meta": {
     "title": "Page not found | InkyBay"
   },
-  "label": "Status 404",
   "title": [
-    "This page isn't in the catalogue.",
-    "Design something instead."
+    "404",
+    "Page not found"
   ],
   "lead": "The link may be out of date, or the page may have moved. Everything else is still where you left it.",
   "button": "Back to homepage",
-  "links_label": "Helpful links",
-  "links": [
-    {"title": "Features", "href": "#features"},
-    {"title": "Industries", "href": "#industries"},
-    {"title": "Pricing", "href": "#pricing"},
-    {"title": "Help center", "href": "https://docs.inkybay.com/spf/en", "external": true}
-  ],
   "editor": {
     "text": "404",
     "max_chars": 8,
     "hint": "Drag, resize or recolor me",
     "warning": "Outside print area",
     "products": [
-      {"product": "tee", "label": "T-shirt", "area": [0.33, 0.28, 0.67, 0.62]},
-      {"product": "mug", "label": "Mug", "area": [0.17, 0.28, 0.56, 0.72]},
-      {"product": "cap", "label": "Cap", "area": [0.46, 0.29, 0.78, 0.5]}
+      {
+        "product": "tee",
+        "label": "T-shirt",
+        "area": [
+          0.33,
+          0.28,
+          0.67,
+          0.62
+        ]
+      },
+      {
+        "product": "mug",
+        "label": "Mug",
+        "area": [
+          0.17,
+          0.28,
+          0.56,
+          0.72
+        ]
+      },
+      {
+        "product": "tote-bag",
+        "label": "Tote bag",
+        "area": [
+          0.31,
+          0.48,
+          0.69,
+          0.84
+        ]
+      }
     ],
     "swatches": [
-      {"name": "Ink", "color": "#2F2F2F"},
-      {"name": "White", "color": "#FFFFFF"},
-      {"name": "Orange", "color": "#FF7500"},
-      {"name": "Red", "color": "#D42427"},
-      {"name": "Navy", "color": "#1F3A68"},
-      {"name": "Green", "color": "#17A673"}
+      {
+        "name": "Ink",
+        "color": "#2F2F2F"
+      },
+      {
+        "name": "White",
+        "color": "#FFFFFF"
+      },
+      {
+        "name": "Orange",
+        "color": "#FF7500"
+      },
+      {
+        "name": "Red",
+        "color": "#D42427"
+      },
+      {
+        "name": "Navy",
+        "color": "#1F3A68"
+      },
+      {
+        "name": "Green",
+        "color": "#17A673"
+      }
     ],
     "weights": [
-      {"name": "Regular", "value": 500},
-      {"name": "Bold", "value": 700}
+      {
+        "name": "Regular",
+        "value": 500
+      },
+      {
+        "name": "Bold",
+        "value": 700
+      }
     ]
   }
 }

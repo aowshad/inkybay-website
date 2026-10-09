@@ -6,16 +6,10 @@
 .e404__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-12); align-items: center; }
 .e404__text { grid-column: 1 / span 5; display: grid; gap: var(--s-6); justify-items: start; }
 .e404__vis { grid-column: 6 / span 7; }
-.e404__label { font-size: 14px; line-height: 20px; font-weight: 500; color: var(--ink-muted); }
-.e404__title { font-size: var(--t-h2); line-height: var(--t-h2-lh, 1.17); letter-spacing: -0.025em; font-weight: 600; text-wrap: balance; }
+.e404__title { font-size: var(--t-display); line-height: var(--t-display-lh); letter-spacing: var(--t-display-track); font-weight: 600; }
+.e404__title .h-line { display: block; }   /* "404" on its own line, "Page not found" below */
 .e404__title .h-muted { color: var(--ink-muted); }
 .e404__lead { color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); max-width: 44ch; }
-.e404__links { display: grid; gap: var(--s-3); padding-top: var(--s-6); border-top: 1px solid var(--line); width: 100%; }
-.e404__links-label { font-size: 14px; line-height: 20px; color: var(--ink-muted); }
-.e404__links ul { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-6); }
-.e404__links a { display: inline-flex; align-items: center; white-space: nowrap; color: var(--ink); font-weight: 500; text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; }
-.e404__links a:hover { text-decoration-color: var(--brand-500); }
-.e404__ext { width: 12px; height: 12px; margin-left: 4px; color: var(--ink-muted); }
 
 /* the editor card: glass, light in both themes (like the industry panel) */
 .ed { --ink: #2F2F2F; --ink-muted: #707070; --line: #E7E7EA; --ed-blue: var(--editor-blue, #1C8CF0); --ed-red: #D42427;
