@@ -1,0 +1,220 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>InkyBay hero video</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@600;700&family=Inter:wght@500&display=block" rel="stylesheet">
+<link rel="stylesheet" href="video.css">
+<style>
+  @property --r { syntax: '<length>'; inherits: false; initial-value: -150px; }
+  body { overflow: hidden; }
+  .layer { position: absolute; inset: 0; transform-origin: 50% 50%; }
+  /* the close: everything clears through a growing circle centred on the logo */
+  .scene { position: absolute; inset: 0; --r: -150px;
+    -webkit-mask-image: radial-gradient(circle at 960px 470px, transparent var(--r), #000 calc(var(--r) + 120px));
+            mask-image: radial-gradient(circle at 960px 470px, transparent var(--r), #000 calc(var(--r) + 120px)); }
+  .hero-word { left: 150px; top: 440px; padding-bottom: .14em; overflow: hidden; }
+  .hero-word span { display: inline-block; }
+  .slot { position: absolute; left: 150px; top: 520px; height: 56px; overflow: hidden; }   /* a hidden line sits fully below the slot */
+  .slot .line { position: static; display: block; line-height: 56px; }
+  .mover { position: absolute; transform-origin: 0 0; }
+  .mover > .prod { position: relative; left: 0; top: 0; }
+  .selsvg { position: absolute; left: 0; top: 0; overflow: visible; z-index: 6; pointer-events: none; }
+  .selsvg rect.box { fill: none; stroke: var(--editor-blue); stroke-width: 2.4; }
+  .selsvg rect.h { fill: #fff; stroke: var(--editor-blue); stroke-width: 2.4; transform-box: fill-box; transform-origin: center; }
+  .rail { left: 1560px; top: 400px; }
+  .rail .ring { position: absolute; left: 10px; top: 10px; width: 68px; height: 68px; border-radius: 50%; border: 3px solid #FF7500; }
+  .rail span.is-on::after { display: none; }
+  /* each ink layer has one mask band: position 100% hidden, 50% shown, 0% hidden again, with a soft edge, so a layer can
+     wipe in (100% to 50%) and later wipe out (50% to 0%) in the same direction */
+  .ink .pt-text, .ink .pt-shade {
+    -webkit-mask-image: linear-gradient(90deg, transparent 27%, #000 33%, #000 67%, transparent 73%); mask-image: linear-gradient(90deg, transparent 27%, #000 33%, #000 67%, transparent 73%);
+    -webkit-mask-size: 400% 100%; mask-size: 400% 100%; -webkit-mask-position: 50% 0; mask-position: 50% 0; }
+  .brand { left: 50%; top: 470px; transform: translate(-50%, -50%); }
+  .brand .mark svg { height: 132px; } .brand .type svg { height: 96px; }
+  .brand-line { position: absolute; z-index: 5; left: 0; right: 0; top: 590px; text-align: center; font: 500 40px/1.2 Inter, sans-serif; color: var(--ink-muted); }
+</style>
+</head>
+<body>
+<!-- The hero video: 10.0s, seamless loop, one master clock. Every animation is a paused Web Animation; seek(t) puts the
+     whole film at time t, so scripts/render_video.py can render any frame exactly. Open in a browser to preview (it plays). -->
+<div class="stage" id="stage">
+  <div class="glow" id="glow" style="--gx: 640px; --gy: -260px"></div>
+
+  <div class="scene" id="scene">
+    <div class="layer" id="camType">
+      <h1 class="hero-word" id="word"></h1>
+      <div class="slot"><p class="line" id="line1">Live on your product page</p></div>
+      <div class="slot"><p class="line" id="line2">One design. Every product.</p></div>
+    </div>
+
+    <div class="layer" id="camProd">
+      <!-- hoodie: laid out at its editor size; the open shot is the same box moved and scaled -->
+      <div class="mover" id="hoodieMv" style="left: 560px; top: 60px">
+        <div class="prod" id="hoodie" style="--s: 960px; --foot: .91; --rx: 20%; --ry: 20%">
+          <img src="../assets/products/hoodie.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div>
+          <div class="ink" data-ink="#FF7500" data-letters></div>
+          <div class="ink" data-ink="#1F3A68"></div>
+          <div class="ink" data-ink="#0E5A3A"></div>
+          <svg class="selsvg" id="sel" width="960" height="960"><rect class="box" pathLength="1"/><rect class="h"/><rect class="h"/><rect class="h"/><rect class="h"/></svg>
+        </div>
+      </div>
+      <!-- every product: placed so its print area's centre is the hoodie's, so the design holds still across the cuts -->
+      <div class="mover" data-cut="tee"><div class="prod" style="--foot: .91"><img src="../assets/products/tee.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
+      <div class="mover" data-cut="mug"><div class="prod" style="--foot: .87"><img src="../assets/products/mug.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
+      <div class="mover" data-cut="cap"><div class="prod" style="--foot: .8"><img src="../assets/products/cap.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
+      <div class="mover" data-cut="tote-bag"><div class="prod" style="--foot: .93; --rx: 90%; --ry: 30%"><img src="../assets/products/tote-bag.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
+
+      <div class="glass rail" id="rail">
+        <span style="--c: #FF7500"></span><span style="--c: #1F3A68"></span><span style="--c: #0E5A3A"></span><i class="ring" id="ring"></i>
+      </div>
+
+      <div class="card" id="card" style="left: 960px; top: 300px">
+        <p class="card__label">New order #1042</p>
+        <p class="card__title">Custom tote bag</p>
+        <p class="card__price">$24.00</p>
+      </div>
+      <span class="chip" id="chip1" style="left: 920px; top: 664px"><span class="chip__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg></span>Print-ready files</span>
+      <span class="chip" id="chip2" style="left: 1310px; top: 664px"><span class="chip__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg></span>Sent to production</span>
+    </div>
+  </div>
+
+  <div class="brand" id="brand"><span class="mark" id="mark"></span><span class="type" id="logotype"></span></div>
+  <p class="brand-line" id="brandLine">Product customizer for Shopify</p>
+  <div class="grain"></div>
+</div>
+
+<script src="print-text.js"></script>
+<script>
+(function () {
+  var DUR = 10, EXPO = 'cubic-bezier(.16, 1, .3, 1)', INOUT = 'cubic-bezier(.65, 0, .35, 1)', OUT = 'cubic-bezier(.33, 1, .68, 1)';
+  var TEXT = 'Add Text';                         // the design: the editor's own default text layer
+  var P = [1049.6, 588], W0 = 210;               // the print centre every cut shares, and the print width of the cut products
+  var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
+  var anims = [];
+  /* A(el, keyframes, start s, duration s, easing, fill): one paused animation on the master clock.
+     The first animation of a property on an element fills 'both'; later ones 'forwards', so each takes over at its start. */
+  function A(el, kf, start, dur, easing, fill) {
+    var a = el.animate(kf, { delay: start * 1000, duration: dur * 1000, easing: easing || EXPO, fill: fill || 'both' });
+    a.pause(); anims.push(a); return a;
+  }
+  function seek(t) { anims.forEach(function (a) { a.currentTime = t * 1000; }); }
+
+  function setup(AREAS) {
+    // products: size each cut product so its print area is W0 wide and centred on P
+    $$('[data-cut]').forEach(function (mv) {
+      var ar = AREAS[mv.getAttribute('data-cut')], q = ar.quad;
+      var w = q[1][0] - q[0][0], cx = (q[0][0] + q[1][0]) / 2, cy = (q[0][1] + q[3][1]) / 2, s = W0 / w;
+      mv.style.left = (P[0] - cx * s) + 'px'; mv.style.top = (P[1] - cy * s) + 'px';
+      var pr = $('.prod', mv); pr.style.setProperty('--s', s + 'px'); pr.style.transformOrigin = (cx * 100) + '% ' + (cy * 100) + '%';
+      mv._s = s;
+    });
+    $$('.prod').forEach(function (p) {
+      var img = $('img', p), g = $('.prod__glow', p);
+      g.style.webkitMaskImage = g.style.maskImage = 'url("' + img.src + '")';
+    });
+    $$('.ink').forEach(function (el) {
+      var prod = el.parentNode, key = prod.id === 'hoodie' ? 'hoodie' : prod.parentNode.getAttribute('data-cut');
+      PrintText.place(prod, AREAS[key], TEXT, { image: $('img', prod).src, color: el.getAttribute('data-ink'), layer: el, letters: el.hasAttribute('data-letters') });
+    });
+    // the selection box hugs the hoodie's print area, 16px out
+    var hq = AREAS.hoodie.quad, S = 960, x0 = hq[0][0] * S - 16, y0 = hq[0][1] * S - 16, x1 = hq[1][0] * S + 16, y1 = hq[3][1] * S + 16;
+    var box = $('#sel .box'); box.setAttribute('x', x0); box.setAttribute('y', y0); box.setAttribute('width', x1 - x0); box.setAttribute('height', y1 - y0);
+    $$('#sel .h').forEach(function (h, i) {
+      h.setAttribute('x', (i % 2 ? x1 : x0) - 7); h.setAttribute('y', (i < 2 ? y0 : y1) - 7); h.setAttribute('width', 14); h.setAttribute('height', 14); h.setAttribute('rx', 3);
+    });
+    // the open word, one span per letter
+    var word = $('#word');
+    'Design it.'.split('').forEach(function (ch, i) {
+      var s = document.createElement('span'); s.textContent = ch === ' ' ? ' ' : ch; if (i > 6) s.className = 'accent'; word.appendChild(s);
+    });
+  }
+
+  function timeline() {
+    // ground: the glow drifts (the only linear motion) and returns to its start
+    A($('#glow'), [{ transform: 'translate(0, 0)' }, { transform: 'translate(150px, 40px)' }, { transform: 'translate(60px, 130px)' }, { transform: 'translate(0, 0)' }], 0, DUR, 'linear');
+    // camera: one slow push-in, type slower than products (parallax); reset while the frame is clear
+    A($('#camType'), [{ transform: 'scale(1)' }, { transform: 'scale(1.02)' }], 0, 8.9, INOUT);
+    A($('#camProd'), [{ transform: 'scale(1)' }, { transform: 'scale(1.05)' }], 0, 8.9, INOUT);
+
+    // OPEN 0.0-1.6: "Design it." lands letter by letter from below; the hoodie rises
+    $$('#word span').forEach(function (s, i) {
+      A(s, [{ transform: 'translateY(105%)', filter: 'blur(12px)', opacity: 0 }, { transform: 'none', filter: 'blur(0)', opacity: 1 }], .12 + i * .03 + (i > 6 ? .1 : 0), .8);
+    });
+    A($('#word'), [{ transform: 'none', filter: 'blur(0)', opacity: 1 }, { transform: 'translateY(-40px)', filter: 'blur(10px)', opacity: 0 }], 1.55, .45, INOUT);
+    var hm = $('#hoodieMv');
+    A(hm, [{ transform: 'translate(500px, 250px) scale(.8542)' }, { transform: 'translate(500px, 90px) scale(.8542)' }], .3, 1.1);
+    A(hm, [{ opacity: 0 }, { opacity: 1 }], .3, .5, OUT);
+
+    // EDITOR 1.6-3.6: the hoodie comes forward; the selection draws; the text types; two soft colour wipes
+    A(hm, [{ transform: 'translate(500px, 90px) scale(.8542)' }, { transform: 'none' }], 1.6, .75, INOUT, 'forwards');
+    A($('#sel .box'), [{ strokeDashoffset: 1, strokeDasharray: '1 1' }, { strokeDashoffset: 0, strokeDasharray: '1 1' }], 2.0, .5, INOUT);
+    $$('#sel .h').forEach(function (h, i) { A(h, [{ transform: 'scale(0)' }, { transform: 'scale(1)' }], 2.4 + i * .04, .35); });
+    $$('#hoodie .ink[data-letters] .pt-ch').forEach(function (c, i) { A(c, [{ opacity: 0 }, { opacity: 1 }], 2.45 + i * .055, .06, 'linear'); });
+    A($('#line1'), [{ transform: 'translateY(105%)' }, { transform: 'none' }], 2.0, .7);
+    A($('#line1'), [{ transform: 'none' }, { transform: 'translateY(-105%)' }], 3.5, .4, INOUT, 'forwards');
+    A($('#rail'), [{ transform: 'translateX(60px)', opacity: 0 }, { transform: 'none', opacity: 1 }], 2.6, .6);
+    A($('#rail'), [{ opacity: 1 }, { opacity: 0 }], 3.55, .25, INOUT, 'forwards');
+    var inks = $$('#hoodie .ink'), ring = $('#ring');
+    [[0, 1, 2.95], [1, 2, 3.27]].forEach(function (w) {        // orange to navy, navy to green
+      var from = inks[w[0]], to = inks[w[1]], t0 = w[2];
+      $$('.pt-text, .pt-shade', to).forEach(function (el) { A(el, [{ maskPosition: '100% 0' }, { maskPosition: '50% 0' }], t0, .3, INOUT); });
+      $$('.pt-text, .pt-shade', from).forEach(function (el) { A(el, [{ maskPosition: '50% 0' }, { maskPosition: '0% 0' }], t0, .3, INOUT, w[0] ? 'forwards' : 'both'); });
+      A(ring, [{ transform: 'translateY(' + (w[0] * 70) + 'px)', borderColor: from.getAttribute('data-ink') }, { transform: 'translateY(' + (w[1] * 70) + 'px)', borderColor: to.getAttribute('data-ink') }], t0 - .05, .35, EXPO, w[0] ? 'forwards' : 'both');
+    });
+    A(hm, [{ opacity: 1 }, { opacity: 0 }], 3.6, .12, OUT, 'forwards');
+
+    // EVERY PRODUCT 3.6-6.0: match cuts on the print area; each product settles from 6deg
+    var cuts = $$('[data-cut]');
+    cuts.forEach(function (mv, k) {
+      var t0 = 3.6 + k * .55, pr = $('.prod', mv);
+      A(mv, [{ opacity: 0 }, { opacity: 1 }], t0, .12, OUT);
+      A(pr, [{ transform: 'rotate(6deg)' }, { transform: 'none' }], t0, .5);
+      if (k < cuts.length - 1) A(mv, [{ opacity: 1 }, { opacity: 0 }], t0 + .55, .12, OUT, 'forwards');
+    });
+    A($('#line2'), [{ transform: 'translateY(105%)' }, { transform: 'none' }], 3.8, .7);
+    A($('#line2'), [{ transform: 'none' }, { transform: 'translateY(-105%)' }], 5.95, .4, INOUT, 'forwards');
+
+    // ORDER 6.0-8.2: the tote slides left; the order card rises; two chips pop with drawn checks
+    var tote = cuts[cuts.length - 1], k = 860 / tote._s;
+    A(tote, [{ transform: 'none' }, { transform: 'translate(' + (130 - parseFloat(tote.style.left)) + 'px, ' + (130 - parseFloat(tote.style.top)) + 'px) scale(' + k + ')' }], 6.0, .85, INOUT);
+    A($('#card'), [{ transform: 'translateY(80px)', opacity: 0 }, { transform: 'none', opacity: 1 }], 6.5, .8);
+    $$('#card p').forEach(function (p, i) { A(p, [{ transform: 'translateY(18px)', opacity: 0 }, { transform: 'none', opacity: 1 }], 6.62 + i * .1, .7); });
+    [['#chip1', 7.25], ['#chip2', 7.65]].forEach(function (c) {
+      A($(c[0]), [{ transform: 'scale(.82)', opacity: 0 }, { transform: 'none', opacity: 1 }], c[1], .55);
+      A($(c[0] + ' path'), [{ strokeDashoffset: 20 }, { strokeDashoffset: 0 }], c[1] + .15, .35, OUT);
+    });
+
+    // CLOSE 8.2-10.0: clear through a circle from the logo; the brand resolves; the last 0.6s return to frame 0
+    A($('#scene'), [{ '--r': '-150px' }, { '--r': '2400px' }], 8.2, .8, INOUT);
+    A($('#brand'), [{ opacity: 0, filter: 'blur(14px)', transform: 'translate(-50%, -50%) scale(.96)' }, { opacity: 1, filter: 'blur(0)', transform: 'translate(-50%, -50%)' }], 8.55, .8);
+    A($('#brandLine'), [{ opacity: 0, transform: 'translateY(16px)' }, { opacity: 1, transform: 'none' }], 8.75, .7);
+    A($('#brand'), [{ opacity: 1, filter: 'blur(0)' }, { opacity: 0, filter: 'blur(10px)' }], 9.4, .5, INOUT, 'forwards');
+    A($('#brandLine'), [{ opacity: 1 }, { opacity: 0 }], 9.4, .45, INOUT, 'forwards');
+  }
+
+  window.DURATION = DUR; window.seek = seek;
+  window.ready = Promise.all([
+    fetch('print-areas.json').then(function (r) { return r.json(); }),
+    fetch('../assets/brand/logo_mark.svg').then(function (r) { return r.text(); }),
+    fetch('../assets/brand/logo_type.svg').then(function (r) { return r.text(); }),
+    document.fonts.load('600 100px Geist'), document.fonts.load('700 100px Geist'), document.fonts.load('500 40px Inter')
+  ]).then(function (r) {
+    $('#mark').innerHTML = r[1]; $('#logotype').innerHTML = r[2];
+    // the logotype's own "Product Customizer" subtitle would repeat the closing line: hide it and crop the box to the word
+    var lt = $('#logotype svg'); $$('[fill="var(--ink-muted)"]', lt).forEach(function (g) { g.style.display = 'none'; }); lt.setAttribute('viewBox', '0 0 121 29');
+    $('#stage').style.setProperty('--ink-muted', '#6E6660');
+    return Promise.all($$('img').map(function (i) { return i.decode ? i.decode().catch(function () {}) : 0; })).then(function () {
+      setup(r[0]); timeline(); seek(0);
+    });
+  });
+  // preview: open the file in a browser and it plays on a loop (the renderer uses seek instead)
+  if (!/render/.test(location.search)) window.ready.then(function () {
+    var t0 = performance.now();
+    (function tick(now) { seek(((now - t0) / 1000) % DUR); requestAnimationFrame(tick); })(t0);
+  });
+})();
+</script>
+</body>
+</html>

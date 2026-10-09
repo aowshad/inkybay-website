@@ -61,6 +61,9 @@ scripts/check_print_areas.py  checks every quad sits on the product's alpha and 
 src/video/video.css       the hero video look (ground, glow, grain, type, product light, selection, glass, order card, chips)
 src/video/style-frames.html  three stills (open, editor, order); scripts/render_style_frames.py renders them to
                           src/video/style-frames/<id>.png at 1920x1080 (2x, downsized)
+src/video/hero-promo.html the 10s hero film (one master clock; window.seek(t) puts it at any time)
+scripts/render_video.py   renders it (60 fps at 2x, blended to 30, checked per frame) and encodes src/assets/video/
+src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (poster); never base64-inlined
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
 
@@ -574,6 +577,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Video: animation, renderer and assets. src/video/hero-promo.html (10.0s seamless loop: open, editor, every product, order, close) and scripts/render_video.py; all 300 frames pass the checks (text on product alpha, nothing clips the edge, loop diff 0.03%). hero-promo.mp4 1.16 MB (H.264 High, CRF 20), hero-promo.webm 0.40 MB (VP9 two-pass, CRF 32), poster 5 KB, all 1600x900, no audio. Decisions: the design reads "Add Text" (the editor's own default layer; your tote correction) and is typed then wiped orange, navy, dark green; the logotype's own "Product Customizer" subtitle is cropped so it does not repeat the closing line; x264 cannot pair CRF with two passes, so H.264 is one pass at a CRF and VP9 is two-pass; the poster is frame 0 as briefed (the empty ground; the 1.5s frame would be stronger)
 - 2026-10-09: Homepage features: product cause-and-effect visuals (hoodie setup, tee design, mug order), 7s stories synced to the progress line's own clock, print text from print-areas.json, reduced motion still. Decisions: there is no back photo of the hoodie, so the back turn shows the front photo mirrored with a "Back" tag; the old three mini UIs move to src/mini-uis.html so the feature pages render unchanged (checked: identical markup on all 18 feature, industry and partner pages); print-text.js gains layer, maxLines and letters options; the audit holds .hchip to the 14px floor
 - 2026-10-09: Blog thumbnails: new background. Your blog-bg.png (1600x1000, 16:10) is src/assets/blog/_bg.webp (q85) and the default --bg of scripts/make_blog_covers.py, replacing the generated gradients; all 14 covers regenerated at 1600x1000 with the same products (file names, alt text and front matter unchanged; the build makes the 640/960/1440 versions). Decision: products fit a 62% square rather than a fixed 62% height, because height-only made the cap, mug and frame look far bigger than the bottle and sock. Every product keeps 190px+ margin; the lowest contrast is the white sock (2.1:1), which still reads on the dark ground. The background's INKYBAY letters sit behind the lower edge of each product
 - 2026-10-09: Video style frames: the tote's print reads "Add Text" in a dark green (#0E5A3A, --ink-green) instead of the light UI green, which washed out on the white fabric (your call); the swatch rail's green matches. The UI check circles keep #17A673
