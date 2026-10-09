@@ -155,6 +155,7 @@ async def check_page(slug, d):
                 await pg.close()
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
+        if slug == "homepage": await check_hero_video(b, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
@@ -350,6 +351,42 @@ async def check_contact(b, path):
         if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"{w}px: horizontal overflow")
         if errs: bad(slug, f"{w}px: JS errors {errs[:2]}")
         await ctx.close()
+
+
+async def check_hero_video(b, path):
+    """The homepage hero video: muted, loop, playsinline and a poster that loads; files, never inlined; the pause button
+    toggles; reduced motion does not play; the frame keeps 16:9 and nothing overflows at 390px."""
+    html = path.read_text()
+    if "data:video" in html: bad("homepage", "hero video is inlined in the HTML (serve it from assets/video/)")
+    for f in ("hero-promo.mp4", "hero-promo.webm", "hero-promo.webp"):
+        if not (path.parent / "assets/video" / f).exists(): bad("homepage", f"site/assets/video/{f} missing (python3 build.py copies src/assets/video/)")
+    for reduce in ("no-preference", "reduce"):
+        pg = await b.new_page(viewport={"width": 1440, "height": 900}, reduced_motion=reduce)
+        await pg.goto(path.as_uri()); await pg.wait_for_timeout(2500)
+        r = await pg.evaluate("""(async()=>{const v=document.querySelector('.hero__video'); if(!v) return null;
+          const poster=await new Promise(res=>{const i=new Image(); i.onload=()=>res(i.naturalWidth); i.onerror=()=>res(0); i.src=v.poster;});
+          const s=v.parentNode.getBoundingClientRect();
+          return {muted:v.muted, loop:v.loop, inline:v.playsInline, poster, paused:v.paused, t:v.currentTime, ratio:s.width/s.height}})()""")
+        if not r: bad("homepage", "hero video missing"); await pg.close(); return
+        if reduce == "reduce":
+            if not r["paused"] or r["t"] > 0: bad("homepage", "hero video plays with reduced motion")
+        else:
+            for k in ("muted", "loop", "inline"):
+                if not r[k]: bad("homepage", f"hero video is not {k}")
+            if not r["poster"]: bad("homepage", "hero video poster does not load")
+            if abs(r["ratio"] - 16 / 9) > .02: bad("homepage", f"hero video frame is not 16:9 ({r['ratio']:.3f})")
+            if r["paused"]: bad("homepage", "hero video does not autoplay")
+            btn = pg.locator(".hero__vbtn")
+            await btn.click(); await pg.wait_for_timeout(300)
+            if not await pg.evaluate("document.querySelector('.hero__video').paused") or await btn.get_attribute("aria-label") != "Play video":
+                bad("homepage", "hero pause button does not pause")
+            await btn.click(); await pg.wait_for_timeout(500)
+            if await pg.evaluate("document.querySelector('.hero__video').paused"): bad("homepage", "hero play button does not resume")
+        await pg.close()
+    pg = await b.new_page(viewport={"width": 390, "height": 844})
+    await pg.goto(path.as_uri()); await pg.wait_for_timeout(800)
+    if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad("homepage", "hero overflows at 390px")
+    await pg.close()
 
 
 async def check_partners(b, path):

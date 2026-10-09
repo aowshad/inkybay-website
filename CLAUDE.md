@@ -74,6 +74,8 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
 - Live: https://aowshad.github.io/inkybay-website/ (feature pages at `features/<slug>/`). Every push to `main` runs
   `.github/workflows/pages.yml`: checkout, Python 3.12, `python3 build.py`, upload `site/` with
   `actions/upload-pages-artifact`, deploy with `actions/deploy-pages` (concurrency group `pages`).
+- build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
+  preloads the hero poster on the homepage only (`{{HERO_PRELOAD}}`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
   `index.html` or `.nojekyll` any more; the deployed artifact is `site/` only.
 
@@ -126,7 +128,7 @@ Section sub headings are 18px.
 - **Image swaps** (features, why): the new frame fades in on top while the old stays fully opaque until covered. No scale, no blink.
 - **Comet ring** (`.has-ring` + `.ring` + `.ring-glow > i`): 1px light with a short trail (~60deg), 8s per lap. The glow is a 3px
   masked stroke inside a wrapper that blurs it (7px) AFTER masking, so the halo is soft and centred on the line. Never mask after blurring.
-  Used on the homepage hero editor, the rating card and the CTA card. Feature-page heroes use the showcase stage instead
+  Used on the homepage hero video frame, the rating card and the CTA card. Feature-page heroes use the showcase stage instead
   (the ring appears there only in the `{"type": "image"}` fallback). Content that should sit above the light gets `z-index: 4`.
 - **Mini UI** (`.mui-stage > .mui`): em-based product snippets used as section visuals; scale with the host via container
   queries; one quiet loop each; animate only while on screen (`.mui-live`).
@@ -134,7 +136,9 @@ Section sub headings are 18px.
 
 ## Section order and behaviour
 
-1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, editor screenshot with comet ring.
+1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, the promo
+   video (16:9) inside the comet-ring frame with a glass pause/play button (see Hero video). The editor screenshot
+   (hero-editor.webp) left the hero; it stays for the Resources mega-menu promo and the feature-page image fallback.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
 3. **Features**: "customization" is always a selected layer; swatches auto-cycle every 2s and are clickable; ring is the active swatch's own box-shadow (always concentric). Left list auto-advances (7s progress line). Mobile heading: "Everything you need / for product / customization + swatches".
    Media: three cause-and-effect visuals on real products (`.hv1`-`.hv3` in the template, homepage-only versions,
@@ -577,6 +581,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Homepage hero: promo video. The editor screenshot is replaced by the video (16:9, autoplay muted loop playsinline, preload metadata, poster preloaded as the LCP image) inside the same comet-ring frame; a 40px glass pause/play button; pauses off screen and in a hidden tab, resumes unless paused; reduced motion, Save-Data and 2g keep the poster until play. hero-editor.webp stays (mega-menu promo, feature-page fallback). The audit checks the video attributes, poster, button, reduced motion, no inlined video and 390px
 - 2026-10-09: Video: animation, renderer and assets. src/video/hero-promo.html (10.0s seamless loop: open, editor, every product, order, close) and scripts/render_video.py; all 300 frames pass the checks (text on product alpha, nothing clips the edge, loop diff 0.03%). hero-promo.mp4 1.16 MB (H.264 High, CRF 20), hero-promo.webm 0.40 MB (VP9 two-pass, CRF 32), poster 5 KB, all 1600x900, no audio. Decisions: the design reads "Add Text" (the editor's own default layer; your tote correction) and is typed then wiped orange, navy, dark green; the logotype's own "Product Customizer" subtitle is cropped so it does not repeat the closing line; x264 cannot pair CRF with two passes, so H.264 is one pass at a CRF and VP9 is two-pass; the poster is frame 0 as briefed (the empty ground; the 1.5s frame would be stronger)
 - 2026-10-09: Homepage features: product cause-and-effect visuals (hoodie setup, tee design, mug order), 7s stories synced to the progress line's own clock, print text from print-areas.json, reduced motion still. Decisions: there is no back photo of the hoodie, so the back turn shows the front photo mirrored with a "Back" tag; the old three mini UIs move to src/mini-uis.html so the feature pages render unchanged (checked: identical markup on all 18 feature, industry and partner pages); print-text.js gains layer, maxLines and letters options; the audit holds .hchip to the 14px floor
 - 2026-10-09: Blog thumbnails: new background. Your blog-bg.png (1600x1000, 16:10) is src/assets/blog/_bg.webp (q85) and the default --bg of scripts/make_blog_covers.py, replacing the generated gradients; all 14 covers regenerated at 1600x1000 with the same products (file names, alt text and front matter unchanged; the build makes the 640/960/1440 versions). Decision: products fit a 62% square rather than a fixed 62% height, because height-only made the cap, mug and frame look far bigger than the bottle and sock. Every product keeps 190px+ margin; the lowest contrast is the white sock (2.1:1), which still reads on the dark ground. The background's INKYBAY letters sit behind the lower edge of each product

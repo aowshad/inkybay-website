@@ -18,7 +18,7 @@ The navbar mega menus, their mobile sheet sub-lists and promos come from src/nav
 src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head, navbar, CTA,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
 """
-import base64, re, html, pathlib, os
+import base64, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
 import render_industry, render_404, render_partners, render_contact, render_blog
@@ -207,6 +207,7 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
+    t = t.replace("{{HERO_PRELOAD}}", "")   # only the homepage preloads the hero poster
     t = t.replace("{{PRINT_TEXT_JS}}", PRINT_TEXT_JS).replace("{{PRINT_AREAS}}", PRINT_AREAS)   # printed text on products (homepage visuals)
     t = t.replace("{{CURSOR}}", render_industry.CURSOR).replace("{{HV_CHECK}}", HV_CHECK)
     t = t.replace("{{BTN_ARROWS}}", ARROW + ARROW)   # submit buttons: the same arrow as every primary button
@@ -223,7 +224,12 @@ def write(path, t):
     print(f"ok -> {path.relative_to(ROOT)} ({round(len(t) / 1024)} KB)")
 
 SITE = ROOT / "site"
-homepage = build((ROOT / "src" / "template.html").read_text())
+HERO_PRELOAD = '<link rel="preload" as="image" href="assets/video/hero-promo.webp" type="image/webp" fetchpriority="high">\n'
+homepage = build((ROOT / "src" / "template.html").read_text().replace("{{HERO_PRELOAD}}", HERO_PRELOAD))
+# the hero video is served as files next to the pages (never base64-inlined): src/assets/video/ -> site/assets/video/
+shutil.rmtree(SITE / "assets" / "video", ignore_errors=True)
+if (ROOT / "src" / "assets" / "video").exists():   # made by scripts/render_video.py; the audit fails while it is missing
+    shutil.copytree(ROOT / "src" / "assets" / "video", SITE / "assets" / "video")
 write(SITE / "index.html", homepage)
 write(SITE / "404.html", build(render_404.render(SITE_BASE), root=SITE_BASE, home=SITE_BASE))
 write(SITE / "partners" / "index.html", build(render_partners.render(), root="../", home="../"))

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>InkyBay — Product Customizer for Shopify</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
+{{HERO_PRELOAD}}<link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Geist:wght@500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
@@ -369,6 +369,20 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   background: var(--surface);
 }
 .hero__screen img { width: 100%; height: 100%; object-fit: cover; object-position: top left; }
+.hero__screen--video { aspect-ratio: 16 / 9; }     /* the homepage hero: the promo video (src/video/hero-promo.html) */
+.hero__video { display: block; width: 100%; height: 100%; object-fit: cover; }
+.hero__vbtn {   /* glass pause / play, required for motion longer than 5s */
+  position: absolute; z-index: 4; right: var(--s-4); bottom: var(--s-4); width: 40px; height: 40px; border-radius: 50%;
+  display: grid; place-items: center; color: #2F2F2F;
+  background: rgba(255, 255, 255, .72); -webkit-backdrop-filter: blur(14px) saturate(150%); backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 8px 20px -8px rgba(13, 18, 28, .35);
+  transition: background .2s ease, transform .2s var(--ease-expo);
+}
+.hero__vbtn:hover { background: rgba(255, 255, 255, .92); transform: scale(1.06); }
+.hero__vbtn:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 3px; }
+.hero__vbtn svg { width: 18px; height: 18px; fill: currentColor; }
+.hero__vbtn-play, .hero__vbtn.is-paused .hero__vbtn-pause { display: none; }
+.hero__vbtn.is-paused .hero__vbtn-play { display: block; }
 
 /* One page-load moment */
 .hero__title .w { display: inline-block; transform-origin: 0 100%; }
@@ -1834,8 +1848,19 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 
       <div class="hero__stage">
         <div class="hero__media has-ring"><span class="ring-glow" aria-hidden="true"><i></i></span><span class="ring" aria-hidden="true"></span>
-          <div class="hero__screen">
-            <img src="{{EDITOR}}" width="2240" height="1836" alt="InkyBay design editor customizing a soccer jersey with a logo, crest and front, back, left and right product sides" decoding="async" fetchpriority="high">
+          <div class="hero__screen hero__screen--video">
+            <video class="hero__video" autoplay muted loop playsinline preload="metadata" poster="assets/video/hero-promo.webp" width="1600" height="900"
+              aria-label="InkyBay in action: designing a product, applying the design to several products and receiving a print-ready order">
+              <source src="assets/video/hero-promo.webm" type="video/webm">
+              <source src="assets/video/hero-promo.mp4" type="video/mp4">
+            </video>
+            <script>/* before the first frame: reduced motion and Save-Data / 2g keep the poster until play is pressed */
+              (function (v) { var c = navigator.connection || {}, hold = matchMedia('(prefers-reduced-motion: reduce)').matches || c.saveData || /(^|-)2g$/.test(c.effectiveType || '');
+                if (hold) { v.removeAttribute('autoplay'); v.preload = 'none'; v.pause(); v.dataset.hold = '1'; } })(document.currentScript.previousElementSibling);</script>
+            <button class="hero__vbtn" type="button" aria-label="Pause video">
+              <svg class="hero__vbtn-pause" viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="6" width="3.4" height="12" rx="1"/><rect x="13.6" y="6" width="3.4" height="12" rx="1"/></svg>
+              <svg class="hero__vbtn-play" viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 6.2v11.6c0 .8.9 1.3 1.6.8l8.6-5.8c.6-.4.6-1.3 0-1.7l-8.6-5.7c-.7-.5-1.6 0-1.6.8z"/></svg>
+            </button>
           </div>
         </div>
       </div>
@@ -2416,6 +2441,18 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       var printRaf = 0, printRo = new ResizeObserver(function () { cancelAnimationFrame(printRaf); printRaf = requestAnimationFrame(printAll); });
       document.querySelectorAll('[data-print]').forEach(function (el) { printRo.observe(el.parentNode); });
     }
+
+    /* hero video: pause / play button; pauses off screen and in a hidden tab, resumes unless the visitor paused it */
+    document.querySelectorAll('.hero__video').forEach(function (v) {
+      var btn = v.parentNode.querySelector('.hero__vbtn'), userPaused = !!v.dataset.hold, seen = true;
+      function ui() { var p = v.paused; btn.classList.toggle('is-paused', p); btn.setAttribute('aria-label', p ? 'Play video' : 'Pause video'); }
+      function fit() { if (!userPaused && seen && !document.hidden) { var pr = v.play(); if (pr && pr.catch) pr.catch(function () {}); } else v.pause(); }
+      btn.addEventListener('click', function () { userPaused = !v.paused; if (userPaused) v.pause(); else { v.preload = 'auto'; } fit(); });
+      v.addEventListener('play', ui); v.addEventListener('pause', ui);
+      document.addEventListener('visibilitychange', fit);
+      if ('IntersectionObserver' in window) new IntersectionObserver(function (es) { seen = es[0].isIntersecting; fit(); }, { threshold: .2 }).observe(v);
+      ui();
+    });
 
     document.querySelectorAll('.features').forEach(function (sec) {
       var items = [].slice.call(sec.querySelectorAll('.fitem'));
