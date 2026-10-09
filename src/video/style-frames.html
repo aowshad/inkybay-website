@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>InkyBay hero video: style frames</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Geist:wght@600;700&family=Inter:wght@500&display=block" rel="stylesheet">
+<link rel="stylesheet" href="video.css">
+<style>body { display: grid; gap: 40px; padding: 0; background: #ddd; }</style>
+</head>
+<body>
+<!-- Three stills for the key moments of the storyboard (open, editor, order). scripts/render_style_frames.py renders
+     each .stage to src/video/style-frames/<id>.png. Same CSS and print-text placement as the animation. -->
+
+<section class="stage" id="open" style="--gx: 760px; --gy: -220px">
+  <div class="glow"></div>
+  <h1 class="hero-word" style="left: 150px; top: 440px">Design <span class="accent">it.</span></h1>
+  <div class="prod" style="--s: 820px; left: 1060px; top: 150px; --foot: .91; --rx: 15%; --ry: 30%">
+    <img src="../assets/products/hoodie.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div>
+  </div>
+  <div class="grain"></div>
+</section>
+
+<section class="stage" id="editor" style="--gx: 300px; --gy: -200px">
+  <div class="glow"></div>
+  <p class="line" style="left: 150px; top: 520px">Live on your product page</p>
+  <div class="prod" style="--s: 960px; left: 560px; top: 60px; --foot: .91; --rx: 20%; --ry: 20%">
+    <img src="../assets/products/hoodie.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div>
+    <div data-print="Your name" data-product="hoodie" data-color="#1F3A68"></div>
+  </div>
+  <div class="sel" data-sel-for="hoodie"><i></i><i></i><i></i><i></i></div>
+  <div class="glass rail" style="left: 1560px; top: 400px">
+    <span style="--c: #FF7500"></span><span class="is-on" style="--c: #1F3A68"></span><span style="--c: #17A673"></span>
+  </div>
+  <div class="grain"></div>
+</section>
+
+<section class="stage" id="order" style="--gx: 420px; --gy: -180px">
+  <div class="glow"></div>
+  <div class="prod" style="--s: 860px; left: 130px; top: 130px; --foot: .9; --rx: 90%; --ry: 30%">
+    <img src="../assets/products/tote-bag.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div>
+    <div data-print="Your name" data-product="tote-bag" data-color="#17A673"></div>
+  </div>
+  <div class="card" style="left: 960px; top: 300px">
+    <p class="card__label">New order #1042</p>
+    <p class="card__title">Custom tote bag</p>
+    <p class="card__price">$24.00</p>
+  </div>
+  <span class="chip" style="left: 920px; top: 664px"><span class="chip__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg></span>Print-ready files</span>
+  <span class="chip" style="left: 1310px; top: 664px"><span class="chip__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg></span>Sent to production</span>
+  <div class="grain"></div>
+</section>
+
+<script src="print-text.js"></script>
+<script>
+  /* print areas: the same file the animation and the homepage use */
+  window.framesReady = fetch('print-areas.json').then(function (r) { return r.json(); }).then(function (A) {
+    return document.fonts.load('700 40px Geist').then(function () {
+      document.querySelectorAll('.prod').forEach(function (p) {
+        var img = p.querySelector('img'), g = p.querySelector('.prod__glow');
+        g.style.webkitMaskImage = g.style.maskImage = 'url("' + img.src + '")';   // the glow reflection stays on the product
+      });
+      document.querySelectorAll('[data-print]').forEach(function (el) {
+        var prod = el.parentNode, img = prod.querySelector('img'), area = A[el.getAttribute('data-product')];
+        PrintText.place(prod, area, el.getAttribute('data-print'), { image: img.src, color: el.getAttribute('data-color'), layer: el });
+        var sel = prod.parentNode.querySelector('[data-sel-for="' + el.getAttribute('data-product') + '"]');
+        if (sel) {                                    // the selection box hugs the print area's bounds, 16px out
+          var S = prod.clientWidth, xs = area.quad.map(function (q) { return q[0] * S; }), ys = area.quad.map(function (q) { return q[1] * S; }), m = 16;
+          sel.style.left = (prod.offsetLeft + Math.min.apply(0, xs) - m) + 'px'; sel.style.top = (prod.offsetTop + Math.min.apply(0, ys) - m) + 'px';
+          sel.style.width = (Math.max.apply(0, xs) - Math.min.apply(0, xs) + 2 * m) + 'px'; sel.style.height = (Math.max.apply(0, ys) - Math.min.apply(0, ys) + 2 * m) + 'px';
+        }
+      });
+    });
+  });
+</script>
+</body>
+</html>

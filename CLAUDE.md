@@ -57,6 +57,9 @@ scripts/audit.py          checks feature JSON and the built pages in site/ (see 
 src/video/print-areas.json  measured print areas (quad, curve, maxLines, ink) per product image, normalized 0-1
 src/video/print-text.js   prints text onto a product photo inside its print area (fit-to-box, matrix3d, alpha clip, print look)
 scripts/check_print_areas.py  checks every quad sits on the product's alpha and "Your name" fits; writes a debug sheet
+src/video/video.css       the hero video look (ground, glow, grain, type, product light, selection, glass, order card, chips)
+src/video/style-frames.html  three stills (open, editor, order); scripts/render_style_frames.py renders them to
+                          src/video/style-frames/<id>.png at 1920x1080 (2x, downsized)
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
 
@@ -553,6 +556,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Video: style frames (open "Design it.", the editor moment on the hoodie, the order card on the tote) from src/video/video.css and style-frames.html, rendered by scripts/render_style_frames.py. Look: warm #FFF7F0-to-white ground, one soft brand glow, ~2.5% grain, Geist 600 hero words at 210px, Inter 500 40px lines, orange as the one accent, editor blue only for the selection box, products on a soft contact shadow with a glow reflection clipped to the product. Your fix: 40px between the order card and its two chips
 - 2026-10-09: Video: measured print areas (src/video/print-areas.json for hoodie, tee, mug, cap and tote bag, measured from each image's alpha; src/video/print-text.js places text by fit-to-box, a matrix3d perspective quad, a cylinder curve on the mug, a clip to the product's alpha and a printed look; scripts/check_print_areas.py checks every quad pixel is on the product and writes the debug sheet). Text is never placed by guess again. The cap holds one line; the mug quad was measured on the new 1000px mug
 - 2026-10-09: New mug image (your higher-resolution mug2.png from products-new): trimmed, centred, 82% fill, 1000x1000 like the tee (24 KB, smaller than the old 600px mug). It replaces the mug everywhere; the 404 mug print area still sits inside the new body
 - 2026-10-09: Partners: type, directory and rhythm fixes. Headings follow the new scale, hero chips 14px, the directory shows 6 then "Show more partners", filter tabs and counts use the blog pill style, the form has example placeholders, and "Why partner with InkyBay" is now a dark band (white, tint, dark, tint, white, dark)
