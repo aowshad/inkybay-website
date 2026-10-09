@@ -1,0 +1,123 @@
+{
+  "_doc": "Print areas in normalized image coordinates (0-1) of src/assets/products/<name>.webp, measured from each image's alpha and checked by scripts/check_print_areas.py. quad: top-left, top-right, bottom-right, bottom-left. curve: horizontal wrap for round surfaces. ink: blend mode for printed ink.",
+  "hoodie": {
+    "quad": [
+      [
+        0.39,
+        0.495
+      ],
+      [
+        0.63,
+        0.495
+      ],
+      [
+        0.63,
+        0.605
+      ],
+      [
+        0.39,
+        0.605
+      ]
+    ],
+    "curve": 0,
+    "maxLines": 2,
+    "ink": "multiply",
+    "note": "chest, below the hood strings, above the pocket"
+  },
+  "tee": {
+    "quad": [
+      [
+        0.37,
+        0.25
+      ],
+      [
+        0.63,
+        0.25
+      ],
+      [
+        0.63,
+        0.43
+      ],
+      [
+        0.37,
+        0.43
+      ]
+    ],
+    "curve": 0,
+    "maxLines": 2,
+    "ink": "multiply",
+    "note": "chest, below the collar, inside the side seams"
+  },
+  "mug": {
+    "quad": [
+      [
+        0.17,
+        0.3
+      ],
+      [
+        0.57,
+        0.3
+      ],
+      [
+        0.57,
+        0.7
+      ],
+      [
+        0.17,
+        0.7
+      ]
+    ],
+    "curve": 0.18,
+    "maxLines": 2,
+    "ink": "multiply",
+    "note": "front face, clear of the handle and the rim highlight"
+  },
+  "cap": {
+    "quad": [
+      [
+        0.33,
+        0.33
+      ],
+      [
+        0.56,
+        0.3
+      ],
+      [
+        0.56,
+        0.5
+      ],
+      [
+        0.33,
+        0.54
+      ]
+    ],
+    "curve": 0.08,
+    "maxLines": 1,
+    "ink": "multiply",
+    "note": "front crown above the brim, centred on the seam like a front logo"
+  },
+  "tote-bag": {
+    "quad": [
+      [
+        0.35,
+        0.52
+      ],
+      [
+        0.65,
+        0.52
+      ],
+      [
+        0.65,
+        0.8
+      ],
+      [
+        0.35,
+        0.8
+      ]
+    ],
+    "curve": 0,
+    "maxLines": 2,
+    "ink": "multiply",
+    "note": "front panel centre, below the handles"
+  }
+}

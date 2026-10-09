@@ -54,6 +54,9 @@ src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py m
 requirements.txt          build dependencies: Markdown 3.7 and Pillow 11.3 (the Pages workflow installs them)
 src/forms.css             shared form styles (Partners, Contact, newsletter); the form JS is shared in the template
 scripts/audit.py          checks feature JSON and the built pages in site/ (see the playbook below)
+src/video/print-areas.json  measured print areas (quad, curve, maxLines, ink) per product image, normalized 0-1
+src/video/print-text.js   prints text onto a product photo inside its print area (fit-to-box, matrix3d, alpha clip, print look)
+scripts/check_print_areas.py  checks every quad sits on the product's alpha and "Your name" fits; writes a debug sheet
 .github/workflows/pages.yml  builds site/ and deploys it to GitHub Pages on every push to main
 ```
 
@@ -550,6 +553,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Video: measured print areas (src/video/print-areas.json for hoodie, tee, mug, cap and tote bag, measured from each image's alpha; src/video/print-text.js places text by fit-to-box, a matrix3d perspective quad, a cylinder curve on the mug, a clip to the product's alpha and a printed look; scripts/check_print_areas.py checks every quad pixel is on the product and writes the debug sheet). Text is never placed by guess again. The cap holds one line; the mug quad was measured on the new 1000px mug
 - 2026-10-09: New mug image (your higher-resolution mug2.png from products-new): trimmed, centred, 82% fill, 1000x1000 like the tee (24 KB, smaller than the old 600px mug). It replaces the mug everywhere; the 404 mug print area still sits inside the new body
 - 2026-10-09: Partners: type, directory and rhythm fixes. Headings follow the new scale, hero chips 14px, the directory shows 6 then "Show more partners", filter tabs and counts use the blog pill style, the form has example placeholders, and "Why partner with InkyBay" is now a dark band (white, tint, dark, tint, white, dark)
 - 2026-10-09: Themed scrollbars: one global rule set in the template (thin, rounded, ink-based thumb that adapts to every theme zone; 6px for inner scrollers), plus an edge fade on the phone category bar
