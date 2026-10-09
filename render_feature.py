@@ -49,8 +49,9 @@ PROD = {k: v["label"] for k, v in json.loads((ROOT / "src" / "products.json").re
 
 
 def mini_uis(home):
-    """Pull the homepage mini-UI snippets, in page order, so feature pages reuse them unchanged."""
-    main = home[home.index("<main>"):home.index("</main>")]
+    """Pull the mini-UI snippets so feature pages reuse them unchanged: src/mini-uis.html (setup, design, files: no
+    longer on the homepage) first, then the homepage's, in page order."""
+    main = (ROOT / "src" / "mini-uis.html").read_text() + home[home.index("<main>"):home.index("</main>")]
     out, i = [], 0
     while (i := main.find('<div class="mui-stage"', i)) >= 0:
         depth, j = 0, i

@@ -17,7 +17,7 @@
   }
   /* place(stage, area, text, opts): stage = the element that holds the product <img> at a known square size.
      opts: color, font (CSS family), weight, minPx, pad (0.08), image (URL of the product, for the mask and shading),
-     layer (print into this element), maxLines (overrides the area's) */
+     layer (print into this element), maxLines (overrides the area's), letters (one span per letter, e.g. for typing) */
   function place(stage, area, text, opts) {
     opts = opts || {};
     var S = stage.clientWidth, q = area.quad.map(function (p) { return [p[0] * S, p[1] * S]; });
@@ -44,7 +44,7 @@
     text.split(' ').forEach(function (word, i) {
       if (i) t.appendChild(document.createTextNode(' '));
       var w_ = document.createElement('span'); w_.style.whiteSpace = 'nowrap'; w_.style.display = 'inline-block';
-      if (area.curve) word.split('').forEach(function (ch) { var c = document.createElement('span'); c.className = 'pt-ch'; c.textContent = ch; c.style.display = 'inline-block'; w_.appendChild(c); });
+      if (area.curve || opts.letters) word.split('').forEach(function (ch) { var c = document.createElement('span'); c.className = 'pt-ch'; c.textContent = ch; c.style.display = 'inline-block'; w_.appendChild(c); });
       else w_.textContent = word;
       t.appendChild(w_);
     });

@@ -27,7 +27,7 @@ def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 # Text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is drawn like a picture and is exempt, except
 # chips, which keep 14px. The allowlist is the token users plus these components.
 SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
-               ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .porbit__chip, .icardx__label, "
+               ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .hchip, .porbit__chip, .icardx__label, "
                ".mega__desc, .mega__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
                ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
                ".bbar__pill, .brel__label, .bcall__title, .bquote p + p")
@@ -38,7 +38,7 @@ SMALL_TEXT_JS = """window.smallText = function () {
     if (![...e.childNodes].some(n => n.nodeType === 3 && n.textContent.trim())) continue;
     const r = e.getBoundingClientRect(); if (!r.width || !r.height) continue;
     const fs = parseFloat(getComputedStyle(e).fontSize);
-    const pic = e.closest('[aria-hidden="true"]') && !e.closest('.chip, .porbit__chip, .icardx__label');
+    const pic = e.closest('[aria-hidden="true"]') && !e.closest('.chip, .hchip, .porbit__chip, .icardx__label');
     if (pic || fs >= 16) continue;
     if (fs < 13.95 || !e.closest(ALLOW)) bad.push((e.className && typeof e.className === 'string' ? e.className : e.tagName) + ' ' + Math.round(fs * 10) / 10 + 'px');
   }

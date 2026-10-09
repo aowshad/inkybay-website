@@ -586,6 +586,210 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .ph__card strong { font-family: var(--font-head); font-weight: 500; color: var(--ink); font-size: var(--t-body); }
 .ph__card span { font-size: var(--t-body); line-height: var(--t-body-lh); }
 
+/* ---------------------------------------------------------------
+   Features visuals: cause and effect on a real product (homepage only, lighter than the feature-page visuals).
+   Each visual is one 7s story built from short CSS animations with delays; JS keeps them paused and sets their time
+   from the active item's progress bar, so the story starts with the item, pauses with it and never drifts.
+   Sizes are em (the stage's font-size follows its width) and cq units, so the whole visual scales as one picture.
+   --------------------------------------------------------------- */
+.hv {
+  position: absolute; inset: 0; overflow: hidden; container-type: size;
+  font-size: 2.3cqw; line-height: 1.35; color: var(--ink); text-align: left;
+  background: radial-gradient(70% 85% at 42% 55%, color-mix(in srgb, var(--brand-500) 8%, var(--bg)), var(--bg) 72%);
+}
+.hv__sq { position: absolute; top: 8cqh; left: var(--x, 20cqw); width: 84cqh; height: 84cqh; }
+.fmedia__frame .hv__img { position: absolute; inset: 0; width: 100%; height: 100%; max-width: none; object-fit: contain;
+  filter: drop-shadow(0 1.4em 1.6em rgba(13, 18, 28, .16)); }
+
+/* glass: light in both themes, like every other glass panel */
+.hv-glass {
+  position: absolute; z-index: 3; color: #2F2F2F; border-radius: .9em; padding: .75em;
+  background: rgba(255, 255, 255, .8); -webkit-backdrop-filter: blur(16px) saturate(150%); backdrop-filter: blur(16px) saturate(150%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 1.4em 2.6em -1.2em rgba(13, 18, 28, .35);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hv-glass { background: rgba(255, 255, 255, .93); } }
+.hv-glass__h { display: flex; justify-content: space-between; gap: .8em; font-weight: 600; margin-bottom: .45em; white-space: nowrap; }
+.hv-glass__h span { font-weight: 400; color: #707070; }
+
+/* chips on visuals: never under 14px (Type floor) */
+.hchip {
+  position: absolute; z-index: 4; display: inline-flex; align-items: center; gap: .5em; white-space: nowrap;
+  padding: .55em .95em; border-radius: 999px; font-size: max(var(--t-small), 1em); font-weight: 500; line-height: 1.35; color: #2F2F2F;
+  background: rgba(255, 255, 255, .94); -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .9), 0 .9em 2em -1em rgba(80, 20, 0, .55);
+}
+.hchip--brand { background: var(--brand-grad); color: #fff; box-shadow: 0 .9em 2em -1em rgba(229, 56, 15, .7); }
+.hchip__ok { width: 1.25em; height: 1.25em; flex: none; border-radius: 50%; display: grid; place-items: center; background: #17A673; color: #fff; }
+.hchip--brand .hchip__ok { background: #fff; color: var(--brand-700); }
+.hchip__ok svg, .hv-ok svg { width: .8em; height: .8em; }
+.hchip__ok path, .hv-ok path { stroke-dasharray: 20; }
+.hroll { display: inline-block; height: 1.35em; overflow: hidden; vertical-align: bottom; }
+.hroll > span { display: flex; flex-direction: column; }
+.hroll i { font-style: normal; height: 1.35em; font-weight: 600; color: var(--brand-700); }
+
+/* toggles and dashed print areas (editor blue: they are editor selections) */
+.hv-row { display: flex; align-items: center; justify-content: space-between; gap: 1em; padding: .42em .55em; border-radius: .55em; white-space: nowrap; }
+.hv-row + .hv-row { margin-top: .2em; }
+.hv-tg { position: relative; flex: none; width: 2em; height: 1.15em; border-radius: 1em; background: #D7D7DA; }
+.hv-tg i { position: absolute; top: .15em; left: .15em; width: .85em; height: .85em; border-radius: 50%; background: #fff; box-shadow: 0 1px 2px rgba(0,0,0,.2); }
+.hv-area { position: absolute; z-index: 2; border: .11em dashed var(--editor-blue); border-radius: .3em;
+  background: color-mix(in srgb, var(--editor-blue) 7%, transparent); }
+.hv-area b { position: absolute; left: -.11em; top: -1.5em; padding: .1em .45em; border-radius: .3em; font-size: .8em; font-weight: 500; color: #fff; background: var(--editor-blue); }
+.hv-cursor { position: absolute; z-index: 6; left: 0; top: 0; width: 1.7em; height: 1.7em; pointer-events: none; translate: -18% -12%;
+  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, .25)); }
+.hv-cursor svg { display: block; width: 100%; height: 100%; }
+.hv-ok { width: 1.3em; height: 1.3em; flex: none; border-radius: 50%; display: grid; place-items: center; background: color-mix(in srgb, #17A673 16%, #fff); color: #17A673; }
+
+/* 1. Set up without coding: each toggle changes the hoodie */
+.hv1 .hv__sq { --x: 13cqw; perspective: 160em; }
+.hv1__turn { position: absolute; inset: 0; transform-style: preserve-3d; }
+.hv1__face { position: absolute; inset: 0; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.hv1__face--back { transform: rotateY(180deg); }
+.hv1__face--back .hv__img { transform: scaleX(-1); }
+.hv1__panel { right: 4cqw; top: 48cqh; width: 15.5em; }
+.hv1__chest { left: 34%; top: 30%; width: 32%; height: 30%; }
+.hv1__back { left: 30%; top: 22%; width: 40%; height: 38%; }
+.hv1__sl { top: 36%; width: 7%; height: 14%; }
+.hv1__sl--l { left: 17.5%; } .hv1__sl--r { left: 75.5%; }
+.hv1__size { left: 50%; top: 84%; translate: -50% 0; }
+.hv1__ready { left: 5cqw; top: 64cqh; }
+
+/* 2. Design freely: type, drag clipart, recolour */
+.hv2 .hv__sq { --x: 19.4cqw; }
+.hv2__tray { right: 88%; top: 30%; display: grid; gap: .45em; padding: .5em; }
+.hv2__tray span { width: 2.4em; height: 2.4em; border-radius: .6em; display: grid; place-items: center; background: #fff; box-shadow: inset 0 0 0 1px rgba(13,18,28,.07); }
+.hv2__tray svg { width: 1.3em; height: 1.3em; }
+.hv2__sel { position: absolute; z-index: 2; left: 37%; top: 25%; width: 26%; height: 18%; border: .1em solid var(--editor-blue); }
+.hv2__sel i { position: absolute; width: .55em; height: .55em; background: #fff; border: .1em solid var(--editor-blue); border-radius: .12em; }
+.hv2__sel i:nth-child(1) { left: -.33em; top: -.33em; } .hv2__sel i:nth-child(2) { right: -.33em; top: -.33em; }
+.hv2__sel i:nth-child(3) { left: -.33em; bottom: -.33em; } .hv2__sel i:nth-child(4) { right: -.33em; bottom: -.33em; }
+.hv2__star { position: absolute; z-index: 5; width: 2.2em; height: 2.2em; translate: -50% -50%; color: #1F2937; filter: drop-shadow(0 .4em .5em rgba(13,18,28,.25)); }
+.hv2__print { position: absolute; z-index: 1; left: 83%; top: 30.5%; width: 7%; height: 7%; translate: -50% -50%; rotate: -10deg; color: #1F2937; mix-blend-mode: multiply; opacity: 0; }
+.hv2__star svg, .hv2__print svg { display: block; width: 100%; height: 100%; }
+.hv2__rail { left: 50%; top: 87%; translate: -50% 0; display: flex; gap: .55em; padding: .5em; border-radius: 999px; }
+.hv2__rail span { width: 1.4em; height: 1.4em; border-radius: 50%; background: var(--c); box-shadow: inset 0 0 0 1px rgba(13,18,28,.12); }
+.hv2__ring { position: absolute; left: .5em; top: .5em; width: 1.4em; height: 1.4em; border-radius: 50%; box-shadow: 0 0 0 .14em #fff, 0 0 0 .28em var(--editor-blue); }
+.hv2__saved { right: -8%; top: 44%; }   /* anchored right, so the 14px chip stays inside on phones */
+/* the typed ink and the recoloured ink are two print layers; a soft mask wipes one into the other (the new layer's
+   shading is wiped in with it: shown early it would wash over the ink below) */
+.hv2 .pt-ink .pt-text { -webkit-mask-image: linear-gradient(90deg, transparent 40%, #000 60%); mask-image: linear-gradient(90deg, transparent 40%, #000 60%);
+  -webkit-mask-size: 260% 100%; mask-size: 260% 100%; -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+.hv2 .pt-new .pt-text, .hv2 .pt-new .pt-shade { -webkit-mask-image: linear-gradient(90deg, #000 40%, transparent 60%); mask-image: linear-gradient(90deg, #000 40%, transparent 60%);
+  -webkit-mask-size: 260% 100%; mask-size: 260% 100%; -webkit-mask-position: 100% 0; mask-position: 100% 0; }
+
+/* 3. Ready-to-print orders: the design leaves the mug as files and lands in production */
+.hv3 .hv__sq { --x: 4cqw; }
+.hv3__placed { left: 3cqw; top: 14cqh; }
+.hv3__art { position: absolute; z-index: 3; left: 17%; top: 30%; width: 40%; height: 40%; display: grid; place-items: center; text-align: center;
+  border-radius: .4em; background: #fff; box-shadow: 0 1.2em 2em -1em rgba(13, 18, 28, .35);
+  font-family: var(--font-head); font-weight: 700; font-size: 5.4cqw; line-height: 1.02; letter-spacing: -.02em; color: #E5380F; }
+.hv3__card { width: 17em; padding: .65em .75em; }
+.hv3__file { left: 38cqw; top: 12cqh; display: flex; align-items: center; gap: .65em; }
+.hv3__file > svg { width: 2.2em; height: 2.2em; flex: none; color: var(--brand-600); }
+.hv3__file p { flex: 1; line-height: 1.3; white-space: nowrap; }
+.hv3__file p span, .hv3__order span { color: #707070; }
+.hv3__order { right: 5cqw; top: 34cqh; }
+.hv3__order .hv-row { padding: .25em 0; }
+.hv3__tray { left: 40cqw; top: 66cqh; width: 17em; padding: .65em .75em; display: flex; align-items: center; gap: .65em; }
+.hv3__tray > svg { width: 2em; height: 2em; flex: none; color: #707070; }
+.hv3__tray p { flex: 1; white-space: nowrap; line-height: 1.3; }
+.hv3__tray .hroll i { color: #2F2F2F; font-weight: 400; }
+
+@media (prefers-reduced-motion: no-preference) {
+  .hv1__face--front .hv1__chest { animation: hv-draw .6s var(--ease-expo) .65s both; }
+  .hv1__panel .hv-tg { animation: hv-tg .35s var(--ease-expo) var(--at) both; }
+  .hv1__panel .hv-tg i { animation: hv-knob .35s var(--ease-expo) var(--at) both; }
+  .hv1__turn { animation: hv-turn 1.6s var(--ease-expo) 1.8s both; }
+  .hv1__back { animation: hv-draw .5s var(--ease-expo) 2.25s both; }
+  .hv1__sl--l { animation: hv-draw .5s var(--ease-expo) 3.75s both; } .hv1__sl--r { animation: hv-draw .5s var(--ease-expo) 3.85s both; }
+  .hv1__size { animation: hv-pop .5s var(--ease-expo) 4.65s both; }
+  .hv1__size .hroll > span { animation: hv-roll3 1.5s var(--ease-expo) 4.95s both; }
+  .hv1__ready { animation: hv-pop .5s var(--ease-expo) 5.7s both; }
+  .hv1__ready path { animation: hv-check .35s ease-out 6s both; }
+
+  .hv2 .hv-cursor { animation: hv2-cursor 7s linear 0s both; }
+  .hv2__sel { animation: hv-in .3s var(--ease-expo) .95s both, hv-out .3s ease 2.5s forwards; }
+  .hv2 .pt-ink .pt-text { animation: hv-type 1.3s steps(9, end) 1s both, hv-wipe .7s ease-in-out 5.05s forwards; }
+  .hv2 .pt-new .pt-text, .hv2 .pt-new .pt-shade { animation: hv-wipe .7s ease-in-out 5.05s both; }
+  .hv2__star { animation: hv2-drag 1.5s var(--ease-expo) 3s both; }
+  .hv2__print { animation: hv-print .3s ease 4.2s both, hv-recolor .6s ease 5.05s forwards; }
+  .hv2__ring { animation: hv2-ring .45s var(--ease-expo) 5s both; }
+  .hv2__saved { animation: hv-pop .5s var(--ease-expo) 5.9s both; }
+  .hv2__saved path { animation: hv-check .35s ease-out 6.2s both; }
+
+  .hv3__placed { animation: hv-pop .5s var(--ease-expo) .4s both; }
+  .hv3__art { animation: hv3-lift 1.4s var(--ease-expo) 1s both; }
+  .hv3__file { animation: hv-pop .5s var(--ease-expo) 2.15s both, hv3-glide-a .7s cubic-bezier(.6, 0, .2, 1) 4.1s forwards; }
+  .hv3__file .hv-ok path { animation: hv-check .35s ease-out 2.6s both; }
+  .hv3__order { animation: hv-slide .6s var(--ease-expo) 2.7s both, hv3-glide-b .7s cubic-bezier(.6, 0, .2, 1) 4.35s forwards; }
+  .hv3__tray { animation: hv-pop .5s var(--ease-expo) 3.5s both; }
+  .hv3__tray .hroll > span { animation: hv-roll2 .7s var(--ease-expo) 4.6s both; }
+  .hv3__tray .hv-ok { animation: hv-pop .4s var(--ease-expo) 5.2s both; }
+  .hv3__tray .hv-ok path { animation: hv-check .35s ease-out 5.35s both; }
+}
+/* final state, still: reduced motion (and the state every story ends in) */
+@media (prefers-reduced-motion: reduce) {
+  .hv-tg { background: var(--brand-600); } .hv-tg i { transform: translateX(.85em); }
+  .hv2__sel, .hv-cursor, .hv2__star, .hv2 .pt-ink, .hv3__art, .hv3__file, .hv3__order { display: none; }
+  .hv2__print { opacity: .9; color: #E5380F; }
+  .hv2 .pt-new .pt-text, .hv2 .pt-new .pt-shade { -webkit-mask-image: none; mask-image: none; }
+  .hv2__ring { transform: translateX(1.95em); }
+  .hv1__size .hroll > span { transform: translateY(-4.05em); }
+  .hv3__tray .hroll > span { transform: translateY(-2.7em); }
+}
+
+@keyframes hv-draw { from { clip-path: inset(0 100% 100% 0); opacity: .4; } to { clip-path: inset(-2em -1em -1em -1em); opacity: 1; } }   /* ends past the box so its label shows */
+@keyframes hv-tg { from { background: #D7D7DA; } to { background: var(--brand-600); } }
+@keyframes hv-knob { from { transform: none; } to { transform: translateX(.85em); } }
+@keyframes hv-turn {
+  0% { transform: rotateY(0); animation-timing-function: cubic-bezier(.5, 0, .2, 1); }
+  25%, 75% { transform: rotateY(180deg); animation-timing-function: cubic-bezier(.5, 0, .2, 1); }
+  100% { transform: rotateY(360deg); }
+}
+@keyframes hv-pop { from { opacity: 0; scale: .7; } to { opacity: 1; scale: 1; } }
+@keyframes hv-in { from { opacity: 0; scale: .96; } to { opacity: 1; scale: 1; } }
+@keyframes hv-out { from { opacity: 1; } to { opacity: 0; } }
+@keyframes hv-slide { from { opacity: 0; transform: translateX(3em); } to { opacity: 1; transform: none; } }
+@keyframes hv-check { from { stroke-dashoffset: 20; } to { stroke-dashoffset: 0; } }
+@keyframes hv-roll3 { 0%, 20% { transform: none; } 33%, 53% { transform: translateY(-1.35em); } 66%, 86% { transform: translateY(-2.7em); } 100% { transform: translateY(-4.05em); } }
+@keyframes hv-roll2 { 0%, 40% { transform: none; } 50%, 90% { transform: translateY(-1.35em); } 100% { transform: translateY(-2.7em); } }
+@keyframes hv-type { from { clip-path: inset(-20% 100% -20% 0); } to { clip-path: inset(-20% 0 -20% 0); } }
+@keyframes hv-wipe { from { -webkit-mask-position: 100% 0; mask-position: 100% 0; } to { -webkit-mask-position: 0 0; mask-position: 0 0; } }
+@keyframes hv-print { from { opacity: 0; } to { opacity: .9; } }
+@keyframes hv-recolor { from { color: #1F2937; } to { color: #E5380F; } }
+@keyframes hv2-ring { from { transform: none; } to { transform: translateX(1.95em); } }
+/* the cursor: click the print area, type, pick the star, drag it to the sleeve, click the orange swatch, leave */
+@keyframes hv2-cursor {
+  0%     { left: 80%; top: 80%; opacity: 0; scale: 1; }
+  4%     { left: 80%; top: 80%; opacity: 1; animation-timing-function: var(--ease-expo); }
+  12.5%  { left: 50%; top: 34%; scale: 1; }
+  13.5%  { scale: .85; } 15% { scale: 1; left: 50%; top: 34%; animation-timing-function: var(--ease-expo); }
+  20%, 35% { left: 62%; top: 46%; animation-timing-function: var(--ease-expo); }
+  41.5%  { left: calc(12% - 1.7em); top: calc(30% + 1.7em); scale: 1; }
+  43%    { scale: .85; left: calc(12% - 1.7em); top: calc(30% + 1.7em); animation-timing-function: cubic-bezier(.6, 0, .2, 1); }
+  60%    { left: 83%; top: 30.5%; scale: .85; }
+  61.5%  { scale: 1; left: 83%; top: 30.5%; animation-timing-function: var(--ease-expo); }
+  70.5%  { left: calc(50% - .97em); top: calc(87% + 1.2em); scale: 1; }
+  71.5%  { scale: .85; } 73% { scale: 1; left: calc(50% - .97em); top: calc(87% + 1.2em); opacity: 1; animation-timing-function: var(--ease-expo); }
+  82%    { left: 88%; top: 74%; opacity: 0; }
+  100%   { left: 88%; top: 74%; opacity: 0; }
+}
+@keyframes hv2-drag {
+  0%   { left: calc(12% - 1.7em); top: calc(30% + 1.7em); opacity: 0; scale: 1; }
+  10%  { opacity: 1; }
+  13%  { left: calc(12% - 1.7em); top: calc(30% + 1.7em); scale: 1.1; animation-timing-function: cubic-bezier(.6, 0, .2, 1); }
+  80%  { left: 83%; top: 30.5%; scale: .6; opacity: 1; }
+  100% { left: 83%; top: 30.5%; scale: .5; opacity: 0; }
+}
+@keyframes hv3-lift {
+  0%   { opacity: 0; transform: none; }
+  15%  { opacity: 1; transform: none; }
+  40%  { opacity: 1; transform: translateY(-8%) scale(1.04); animation-timing-function: cubic-bezier(.6, 0, .2, 1); }
+  100% { opacity: 0; transform: translate(15.7cqw, -32.5cqh) scale(.18); }
+}
+@keyframes hv3-glide-a { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate(2cqw, 54cqh) scale(.5); } }
+@keyframes hv3-glide-b { from { opacity: 1; transform: none; } to { opacity: 0; transform: translate(-16cqw, 32cqh) scale(.5); } }
+
 @media (prefers-reduced-motion: reduce) {
   .fitem.is-active .fitem__bar { animation: none; transform: scaleX(1); }
   .fx__word--custom, .fx__sw, .fmedia__frame, .fitem__panel { transition: none !important; }
@@ -1696,13 +1900,75 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         </div>
         <div class="fmedia">
           <div class="fmedia__frame is-active" data-index="0">
-            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Product setup<span>Custom tee</span></div><div class="mui__row"><span>Print area · Front</span><span class="mui__tg is-on"></span></div><div class="mui__row"><span>Print area · Back</span><span class="mui__tg a-tg" style="--k:1"></span></div><div class="mui__row"><span>Sleeves</span><span class="mui__tg a-tg" style="--k:2"></span></div><div class="mui__row"><span>Name and number</span><span class="mui__tg a-tg" style="--k:3"></span></div></div></div>
+            <div class="hv hv1" aria-hidden="true">
+              <div class="hv__sq">
+                <div class="hv1__turn">
+                  <div class="hv1__face hv1__face--front">
+                    <img class="hv__img" src="{{IMG:products/hoodie.webp}}" alt="" width="600" height="600">
+                    <span class="hv-area hv1__chest"><b>Front</b></span>
+                    <span class="hv-area hv1__sl hv1__sl--l"></span><span class="hv-area hv1__sl hv1__sl--r"></span>
+                  </div>
+                  <div class="hv1__face hv1__face--back">
+                    <img class="hv__img" data-copy-src alt="" width="600" height="600">
+                    <span class="hv-area hv1__back"><b>Back</b></span>
+                  </div>
+                </div>
+                <span class="hchip hv1__size">Size <span class="hroll"><span><i>S</i><i>M</i><i>L</i><i>XL</i></span></span></span>
+              </div>
+              <div class="hv-glass hv1__panel">
+                <div class="hv-glass__h">Product setup<span>Hoodie</span></div>
+                <div class="hv-row">Front print area<span class="hv-tg" style="--at:.5s"><i></i></span></div>
+                <div class="hv-row">Back print area<span class="hv-tg" style="--at:1.6s"><i></i></span></div>
+                <div class="hv-row">Sleeves<span class="hv-tg" style="--at:3.6s"><i></i></span></div>
+                <div class="hv-row">Sizes<span class="hv-tg" style="--at:4.5s"><i></i></span></div>
+              </div>
+              <span class="hchip hchip--brand hv1__ready"><span class="hchip__ok">{{HV_CHECK}}</span>Ready to sell</span>
+            </div>
           </div>
           <div class="fmedia__frame" data-index="1">
-            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Live design editor<span>Front</span></div><div class="mui__canvas"><img src="{{IMG:products/tee.webp}}" alt=""><span class="mui__sel a-recolor">Make it yours</span></div><div class="mui__sw"><i class="is-on" style="--c:#FF7500"></i><i style="--c:#1C8CF0"></i><i style="--c:#17A673"></i><i style="--c:#2F2F2F"></i></div></div></div>
+            <div class="hv hv2" aria-hidden="true">
+              <div class="hv__sq">
+                <img class="hv__img" src="{{IMG:products/tee.webp}}" alt="" width="1000" height="1000">
+                <div class="pt-ink" data-print="Your name" data-product="tee" data-color="#1F2937" data-lines="1"></div>
+                <div class="pt-new" data-print="Your name" data-product="tee" data-color="#E5380F" data-lines="1"></div>
+                <span class="hv2__print"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></span>
+                <span class="hv2__sel"><i></i><i></i><i></i><i></i></span>
+                <div class="hv-glass hv2__tray">
+                  <span><svg viewBox="0 0 24 24" style="color:#1F2937"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></span>
+                  <span><svg viewBox="0 0 24 24" style="color:#D42427"><path fill="currentColor" d="M12 20.5s-7.5-4.6-7.5-10.1A4.3 4.3 0 0 1 12 7.6a4.3 4.3 0 0 1 7.5 2.8c0 5.5-7.5 10.1-7.5 10.1z"/></svg></span>
+                  <span><svg viewBox="0 0 24 24" style="color:#F58220"><path fill="currentColor" d="M13.5 2.5L5 13.5h6l-1 8 8.5-11h-6z"/></svg></span>
+                </div>
+                <span class="hv2__star"><svg viewBox="0 0 24 24"><path fill="currentColor" d="M12 2.5l2.9 6 6.6.8-4.9 4.6 1.3 6.5L12 17.2l-5.9 3.2 1.3-6.5L2.5 9.3l6.6-.8z"/></svg></span>
+                <div class="hv-glass hv2__rail"><span style="--c:#1F2937"></span><span style="--c:#E5380F"></span><span style="--c:#1C8CF0"></span><span style="--c:#17A673"></span><i class="hv2__ring"></i></div>
+                <span class="hchip hv2__saved"><span class="hchip__ok">{{HV_CHECK}}</span>Saved to cart</span>
+                <span class="hv-cursor">{{CURSOR}}</span>
+              </div>
+            </div>
           </div>
           <div class="fmedia__frame" data-index="2">
-            <div class="mui-stage" aria-hidden="true"><div class="mui"><div class="mui__h">Order #1042<span>Print-ready</span></div><div class="a-seq" style="display:grid;gap:.45em"><div class="mui__row" style="--k:0"><span>front.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:1"><span>back.png <span class="mui__muted">· 300 DPI</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div><div class="mui__row" style="--k:2"><span>proof.pdf <span class="mui__muted">· preview</span></span><span class="mui__ok"><svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.2l2.2 2.2 4.8-4.8"/></svg></span></div></div><span class="mui__btn">Download all</span></div></div>
+            <div class="hv hv3" aria-hidden="true">
+              <div class="hv__sq">
+                <img class="hv__img" src="{{IMG:products/mug.webp}}" alt="" width="1000" height="1000">
+                <div data-print="Good vibes" data-product="mug" data-color="#E5380F"></div>
+                <span class="hv3__art">Good<br>vibes</span>
+              </div>
+              <span class="hchip hchip--brand hv3__placed">Order placed</span>
+              <div class="hv-glass hv3__card hv3__file">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M6 2.8h8l4.5 4.5v13.9H6z"/><path d="M14 2.8v4.5h4.5"/><path d="M8.8 16.5l2.4-3 1.8 2.1 1.3-1.5 2 2.4" stroke-linecap="round"/></svg>
+                <p><b>front.png</b><br><span>300 DPI · print-ready</span></p>
+                <span class="hv-ok">{{HV_CHECK}}</span>
+              </div>
+              <div class="hv-glass hv3__card hv3__order">
+                <div class="hv-glass__h">Order #1042<span>Paid</span></div>
+                <div class="hv-row">Product<span>Mug, white 11 oz</span></div>
+                <div class="hv-row">Quantity<span>2</span></div>
+              </div>
+              <div class="hv-glass hv3__tray">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"><path d="M3.5 13.5l2.6-8h11.8l2.6 8v6H3.5z"/><path d="M3.5 13.5h5l1 2.5h5l1-2.5h5"/></svg>
+                <p><b>Production</b><br><span class="hroll"><span><i>Waiting for files</i><i>1 file ready</i><i>2 files ready</i></span></span></p>
+                <span class="hv-ok">{{HV_CHECK}}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -2131,6 +2397,26 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     });
 
     /* Features list: progress line fills, then the next item opens */
+    /* printed text on product photos: print areas from src/video/print-areas.json, placement from print-text.js
+       (fit-to-box, perspective quad, clipped to the product's alpha, printed look). Placed now, again once Geist has
+       loaded and whenever a product changes size. */
+    {{PRINT_TEXT_JS}}
+    var PRINT_AREAS = {{PRINT_AREAS}};
+    document.querySelectorAll('img[data-copy-src]').forEach(function (im) { im.src = im.parentNode.parentNode.querySelector('img:not([data-copy-src])').src; });
+    function printAll() {
+      document.querySelectorAll('[data-print]').forEach(function (el) {
+        var sq = el.parentNode, img = sq.querySelector('img');
+        PrintText.place(sq, PRINT_AREAS[el.getAttribute('data-product')], el.getAttribute('data-print'),
+          { image: img.src, color: el.getAttribute('data-color'), layer: el, maxLines: +el.getAttribute('data-lines') || 0 });
+      });
+    }
+    printAll();
+    if (document.fonts) document.fonts.load('700 1em Geist').then(printAll, function () {});
+    if ('ResizeObserver' in window) {
+      var printRaf = 0, printRo = new ResizeObserver(function () { cancelAnimationFrame(printRaf); printRaf = requestAnimationFrame(printAll); });
+      document.querySelectorAll('[data-print]').forEach(function (el) { printRo.observe(el.parentNode); });
+    }
+
     document.querySelectorAll('.features').forEach(function (sec) {
       var items = [].slice.call(sec.querySelectorAll('.fitem'));
       var frames = [].slice.call(sec.querySelectorAll('.fmedia__frame'));
@@ -2145,7 +2431,19 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           bar.style.animation = 'none'; void bar.offsetWidth; bar.style.animation = '';
         });
         frames.forEach(function (f, k) { f.classList.toggle('is-active', k === current); });
+        sync();
       }
+      /* the visuals' 7s stories run on the active item's progress bar clock: same start, same pauses, no drift.
+         Inactive frames keep their last state (the outgoing one stays still under the crossfade). */
+      var reduceFx = window.matchMedia('(prefers-reduced-motion: reduce)').matches, raf = 0, onScreen = false;
+      var anims = frames.map(function (f) { return f.getAnimations ? f.getAnimations({ subtree: true }) : []; });
+      anims.forEach(function (list) { list.forEach(function (a) { a.pause(); a.currentTime = 0; }); });
+      function sync() {
+        var bar = items[current].querySelector('.fitem__bar'), ba = bar.getAnimations ? bar.getAnimations()[0] : null;
+        var tm = ba && ba.currentTime != null ? Math.min(ba.currentTime, 7000) : 0;
+        anims[current].forEach(function (a) { a.currentTime = tm; });
+      }
+      function loop() { sync(); raf = onScreen ? requestAnimationFrame(loop) : 0; }
       items.forEach(function (it, k) {
         it.querySelector('.fitem__btn').addEventListener('click', function () { activate(k); });
         it.querySelector('.fitem__bar').addEventListener('animationend', function () {
@@ -2155,9 +2453,12 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       sec.classList.add('is-paused');
       if ('IntersectionObserver' in window) {
         new IntersectionObserver(function (es) {
-          es.forEach(function (e) { sec.classList.toggle('is-paused', !e.isIntersecting); });
+          es.forEach(function (e) {
+            sec.classList.toggle('is-paused', !e.isIntersecting); onScreen = e.isIntersecting;
+            if (onScreen && !raf && !reduceFx) loop();
+          });
         }, { threshold: 0.35 }).observe(sec);
-      } else { sec.classList.remove('is-paused'); }
+      } else { sec.classList.remove('is-paused'); onScreen = true; if (!reduceFx) loop(); }
     });
 
     /* Industries wheel: cards on a circle; angle advances slowly, eases to a stop on pause/hover */

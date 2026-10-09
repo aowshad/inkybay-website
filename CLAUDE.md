@@ -37,6 +37,7 @@ src/nav.json              every navbar mega menu: items, groups, promos, footer 
 src/industries/_index.json  the eight industries (slug, title, short, icon): single source for the mega menu,
                           the wheel's industry order and future industry pages
 render_feature.py         renders a feature page: homepage head/nav/CTA/footer/JS + JSON content
+src/mini-uis.html         the setup, design and files mini UIs feature pages reuse (no longer on the homepage)
 render_industry.py        renders an industry page (same shell) from src/industries/<slug>.json
 src/industry.css          styles for the shared industry-page template
 src/industries/<slug>.json  content for one industry page (hero deck, products, stats, merchants, FAQs)
@@ -133,6 +134,19 @@ Section sub headings are 18px.
 1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, editor screenshot with comet ring.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
 3. **Features**: "customization" is always a selected layer; swatches auto-cycle every 2s and are clickable; ring is the active swatch's own box-shadow (always concentric). Left list auto-advances (7s progress line). Mobile heading: "Everything you need / for product / customization + swatches".
+   Media: three cause-and-effect visuals on real products (`.hv1`-`.hv3` in the template, homepage-only versions,
+   lighter than the feature-page visuals): (1) Set up without coding: a glass setup panel overlapping the hoodie switches
+   four toggles, each changing the hoodie (dashed editor-blue front area, a 3D turn to the back area, sleeve areas, a
+   rolling S/M/L/XL chip), ending on "Ready to sell"; (2) Design freely: a cursor types "Your name" into the tee's print
+   area, drags a star from a glass clipart tray onto the sleeve, clicks the orange swatch and the print recolours with a
+   soft wipe, ending on "Saved to cart"; (3) Ready-to-print orders: the mug's design lifts off into a "front.png · 300 DPI"
+   file card, an order card slides in, both glide into a "Production" tray that ticks "2 files ready". Each story is
+   exactly 7s of short CSS animations with delays; JS keeps them paused and sets their time from the active item's
+   progress-bar animation, so a story starts with its item, pauses with it (hover, off screen) and restarts from 0 on
+   a switch; only the active visual moves, the outgoing one stays still under the crossfade. Reduced motion shows each
+   final state, still. Text on products comes from src/video/print-areas.json via print-text.js (inlined by build.py as
+   `{{PRINT_TEXT_JS}}` and `{{PRINT_AREAS}}`); chips are `.hchip` (14px floor). The setup, design and files mini UIs the
+   feature pages reuse now live in `src/mini-uis.html`.
 4. **Industries** (always dark, "Custom products for every business"): the wheel is built by build.py from
    `src/products.json`: one static card per product that has an `industry`, each product exactly once. Card: the product
    image and its `label` (one line, never wraps, also at 390px; cards 232px with 22px titles, 210px at 960px and below),
@@ -560,6 +574,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Homepage features: product cause-and-effect visuals (hoodie setup, tee design, mug order), 7s stories synced to the progress line's own clock, print text from print-areas.json, reduced motion still. Decisions: there is no back photo of the hoodie, so the back turn shows the front photo mirrored with a "Back" tag; the old three mini UIs move to src/mini-uis.html so the feature pages render unchanged (checked: identical markup on all 18 feature, industry and partner pages); print-text.js gains layer, maxLines and letters options; the audit holds .hchip to the 14px floor
 - 2026-10-09: Blog thumbnails: new background. Your blog-bg.png (1600x1000, 16:10) is src/assets/blog/_bg.webp (q85) and the default --bg of scripts/make_blog_covers.py, replacing the generated gradients; all 14 covers regenerated at 1600x1000 with the same products (file names, alt text and front matter unchanged; the build makes the 640/960/1440 versions). Decision: products fit a 62% square rather than a fixed 62% height, because height-only made the cap, mug and frame look far bigger than the bottle and sock. Every product keeps 190px+ margin; the lowest contrast is the white sock (2.1:1), which still reads on the dark ground. The background's INKYBAY letters sit behind the lower edge of each product
 - 2026-10-09: Video style frames: the tote's print reads "Add Text" in a dark green (#0E5A3A, --ink-green) instead of the light UI green, which washed out on the white fabric (your call); the swatch rail's green matches. The UI check circles keep #17A673
 - 2026-10-09: Video: style frames (open "Design it.", the editor moment on the hoodie, the order card on the tote) from src/video/video.css and style-frames.html, rendered by scripts/render_style_frames.py. Look: warm #FFF7F0-to-white ground, one soft brand glow, ~2.5% grain, Geist 600 hero words at 210px, Inter 500 40px lines, orange as the one accent, editor blue only for the selection box, products on a soft contact shadow with a glow reflection clipped to the product. Your fix: 40px between the order card and its two chips

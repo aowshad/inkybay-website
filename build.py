@@ -192,6 +192,10 @@ def wheel(root):
           </li>''')
     return "\n          ".join(cards)
 
+PRINT_TEXT_JS = (ROOT / "src" / "video" / "print-text.js").read_text()
+PRINT_AREAS = json.dumps({k: v for k, v in json.loads((ROOT / "src" / "video" / "print-areas.json").read_text()).items() if not k.startswith("_")}, separators=(",", ":"))
+HV_CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg>'
+
 def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
@@ -203,6 +207,8 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
+    t = t.replace("{{PRINT_TEXT_JS}}", PRINT_TEXT_JS).replace("{{PRINT_AREAS}}", PRINT_AREAS)   # printed text on products (homepage visuals)
+    t = t.replace("{{CURSOR}}", render_industry.CURSOR).replace("{{HV_CHECK}}", HV_CHECK)
     t = t.replace("{{BTN_ARROWS}}", ARROW + ARROW)   # submit buttons: the same arrow as every primary button
     for token, name in [("WORDMARK_LIT", "wordmark_lit.svg"), ("WORDMARK", "wordmark.svg"), ("LOGO_MARK", "logo_mark.svg"), ("LOGO_TYPE", "logo_type.svg")]:
         t = t.replace("{{%s}}" % token, (ASSETS / "brand" / name).read_text())
