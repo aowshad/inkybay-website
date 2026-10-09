@@ -152,6 +152,11 @@ Section sub headings are 18px.
 ## Rules that must survive the rebuild
 
 - Every section uses `--section-y` and `--head-gap`; no ad-hoc paddings.
+- Scrollbars are themed everywhere (template.html): thin (8px page, 6px inner scrollers like the mobile sheet, mega
+  panel, blog contents and tables), rounded, transparent track, thumb `color-mix(var(--ink) 20%)` (35% on hover), so they
+  follow light, dark and the dark zones; Firefox via `scrollbar-width`/`scrollbar-color`, Chrome and Safari via
+  `::-webkit-scrollbar`. Horizontal chip bars (the blog category bar on phones, the feature rail) hide theirs
+  (`.no-scrollbar` or the same rules) but stay swipeable, with an edge fade where it helps.
 - No "AI-template" styling: never a coloured border on one side of a rounded card or quote, and never a gradient
   ring around a card. Quotes use a large soft quotation mark; cards use a full 1px hairline. The audit fails a
   border-left/right of 2px or more that differs from the other sides on a rounded element.
@@ -542,6 +547,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Themed scrollbars: one global rule set in the template (thin, rounded, ink-based thumb that adapts to every theme zone; 6px for inner scrollers), plus an edge fade on the phone category bar
 - 2026-10-09: Blog article: calmer pills (one 14px muted style for pills, tags and the category bar; active filter inverted), a better Key takeaways card (surface card, preview line, numbered points with optional "Read section" links via {text, section} summary items), a cleaner contents list (h2 entries, active section's h3s expand, one sliding 2px indicator), quotes and callouts without one-sided accents (new rule and audit check), body H2 28/500 and H3 22/500, a 14px meta row with thin separators; the newsletter and install promo cards are removed from the article (markup, CSS, blog.json fields)
 - 2026-10-09: Type: explicit 14px allowlist. --t-small (14/20) and .t-small; every 14px in the CSS now uses the token; the 404 editor's tab, weight and Reset buttons go to 16px (buttons are always 16); chips on visuals never go under 14px (the partner orbit chips were 15px and the deck label and chip 10 to 11px on phones); placeholders are 14px while typed values stay 16px. The audit checks every visible text node against the allowlist, fails anything under 14px and any input under 16px. Decision: text inside aria-hidden illustrations (mini UIs, scenes, the deck panel) is treated like text in an image and exempt; raising it would mean redesigning ~40 illustration parts
 - 2026-10-09: Type scale: lighter, smaller headings. --t-h2 48 (32 on phones) at 1.15 and weight 500 for every H2 and H3; new --t-h1-inner (56/500) for inner-page hero H1s and --t-h1-article (44/500); hard-coded 600 card and step titles drop to 500; the homepage hero H1 is unchanged. Checked at 1440 and 390: H2 48/500 everywhere, no two-tone line wraps at 1440

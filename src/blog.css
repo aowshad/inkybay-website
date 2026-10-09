@@ -270,7 +270,8 @@
   .bview { display: none; }
   .bsearch__key { display: none; }
   .bbar { top: calc(var(--nav-h-compact, 60px) + 12px); }
-  .bbar__list { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none; }
+  .bbar__list { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;   /* swipeable, no scrollbar; an edge fade shows there is more */
+    -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
   .bbar__list::-webkit-scrollbar { display: none; }
   .bbar__list > li { scroll-snap-align: start; }
   .bbar__list > li[hidden] { display: list-item; }
