@@ -156,6 +156,7 @@ async def check_page(slug, d):
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "homepage": await check_hero_video(b, path)
+        if slug == "homepage": await check_home_visuals(b, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
@@ -351,6 +352,75 @@ async def check_contact(b, path):
         if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad(slug, f"{w}px: horizontal overflow")
         if errs: bad(slug, f"{w}px: JS errors {errs[:2]}")
         await ctx.close()
+
+
+HOME_VIS_JS = """async () => {
+  // measure every vignette at a settled moment (3.6s: every part is in, nothing is fading)
+  document.querySelectorAll('.rail .vg').forEach(v => v.getAnimations({ subtree: true }).forEach(a => { a.pause(); a.currentTime = 3600; }));
+  const alpha = {}, out = [];
+  const A = async img => { if (alpha[img.src]) return alpha[img.src]; await img.decode().catch(()=>{});
+    const n = 300, c = document.createElement('canvas'); c.width = c.height = n; const g = c.getContext('2d'); g.drawImage(img, 0, 0, n, n);
+    const px = g.getImageData(0, 0, n, n).data, d = new Uint8Array(n * n); let x0 = n, y0 = n, x1 = 0, y1 = 0;
+    for (let i = 0; i < n * n; i++) { d[i] = px[i * 4 + 3]; if (d[i] > 8) { const x = i % n, y = (i / n) | 0; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } }
+    return alpha[img.src] = { n, d, bb: [x0 / n, y0 / n, (x1 + 1) / n, (y1 + 1) / n] }; };
+  const prodBox = async img => { const r = img.getBoundingClientRect(), a = await A(img);
+    return { left: r.left + a.bb[0] * r.width, top: r.top + a.bb[1] * r.height, right: r.left + a.bb[2] * r.width, bottom: r.top + a.bb[3] * r.height }; };
+  const hit = (a, b) => a.left < b.right && b.left < a.right && a.top < b.bottom && b.top < a.bottom;
+  // rail: 9 cards in the index order, each linking to its feature page; UI and chip overlap the product
+  const cards = [...document.querySelectorAll('.rail .fcard')];
+  const links = cards.map(c => (c.querySelector('a.fcard__link') || {}).getAttribute?.('href'));
+  for (const c of cards) {
+    const vg = c.querySelector('.vg'); if (!vg) { out.push('rail card without a vignette: ' + c.querySelector('h3').textContent); continue; }
+    const img = vg.querySelector('.vg__img:not([data-copy-src])'), pb = await prodBox(img), name = c.querySelector('h3').textContent;
+    const media = c.querySelector('.fcard__media').getBoundingClientRect();
+    for (const sel of ['.vg__ui', '.vg__chip']) { const e = vg.querySelector(sel); if (!e) { out.push(name + ': no ' + sel); continue; }
+      const r = e.getBoundingClientRect(); if (!hit(r, pb)) out.push(name + ': ' + sel + ' does not overlap the product');
+      if (r.left < media.left - .5 || r.right > media.right + .5 || r.top < media.top - .5 || r.bottom > media.bottom + .5) out.push(name + ': ' + sel + ' leaves the media box'); }
+  }
+  // text printed on products stays on the product's alpha (every word or letter: centre and four inner points)
+  for (const t of document.querySelectorAll('.hv .pt-text[data-on-product], .vg .pt-text[data-on-product]')) {
+    const img = t.closest('.hv__sq, .vg__sq').querySelector('img:not([data-copy-src])'), r = img.getBoundingClientRect(), a = await A(img);
+    for (const w of t.querySelectorAll(':scope > span')) for (const u of (w.querySelectorAll('.pt-ch').length ? w.querySelectorAll('.pt-ch') : [w])) {
+      const b = u.getBoundingClientRect(); if (b.width < 1) continue;
+      for (const [fx, fy] of [[.5, .5], [.2, .3], [.8, .3], [.2, .7], [.8, .7]]) {
+        const x = Math.round((b.left + b.width * fx - r.left) / r.width * (a.n - 1)), y = Math.round((b.top + b.height * fy - r.top) / r.height * (a.n - 1));
+        const v = a.d[Math.min(a.n - 1, Math.max(0, y)) * a.n + Math.min(a.n - 1, Math.max(0, x))];
+        if (!(v > 200)) { out.push('print text off its product: "' + t.textContent + '" (' + img.src.slice(-30) + ')'); break; } } }
+  }
+  return { links, out };
+}"""
+
+
+async def check_home_visuals(b, path):
+    """Homepage visuals: the rail's nine cards and vignettes, print text on product alpha, only the active Features
+    visual animating, and reduced motion still."""
+    feats = [f["slug"] for f in json.loads((ROOT / "src/features/_index.json").read_text())["features"]]
+    pg = await b.new_page(viewport={"width": 1440, "height": 900})
+    await pg.goto(path.as_uri()); await pg.wait_for_timeout(2000)
+    await pg.evaluate("document.querySelector('.rail').scrollIntoView()"); await pg.wait_for_timeout(400)
+    r = await pg.evaluate(HOME_VIS_JS)
+    if r["links"] != [f"features/{s}/" for s in feats]: bad("homepage", f"rail cards/links do not match _index.json: {r['links']}")
+    for x in r["out"][:8]: bad("homepage", x)
+    p390 = await b.new_page(viewport={"width": 390, "height": 844})                  # the swipe rail on phones
+    await p390.goto(path.as_uri()); await p390.wait_for_timeout(1500)
+    for x in (await p390.evaluate(HOME_VIS_JS))["out"][:8]: bad("homepage", "390px: " + x)
+    cut = await p390.evaluate("[...document.querySelectorAll('.rail .fcard__title')].filter(h => h.scrollWidth > h.clientWidth + 1).map(h => h.textContent)")
+    if cut: bad("homepage", f"390px: rail titles cut off: {cut}")
+    await p390.close()
+    # only the active Features visual moves: sample each frame's animation times twice
+    await pg.evaluate("document.querySelector('.features').scrollIntoView({block: 'center'})"); await pg.wait_for_timeout(600)
+    js = "[...document.querySelectorAll('.fmedia__frame')].map(f => f.getAnimations({subtree: true}).reduce((s, a) => s + (a.currentTime || 0), 0))"
+    t0 = await pg.evaluate(js); await pg.wait_for_timeout(500); t1 = await pg.evaluate(js)
+    act = await pg.evaluate("[...document.querySelectorAll('.fmedia__frame')].findIndex(f => f.classList.contains('is-active'))")
+    for k, (a0, a1) in enumerate(zip(t0, t1)):
+        if k == act and not a1 > a0: bad("homepage", "the active Features visual does not animate")
+        if k != act and a1 != a0: bad("homepage", f"Features visual {k + 1} animates while inactive")
+    await pg.close()
+    pg = await b.new_page(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
+    await pg.goto(path.as_uri()); await pg.wait_for_timeout(1200)
+    n = await pg.evaluate("[...document.querySelectorAll('.fmedia, .rail .vg')].reduce((s, e) => s + e.getAnimations({subtree: true}).length, 0)")
+    if n: bad("homepage", f"reduced motion: {n} animations still run in the Features visuals or rail vignettes")
+    await pg.close()
 
 
 async def check_hero_video(b, path):
