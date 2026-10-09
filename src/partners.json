@@ -4,10 +4,7 @@
     "description": "Apps, agencies and themes that work with InkyBay to help Shopify merchants sell custom products."
   },
   "hero": {
-    "title": [
-      "Grow with the InkyBay partner network.",
-      "Apps, agencies and themes, working together."
-    ],
+    "title": "Grow with the InkyBay partner network",
     "lead": "We work with apps, agencies and theme builders that help Shopify merchants sell custom products. Find a partner for your store, or join the network.",
     "primary_cta": "Become a partner",
     "secondary_cta": "Browse partners",
@@ -80,40 +77,10 @@
       "draft": true
     }
   ],
-  "who_heading": [
-    "Who we partner with.",
-    "Four ways to work together."
-  ],
-  "who": [
-    {
-      "type": "app",
-      "for": "Shopify apps that sit next to a product customizer, like order, print and marketing tools.",
-      "example": "An order-printing app that takes custom orders straight to production."
-    },
-    {
-      "type": "service",
-      "for": "Agencies and freelancers who build and grow Shopify stores.",
-      "example": "An agency setting up a merchant's customizable catalogue."
-    },
-    {
-      "type": "theme",
-      "for": "Theme developers whose themes show customizable products.",
-      "example": "A theme with product pages designed around a live preview."
-    },
-    {
-      "type": "other",
-      "for": "Print suppliers, fulfilment partners and other businesses around custom products.",
-      "example": "A print-on-demand supplier that fulfils custom orders."
-    }
-  ],
-  "steps_heading": [
-    "How it works.",
-    "Three steps to the directory."
-  ],
   "steps": [
     {
       "title": "Apply",
-      "text": "Tell us about your business with the form on this page."
+      "text": "Tell us about your business with this form."
     },
     {
       "title": "We review",
@@ -178,5 +145,7 @@
       "a": "Send us your changes with the form on this page and we'll update your card.",
       "draft": true
     }
-  ]
+  ],
+  "steps_label": "How it works",
+  "trust": "We read every application and reply by email."
 }

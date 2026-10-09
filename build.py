@@ -203,6 +203,7 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
+    t = t.replace("{{BTN_ARROWS}}", ARROW + ARROW)   # submit buttons: the same arrow as every primary button
     for token, name in [("WORDMARK_LIT", "wordmark_lit.svg"), ("WORDMARK", "wordmark.svg"), ("LOGO_MARK", "logo_mark.svg"), ("LOGO_TYPE", "logo_type.svg")]:
         t = t.replace("{{%s}}" % token, (ASSETS / "brand" / name).read_text())
     t = t.replace("{{EDITOR}}", b64("hero-editor.webp"))

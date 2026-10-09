@@ -71,7 +71,7 @@ def render(root):
               {fx("message", f'<label class="field"><span class="field__label cform__msg-label">{E(fl["message"]["label"])}<span class="cform__count" aria-hidden="true">0 / {fl["message"]["max"]}</span></span><textarea name="message" rows="5" maxlength="{fl["message"]["max"]}" required placeholder="{E(f["default_placeholder"])}" data-default-placeholder="{E(f["default_placeholder"])}" {req("message")}></textarea>{err("message")}</label>')}
               <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
               {fx("consent", f'<label class="field field--check"><input name="consent" type="checkbox" required {req("consent")}><span>{E(fl["consent"]["label"])} <a href="#">{E(fl["consent"]["link"])}</a></span>{err("consent")}</label>')}
-              <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="sr-only">{E(f["submit"])}</span></button>
+              <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(f["submit"])}</span></button>
                 <p class="form__status" role="status" aria-live="polite" data-ok="" data-fail="{E(f["error"])}" data-fail-email="{E(f["error_email"])}" data-off="{E(f["not_connected"])}"></p></div>
             </div></div>
           </form>

@@ -221,7 +221,7 @@ def news_form(n, pid):
     return (f'<form class="form bnews__form" data-form="newsletter" data-endpoint="{{{{NEWSLETTER_ENDPOINT}}}}" method="post" novalidate>'
             f'<p class="form__note" hidden>{E(n["not_connected"])}</p>'
             f'<div class="bnews__row"><label class="field"><span class="sr-only">{E(n["email"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" placeholder="{E(n["email"])}" required data-err="{E(n["error"])}" aria-describedby="{pid}-err"></label>'
-            f'<button class="btn btn--primary form__submit" type="submit" data-sending="{E(n["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(n["button"])}">{E(n["button"])}</span></span><span class="sr-only">{E(n["button"])}</span></button></div>'
+            f'<button class="btn btn--primary form__submit" type="submit" data-sending="{E(n["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(n["button"])}">{E(n["button"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(n["button"])}</span></button></div>'
             f'<span class="field__err" id="{pid}-err" aria-live="polite"></span>'
             f'<div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>'
             f'<div class="bnews__consent">{E(n["consent"])}</div>'

@@ -2914,7 +2914,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       var submit = form.querySelector('[type="submit"]'), label = submit && submit.querySelector('[data-text]');
       var done = form.parentNode.querySelector('template.form__done');
       var fields = [].slice.call(form.querySelectorAll('[required], [data-url]')), tried = false;
-      if (!endpoint && note) note.hidden = false;
+      /* the "Form not connected yet" note stays hidden for now; a submit without an endpoint still says so in the status line */
       function active(el) { return !el.disabled && !el.closest('.cfx.is-hidden'); }
       function valid(el) {
         var v = (el.value || '').trim();

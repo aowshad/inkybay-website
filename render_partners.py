@@ -9,7 +9,6 @@ from render_feature import ROOT, E, ICON, CHEV_R, heading
 
 EXT = ('<svg class="ptr__ext" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" '
        'stroke-linejoin="round" aria-hidden="true"><path d="M6 4h6v6M12 4l-7.5 7.5"/></svg>')
-TYPE_ICON = {"app": "layers", "service": "chat", "theme": "template", "other": "box"}
 
 
 def monogram(name):
@@ -47,7 +46,7 @@ def render():
             + "".join(f'<button class="pdir__tab" type="button" role="tab" aria-selected="false" data-type="{t["id"]}">{E(t["label"])} '
                       f'<span class="pdir__count">{sum(p["type"] == t["id"] for p in partners)}</span></button>' for t in c["types"]))
     cards = "".join(
-        f'<li class="ptr{" is-featured" if p.get("featured") else ""}" data-type="{E(p["type"])}" data-q="{E((p["name"] + " " + p["description"]).lower())}">'
+        f'<li class="ptr" data-type="{E(p["type"])}" data-q="{E((p["name"] + " " + p["description"]).lower())}">'
         f'<span class="ptr__logo{logo_cls(p, k)}" aria-hidden="true">{logo(p)}</span>'
         f'<div class="ptr__head"><h3 class="ptr__name">{E(p["name"])}</h3><span class="ptr__badge">{E(types[p["type"]]["badge"])}</span></div>'
         f'<p class="ptr__text">{E(p["description"])}</p>'
@@ -55,9 +54,7 @@ def render():
         for k, p in enumerate(partners))
 
     benefits = "".join(f'<li class="fben__item"><span class="fben__icon">{ICON[b["icon"]]}</span><h3>{E(b["title"])}</h3><p>{E(b["text"])}</p></li>' for b in c["benefits"])
-    who = "".join(f'<li class="pwho__card"><span class="pwho__icon">{ICON[TYPE_ICON[w["type"]]]}</span><h3>{E(types[w["type"]]["label"])}</h3>'
-                  f'<p class="pwho__for">{E(w["for"])}</p><p class="pwho__ex"><span>For example</span>{E(w["example"])}</p></li>' for w in c["who"])
-    steps = "".join(f'<li class="pstep"><span class="pstep__num">{k + 1:02d}</span><h3>{E(s["title"])}</h3><p>{E(s["text"])}</p></li>' for k, s in enumerate(c["steps"]))
+    steps = "".join(f'<li class="pstep"><span class="pstep__num">{k + 1}</span><div><h3>{E(s["title"])}</h3><p>{E(s["text"])}</p></div></li>' for k, s in enumerate(c["steps"]))
     opts = "".join(f'<option value="{E(o)}">{E(o)}</option>' for o in f["type_options"])
     err = lambda k: f'<span class="field__err" id="pf-{k}-err" aria-live="polite"></span>'
     faqs = "\n".join(f"""          <li class="qa{" is-open" if k == 0 else ""}">
@@ -71,7 +68,7 @@ def render():
     <div class="container fhero__grid">
       <div class="fhero__text">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Resources</a>{CHEV_R}<span aria-current="page">Partners</span></nav>
-        <h1 class="fhero__title" id="p-title"><span class="h-line">{E(h["title"][0])}</span> <span class="h-line h-muted">{E(h["title"][1])}</span></h1>
+        <h1 class="fhero__title" id="p-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|#partner-form}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|#directory}}}}</div>
         {proof}
@@ -103,47 +100,40 @@ def render():
     </div>
   </section>
 
-  <!-- 4 · WHO WE PARTNER WITH (dark) -->
-  <section class="fsec fsec--dark" aria-labelledby="p-who">
-    <div class="container">
-      <div class="fsec__head fsec__head--center">{heading(c["who_heading"], id_="p-who")}</div>
-      <ul class="pwho__grid">{who}</ul>
+  <!-- 4 · PARTNER WITH INKYBAY (tint): how it works on the left, the form on the right -->
+  <section class="fsec fsec--tint pjoin" id="partner-form" aria-labelledby="p-form">
+    <div class="container pjoin__grid">
+      <div class="pjoin__intro">
+        <h2 class="fsec__title" id="p-form">{E(f["heading"])}</h2>
+        <p class="fsec__lead">{E(f["lead"])}</p>
+        <h3 class="pjoin__label">{E(c["steps_label"])}</h3>
+        <ol class="psteps">{steps}</ol>
+        <p class="pjoin__trust">{ICON["chat"]}<span>{E(c["trust"])}</span></p>
+      </div>
+      <div class="pjoin__card">
+        <form class="form" data-form="partner" data-endpoint="{{{{FORM_ENDPOINT}}}}" method="post" novalidate>
+          <div class="form__row">
+            <label class="field"><span class="field__label">{E(f["name"])}</span><input name="name" type="text" autocomplete="name" required data-err="{E(f["errors"]["name"])}" aria-describedby="pf-name-err">{err("name")}</label>
+            <label class="field"><span class="field__label">{E(f["email"])}</span><input name="email" type="email" autocomplete="email" required data-err="{E(f["errors"]["email"])}" aria-describedby="pf-email-err">{err("email")}</label>
+          </div>
+          <div class="form__one">
+            <label class="field"><span class="field__label">{E(f["website"])} <span class="field__opt">({E(f["optional"])})</span></span>
+              <span class="field__prefix"><span aria-hidden="true">https://</span><input name="website" type="text" inputmode="url" autocomplete="url" data-url data-err="{E(f["errors"]["website"])}" aria-describedby="pf-website-err"></span>{err("website")}</label>
+          </div>
+          <div class="form__one">
+            <label class="field"><span class="field__label">{E(f["type"])}</span><select name="type" required data-err="{E(f["errors"]["type"])}" aria-describedby="pf-type-err"><option value="">{E(f["type_placeholder"])}</option>{opts}</select>{err("type")}</label>
+          </div>
+          <label class="field"><span class="field__label">{E(f["message"])}</span><textarea name="message" rows="5" required placeholder="{E(f["message_placeholder"])}" data-err="{E(f["errors"]["message"])}" aria-describedby="pf-message-err"></textarea>{err("message")}</label>
+          <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
+          <label class="field field--check"><input name="consent" type="checkbox" required data-err="{E(f["errors"]["consent"])}" aria-describedby="pf-consent-err"><span>{E(f["consent"])} <a href="#">{E(f["privacy"])}</a></span>{err("consent")}</label>
+          <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(f["submit"])}</span></button>
+            <p class="form__status" role="status" aria-live="polite" data-ok="{E(f["success"])}" data-fail="{E(f["error"])}" data-off="{E(f["not_connected"])}"></p></div>
+        </form>
+      </div>
     </div>
   </section>
 
-  <!-- 5 · HOW IT WORKS (white) -->
-  <section class="fsec" aria-labelledby="p-steps">
-    <div class="container">
-      <div class="fsec__head">{heading(c["steps_heading"], id_="p-steps")}</div>
-      <ol class="psteps">{steps}</ol>
-    </div>
-  </section>
-
-  <!-- 6 · PARTNER FORM (tint) -->
-  <section class="fsec fsec--tint" id="partner-form" aria-labelledby="p-form">
-    <div class="container pform-wrap">
-      <div class="fsec__head fsec__head--center"><h2 class="fsec__title" id="p-form">{E(f["heading"])}</h2><p class="fsec__lead">{E(f["lead"])}</p></div>
-      <form class="form" data-form="partner" data-endpoint="{{{{FORM_ENDPOINT}}}}" method="post" novalidate>
-        <p class="form__note" hidden>{E(f["not_connected"])}</p>
-        <div class="form__row">
-          <label class="field"><span class="field__label">{E(f["name"])}</span><input name="name" type="text" autocomplete="name" required data-err="{E(f["errors"]["name"])}" aria-describedby="pf-name-err">{err("name")}</label>
-          <label class="field"><span class="field__label">{E(f["email"])}</span><input name="email" type="email" autocomplete="email" required data-err="{E(f["errors"]["email"])}" aria-describedby="pf-email-err">{err("email")}</label>
-        </div>
-        <div class="form__row">
-          <label class="field"><span class="field__label">{E(f["website"])} <span class="field__opt">({E(f["optional"])})</span></span>
-            <span class="field__prefix"><span aria-hidden="true">https://</span><input name="website" type="text" inputmode="url" autocomplete="url" data-url data-err="{E(f["errors"]["website"])}" aria-describedby="pf-website-err"></span>{err("website")}</label>
-          <label class="field"><span class="field__label">{E(f["type"])}</span><select name="type" required data-err="{E(f["errors"]["type"])}" aria-describedby="pf-type-err"><option value="">{E(f["type_placeholder"])}</option>{opts}</select>{err("type")}</label>
-        </div>
-        <label class="field"><span class="field__label">{E(f["message"])}</span><textarea name="message" rows="5" required placeholder="{E(f["message_placeholder"])}" data-err="{E(f["errors"]["message"])}" aria-describedby="pf-message-err"></textarea>{err("message")}</label>
-        <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
-        <label class="field field--check"><input name="consent" type="checkbox" required data-err="{E(f["errors"]["consent"])}" aria-describedby="pf-consent-err"><span>{E(f["consent"])} <a href="#">{E(f["privacy"])}</a></span>{err("consent")}</label>
-        <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="sr-only">{E(f["submit"])}</span></button>
-          <p class="form__status" role="status" aria-live="polite" data-ok="{E(f["success"])}" data-fail="{E(f["error"])}" data-off="{E(f["not_connected"])}"></p></div>
-      </form>
-    </div>
-  </section>
-
-  <!-- 7 · FAQS (white) -->
+  <!-- 5 · FAQS (white) -->
   <section class="faq" aria-labelledby="faq-title">
     <div class="container faq__grid">
       <div class="faq__intro">

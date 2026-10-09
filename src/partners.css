@@ -3,8 +3,6 @@
    PARTNERS — hero orbit, directory (tabs, search, cards), who, steps, partner form
    ========================================================= */
 .phero .fhero__text { grid-column: 1 / span 6; }
-.phero .fhero__title { font-size: var(--t-h2); line-height: 1.17; letter-spacing: -0.025em; }   /* a two-line title: H2 size keeps it to ~4 lines */
-.phero .fhero__title .h-muted { color: var(--ink-muted); }
 
 /* monogram logo tiles: initials on a brand-tinted square (demo logos, never real ones) */
 .mono { display: grid; place-items: center; font-family: var(--font-head); font-weight: 700; letter-spacing: -0.02em; color: #8A3B07; background: #FFE3CC; }
@@ -55,9 +53,10 @@
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); }
 .pdir__search input:focus { outline: 2px solid var(--brand-500); outline-offset: 1px; }
 .pdir__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
-.ptr { display: grid; align-content: start; gap: var(--s-4); padding: var(--s-6); border-radius: var(--r-xl); background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); }
+.ptr { display: grid; align-content: start; gap: var(--s-4); padding: var(--s-6); border-radius: var(--r-xl); background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line);
+  transition: transform .5s var(--ease-expo), box-shadow .3s ease; }
+.ptr:hover, .ptr:focus-within { transform: translateY(-4px); box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--brand-500) 55%, var(--tint-line)), 0 24px 44px -30px rgba(229, 56, 15, .5); }
 .ptr[hidden] { display: none; }
-.ptr.is-featured { box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--brand-500) 55%, var(--tint-line)), 0 20px 40px -30px rgba(229, 56, 15, .5); }
 .ptr.is-in { animation: ptr-in .4s var(--ease-expo) both; }
 @keyframes ptr-in { from { opacity: 0; transform: translateY(8px); } }
 .ptr__logo { width: 52px; height: 52px; border-radius: 14px; font-size: 18px; }
@@ -75,33 +74,30 @@
 .pdir__more { margin-top: var(--head-gap); display: flex; justify-content: center; }
 .pdir__more[hidden] { display: none; }
 
-/* who we partner with (dark) */
-.pwho__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
-.pwho__card { display: grid; align-content: start; gap: var(--s-3); padding: var(--s-6); border-radius: var(--r-xl); background: #1E150E; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
-.pwho__icon { width: 40px; height: 40px; border-radius: 12px; display: grid; place-items: center; color: #FFB46B; background: rgba(255, 117, 0, .14); }
-.pwho__icon svg { width: 22px; height: 22px; }
-.pwho__card h3 { font-size: 20px; line-height: 28px; font-weight: 600; color: #fff; margin-top: var(--s-2); }
-.pwho__for { color: rgba(255, 255, 255, .78); }
-.pwho__ex { display: grid; gap: var(--s-1); padding-top: var(--s-3); border-top: 1px solid rgba(255, 255, 255, .1); color: rgba(255, 255, 255, .78); }
-.pwho__ex span { font-size: 14px; line-height: 20px; color: #FFB46B; }
 
-/* how it works: three steps in a row */
-.psteps { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); counter-reset: none; }
-.pstep { display: grid; align-content: start; gap: var(--s-3); padding-top: var(--s-6); border-top: 1px solid var(--line); }
-.pstep__num { font-family: var(--font-head); font-weight: 600; font-size: 20px; line-height: 28px; color: var(--brand-600); font-variant-numeric: tabular-nums; }
-.pstep h3 { font-size: 20px; line-height: 28px; font-weight: 600; letter-spacing: -0.01em; }
+/* partner with InkyBay (tint): how it works on the left in small type, the form card on the right */
+.pjoin__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-10); align-items: start; }
+.pjoin__intro { grid-column: 1 / span 5; display: grid; gap: var(--s-4); align-content: start; }
+.pjoin__intro .fsec__title { text-align: left; }
+.pjoin__label { margin-top: var(--s-6); font-size: 14px; line-height: 20px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; color: var(--brand-700); }
+.psteps { list-style: none; margin: 0; padding: 0; display: grid; }
+.pstep { position: relative; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: var(--s-4); padding-bottom: var(--s-5); }
+.pstep:not(:last-child)::before { content: ""; position: absolute; left: 15.5px; top: 36px; bottom: 4px; width: 1px; background: var(--tint-line); }   /* the thread between steps */
+.pstep__num { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; font-size: 14px; line-height: 1; font-weight: 600; color: var(--brand-700);
+  background: var(--bg); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 40%, var(--tint-line)); font-variant-numeric: tabular-nums; }
+.pstep h3 { font-size: 16px; line-height: 24px; font-weight: 600; padding-top: 4px; }
 .pstep p { color: var(--ink-muted); }
+.pjoin__trust { display: flex; align-items: center; gap: var(--s-3); padding-top: var(--s-5); border-top: 1px solid var(--tint-line); color: var(--ink-muted); }
+.pjoin__trust svg { flex: none; width: 20px; height: 20px; color: var(--brand-600); }
+.pjoin__card { grid-column: 7 / span 6; padding: var(--s-8); border-radius: 24px; background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--tint-line), 0 40px 80px -48px rgba(60, 25, 5, .35); }
 
-.pform-wrap { max-width: 760px; }
-.pform-wrap .form { padding: var(--s-8); border-radius: var(--r-xl); background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line), 0 30px 60px -40px rgba(60, 25, 5, .35); }
-
+@media (max-width: 960px) { .pjoin__intro, .pjoin__card { grid-column: 1 / -1; } }
 @media (max-width: 1100px) {
   .pdir__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .pwho__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 @media (max-width: 600px) {
-  .pdir__grid, .pwho__grid, .psteps { grid-template-columns: minmax(0, 1fr); }
+  .pdir__grid { grid-template-columns: minmax(0, 1fr); }
   .pdir__search, .pdir__search input { width: 100%; }
-  .pform-wrap .form { padding: var(--s-5); }
-}
+  }
 @media (prefers-reduced-motion: reduce) { .ptr.is-in { animation: none; } }

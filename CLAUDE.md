@@ -292,11 +292,15 @@ this page. Images are inlined, so nothing else depends on the depth. It has `noi
 ## Forms (shared)
 
 Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, control, `.field__err` with aria-live), a
-`.form__note`, a `.form__hp` honeypot and a `.form__status`; styles in `src/forms.css`, one handler in the template.
+`.form__hp` honeypot and a `.form__status`; styles in `src/forms.css`, one handler in the template. Selects use our own
+chevron with room on the right; checkboxes are a custom 22px box with a check mark; submit buttons are primary
+buttons with the arrow (`{{BTN_ARROWS}}` inside the `<button>`). `.form__row` puts two fields side by side, `.form__one`
+keeps one field per row.
 - Endpoints come from the build config in build.py: `FORM_ENDPOINT` (Partners, Contact) and `NEWSLETTER_ENDPOINT`
   (newsletter), e.g. a Formspree or Basin URL, set with `FORM_ENDPOINT=... python3 build.py` (and the same in the
-  Pages workflow when chosen). Both are empty for now: the form shows "Form not connected yet" up front and on submit,
-  and never pretends to send. No service has been picked.
+  Pages workflow when chosen). Both are empty for now. The "Form not connected yet" note (`.form__note`) is hidden
+  for now (your call); a submit without an endpoint still says so in the status line and never pretends to send. No
+  service has been picked.
 - Client-side validation with inline errors (required fields, email, `https://` website fields), on blur once a field
   was touched and on submit, with aria-invalid and focus on the first error; hidden or disabled fields are skipped; a
   filled honeypot is dropped quietly; the submit button shows a loading state; the result appears in place via fetch
@@ -309,16 +313,22 @@ Every form is `form.form[data-form][data-endpoint]` with `.field`s (label, contr
 
 `site/partners/`, built by `render_partners.py` from `src/partners.json` (all copy) and `src/partners-directory.json`
 (the list), styles in `src/partners.css` + `src/forms.css`. Reached from the Resources mega menu and the footer.
-1. Hero [white]: breadcrumb Home > Resources > Partners, two-tone H1 (H2 size), lead, "Become a partner" (to the form)
-   and "Browse partners" (to the directory); visual: the first six partners' logo tiles orbiting an InkyBay tile (90s, upright,
-   the core and chips float; static with reduced motion).
+1. Hero [white]: breadcrumb Home > Resources > Partners, a one-line H1 "Grow with the InkyBay partner network" (display
+   size, no second line), lead, "Become a partner" (to the form) and "Browse partners" (to the directory); visual: the
+   first six partners' logo tiles orbiting an InkyBay tile (90s, upright, the core and chips float; static with
+   reduced motion).
 2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts, a search on name and description,
    3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
-   `featured` partner comes first with a brand border; the first 9, then "Show more partners"; an empty state with
-   "Clear filters". Filtering fades and slides cards in.
-3. Why partner [white]: four benefit columns (feature-page benefit style). 4. Who we partner with [dark]: one card per
-   type with who it is for and an example. 5. How it works [white]: Apply, We review, Get listed (no time promises).
-6. Partner form [tint]: see Forms. 7. FAQs [white]. 8. CTA, crowd marquee, footer.
+   `featured` partner is listed first but looks like every other card. Every card lifts with a brand edge on hover or
+   keyboard focus. The first 9, then "Show more partners"; an empty state with "Clear filters". Filtering fades and
+   slides cards in.
+3. Why partner [white]: four benefit columns (feature-page benefit style).
+4. Partner with InkyBay [tint]: one section, one heading. Left (5 cols): the heading, lead, "How it works" in small
+   type (Apply, We review, Get listed; numbered circles joined by a thread; no time promises) and a one-line trust note.
+   Right (7 cols): the form card: name and email side by side, then company website, partner type and message each on
+   their own row, consent, and "Send message" (a primary button with the arrow). See Forms.
+5. FAQs [white]. 6. CTA, crowd marquee, footer.
+(There is no "Who we partner with" section any more; your call.)
 - Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
 - Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
   supplied partner logos assigned at random, so names and logos do not belong together yet;
@@ -498,6 +508,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-09: Partners and forms polish (your changes): one-line hero heading; "Who we partner with" removed; How it works and the form merged into one "Partner with InkyBay" section (steps small on the left, form card on the right; name + email in one row, website, type and message each on their own row); every partner card has the same hover lift instead of the first one looking permanently hovered; shared form fixes on every form: a proper select chevron, a custom checkbox, the primary arrow on submit buttons, and the "Form not connected yet" note hidden
 - 2026-10-08: Blog links, audit and docs: audit check_blog (thumbnail ratios, pill/tag/pagination links, search results and empty state, layout switch, contents highlight, summary reveal, JSON-LD, overflow at 390px) and four blog pages in --all; docs/writing-a-blog-post.md for writers. The Resources mega menu and footer already point to resources/blog/
 - 2026-10-08: Blog demo content: four categories (Print prep, Pricing and operations, Shopify and growth, InkyBay product), eight tags, two demo authors, 14 demo posts (302 to 702 words; two featured) including the flagship "What makes a file print-ready? A practical guide" with the resolution table, colour section, callout, merchant quote, lists, checklist and FAQ; 16:10 covers (soft brand gradient + one product, no text) made by scripts/make_blog_covers.py. Figma frames were not readable, so titles are our own
 - 2026-10-08: Blog content model and build (render_blog.py: front matter, validation, Python-Markdown, reading time, contents, responsive thumbnails, listing / category / tag / search / article pages, SEO tags and JSON-LD, search-index.json, feed.xml; sitemap.xml for the whole site; SITE_URL; requirements.txt pinned Markdown 3.7 + Pillow 11.3, installed by the Pages workflow; blog.css and blog JS). The brief's listing, result-page and article commits land here because one renderer builds them all. Decisions: Python-Markdown (small, well known, tables and heading ids built in); a small built-in front matter reader instead of a YAML library; the sticky sidebar scrolls inside itself when taller than the screen; pills, tags and share buttons are 16px, metadata 14px in non-paragraph elements; screen-reader-only headings are skipped by the heading reveal
