@@ -198,6 +198,7 @@ def wheel(root):
 
 PRINT_TEXT_JS = (ROOT / "src" / "video" / "print-text.js").read_text()
 PRINT_AREAS = json.dumps({k: v for k, v in json.loads((ROOT / "src" / "video" / "print-areas.json").read_text()).items() if not k.startswith("_")}, separators=(",", ":"))
+FONT_FACES = (ROOT / "src" / "fonts.css").read_text()
 HV_CHECK = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 6.3l2.3 2.3 4.7-4.9"/></svg>'
 
 RAIL_ARROW = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h10M9 4l4 4-4 4"/></svg>'
@@ -232,6 +233,8 @@ def build(t, root="", home="#", current=None):
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
     t = t.replace("{{HERO_PRELOAD}}", "")   # only the homepage preloads the hero poster
+    t = t.replace("{{FONT_FACES}}", FONT_FACES)   # self-hosted Geist and Inter (src/fonts.css)
+    t = re.sub(r"\{\{FONT:(.*?)\}\}", lambda m: asset(m.group(1), root), t)
     t = t.replace("{{PRINT_TEXT_JS}}", PRINT_TEXT_JS).replace("{{PRINT_AREAS}}", PRINT_AREAS)   # printed text on products (homepage visuals)
     t = t.replace("{{CURSOR}}", render_industry.CURSOR).replace("{{HV_CHECK}}", HV_CHECK)
     t = t.replace("{{BTN_ARROWS}}", ARROW + ARROW)   # submit buttons: the same arrow as every primary button

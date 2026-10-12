@@ -82,6 +82,10 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
   stale, and copies only the images pages use. Below-the-fold images are `loading="lazy" decoding="async"`; the
   feature-page hero photo is `fetchpriority="high"`. The mega-menu promos use 600px copies (`src/assets/promo/`).
   The audit serves site/ over its local GitHub-Pages-like server (correct content types) instead of file://.
+- Fonts are self-hosted (`src/assets/fonts/`, OFL): one variable woff2 per family and subset (Geist and Inter,
+  latin and latin-ext) covers every weight. `src/fonts.css` holds the @font-face rules (font-display: swap,
+  unicode-range), inlined into every page head; the two latin files are preloaded. No request leaves the site for
+  fonts (the hero video and style-frame pages, render tools only, still use Google Fonts).
 - build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
   preloads the hero poster on the homepage only (`{{HERO_PRELOAD}}`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
@@ -101,7 +105,7 @@ Never delete an image that something still references.
 **Layout**: 1440 frame, 1248 container, `--margin` 96 (fluid, 20 min), 12 columns, `--gutter` 32 (fluid).
 **Rhythm**: `--section-y` 120 desktop / 80 phones (every section's top and bottom padding).
 `--head-gap` 64 / 40 (section heading block to its content).
-**Type**: Geist for headings only, Inter for everything else. **No monospace anywhere**, including chip and mini-UI text:
+**Type**: Geist for headings only, Inter for everything else (self-hosted, see Build and deploy). **No monospace anywhere**, including chip and mini-UI text:
 a font-name roll uses "Display", never "Mono".
 Display 64/72 (`--t-display`, the homepage hero H1 only, weight 600). Inner-page hero H1 56 (`--t-h1-inner`, weight 500:
 features, industries, partners, contact, blog listing); blog article H1 44 (`--t-h1-article`, 500). H2 48 on desktop,
@@ -222,7 +226,6 @@ Section sub headings are 18px.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
-- Fonts load from Google Fonts in the build; self-host Geist and Inter in production.
 
 ## Suggested next steps
 
@@ -650,6 +653,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-12: Performance: self-hosted fonts. Geist and Inter come from src/assets/fonts/ (latin 28 KB and 47 KB, preloaded; latin-ext only when needed) with inline @font-face rules, instead of a render-blocking stylesheet from fonts.googleapis.com and files from fonts.gstatic.com. Lighthouse (local, gzipped like Pages; the live site before this work): homepage mobile 56 to 97 (first paint 10.7s to 1.4s), desktop 75 to 100; a feature page mobile 60 to 92, desktop 88 to 100. Closes the open item "self-host Geist and Inter"
 - 2026-10-12: Performance: images as cached files and lazy loading. Every page inlined its images as base64 (homepage HTML 2.6 MB, 2.1 MB of it images, 645 KB repeated; even the contact page 1 MB, all re-downloaded on every page). Now images are files with a content hash, copied only when used; below-the-fold images lazy-load; the mega-menu promos use 600px copies of the 2240px editor shot and the 1000px collage. Homepage HTML 2.6 MB to 414 KB (93 KB gzipped), contact 1 MB to 372 KB. The audit moved to its local server (file:// pages cannot read image files into a canvas), its alpha check loads its own image copy (a lazy image off screen never decodes), and the 404 rule now accepts paths from SITE_BASE and checks they load
 - 2026-10-09: Document the hero video: a Hero video section (story, art direction, the print-area method and files, how to re-render, how to swap in a designer-made video with the same three file names and size, the 2.5 MB budget, accessibility, the poster decision)
 - 2026-10-09: Document the new homepage visuals: audit check_home_visuals (rail cards and links from _index.json, vignette UI and chip overlap at 1440 and 390px measured at a settled moment, rail titles not cut off, print text on product alpha, only the active Features visual animating, reduced motion still) and the playbook's audit description. Found by these checks and fixed before the rail commit: three vignettes with narrow products, a chip shifted by its own font size (--vc is now a registered length), titles cut off at 360px
