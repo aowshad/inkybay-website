@@ -431,8 +431,8 @@ keeps one field per row.
 (the list), styles in `src/partners.css` + `src/forms.css`. Reached from the Resources mega menu and the footer.
 1. Hero [white]: breadcrumb Home > Resources > Partners, a one-line H1 "Grow with the InkyBay partner network" (display
    size, no second line), lead, "Become a partner" (to the form) and "Browse partners" (to the directory); visual: the
-   first six partners' logo tiles orbiting an InkyBay tile (90s, upright, the core and chips float; static with
-   reduced motion).
+   first six partners' logo tiles orbiting the 3D InkyBay logo (`src/assets/brand/inkybay-3d.webp`, 480px, a soft
+   drop shadow, no glass tile; your logo) (90s, upright, the core and chips float; static with reduced motion).
 2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts (the blog pill style: 14px, muted on
    surface, hairline, active inverted), a search on name and description,
    3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
@@ -653,6 +653,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-12: Partners: the orbit's centre is your 3D InkyBay logo instead of the flat mark on a glass tile (trimmed, 480px WebP, 21 KB; slightly larger at 32% of the orbit, drop shadow, same float); checked light, dark and 390px
 - 2026-10-12: Performance: self-hosted fonts. Geist and Inter come from src/assets/fonts/ (latin 28 KB and 47 KB, preloaded; latin-ext only when needed) with inline @font-face rules, instead of a render-blocking stylesheet from fonts.googleapis.com and files from fonts.gstatic.com. Lighthouse (local, gzipped like Pages; the live site before this work): homepage mobile 56 to 97 (first paint 10.7s to 1.4s), desktop 75 to 100; a feature page mobile 60 to 92, desktop 88 to 100. Closes the open item "self-host Geist and Inter"
 - 2026-10-12: Performance: images as cached files and lazy loading. Every page inlined its images as base64 (homepage HTML 2.6 MB, 2.1 MB of it images, 645 KB repeated; even the contact page 1 MB, all re-downloaded on every page). Now images are files with a content hash, copied only when used; below-the-fold images lazy-load; the mega-menu promos use 600px copies of the 2240px editor shot and the 1000px collage. Homepage HTML 2.6 MB to 414 KB (93 KB gzipped), contact 1 MB to 372 KB. The audit moved to its local server (file:// pages cannot read image files into a canvas), its alpha check loads its own image copy (a lazy image off screen never decodes), and the 404 rule now accepts paths from SITE_BASE and checks they load
 - 2026-10-09: Document the hero video: a Hero video section (story, art direction, the print-area method and files, how to re-render, how to swap in a designer-made video with the same three file names and size, the 2.5 MB budget, accessibility, the poster decision)

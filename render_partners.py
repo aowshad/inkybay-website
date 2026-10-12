@@ -39,7 +39,7 @@ def render():
     ring = "".join(f'<span class="porbit__tile{logo_cls(p, k)}" style="--k:{k}">{logo(p)}</span>' for k, p in enumerate(partners[:6]))
     chips = "".join(f'<span class="porbit__chip porbit__chip--{k + 1} chip{" chip--brand" if k else ""}">{E(t)}</span>' for k, t in enumerate(h["chips"]))
     orbit = (f'<div class="porbit" aria-hidden="true"><span class="porbit__glow"></span><div class="porbit__ring">{ring}</div>'
-             f'<span class="porbit__core">{{{{LOGO_MARK}}}}</span>{chips}</div>')
+             f'<span class="porbit__core"><img src="{{{{IMG:brand/inkybay-3d.webp}}}}" alt="" width="480" height="451" decoding="async" fetchpriority="high"></span>{chips}</div>')
 
     # directory
     tabs = (f'<button class="pdir__tab" type="button" role="tab" aria-selected="true" data-type="all">{E(dr["all"])} <span class="pdir__count">{len(partners)}</span></button>'
