@@ -18,7 +18,7 @@ The navbar mega menus, their mobile sheet sub-lists and promos come from src/nav
 src/template.html is the homepage with {{TOKENS}}. Feature pages reuse its head, navbar, CTA,
 footer, CSS and JS (see render_feature.py), so every page stays in sync with the homepage.
 """
-import base64, re, html, pathlib, os, shutil
+import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
 import render_industry, render_404, render_partners, render_contact, render_blog
@@ -46,8 +46,12 @@ def primary(m):
 def secondary(m):
     e = html.escape(m.group(1), quote=True)
     return f'<a class="btn btn--secondary" href="#" aria-label="{e}">{label(m.group(1))}</a>'
-def b64(path):
-    return "data:image/webp;base64," + base64.b64encode((ASSETS / path).read_bytes()).decode()
+USED_ASSETS = set()                     # every image a page references; copied to site/assets/ once all pages are built
+def asset(path, root):
+    """An image under src/assets/ as a file URL relative to the page (served and cached, never base64-inlined), with a
+    short content hash so a changed image is never served stale."""
+    USED_ASSETS.add(path)
+    return f"{root}assets/{path}?v={hashlib.md5((ASSETS / path).read_bytes()).hexdigest()[:8]}"
 
 def secondary_html(text, href="#"):
     e = html.escape(text, quote=True)
@@ -116,12 +120,12 @@ def render_nav(root, current):
             main = f'<div class="mega__main">\n        <p class="mega__label">{lab}</p>\n        <ul class="mega__grid">{"".join(d for d, _ in pairs)}</ul>\n      </div>'
         p = m["promo"]
         if p.get("visual") == "video":
-            media = (f'<span class="mega__video"><img class="mega__img" src="{b64("hero-editor.webp")}" alt="" width="2240" height="1836" loading="lazy" decoding="async">'
+            media = (f'<span class="mega__video"><img class="mega__img" src="{asset("promo/hero-editor.webp", root)}" alt="" width="600" height="492" loading="lazy" decoding="async">'
                      f'<span class="mega__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></span>')
         else:
             w, h = webp_size(p["image"])
             pos = f' style="object-position: {html.escape(p["position"])}"' if p.get("position") else ""
-            media = f'<img class="mega__img" src="{b64(p["image"])}" alt="" width="{w}" height="{h}"{pos} loading="lazy" decoding="async">'
+            media = f'<img class="mega__img" src="{asset(p["image"], root)}" alt="" width="{w}" height="{h}"{pos} loading="lazy" decoding="async">'
         phref, _ = link({"href": p["href"]}, "", root)
         promo = (f'<aside class="mega__promo">\n        {media}\n        <p class="mega__promo-title">{html.escape(p["title"])}</p>\n'
                  f'        <p class="mega__promo-text">{html.escape(p["text"])}</p>\n        {primary_html(p["cta"], phref)}\n      </aside>')
@@ -184,7 +188,7 @@ def wheel(root):
         aria = html.escape(f'{p["label"]}, {titles[p["industry"]]}', quote=True)
         cards.append(f'''<li class="wheel__card">
             <a class="icard" href="{root}industries/{p["industry"]}/" aria-label="{aria}">
-              <div class="icard__media"><img src="{b64("products/" + n + ".webp")}" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
+              <div class="icard__media"><img src="{asset("products/" + n + ".webp", root)}" alt="" width="600" height="600" loading="lazy" decoding="async"></div>
               <div class="icard__body">
                 <h3 class="icard__title">{label}</h3>
               </div>
@@ -233,8 +237,8 @@ def build(t, root="", home="#", current=None):
     t = t.replace("{{BTN_ARROWS}}", ARROW + ARROW)   # submit buttons: the same arrow as every primary button
     for token, name in [("WORDMARK_LIT", "wordmark_lit.svg"), ("WORDMARK", "wordmark.svg"), ("LOGO_MARK", "logo_mark.svg"), ("LOGO_TYPE", "logo_type.svg")]:
         t = t.replace("{{%s}}" % token, (ASSETS / "brand" / name).read_text())
-    t = t.replace("{{EDITOR}}", b64("hero-editor.webp"))
-    t = re.sub(r"\{\{IMG:(.*?)\}\}", lambda m: b64(m.group(1)), t)
+    t = t.replace("{{EDITOR}}", asset("hero-editor.webp", root))
+    t = re.sub(r"\{\{IMG:(.*?)\}\}", lambda m: asset(m.group(1), root), t)
     left = re.findall(r"\{\{.*?\}\}", t)
     assert not left, f"unresolved tokens: {left}"
     return t
@@ -260,6 +264,10 @@ for ind in INDUSTRIES:                                   # an industry gets a pa
     if (ROOT / "src" / "industries" / f'{ind["slug"]}.json').exists():
         write(SITE / "industries" / ind["slug"] / "index.html", build(render_industry.render(ind["slug"]), root="../../", home="../../", current=("industries", ind["slug"])))
 blog_pages = render_blog.build_all(build, write, SITE, SITE_URL, (ROOT / "src" / "template.html").read_text())
+
+for a in sorted(USED_ASSETS):            # images are files next to the pages, cached across pages
+    (SITE / "assets" / a).parent.mkdir(parents=True, exist_ok=True); shutil.copy2(ASSETS / a, SITE / "assets" / a)
+print(f"ok -> site/assets/ ({len(USED_ASSETS)} images)")
 
 # sitemap.xml for the whole site: every built page except the 404 and search results
 lastmod = dict(blog_pages)

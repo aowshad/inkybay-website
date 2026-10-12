@@ -27,7 +27,8 @@ chosen stack until it matches the build, and only then create new pages. Do not 
 
 ```
 site/                     build output, not in git (.gitignore); python3 build.py regenerates it, Actions deploys it
-  index.html              the homepage, one self-contained file
+  index.html              the homepage (images, fonts and the video are files under site/assets/)
+  assets/                 every image a page uses (build.py copies only those, URLs carry ?v=<hash>), fonts, video
   features/<slug>/index.html  one page per src/features/<slug>.json (clean URL: features/<slug>/)
   404.html                the interactive 404 (every link starts from SITE_BASE)
 src/template.html         the homepage with {{TOKENS}} for buttons, brand SVGs and images
@@ -71,10 +72,16 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
 ## Build and deploy
 
 - Local: `python3 build.py`, then preview with `python3 -m http.server -d site` (open http://localhost:8000/).
-  Opening the files directly works for single pages, but folder links like `features/<slug>/` need a server.
+  Always preview through a server: images are files, and a file:// page cannot use them as CSS masks (the print
+  text on products) or read them into a canvas (the audit), and folder links like `features/<slug>/` need one too.
 - Live: https://aowshad.github.io/inkybay-website/ (feature pages at `features/<slug>/`). Every push to `main` runs
   `.github/workflows/pages.yml`: checkout, Python 3.12, `python3 build.py`, upload `site/` with
   `actions/upload-pages-artifact`, deploy with `actions/deploy-pages` (concurrency group `pages`).
+- Images are files, never base64: build.py's `asset()` turns `{{IMG:x}}` (and the menu, wheel and editor images) into
+  `<root>assets/x?v=<8-character content hash>`, so they are cached across pages and a changed image is never served
+  stale, and copies only the images pages use. Below-the-fold images are `loading="lazy" decoding="async"`; the
+  feature-page hero photo is `fetchpriority="high"`. The mega-menu promos use 600px copies (`src/assets/promo/`).
+  The audit serves site/ over its local GitHub-Pages-like server (correct content types) instead of file://.
 - build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
   preloads the hero poster on the homepage only (`{{HERO_PRELOAD}}`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
@@ -376,7 +383,7 @@ section type, add it to the template for all pages.
 `site/404.html`, built by `render_404.py` from `src/404.json` (copy, products, print areas, swatches) with
 `src/404.css`. GitHub Pages serves it for any missing URL at any depth, so its links cannot be relative: build.py's
 `SITE_BASE` ("/inkybay-website/" now; `SITE_BASE=/ python3 build.py` on a custom domain) is the root of every link on
-this page. Images are inlined, so nothing else depends on the depth. It has `noindex` and nothing links to it. It has
+this page. Images and fonts also start from SITE_BASE, so nothing depends on the depth. It has `noindex` and nothing links to it. It has
 no CTA section (render_404.py removes it from the shared tail); the crowd marquee and footer stay.
 - Left (5 cols): H1 on two lines, "404" (ink) over "Page not found" (muted), at display size; the lead and "Back to
   homepage". No status label and no helpful links (your call).
@@ -643,6 +650,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-12: Performance: images as cached files and lazy loading. Every page inlined its images as base64 (homepage HTML 2.6 MB, 2.1 MB of it images, 645 KB repeated; even the contact page 1 MB, all re-downloaded on every page). Now images are files with a content hash, copied only when used; below-the-fold images lazy-load; the mega-menu promos use 600px copies of the 2240px editor shot and the 1000px collage. Homepage HTML 2.6 MB to 414 KB (93 KB gzipped), contact 1 MB to 372 KB. The audit moved to its local server (file:// pages cannot read image files into a canvas), its alpha check loads its own image copy (a lazy image off screen never decodes), and the 404 rule now accepts paths from SITE_BASE and checks they load
 - 2026-10-09: Document the hero video: a Hero video section (story, art direction, the print-area method and files, how to re-render, how to swap in a designer-made video with the same three file names and size, the 2.5 MB budget, accessibility, the poster decision)
 - 2026-10-09: Document the new homepage visuals: audit check_home_visuals (rail cards and links from _index.json, vignette UI and chip overlap at 1440 and 390px measured at a settled moment, rail titles not cut off, print text on product alpha, only the active Features visual animating, reduced motion still) and the playbook's audit description. Found by these checks and fixed before the rail commit: three vignettes with narrow products, a chip shifted by its own font size (--vc is now a registered length), titles cut off at 360px
 - 2026-10-09: Feature rail: nine feature vignettes. Cards are built from src/features/_index.json (the hardcoded eight are gone; Unlimited product options is the ninth) with a "Learn more" link each; vignettes in src/rail-vignettes.html loop only while their card is on screen. The card sizing and scroll distance need no change for nine cards (both follow the track width); checked pinned at 1440 and as a swipe rail at 390, light and dark. Decisions: the notebook gets a measured print area (front cover); the 8 old rail mini UIs move to src/mini-uis.html so the 19 feature, industry, partner and contact pages render identical markup; the link is ink with a brand arrow (brand-700 text is under 4.5:1 at 16px)

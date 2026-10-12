@@ -108,7 +108,7 @@ async def check_page(slug, d):
                     await pg.route("**/fonts.googleapis.com/**", lambda rt: rt.fulfill(status=200, content_type="text/css", body=FONTS_CSS))
                 errs = []
                 pg.on("pageerror", lambda e: errs.append(str(e)))
-                await pg.goto(path.as_uri()); await pg.wait_for_timeout(800)
+                await pg.goto(url_of(path)); await pg.wait_for_timeout(800)
                 h = await pg.evaluate("document.body.scrollHeight")
                 for y in range(0, h, 500):
                     await pg.evaluate(f"window.scrollTo(0,{y})"); await pg.wait_for_timeout(40)
@@ -211,7 +211,7 @@ async def check_industry_hero(b, slug, path):
     for w in (1440, 390):
         pg = await b.new_page(viewport={"width": w, "height": 900})
         await pg.emulate_media(reduced_motion="reduce")      # the settled, coloured first card
-        await pg.goto(path.as_uri()); await pg.wait_for_timeout(700)
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(700)
         r = await pg.evaluate("""(async()=>{const box=e=>e.getBoundingClientRect();
           const edge=(q,r)=>{const touch=!(q.right<r.left||q.left>r.right||q.bottom<r.top||q.top>r.bottom), inside=q.left>=r.left&&q.right<=r.right&&q.top>=r.top&&q.bottom<=r.bottom; return touch&&!inside};
           const front=document.querySelector('.icardx[data-front]'); if(!front) return {missing:true};
@@ -226,7 +226,7 @@ async def check_industry_hero(b, slug, path):
     # interaction (motion on): the loop advances on its own when not hovered; each tab brings its card to the front
     pg = await b.new_page(viewport={"width": 1440, "height": 900}); errs = []
     pg.on("pageerror", lambda e: errs.append(str(e)))
-    await pg.goto(path.as_uri()); await pg.mouse.move(4, 896)
+    await pg.goto(url_of(path)); await pg.mouse.move(4, 896)
     FRONT = "document.querySelector('.icardx[data-front]').getAttribute('aria-label')"
     first = await pg.evaluate(FRONT)
     try:
@@ -314,7 +314,7 @@ async def check_contact(b, path):
         ctx = await b.new_context(viewport={"width": w, "height": 900}, permissions=["clipboard-read", "clipboard-write"])
         pg = await ctx.new_page(); errs = []
         pg.on("pageerror", lambda e: errs.append(str(e)))
-        await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(500)
         S = """(()=>({ph:document.querySelector('[name="message"]').placeholder, topic:document.querySelector('[name="topic"]').value,
               note:!document.querySelector('.cform .chelp').hidden}))()"""
         base = await pg.evaluate(S)
@@ -358,8 +358,9 @@ HOME_VIS_JS = """async () => {
   // measure every vignette at a settled moment (3.6s: every part is in, nothing is fading)
   document.querySelectorAll('.rail .vg').forEach(v => v.getAnimations({ subtree: true }).forEach(a => { a.pause(); a.currentTime = 3600; }));
   const alpha = {}, out = [];
-  const A = async img => { if (alpha[img.src]) return alpha[img.src]; await img.decode().catch(()=>{});
-    const n = 300, c = document.createElement('canvas'); c.width = c.height = n; const g = c.getContext('2d'); g.drawImage(img, 0, 0, n, n);
+  const A = async img => { if (alpha[img.src]) return alpha[img.src];
+    const im = new Image(); im.src = img.currentSrc || img.src; await im.decode().catch(()=>{});   // its own copy: a lazy image off screen never loads
+    const n = 300, c = document.createElement('canvas'); c.width = c.height = n; const g = c.getContext('2d'); g.drawImage(im, 0, 0, n, n);
     const px = g.getImageData(0, 0, n, n).data, d = new Uint8Array(n * n); let x0 = n, y0 = n, x1 = 0, y1 = 0;
     for (let i = 0; i < n * n; i++) { d[i] = px[i * 4 + 3]; if (d[i] > 8) { const x = i % n, y = (i / n) | 0; x0 = Math.min(x0, x); y0 = Math.min(y0, y); x1 = Math.max(x1, x); y1 = Math.max(y1, y); } }
     return alpha[img.src] = { n, d, bb: [x0 / n, y0 / n, (x1 + 1) / n, (y1 + 1) / n] }; };
@@ -396,13 +397,13 @@ async def check_home_visuals(b, path):
     visual animating, and reduced motion still."""
     feats = [f["slug"] for f in json.loads((ROOT / "src/features/_index.json").read_text())["features"]]
     pg = await b.new_page(viewport={"width": 1440, "height": 900})
-    await pg.goto(path.as_uri()); await pg.wait_for_timeout(2000)
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(2000)
     await pg.evaluate("document.querySelector('.rail').scrollIntoView()"); await pg.wait_for_timeout(400)
     r = await pg.evaluate(HOME_VIS_JS)
     if r["links"] != [f"features/{s}/" for s in feats]: bad("homepage", f"rail cards/links do not match _index.json: {r['links']}")
     for x in r["out"][:8]: bad("homepage", x)
     p390 = await b.new_page(viewport={"width": 390, "height": 844})                  # the swipe rail on phones
-    await p390.goto(path.as_uri()); await p390.wait_for_timeout(1500)
+    await p390.goto(url_of(path)); await p390.wait_for_timeout(1500)
     for x in (await p390.evaluate(HOME_VIS_JS))["out"][:8]: bad("homepage", "390px: " + x)
     cut = await p390.evaluate("[...document.querySelectorAll('.rail .fcard__title')].filter(h => h.scrollWidth > h.clientWidth + 1).map(h => h.textContent)")
     if cut: bad("homepage", f"390px: rail titles cut off: {cut}")
@@ -417,7 +418,7 @@ async def check_home_visuals(b, path):
         if k != act and a1 != a0: bad("homepage", f"Features visual {k + 1} animates while inactive")
     await pg.close()
     pg = await b.new_page(viewport={"width": 1440, "height": 900}, reduced_motion="reduce")
-    await pg.goto(path.as_uri()); await pg.wait_for_timeout(1200)
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(1200)
     n = await pg.evaluate("[...document.querySelectorAll('.fmedia, .rail .vg')].reduce((s, e) => s + e.getAnimations({subtree: true}).length, 0)")
     if n: bad("homepage", f"reduced motion: {n} animations still run in the Features visuals or rail vignettes")
     await pg.close()
@@ -432,7 +433,7 @@ async def check_hero_video(b, path):
         if not (path.parent / "assets/video" / f).exists(): bad("homepage", f"site/assets/video/{f} missing (python3 build.py copies src/assets/video/)")
     for reduce in ("no-preference", "reduce"):
         pg = await b.new_page(viewport={"width": 1440, "height": 900}, reduced_motion=reduce)
-        await pg.goto(path.as_uri()); await pg.wait_for_timeout(2500)
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(2500)
         r = await pg.evaluate("""(async()=>{const v=document.querySelector('.hero__video'); if(!v) return null;
           const poster=await new Promise(res=>{const i=new Image(); i.onload=()=>res(i.naturalWidth); i.onerror=()=>res(0); i.src=v.poster;});
           const s=v.parentNode.getBoundingClientRect();
@@ -454,7 +455,7 @@ async def check_hero_video(b, path):
             if await pg.evaluate("document.querySelector('.hero__video').paused"): bad("homepage", "hero play button does not resume")
         await pg.close()
     pg = await b.new_page(viewport={"width": 390, "height": 844})
-    await pg.goto(path.as_uri()); await pg.wait_for_timeout(800)
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(800)
     if await pg.evaluate("document.documentElement.scrollWidth > document.documentElement.clientWidth"): bad("homepage", "hero overflows at 390px")
     await pg.close()
 
@@ -466,7 +467,7 @@ async def check_partners(b, path):
     for w in (1440, 390):
         pg = await b.new_page(viewport={"width": w, "height": 900}); errs = []
         pg.on("pageerror", lambda e: errs.append(str(e)))
-        await pg.goto(path.as_uri()); await pg.wait_for_timeout(400)
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(400)
         S = """(()=>{const v=[...document.querySelectorAll('.ptr')].filter(c=>!c.hidden);
           return {shown:v.length, types:[...new Set(v.map(c=>c.dataset.type))], more:!document.querySelector('.pdir__more').hidden,
                   empty:!document.querySelector('.pdir__empty').hidden,
@@ -495,6 +496,21 @@ async def check_partners(b, path):
         await pg.close()
 
 
+TYPES = {".html": "text/html; charset=utf-8", ".webp": "image/webp", ".png": "image/png", ".jpg": "image/jpeg", ".svg": "image/svg+xml",
+         ".mp4": "video/mp4", ".webm": "video/webm", ".woff2": "font/woff2", ".css": "text/css", ".js": "text/javascript",
+         ".json": "application/json", ".xml": "application/xml"}
+_SITE = {}
+
+
+def url_of(path):
+    """A built page (site/...) as a URL on the local GitHub-Pages-like server: images are files now, and file:// pages
+    cannot read them into a canvas or use them as CSS masks."""
+    if "base" not in _SITE:
+        _SITE["srv"], _SITE["base"] = serve_site()
+    rel = path.relative_to(ROOT / "site").as_posix()
+    return _SITE["base"] + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+
+
 def serve_site():
     """A local stand-in for GitHub Pages: site/ under SITE_BASE, and 404.html (status 404) for any missing path."""
     import http.server, threading, os
@@ -508,7 +524,8 @@ def serve_site():
                 if f.is_dir(): f = f / "index.html"
             ok = f is not None and f.is_file()
             body = (f if ok else site / "404.html").read_bytes()
-            self.send_response(200 if ok else 404); self.send_header("Content-Type", "text/html; charset=utf-8")
+            ctype = TYPES.get((f.suffix if ok else ".html").lower(), "application/octet-stream")
+            self.send_response(200 if ok else 404); self.send_header("Content-Type", ctype)
             self.send_header("Content-Length", str(len(body))); self.end_headers(); self.wfile.write(body)
     srv = http.server.ThreadingHTTPServer(("127.0.0.1", 0), H)
     threading.Thread(target=srv.serve_forever, daemon=True).start()
@@ -526,8 +543,12 @@ async def check_404(b):
             r = await pg.goto(base + depth)
             if r.status != 404 or not await pg.locator(".ed").count(): bad(slug, f"{depth}: missing URL does not show the 404 editor (status {r.status})")
             links = await pg.evaluate("""[...document.querySelectorAll('a[href]')].filter(a=>!a.getAttribute('href').startsWith('#')).map(a=>a.href).filter(h=>h.startsWith(location.origin))""")
-            srcs = await pg.evaluate("""[...document.querySelectorAll('[src]')].map(e=>e.getAttribute('src')).filter(s=>!/^(data:|https?:)/.test(s))""")
+            sb = os.environ.get("SITE_BASE", "/inkybay-website/")   # images and fonts are files now: every path starts from SITE_BASE
+            srcs = await pg.evaluate("""(sb)=>[...document.querySelectorAll('[src]')].map(e=>e.getAttribute('src')).filter(s=>!/^(data:|https?:)/.test(s) && !s.startsWith(sb))""", sb)
             if srcs: bad(slug, f"{depth}: relative asset paths {srcs[:2]}")
+            broken = await pg.evaluate("""async()=>{const u=[...new Set([...document.querySelectorAll('[src]')].map(e=>e.src).filter(s=>s.startsWith(location.origin)))];
+              const r=await Promise.all(u.map(s=>fetch(s).then(x=>x.ok?null:s).catch(()=>s))); return r.filter(Boolean)}""")
+            if broken: bad(slug, f"{depth}: assets that do not load {broken[:2]}")
             if any(not l.startswith(base) for l in links): bad(slug, f"{depth}: a link leaves SITE_BASE: {[l for l in links if not l.startswith(base)][:2]}")
             if hrefs is None: hrefs = sorted(set(links))
             elif sorted(set(links)) != hrefs: bad(slug, f"{depth}: links differ by depth (relative links)")
@@ -584,7 +605,7 @@ async def check_menus(b, slug, path):
     for w in (1366, 1440):
         pg = await b.new_page(viewport={"width": w, "height": 900}); errs = []
         pg.on("pageerror", lambda e: errs.append(str(e)))
-        await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(500)
         tag = f"menus {w}px"
         for mid in exp:
             t = pg.locator(f"#nav-{mid}")
@@ -611,7 +632,7 @@ async def check_menus(b, slug, path):
         if errs: bad(slug, f"{tag}: JS errors {errs[:2]}")
         await pg.close()
     pg = await b.new_page(viewport={"width": 390, "height": 844})
-    await pg.goto(path.as_uri()); await pg.wait_for_timeout(500)
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(500)
     await pg.click(".nav__toggle"); await pg.wait_for_timeout(400)
     for mid, n in exp.items():
         t = pg.locator(f'.sheet-toggle[aria-controls="sheet-{mid}"]')
