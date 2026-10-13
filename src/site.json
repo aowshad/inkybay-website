@@ -1,0 +1,12 @@
+{
+  "name": "InkyBay",
+  "home": {
+    "description": "InkyBay is a Shopify product customizer: shoppers design text, images and artwork live on any product, and your team gets print-ready orders."
+  },
+  "social": {
+    "image": "brand/og-card.jpg",
+    "image_alt": "InkyBay, the product customizer for Shopify",
+    "headline": "Sell personalized products with a live design editor",
+    "line": "Product customizer for Shopify"
+  }
+}

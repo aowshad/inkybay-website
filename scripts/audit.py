@@ -99,6 +99,10 @@ async def check_page(slug, d):
     path = page_path(slug)
     if not path.exists():
         return bad(slug, f"not built: run python3 build.py ({path.relative_to(ROOT)})")
+    page = path.read_text(); noindex = 'content="noindex"' in page        # SEO tags (build.py seo()): one of each, no canonical on noindex pages
+    for need in ['name="description"', 'property="og:title"', 'property="og:image"', 'name="twitter:card"'] + ([] if noindex else ['rel="canonical"']):
+        n = page.count(need)
+        if n != 1: bad(slug, f"head has {n} x {need} (want 1)")
     async with async_playwright() as p:
         b = await p.chromium.launch()
         for scheme in ("light", "dark"):

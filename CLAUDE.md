@@ -86,6 +86,11 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
   latin and latin-ext) covers every weight. `src/fonts.css` holds the @font-face rules (font-display: swap,
   unicode-range), inlined into every page head; the two latin files are preloaded. No request leaves the site for
   fonts (the hero video and style-frame pages, render tools only, still use Google Fonts).
+- SEO tags (build.py `seo()`, applied when each page is written): every page gets a meta description (the homepage's
+  from `src/site.json`), a canonical URL and og:url from `SITE_URL` (not on noindex pages: the 404 and search), and
+  Open Graph and Twitter tags with the social card `src/assets/brand/og-card.jpg` (1200x630, made by
+  `scripts/make_og_card.py` from site.json's "social" copy and the 3D logo). Pages that set their own (the blog) keep
+  theirs; blog listings get the card as their image. The audit checks one of each tag on every page.
 - Favicon: `src/assets/brand/favicon.svg` (the brand mark), `favicon-32.png` and `apple-touch-icon.png` (180px, square:
   iOS rounds the corners), linked from every page head with a theme colour per scheme (#FFFFFF / #0F1013).
 - build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
@@ -655,6 +660,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-13: SEO: description, canonical and social tags on every page. The homepage had no description and only blog pages had canonical and Open Graph tags; build.py now adds them to every page as it is written (homepage description in the new src/site.json), with a 1200x630 social card (warm ground, the hero headline, your 3D logo; scripts/make_og_card.py). 50 pages checked, no duplicates; the audit enforces it
 - 2026-10-13: Favicon on every page: the brand mark as SVG, a 32px PNG fallback and a 180px Apple touch icon (square, iOS rounds it), plus a light/dark theme colour for mobile browser chrome
 - 2026-10-13: Blog: the category bar on the listing, category, tag and search pages no longer sticks under the navbar (your call); it stays where it is above the posts. The article's contents sidebar is unchanged
 - 2026-10-12: Partners: the orbit's centre is your 3D InkyBay logo instead of the flat mark on a glass tile (trimmed, 480px WebP, 21 KB; slightly larger at 32% of the orbit, drop shadow, same float); checked light, dark and 390px

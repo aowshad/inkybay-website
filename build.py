@@ -246,7 +246,40 @@ def build(t, root="", home="#", current=None):
     assert not left, f"unresolved tokens: {left}"
     return t
 
+SITE_JSON = json.loads((ROOT / "src" / "site.json").read_text())
+
+
+def seo(path, t):
+    """Every page gets a description, a canonical URL and Open Graph / Twitter tags (the social card from site.json
+    unless the page brings its own image). Pages that already set a canonical (the blog) are left as they are;
+    noindex pages (404, search) get no canonical or og:url."""
+    soc = SITE_JSON["social"]; img = SITE_URL + "assets/" + soc["image"]
+    if 'rel="canonical"' in t:
+        if 'property="og:image"' in t: return t
+        USED_ASSETS.add(soc["image"])                         # blog listings: their own tags, the social card as image
+        t = t.replace('<meta name="twitter:card" content="summary">', '<meta name="twitter:card" content="summary_large_image">')
+        return t.replace("</title>", f'</title>\n<meta property="og:image" content="{img}">\n<meta name="twitter:image" content="{img}">', 1)
+    rel = path.relative_to(SITE).as_posix()
+    url = SITE_URL + (rel[:-len("index.html")] if rel.endswith("index.html") else rel)
+    title = re.search(r"<title>(.*?)</title>", t, re.S).group(1)
+    d = re.search(r'<meta name="description" content="([^"]*)">', t)
+    tags = []
+    if d: desc = d.group(1)
+    else:
+        desc = html.escape(SITE_JSON["home"]["description"], quote=True); tags.append(f'<meta name="description" content="{desc}">')
+    noindex = 'name="robots" content="noindex"' in t
+    USED_ASSETS.add(soc["image"])
+    if not noindex: tags += [f'<link rel="canonical" href="{url}">', f'<meta property="og:url" content="{url}">']
+    tags += ['<meta property="og:type" content="website">', f'<meta property="og:site_name" content="{SITE_JSON["name"]}">',
+             f'<meta property="og:title" content="{title}">', f'<meta property="og:description" content="{desc}">',
+             f'<meta property="og:image" content="{img}">', '<meta property="og:image:width" content="1200">', '<meta property="og:image:height" content="630">',
+             f'<meta property="og:image:alt" content="{html.escape(soc["image_alt"], quote=True)}">', '<meta name="twitter:card" content="summary_large_image">',
+             f'<meta name="twitter:title" content="{title}">', f'<meta name="twitter:description" content="{desc}">', f'<meta name="twitter:image" content="{img}">']
+    return t.replace("</title>", "</title>\n" + "\n".join(tags), 1)
+
+
 def write(path, t):
+    if path.suffix == ".html": t = seo(path, t)
     path.parent.mkdir(parents=True, exist_ok=True); path.write_text(t)
     print(f"ok -> {path.relative_to(ROOT)} ({round(len(t) / 1024)} KB)")
 
