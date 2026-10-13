@@ -44,7 +44,7 @@
 
 /* latest: sticky category bar + view switch, then the grid */
 .blatest__title { margin-bottom: var(--s-8); }
-.bbar { position: sticky; top: calc(var(--nav-h-compact, 60px) + 16px); z-index: 20; display: flex; align-items: center; gap: var(--s-4); margin-bottom: var(--s-8);
+.bbar { position: relative; z-index: 20;   /* in the flow, not sticky (your call); z-index keeps the More popover over the cards */ display: flex; align-items: center; gap: var(--s-4); margin-bottom: var(--s-8);
   padding: 8px; border-radius: 16px; background: color-mix(in srgb, var(--tint) 88%, transparent); -webkit-backdrop-filter: blur(12px); backdrop-filter: blur(12px);
   box-shadow: inset 0 0 0 1px var(--tint-line); }
 .bbar__nav { position: relative; flex: 1; min-width: 0; display: flex; align-items: center; gap: var(--s-2); }
@@ -269,7 +269,6 @@
   .bgrid[data-view="list"] .bcard { grid-template-columns: minmax(0, 1fr); }
   .bview { display: none; }
   .bsearch__key { display: none; }
-  .bbar { top: calc(var(--nav-h-compact, 60px) + 12px); }
   .bbar__list { overflow-x: auto; scroll-snap-type: x mandatory; scrollbar-width: none;   /* swipeable, no scrollbar; an edge fade shows there is more */
     -webkit-mask-image: linear-gradient(90deg, #000 85%, transparent); mask-image: linear-gradient(90deg, #000 85%, transparent); }
   .bbar__list::-webkit-scrollbar { display: none; }
