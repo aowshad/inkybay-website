@@ -233,6 +233,10 @@ Section sub headings are 18px.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
+- Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
+  store), See all reviews, See full case study, the footer's social profiles, Pricing, Privacy policy, Terms and
+  conditions, Changelog. The footer's Live design editor, Features and Product options go to the homepage Features
+  section, the feature rail and Unlimited product options (`{{ROOT}}` is a page's way back to the site root).
 
 ## Suggested next steps
 
@@ -660,6 +664,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-13: Fix dead links that have a target: footer Live design editor to the homepage Features section, Features to the feature rail, Product options to Unlimited product options (new {{ROOT}} token, so they work from every page and the 404), Powered by ParseLab to parselab.com (new tab; the domain of your email, change it if ParseLab's site lives elsewhere). The links still waiting for URLs are listed in Open items
 - 2026-10-13: SEO: description, canonical and social tags on every page. The homepage had no description and only blog pages had canonical and Open Graph tags; build.py now adds them to every page as it is written (homepage description in the new src/site.json), with a 1200x630 social card (warm ground, the hero headline, your 3D logo; scripts/make_og_card.py). 50 pages checked, no duplicates; the audit enforces it
 - 2026-10-13: Favicon on every page: the brand mark as SVG, a 32px PNG fallback and a 180px Apple touch icon (square, iOS rounds it), plus a light/dark theme colour for mobile browser chrome
 - 2026-10-13: Blog: the category bar on the listing, category, tag and search pages no longer sticks under the navbar (your call); it stays where it is above the posts. The article's contents sidebar is unchanged

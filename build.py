@@ -232,6 +232,7 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
+    t = t.replace("{{ROOT}}", root)   # the page's way back to the site root ("" on the homepage)
     t = t.replace("{{HERO_PRELOAD}}", "")   # only the homepage preloads the hero poster
     t = t.replace("{{FONT_FACES}}", FONT_FACES)   # self-hosted Geist and Inter (src/fonts.css)
     t = re.sub(r"\{\{FONT:(.*?)\}\}", lambda m: asset(m.group(1), root), t)
