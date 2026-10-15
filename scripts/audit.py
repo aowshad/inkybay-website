@@ -179,6 +179,7 @@ def page_path(slug):
     if slug == "404": return ROOT / "site/404.html"
     if slug == "partners": return ROOT / "site/partners/index.html"
     if slug == "contact": return ROOT / "site/contact/index.html"
+    if slug in ("privacy-policy", "terms-of-service"): return ROOT / f"site/{slug}/index.html"
     if slug.startswith("blog"): return ROOT / "site/resources" / (slug.replace("blog", "blog", 1)) / "index.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
@@ -652,12 +653,12 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = (["homepage", "404", "partners", "contact"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
+        args = (["homepage", "404", "partners", "contact", "privacy-policy", "terms-of-service"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
                 + industry_slugs() + ["blog", "blog/" + blog_flagship(), "blog/category/print-prep", "blog/tag/b2b"])
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in ("404", "partners", "contact") or slug.startswith("blog"):
+        if slug in ("404", "partners", "contact", "privacy-policy", "terms-of-service") or slug.startswith("blog"):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))

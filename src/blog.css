@@ -287,3 +287,16 @@
 @media (prefers-reduced-motion: reduce) {
   .bcard__img, .bsum.is-shimmer::after, .bsum__list li.is-in, .btoc__ind { transition: none; animation: none; }
 }
+
+/* Legal pages (render_legal.py): the article layout plus an "In short" card and a questions card */
+.lsum { margin-bottom: var(--s-8); }
+.lsum ul { margin: var(--s-2) 0 0; padding-left: 1.2em; display: grid; gap: var(--s-2); font-size: 17px; line-height: 1.55; color: var(--ink); }
+.lfoot { display: grid; gap: var(--s-6); margin-top: var(--s-12); padding-top: var(--s-8); border-top: 1px solid var(--line); }
+.lfoot__card { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-6); padding: var(--s-6);
+  border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.lfoot__card > div { flex: 1 1 320px; }   /* the text takes the room; the button sits at the right, or below on phones */
+.lfoot__title { font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -0.015em; }
+.lfoot__text { margin-top: 4px; color: var(--ink-muted); }
+.lfoot__also { color: var(--ink-muted); }
+.lfoot__also a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--line); text-underline-offset: 4px; transition: text-decoration-color .2s ease; }
+.lfoot__also a:hover { text-decoration-color: currentColor; }

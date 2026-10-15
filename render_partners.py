@@ -125,7 +125,7 @@ def render():
           </div>
           <label class="field"><span class="field__label">{E(f["message"])}</span><textarea name="message" rows="5" required placeholder="{E(f["message_placeholder"])}" data-err="{E(f["errors"]["message"])}" aria-describedby="pf-message-err"></textarea>{err("message")}</label>
           <div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>
-          <label class="field field--check"><input name="consent" type="checkbox" required data-err="{E(f["errors"]["consent"])}" aria-describedby="pf-consent-err"><span>{E(f["consent"])} <a href="#">{E(f["privacy"])}</a></span>{err("consent")}</label>
+          <label class="field field--check"><input name="consent" type="checkbox" required data-err="{E(f["errors"]["consent"])}" aria-describedby="pf-consent-err"><span>{E(f["consent"])} <a href="{{{{ROOT}}}}privacy-policy/">{E(f["privacy"])}</a></span>{err("consent")}</label>
           <div class="form__foot"><button class="btn btn--primary form__submit" type="submit" data-sending="{E(f["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(f["submit"])}">{E(f["submit"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{E(f["submit"])}</span></button>
             <p class="form__status" role="status" aria-live="polite" data-ok="{E(f["success"])}" data-fail="{E(f["error"])}" data-off="{E(f["not_connected"])}"></p></div>
         </form>

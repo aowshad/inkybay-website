@@ -1,0 +1,15 @@
+{
+  "pages": ["privacy-policy", "terms-of-service"],
+  "labels": {
+    "home": "Home",
+    "updated": "Last updated",
+    "effective": "Effective",
+    "minutes": "min read",
+    "summary": "In short",
+    "toc": "On this page",
+    "questions_title": "Questions about this page?",
+    "questions_text": "Our team is happy to help. Email support@inkybay.com or send us a message.",
+    "contact": "Contact us",
+    "also": "Also read"
+  }
+}

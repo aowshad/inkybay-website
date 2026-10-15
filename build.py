@@ -21,7 +21,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
-import render_industry, render_404, render_partners, render_contact, render_blog
+import render_industry, render_404, render_partners, render_contact, render_blog, render_legal
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -295,6 +295,8 @@ write(SITE / "index.html", homepage)
 write(SITE / "404.html", build(render_404.render(SITE_BASE), root=SITE_BASE, home=SITE_BASE))
 write(SITE / "partners" / "index.html", build(render_partners.render(), root="../", home="../"))
 write(SITE / "contact" / "index.html", build(render_contact.render("../"), root="../", home="../"))
+for s in render_legal.CFG["pages"]:                # Privacy policy and Terms of service (src/legal/<slug>.md)
+    write(SITE / s / "index.html", build(render_legal.render(s, (ROOT / "src" / "template.html").read_text()), root="../", home="../"))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page
     write(SITE / "features" / j.stem / "index.html", build(render(j.stem), root="../../", home="../../", current=("features", j.stem)))
 for ind in INDUSTRIES:                                   # an industry gets a page once src/industries/<slug>.json exists

@@ -52,6 +52,7 @@ render_404.py             renders the 404 from src/404.json (styles in src/404.c
 render_partners.py        renders site/partners/ from src/partners.json (copy) + src/partners-directory.json (the list)
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
+render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
 src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers on _bg.webp (your background)
 requirements.txt          build dependencies: Markdown 3.7 and Pillow 11.3 (the Pages workflow installs them)
@@ -234,8 +235,7 @@ Section sub headings are 18px.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
 - Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
-  store), See all reviews, See full case study, the footer's social profiles, Pricing, Privacy policy, Terms and
-  conditions, Changelog. The footer's Live design editor, Features and Product options go to the homepage Features
+  store), See all reviews, See full case study, the footer's social profiles, Pricing, Changelog (you will provide it). The footer's Live design editor, Features and Product options go to the homepage Features
   section, the feature rail and Unlimited product options (`{{ROOT}}` is a page's way back to the site root).
 
 ## Suggested next steps
@@ -465,8 +465,7 @@ keeps one field per row.
 - Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
 - Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
   supplied partner logos assigned at random, so names and logos do not belong together yet;
-  the benefits and FAQ answers are `"draft": true`. The consent checkbox's privacy policy link is `#` (no privacy page
-  yet). The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
+  the benefits and FAQ answers are `"draft": true`. The consent checkbox links to the Privacy policy. The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
   overflow at 390px.
 
 ## Contact page
@@ -481,8 +480,7 @@ hardcoded), styles in `src/contact.css` + `src/forms.css`. "It should feel like 
      inside the field); "What can we help with?" (a required dropdown: App support or bug, Setup and configuration,
      Plans and billing, Feature request, Custom development, App or theme partnership, Guest post, Link exchange,
      Something else) and "Attach a file" (optional; screenshot, PDF or ZIP up to 10 MB, checked before sending; shows the
-     chosen name with a remove button) in one row; Message alone (counter, 1000 max); consent (privacy link `#` until a
-     privacy page exists); honeypot; "Send message" (primary, with the arrow). The form posts multipart to FORM_ENDPOINT
+     chosen name with a remove button) in one row; Message alone (counter, 1000 max); consent (links to the Privacy policy); honeypot; "Send message" (primary, with the arrow). The form posts multipart to FORM_ENDPOINT
      (see Forms) with the topic in the payload.
    - Each topic sets the message placeholder; "App or theme partnership" also shows one line of helper text under the
      dropdown, "Want to be listed in our partner directory? Become a partner", linking to `partners/#partner-form`
@@ -559,6 +557,26 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   contents follow the section in view, the summary reveals the bullets, JSON-LD parses, no overflow at 390px.
 - Endpoints: the newsletter forms post to `NEWSLETTER_ENDPOINT` (see Forms); empty for now, so they say "Not connected
   yet". Draft / demo: the 14 posts and both authors are demo content; the newsletter copy is draft.
+
+## Legal pages (Privacy policy, Terms of service)
+
+`site/privacy-policy/` and `site/terms-of-service/`, built by `render_legal.py` from `src/legal/<slug>.md` (front matter:
+title, slug, description, updated, effective, summary bullets; Markdown body) with labels in `src/legal/legal.json`
+(the page list and every UI string). They reuse the blog article layout and styles (`render_blog.md_html`, `shell`,
+`.bart`, `.bbody`, `.btoc`; small additions `.lsum` and `.lfoot` in `src/blog.css`): reading progress bar,
+breadcrumb Home > title, H1 at the article size (44/500), a 14px meta row (Last updated, Effective, reading time), an
+"In short" card (the summary bullets, 17px), numbered H2 sections with copy-link anchors, the sticky "On this page"
+contents with the sliding indicator on desktop (a disclosure on tablet and phone), then a questions card (Contact us,
+secondary button to `contact/`) and an "Also read" link to the other page. Standard sections: privacy covers who we
+are, controller vs processor roles, what we collect (forms, newsletter, Shopify store and order data, shopper designs,
+server logs, browser storage), use, legal bases, sharing (never sold), transfers (US, Bangladesh, SCCs), retention
+(Shopify's shop redaction 48 hours after uninstall), security, rights (GDPR, CCPA), children, changes, contact; terms
+cover the service, eligibility, Shopify billing and trials, your content, acceptable use, our IP, third parties,
+privacy, availability, termination, disclaimers, liability cap (12 months of fees), indemnity, governing law, changes,
+general, contact. The footer legal row, the Contact and Partners consent checkboxes and the sitemap link to them.
+To change the text, edit the Markdown and the `updated` date. Draft for legal review: the legal entity name
+(written as "ParseLab"), the governing law (Delaware, from the US office), and the data practices (no analytics,
+service providers, retention) must be confirmed before launch; this is a standard draft, not legal advice.
 
 ## Industry pages (one template)
 
@@ -664,6 +682,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-15: Privacy policy and Terms of service pages (render_legal.py, src/legal/*.md, legal.json, .lsum/.lfoot in blog.css, audit pages). Standard sections, built on the blog article layout so they match the design system (breadcrumb, 44/500 H1, meta row, In short card, numbered sections, sticky contents, questions card). The footer row reads "Privacy policy · Terms of service" (was "Terms and conditions"), and the Contact and Partners consent checkboxes now link to the policy. Decisions: facts come from the site and the app (support@inkybay.com, the Delaware and Dhaka offices, no analytics, Shopify billing, Shopify's 48-hour shop redaction); the legal entity, governing law and data practices are flagged for legal review. Changelog stays # until you provide it
 - 2026-10-13: Fix dead links that have a target: footer Live design editor to the homepage Features section, Features to the feature rail, Product options to Unlimited product options (new {{ROOT}} token, so they work from every page and the 404), Powered by ParseLab to parselab.com (new tab; the domain of your email, change it if ParseLab's site lives elsewhere). The links still waiting for URLs are listed in Open items
 - 2026-10-13: SEO: description, canonical and social tags on every page. The homepage had no description and only blog pages had canonical and Open Graph tags; build.py now adds them to every page as it is written (homepage description in the new src/site.json), with a 1200x630 social card (warm ground, the hero headline, your 3D logo; scripts/make_og_card.py). 50 pages checked, no duplicates; the audit enforces it
 - 2026-10-13: Favicon on every page: the brand mark as SVG, a 32px PNG fallback and a 180px Apple touch icon (square, iOS rounds it), plus a light/dark theme colour for mobile browser chrome
