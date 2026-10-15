@@ -12,7 +12,19 @@
         "cta": "Try live demo",
         "href": "#",
         "image": "mega-promo.webp"
-      }
+      },
+      "footer": [
+        {
+          "title": "Product",
+          "extra": [
+            {
+              "title": "Pricing",
+              "href": "#pricing"
+            }
+          ],
+          "wide": true
+        }
+      ]
     },
     {
       "id": "industries",
@@ -30,12 +42,7 @@
       },
       "footer": [
         {
-          "title": "Industries",
-          "limit": 5,
-          "more": {
-            "title": "All industries",
-            "href": "industries/"
-          }
+          "title": "Industries"
         }
       ]
     },

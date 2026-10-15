@@ -135,7 +135,7 @@ def render_nav(root, current):
     return "\n          ".join(triggers), "\n        ".join(sheet), "\n  ".join(panels)
 
 def foot_cols(mid, root):
-    """Footer columns for one menu (its "footer" list in nav.json): {"title", "groups"?, "limit"?, "more"?, "extra"?}."""
+    """Footer columns for one menu (its "footer" list in nav.json): {"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?}."""
     m = next(x for x in NAV if x["id"] == mid)
     cols = []
     for c in m["footer"]:
@@ -151,7 +151,7 @@ def foot_cols(mid, root):
             href, extra = link(i, i["base"], root)
             act = f' data-action="{html.escape(i["action"])}"' if i.get("action") else ""
             lis.append(f'<li><a href="{href}"{extra}{act}>{html.escape(i["title"])}{EXT if i.get("external") else ""}</a></li>')
-        cols.append(f'<div class="foot__col"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
+        cols.append(f'<div class="foot__col{" foot__col--wide" if c.get("wide") else ""}"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
     return "\n          ".join(cols)
 
 INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]

@@ -1463,7 +1463,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 /* footer */
 .foot { padding-top: var(--s-20); }
 .foot__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-10); }
-.foot__brand { grid-column: 1 / span 4; display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
+.foot__brand { grid-column: 1 / span 3; display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
 .foot__brand p { color: var(--ink-muted); max-width: 30ch; }
 .foot__social { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); margin-top: var(--s-2); }
 .foot__social a {
@@ -1472,6 +1472,10 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 }
 .foot__social a:hover { color: #fff; text-decoration-color: var(--brand-500); }
 .foot__col { grid-column: span 2; }
+.foot__col--wide { grid-column: span 3; }   /* Product: the nine feature names fit on one line at 1440 */
+@media (max-width: 1100px) and (min-width: 961px) {   /* tablets: the brand gets its own row, the four columns share it evenly */
+  .foot__brand { grid-column: 1 / -1; } .foot__col, .foot__col--wide { grid-column: span 3; }
+}
 .foot__col h3 { font-family: var(--font-body); font-size: var(--t-body); font-weight: 600; color: var(--ink); margin-bottom: var(--s-4); }
 .foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
 .foot__col a { color: var(--ink-muted); transition: color .2s ease; }
@@ -1517,7 +1521,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
   .cta__vis { order: -1; min-height: 0; display: grid; place-items: center; }
   .cta__vis img { position: static; height: auto; width: min(100%, 360px); margin-top: calc(var(--s-10) * -1 - 24px); }
   .foot__brand { grid-column: 1 / -1; }
-  .foot__col { grid-column: span 6; }
+  .foot__col, .foot__col--wide { grid-column: span 6; }
   .how__head { flex-direction: column; align-items: flex-start; gap: var(--s-6); }
 }
 @media (max-width: 520px) {
@@ -2445,7 +2449,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           <p>Effortless, powerful product personalization for Shopify stores.</p>
           <div class="foot__social" aria-label="InkyBay on social media"><a href="#">LinkedIn</a><a href="#">YouTube</a><a href="#">X</a><a href="#">Instagram</a><a href="#">Facebook</a></div>
         </div>
-          <div class="foot__col"><h3>Product</h3><ul><li><a href="{{ROOT}}#features">Live design editor</a></li><li><a href="{{ROOT}}#rail-title">Features</a></li><li><a href="{{ROOT}}features/unlimited-product-options/">Product options</a></li><li><a href="#">Pricing</a></li></ul></div>
+          {{FOOT_COLS:features}}
           {{FOOT_COLS:industries}}
           {{FOOT_COLS:resources}}
       </div>

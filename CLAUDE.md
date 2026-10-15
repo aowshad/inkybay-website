@@ -235,8 +235,7 @@ Section sub headings are 18px.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
 - Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
-  store), See all reviews, See full case study, the footer's social profiles, Pricing, Changelog (you will provide it). The footer's Live design editor, Features and Product options go to the homepage Features
-  section, the feature rail and Unlimited product options (`{{ROOT}}` is a page's way back to the site root).
+  store), See all reviews, See full case study, the footer's social profiles, Pricing, Changelog (you will provide it). `{{ROOT}}` is a page's way back to the site root.
 
 ## Suggested next steps
 
@@ -300,9 +299,14 @@ into the shared template. Never hand-write a menu in the template.
 - Promo: `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card; optional
   `"position"` sets its `object-position` when the subject is not centred in the 16:10 crop) or `"visual": "video"`.
 - Footer: a menu's `"footer"` list renders its footer columns (`{{FOOT_COLS:<id>}}` in the template):
-  `{"title", "groups"?, "limit"?, "more"?, "extra"?}`. Footer link copy comes from the same data as the menus.
-- Menus: Features (grid, `src/features/_index.json`, base `features/`); Industries (grid, `src/industries/_index.json`,
-  base `industries/`, promo `cta-products.webp` anchored to the top, footer: first five plus "All industries").
+  `{"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?}`. Footer link copy comes from the same data as the menus.
+  Footer columns: Product (all nine feature pages from `_index.json` plus Pricing, `"wide"`: 3 of 12 columns so every
+  name fits one line at 1440), Industries (all eight industry pages), Resources and Get help; the brand block takes 3
+  columns, the others 2. From 961 to 1100px the brand gets its own row and the four columns share it; phones show two
+  per row.
+- Menus: Features (grid, `src/features/_index.json`, base `features/`, footer: "Product" with every feature and Pricing);
+  Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
+  footer: every industry; no "All industries" link until an overview page exists).
   Industry pages come later, so `industries/...` links 404 until they exist.
   Resources (groups: Learn, Grow with InkyBay, Get help; internal pages `resources/blog/`, `resources/case-studies/`,
   `resources/video-tutorials/`, `partners/`, `affiliate/` come later; Help center is external to docs.inkybay.com;
@@ -682,6 +686,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-15: Footer: Product lists all nine feature pages plus Pricing (your call; it replaces Live design editor, Features and Product options, since there is no features overview page), Industries lists all eight industry pages without "All industries" (no overview page). Both columns now come from nav.json like Resources and Get help. Pricing stays last under Product, the usual place, still #pricing until a pricing page exists. The Product column is wider (3 of 12; brand 4 to 3) so no name wraps at 1440, and from 961 to 1100px the brand takes its own row
 - 2026-10-15: Privacy policy and Terms of service pages (render_legal.py, src/legal/*.md, legal.json, .lsum/.lfoot in blog.css, audit pages). Standard sections, built on the blog article layout so they match the design system (breadcrumb, 44/500 H1, meta row, In short card, numbered sections, sticky contents, questions card). The footer row reads "Privacy policy · Terms of service" (was "Terms and conditions"), and the Contact and Partners consent checkboxes now link to the policy. Decisions: facts come from the site and the app (support@inkybay.com, the Delaware and Dhaka offices, no analytics, Shopify billing, Shopify's 48-hour shop redaction); the legal entity, governing law and data practices are flagged for legal review. Changelog stays # until you provide it
 - 2026-10-13: Fix dead links that have a target: footer Live design editor to the homepage Features section, Features to the feature rail, Product options to Unlimited product options (new {{ROOT}} token, so they work from every page and the 404), Powered by ParseLab to parselab.com (new tab; the domain of your email, change it if ParseLab's site lives elsewhere). The links still waiting for URLs are listed in Open items
 - 2026-10-13: SEO: description, canonical and social tags on every page. The homepage had no description and only blog pages had canonical and Open Graph tags; build.py now adds them to every page as it is written (homepage description in the new src/site.json), with a 1200x630 social card (warm ground, the hero headline, your 3D logo; scripts/make_og_card.py). 50 pages checked, no duplicates; the audit enforces it
