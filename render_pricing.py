@@ -27,12 +27,12 @@ def render():
             y_month, y_note = money(p["monthly"]), L["monthly_only"]
         lead = f'<li class="prcard__lead">{E(p["lead_feature"])}</li>' if p.get("lead_feature") else ""
         feats = "".join(f"<li>{CHECK}<span>{E(f)}</span></li>" for f in p["features"])
-        return f"""<li class="prcard" style="--k:{k}">
-          <h2 class="prcard__name">{E(p["name"])}</h2>
+        return f"""<li class="prcard{" prcard--featured" if p.get("badge") else ""}" style="--k:{k}">
+          <div class="prcard__top"><h2 class="prcard__name">{E(p["name"])}</h2>{f'<span class="prcard__badge">{E(p["badge"])}</span>' if p.get("badge") else ""}</div>
           <p class="prcard__text">{E(p["text"])}</p>
           <p class="prcard__price"><span class="prcard__amt" data-monthly>{money(p["monthly"])}</span><span class="prcard__amt" data-yearly>{y_month}</span><span class="prcard__per">{E(L["per_month"])}</span></p>
           <p class="prcard__note"><span data-monthly>{E(L["billed_monthly"])}</span><span data-yearly>{E(y_note)}</span></p>
-          {{{{BTN_PRIMARY:{L["cta"]}|{d["install_url"]}}}}}
+          {{{{BTN_{"PRIMARY" if p.get("cta") == "primary" else "SECONDARY"}:{L["cta"]}|{d["install_url"]}}}}}
           <p class="prcard__trial">{E(L["trial"])}</p>
           <div class="prcard__feats"><p class="prcard__label">{E(L["features"])}</p><ul>{lead}{feats}</ul></div>
         </li>"""

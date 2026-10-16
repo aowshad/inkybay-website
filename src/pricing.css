@@ -25,6 +25,12 @@
   transition: transform .5s var(--ease-expo), box-shadow .5s var(--ease-expo); }
 .prcard:hover, .prcard:focus-within { transform: translateY(-4px);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 55%, var(--line)), 0 30px 60px -30px rgba(229, 56, 15, .28); }
+.prcard__top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
+.prcard__badge { flex: none; padding: 4px 10px; border-radius: 999px; font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500;
+  color: #fff; background: var(--brand-grad); box-shadow: 0 8px 18px -10px rgba(229, 56, 15, .7); }
+/* the featured plan: a solid 1.5px brand hairline (never a gradient ring) and a warm wash at the top */
+.prcard--featured { background: linear-gradient(180deg, color-mix(in srgb, var(--brand-500) 7%, var(--bg)), var(--bg) 40%);
+  box-shadow: inset 0 0 0 1.5px var(--brand-500), 0 30px 60px -34px rgba(229, 56, 15, .35); }
 .prcard__name { font-size: 22px; line-height: 30px; font-weight: 500; letter-spacing: -0.015em; }
 .prcard__text { margin-top: var(--s-2); color: var(--ink-muted); min-height: calc(var(--t-body-lh) * 2); }
 .prcard__price { display: flex; align-items: baseline; gap: 6px; margin-top: var(--s-6); }
@@ -32,6 +38,7 @@
 .prcard__per { color: var(--ink-muted); }
 .prcard__note { margin-top: var(--s-2); min-height: var(--t-small-lh); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
 .prcard .btn { margin-top: var(--s-6); width: 100%; justify-content: space-between; padding-left: var(--s-4); }
+.prcard .btn--secondary { justify-content: center; padding-inline: var(--s-4); }   /* no arrow, so the label centres */
 .prcard__trial { margin-top: var(--s-3); text-align: center; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
 .prcard__feats { margin-top: var(--s-6); padding-top: var(--s-6); border-top: 1px solid var(--line); }
 .prcard__label { margin-bottom: var(--s-3); font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; color: var(--ink-muted); }

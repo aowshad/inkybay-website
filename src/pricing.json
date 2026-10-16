@@ -41,7 +41,8 @@
         "5 GB storage",
         "0% commission",
         "Email and ticket support"
-      ]
+      ],
+      "cta": "secondary"
     },
     {
       "name": "Advance",
@@ -57,7 +58,8 @@
         "Quantity discounts",
         "Design ideas",
         "Live support"
-      ]
+      ],
+      "cta": "secondary"
     },
     {
       "name": "Professional",
@@ -73,7 +75,9 @@
         "Design ideas",
         "White label",
         "Live support"
-      ]
+      ],
+      "cta": "primary",
+      "badge": "Most popular"
     },
     {
       "name": "Unlimited",
@@ -86,7 +90,8 @@
         "36 months of order access",
         "Order add-ons: bulk download and Order API",
         "Inventory control"
-      ]
+      ],
+      "cta": "secondary"
     }
   ],
   "includes": {

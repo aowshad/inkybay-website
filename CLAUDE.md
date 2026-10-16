@@ -579,10 +579,12 @@ changes.
    `aria-pressed`). Yearly shows the per-month price with "Billed $X yearly"; Starter keeps its monthly price with
    "Monthly billing only". Without JS the monthly prices show.
 2. Plans [white]: four equal cards (two at 1100px and below, one on phones): name (22/500), a two-line description so
-   the prices share a baseline, the price (Geist 44, tabular), a 14px billing note, "Start free trial" (primary, to the
-   App Store listing), "21-day free trial", then "What's included" with brand check marks (Unlimited starts with
-   "Everything in Professional, plus:"). Cards lift with a brand edge on hover or focus; no "most popular" label (the
-   listing does not say which plan that is).
+   the prices share a baseline, the price (Geist 44, tabular), a 14px billing note, "Start free trial" (to the App
+   Store listing), "21-day free trial", then "What's included" with brand check marks (Unlimited starts with
+   "Everything in Professional, plus:"). Professional is the featured plan (your call): a "Most popular" badge (14px,
+   brand gradient), a solid 1.5px brand hairline with a warm wash at the top, and the only primary button; Starter,
+   Advance and Unlimited use secondary buttons (`"badge"` and `"cta"` per plan in the JSON). Cards lift with a brand
+   edge on hover or focus.
 3. Every plan starts with [tint]: four columns (icon tile, title, text): the free trial, the live design editor,
    print-ready files, billing through Shopify.
 4. FAQs [white]: billing, the free trial, yearly billing, changing or cancelling. 5. CTA, crowd marquee, footer.
@@ -725,6 +727,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Pricing: Professional is marked "Most popular" (your call) with a brand badge, a solid brand hairline and a warm wash, and keeps the only primary button; Starter, Advance and Unlimited get secondary buttons (you listed Professional as secondary too, then chose Professional primary when asked). Set per plan with "badge" and "cta" in src/pricing.json
 - 2026-10-16: Legal pages name the company ParseLab, LLC (the developer on the Shopify App Store listing, Newark, DE, matching our US office address) in the opening paragraph and the postal address; both pages' Last updated is now October 16, 2026
 - 2026-10-16: Changelog page (render_changelog.py, src/changelog.json, src/changelog.css, audit): a dated timeline with type pills, self-link anchors and a feature-request card; the footer's Changelog now links to it. Decision: there are no public release notes (the docs site has none and App Store listings carry no changelog), so it is seeded only with entries we can verify, the new website and the App Store launch on August 9, 2017; add real releases to src/changelog.json
 - 2026-10-16: Pricing page (render_pricing.py, src/pricing.json, src/pricing.css, switch JS, audit): plans, prices and features taken from the live App Store listing (Starter $19.99, Advance $49.99, Professional $99.99, Unlimited $249.99; yearly 20% off except Starter; 21-day free trial; billed through Shopify in USD). Monthly / Yearly switch, four plan cards with "Start free trial" to apps.shopify.com/productsdesigner, an "Every plan starts with" band, billing FAQs. The navbar and footer Pricing links now go to pricing/. Decisions: no "most popular" badge and no comparison table, because the listing does not state them and the per-plan lists are not cumulative; found on the listing: the rating is 4.4 (169 reviews), not the 4.6 the homepage shows (left for you)
