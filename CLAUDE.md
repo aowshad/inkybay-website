@@ -594,7 +594,8 @@ The navbar's Pricing and the footer's Product > Pricing link here. The audit cov
 
 `site/changelog/`, built by `render_changelog.py` from `src/changelog.json` (labels, the four entry types and the
 entries), styles in `src/changelog.css` (plus feature.css for the breadcrumb). Hero: breadcrumb, H1 (56/500), lead.
-Timeline (max 960px): each entry is a row with the date on the left (14px), a thin thread with a brand dot, then type
+Timeline (the full 1248px container, like every page; text runs to 72ch): each entry is a row with the date in a
+240px column on the left (14px), a thin thread with a brand dot, then type
 pills (New, Improved, Fixed, Announcement; New is brand-tinted), the title (28/500, a self-link anchor
 `#<date>-<title>`), the text and optional points; entries sort newest first; a "Missing something?" card with
 "Request a feature" (secondary, to `contact/`). Phones stack the date above the entry. To add a release, add an entry
@@ -727,6 +728,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Changelog uses the full container (your call; the 960px cap made it look squeezed): the date column is 240px and entry text runs to 72ch
 - 2026-10-16: Pricing: Professional is marked "Most popular" (your call) with a brand badge, a solid brand hairline and a warm wash, and keeps the only primary button; Starter, Advance and Unlimited get secondary buttons (you listed Professional as secondary too, then chose Professional primary when asked). Set per plan with "badge" and "cta" in src/pricing.json
 - 2026-10-16: Legal pages name the company ParseLab, LLC (the developer on the Shopify App Store listing, Newark, DE, matching our US office address) in the opening paragraph and the postal address; both pages' Last updated is now October 16, 2026
 - 2026-10-16: Changelog page (render_changelog.py, src/changelog.json, src/changelog.css, audit): a dated timeline with type pills, self-link anchors and a feature-request card; the footer's Changelog now links to it. Decision: there are no public release notes (the docs site has none and App Store listings carry no changelog), so it is seeded only with entries we can verify, the new website and the App Store launch on August 9, 2017; add real releases to src/changelog.json
