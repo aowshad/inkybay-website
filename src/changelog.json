@@ -1,0 +1,42 @@
+{
+  "meta": {
+    "title": "Changelog | InkyBay",
+    "description": "New features, improvements and fixes in InkyBay, the product customizer for Shopify, newest first."
+  },
+  "hero": {
+    "title": "Changelog",
+    "lead": "New features, improvements and fixes in InkyBay, newest first."
+  },
+  "labels": {
+    "home": "Home",
+    "request_title": "Missing something?",
+    "request_text": "Tell us what would help your store next. Feature requests shape what we build.",
+    "request_cta": "Request a feature"
+  },
+  "types": {
+    "new": "New",
+    "improved": "Improved",
+    "fixed": "Fixed",
+    "announcement": "Announcement"
+  },
+  "entries": [
+    {
+      "date": "2026-10-16",
+      "title": "A new InkyBay website",
+      "types": ["announcement"],
+      "text": "We rebuilt the InkyBay website so it is easier to see what InkyBay does and how it fits your store.",
+      "items": [
+        "A page for each of the nine features, with live examples of how they work",
+        "Eight industry pages, from fashion and apparel to gadgets and electronics",
+        "A blog with practical guides on print preparation, pricing and growth",
+        "A partner directory, a new contact page and a pricing page with every plan"
+      ]
+    },
+    {
+      "date": "2017-08-09",
+      "title": "InkyBay launches on the Shopify App Store",
+      "types": ["announcement"],
+      "text": "InkyBay Product Personalizer is listed on the Shopify App Store, giving merchants a live design editor so shoppers can create and preview their own custom products."
+    }
+  ]
+}

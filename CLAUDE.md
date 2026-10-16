@@ -53,6 +53,7 @@ render_partners.py        renders site/partners/ from src/partners.json (copy) +
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
 render_pricing.py         renders site/pricing/ from src/pricing.json (styles in src/pricing.css)
+render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
 src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers on _bg.webp (your background)
@@ -235,7 +236,7 @@ Section sub headings are 18px.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
 - Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
-  store), See all reviews, See full case study, the footer's social profiles, Changelog (you will provide it). The App Store
+  store), See all reviews, See full case study, the footer's social profiles. The App Store
   listing is https://apps.shopify.com/productsdesigner (the Pricing page's buttons use it); it shows a 4.4 rating
   from 169 reviews, while the homepage says 4.6. `{{ROOT}}` is a page's way back to the site root.
 
@@ -587,6 +588,18 @@ changes.
 4. FAQs [white]: billing, the free trial, yearly billing, changing or cancelling. 5. CTA, crowd marquee, footer.
 The navbar's Pricing and the footer's Product > Pricing link here. The audit covers it (`pricing` in `--all`).
 
+## Changelog page
+
+`site/changelog/`, built by `render_changelog.py` from `src/changelog.json` (labels, the four entry types and the
+entries), styles in `src/changelog.css` (plus feature.css for the breadcrumb). Hero: breadcrumb, H1 (56/500), lead.
+Timeline (max 960px): each entry is a row with the date on the left (14px), a thin thread with a brand dot, then type
+pills (New, Improved, Fixed, Announcement; New is brand-tinted), the title (28/500, a self-link anchor
+`#<date>-<title>`), the text and optional points; entries sort newest first; a "Missing something?" card with
+"Request a feature" (secondary, to `contact/`). Phones stack the date above the entry. To add a release, add an entry
+`{"date": "YYYY-MM-DD", "title", "types": [...], "text", "items"?}`; the build stops on a bad date or unknown type.
+Seeded with two verified entries only (the new website; the App Store launch on August 9, 2017, from the listing);
+real release notes are yours to add. The footer's Changelog links here.
+
 ## Legal pages (Privacy policy, Terms of service)
 
 `site/privacy-policy/` and `site/terms-of-service/`, built by `render_legal.py` from `src/legal/<slug>.md` (front matter:
@@ -711,6 +724,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Changelog page (render_changelog.py, src/changelog.json, src/changelog.css, audit): a dated timeline with type pills, self-link anchors and a feature-request card; the footer's Changelog now links to it. Decision: there are no public release notes (the docs site has none and App Store listings carry no changelog), so it is seeded only with entries we can verify, the new website and the App Store launch on August 9, 2017; add real releases to src/changelog.json
 - 2026-10-16: Pricing page (render_pricing.py, src/pricing.json, src/pricing.css, switch JS, audit): plans, prices and features taken from the live App Store listing (Starter $19.99, Advance $49.99, Professional $99.99, Unlimited $249.99; yearly 20% off except Starter; 21-day free trial; billed through Shopify in USD). Monthly / Yearly switch, four plan cards with "Start free trial" to apps.shopify.com/productsdesigner, an "Every plan starts with" band, billing FAQs. The navbar and footer Pricing links now go to pricing/. Decisions: no "most popular" badge and no comparison table, because the listing does not state them and the per-plan lists are not cumulative; found on the listing: the rating is 4.4 (169 reviews), not the 4.6 the homepage shows (left for you)
 - 2026-10-15: Footer: Product lists all nine feature pages plus Pricing (your call; it replaces Live design editor, Features and Product options, since there is no features overview page), Industries lists all eight industry pages without "All industries" (no overview page). Both columns now come from nav.json like Resources and Get help. Pricing stays last under Product, the usual place, still #pricing until a pricing page exists. The Product column is wider (3 of 12; brand 4 to 3) so no name wraps at 1440, and from 961 to 1100px the brand takes its own row
 - 2026-10-15: Privacy policy and Terms of service pages (render_legal.py, src/legal/*.md, legal.json, .lsum/.lfoot in blog.css, audit pages). Standard sections, built on the blog article layout so they match the design system (breadcrumb, 44/500 H1, meta row, In short card, numbered sections, sticky contents, questions card). The footer row reads "Privacy policy · Terms of service" (was "Terms and conditions"), and the Contact and Partners consent checkboxes now link to the policy. Decisions: facts come from the site and the app (support@inkybay.com, the Delaware and Dhaka offices, no analytics, Shopify billing, Shopify's 48-hour shop redaction); the legal entity, governing law and data practices are flagged for legal review. Changelog stays # until you provide it
