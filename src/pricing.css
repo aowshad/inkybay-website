@@ -1,0 +1,65 @@
+/* =========================================================
+   PRICING (render_pricing.py, src/pricing.json)
+   ========================================================= */
+.prhero { padding-block: calc(var(--nav-h) + var(--s-12)) var(--section-y); }
+.prhero__inner { display: grid; justify-items: center; gap: var(--s-6); text-align: center; margin-bottom: var(--head-gap); }
+.prhero__title { font-size: var(--t-h1-inner); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; max-width: 18ch; }
+.prhero__title .h-line { display: block; }
+.prhero__title .h-muted { color: var(--ink-muted); }
+.prhero__lead { max-width: 52ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+
+/* Monthly / Yearly switch: a pill with the active option raised */
+.prtoggle { display: inline-flex; gap: 4px; padding: 4px; border-radius: 999px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.prtoggle button { display: inline-flex; align-items: center; gap: 8px; height: 40px; padding: 0 18px; border-radius: 999px;
+  font-size: var(--t-body); font-weight: 500; color: var(--ink-muted); transition: color .2s ease, background .3s var(--ease-expo), box-shadow .3s var(--ease-expo); }
+.prtoggle button:hover { color: var(--ink); }
+.prtoggle button[aria-pressed="true"] { color: var(--ink); background: var(--bg); box-shadow: 0 1px 2px rgba(13, 18, 28, .08), inset 0 0 0 1px var(--line); }
+.prtoggle button:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.prtoggle__save { padding: 2px 8px; border-radius: 999px; font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500;
+  color: var(--brand-700); background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); }
+
+/* plan cards: equal columns, prices on one baseline (the description reserves two lines) */
+.prplans { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); align-items: stretch; }
+.prcard { display: flex; flex-direction: column; padding: var(--s-6); border-radius: 20px; background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line), 0 24px 48px -36px rgba(13, 18, 28, .25);
+  transition: transform .5s var(--ease-expo), box-shadow .5s var(--ease-expo); }
+.prcard:hover, .prcard:focus-within { transform: translateY(-4px);
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 55%, var(--line)), 0 30px 60px -30px rgba(229, 56, 15, .28); }
+.prcard__name { font-size: 22px; line-height: 30px; font-weight: 500; letter-spacing: -0.015em; }
+.prcard__text { margin-top: var(--s-2); color: var(--ink-muted); min-height: calc(var(--t-body-lh) * 2); }
+.prcard__price { display: flex; align-items: baseline; gap: 6px; margin-top: var(--s-6); }
+.prcard__amt { font-family: var(--font-head); font-size: 44px; line-height: 1; font-weight: 500; letter-spacing: -0.03em; font-variant-numeric: tabular-nums; }
+.prcard__per { color: var(--ink-muted); }
+.prcard__note { margin-top: var(--s-2); min-height: var(--t-small-lh); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.prcard .btn { margin-top: var(--s-6); width: 100%; justify-content: space-between; padding-left: var(--s-4); }
+.prcard__trial { margin-top: var(--s-3); text-align: center; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.prcard__feats { margin-top: var(--s-6); padding-top: var(--s-6); border-top: 1px solid var(--line); }
+.prcard__label { margin-bottom: var(--s-3); font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; color: var(--ink-muted); }
+.prcard__feats ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.prcard__feats li { display: grid; grid-template-columns: 18px minmax(0, 1fr); gap: 10px; align-items: start; }
+.prcard__feats li svg { width: 18px; height: 18px; margin-top: 3px; color: var(--brand-600); }
+.prcard__feats li.prcard__lead { display: block; font-weight: 500; }
+/* the switch shows one price set; Starter keeps its monthly price under Yearly */
+.prplans [data-yearly], .prplans[data-period="yearly"] [data-monthly] { display: none; }
+.prplans[data-period="yearly"] [data-yearly] { display: inline; }
+
+/* Every plan starts with: four columns on tint */
+.princl__head { text-align: center; margin-bottom: var(--head-gap); }
+.princl__grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+.princl__icon { display: grid; place-items: center; width: 44px; height: 44px; border-radius: 12px; color: var(--brand-600);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); }
+.princl__icon svg { width: 22px; height: 22px; }
+.princl__title { margin-top: var(--s-4); font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; }
+.princl__text { margin-top: var(--s-2); color: var(--ink-muted); }
+
+@media (max-width: 1100px) {
+  .prplans, .princl__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  .prplans, .princl__grid { grid-template-columns: minmax(0, 1fr); }
+  .prcard__text { min-height: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .prcard, .prtoggle button { transition: none; }
+  .prcard:hover, .prcard:focus-within { transform: none; }
+}

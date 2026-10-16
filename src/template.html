@@ -1970,7 +1970,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       <nav aria-label="Primary">
         <ul class="nav__menu">
           {{NAV_TRIGGERS}}
-          <li><a class="nav__link" href="#pricing">Pricing</a></li>
+          <li><a class="nav__link" href="{{ROOT}}pricing/">Pricing</a></li>
         </ul>
       </nav>
 
@@ -1986,7 +1986,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
     <div class="nav__sheet" id="nav-sheet" data-open="false">
       <ul>
         {{SHEET_MENUS}}
-        <li><a class="nav__link" href="#pricing">Pricing</a></li>
+        <li><a class="nav__link" href="{{ROOT}}pricing/">Pricing</a></li>
       </ul>
       {{BTN_PRIMARY:Start free trial}}
     </div>
@@ -2576,6 +2576,17 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       var printRaf = 0, printRo = new ResizeObserver(function () { cancelAnimationFrame(printRaf); printRaf = requestAnimationFrame(printAll); });
       document.querySelectorAll('[data-print]').forEach(function (el) { printRo.observe(el.parentNode); });
     }
+
+    /* Pricing: the Monthly / Yearly switch shows one price set (src/pricing.json, render_pricing.py) */
+    document.querySelectorAll('.prtoggle').forEach(function (g) {
+      var plans = document.querySelector('.prplans'), btns = [].slice.call(g.querySelectorAll('[data-period]'));
+      btns.forEach(function (b) {
+        b.addEventListener('click', function () {
+          btns.forEach(function (x) { x.setAttribute('aria-pressed', String(x === b)); });
+          plans.setAttribute('data-period', b.getAttribute('data-period'));
+        });
+      });
+    });
 
     /* hero video: pause / play button; pauses off screen and in a hidden tab, resumes unless the visitor paused it */
     document.querySelectorAll('.hero__video').forEach(function (v) {

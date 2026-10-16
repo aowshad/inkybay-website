@@ -52,6 +52,7 @@ render_404.py             renders the 404 from src/404.json (styles in src/404.c
 render_partners.py        renders site/partners/ from src/partners.json (copy) + src/partners-directory.json (the list)
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
+render_pricing.py         renders site/pricing/ from src/pricing.json (styles in src/pricing.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
 src/assets/blog/          post thumbnails (16:10); scripts/make_blog_covers.py makes the demo covers on _bg.webp (your background)
@@ -233,9 +234,10 @@ Section sub headings are 18px.
 - Social links are text; drop in official icons from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
-- There is no pricing page or section yet: the navbar's "Pricing" (`#pricing`) and the 404's "Pricing" link go nowhere.
 - Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
-  store), See all reviews, See full case study, the footer's social profiles, Pricing, Changelog (you will provide it). `{{ROOT}}` is a page's way back to the site root.
+  store), See all reviews, See full case study, the footer's social profiles, Changelog (you will provide it). The App Store
+  listing is https://apps.shopify.com/productsdesigner (the Pricing page's buttons use it); it shows a 4.4 rating
+  from 169 reviews, while the homepage says 4.6. `{{ROOT}}` is a page's way back to the site root.
 
 ## Suggested next steps
 
@@ -304,7 +306,8 @@ into the shared template. Never hand-write a menu in the template.
   name fits one line at 1440), Industries (all eight industry pages), Resources and Get help; the brand block takes 3
   columns, the others 2. From 961 to 1100px the brand gets its own row and the four columns share it; phones show two
   per row.
-- Menus: Features (grid, `src/features/_index.json`, base `features/`, footer: "Product" with every feature and Pricing);
+- Menus: Features (grid, `src/features/_index.json`, base `features/`, footer: "Product" with every feature and Pricing,
+  which links to `pricing/`, like the navbar's Pricing);
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry; no "All industries" link until an overview page exists).
   Industry pages come later, so `industries/...` links 404 until they exist.
@@ -562,6 +565,28 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
 - Endpoints: the newsletter forms post to `NEWSLETTER_ENDPOINT` (see Forms); empty for now, so they say "Not connected
   yet". Draft / demo: the 14 posts and both authors are demo content; the newsletter copy is draft.
 
+## Pricing page
+
+`site/pricing/`, built by `render_pricing.py` from `src/pricing.json` (every price, feature and string; nothing
+hardcoded), styles in `src/pricing.css`, the switch JS in the template. Plans, prices and features come from the
+Shopify App Store listing (apps.shopify.com/productsdesigner, October 2026): Starter $19.99, Advance $49.99,
+Professional $99.99, Unlimited $249.99 a month; yearly $479.90, $959.90 and $2,399.90 (20% off; Starter is monthly
+only); a 21-day free trial on every plan; billed through Shopify in USD every 30 days. Update the JSON when the listing
+changes.
+1. Hero [white]: breadcrumb Home > Pricing, a centred two-tone H1 (56/500, "Simple pricing / that grows with your
+   store."), the lead, and a Monthly / Yearly switch (a pill with the active option raised, "Save 20%" badge,
+   `aria-pressed`). Yearly shows the per-month price with "Billed $X yearly"; Starter keeps its monthly price with
+   "Monthly billing only". Without JS the monthly prices show.
+2. Plans [white]: four equal cards (two at 1100px and below, one on phones): name (22/500), a two-line description so
+   the prices share a baseline, the price (Geist 44, tabular), a 14px billing note, "Start free trial" (primary, to the
+   App Store listing), "21-day free trial", then "What's included" with brand check marks (Unlimited starts with
+   "Everything in Professional, plus:"). Cards lift with a brand edge on hover or focus; no "most popular" label (the
+   listing does not say which plan that is).
+3. Every plan starts with [tint]: four columns (icon tile, title, text): the free trial, the live design editor,
+   print-ready files, billing through Shopify.
+4. FAQs [white]: billing, the free trial, yearly billing, changing or cancelling. 5. CTA, crowd marquee, footer.
+The navbar's Pricing and the footer's Product > Pricing link here. The audit covers it (`pricing` in `--all`).
+
 ## Legal pages (Privacy policy, Terms of service)
 
 `site/privacy-policy/` and `site/terms-of-service/`, built by `render_legal.py` from `src/legal/<slug>.md` (front matter:
@@ -686,6 +711,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Pricing page (render_pricing.py, src/pricing.json, src/pricing.css, switch JS, audit): plans, prices and features taken from the live App Store listing (Starter $19.99, Advance $49.99, Professional $99.99, Unlimited $249.99; yearly 20% off except Starter; 21-day free trial; billed through Shopify in USD). Monthly / Yearly switch, four plan cards with "Start free trial" to apps.shopify.com/productsdesigner, an "Every plan starts with" band, billing FAQs. The navbar and footer Pricing links now go to pricing/. Decisions: no "most popular" badge and no comparison table, because the listing does not state them and the per-plan lists are not cumulative; found on the listing: the rating is 4.4 (169 reviews), not the 4.6 the homepage shows (left for you)
 - 2026-10-15: Footer: Product lists all nine feature pages plus Pricing (your call; it replaces Live design editor, Features and Product options, since there is no features overview page), Industries lists all eight industry pages without "All industries" (no overview page). Both columns now come from nav.json like Resources and Get help. Pricing stays last under Product, the usual place, still #pricing until a pricing page exists. The Product column is wider (3 of 12; brand 4 to 3) so no name wraps at 1440, and from 961 to 1100px the brand takes its own row
 - 2026-10-15: Privacy policy and Terms of service pages (render_legal.py, src/legal/*.md, legal.json, .lsum/.lfoot in blog.css, audit pages). Standard sections, built on the blog article layout so they match the design system (breadcrumb, 44/500 H1, meta row, In short card, numbered sections, sticky contents, questions card). The footer row reads "Privacy policy · Terms of service" (was "Terms and conditions"), and the Contact and Partners consent checkboxes now link to the policy. Decisions: facts come from the site and the app (support@inkybay.com, the Delaware and Dhaka offices, no analytics, Shopify billing, Shopify's 48-hour shop redaction); the legal entity, governing law and data practices are flagged for legal review. Changelog stays # until you provide it
 - 2026-10-13: Fix dead links that have a target: footer Live design editor to the homepage Features section, Features to the feature rail, Product options to Unlimited product options (new {{ROOT}} token, so they work from every page and the 404), Powered by ParseLab to parselab.com (new tab; the domain of your email, change it if ParseLab's site lives elsewhere). The links still waiting for URLs are listed in Open items

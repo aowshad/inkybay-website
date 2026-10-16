@@ -1,0 +1,136 @@
+{
+  "meta": {
+    "title": "Pricing | InkyBay",
+    "description": "InkyBay plans from $19.99 a month, each with a 21-day free trial. Billed through Shopify in USD; save 20% with yearly billing."
+  },
+  "source": "Plans, prices and features from the Shopify App Store listing (apps.shopify.com/productsdesigner), October 2026",
+  "hero": {
+    "title": [
+      "Simple pricing",
+      "that grows with your store."
+    ],
+    "lead": "Every plan starts with a 21-day free trial. Billing runs through Shopify in USD, and you can change plans or uninstall at any time."
+  },
+  "install_url": "https://apps.shopify.com/productsdesigner",
+  "toggle": {
+    "label": "Billing period",
+    "monthly": "Monthly",
+    "yearly": "Yearly",
+    "save": "Save 20%"
+  },
+  "labels": {
+    "per_month": "/ month",
+    "billed_monthly": "Billed monthly",
+    "billed_yearly": "Billed {price} yearly",
+    "monthly_only": "Monthly billing only",
+    "cta": "Start free trial",
+    "trial": "21-day free trial",
+    "features": "What's included"
+  },
+  "plans": [
+    {
+      "name": "Starter",
+      "text": "For stores taking their first custom orders.",
+      "monthly": 19.99,
+      "yearly": null,
+      "features": [
+        "10 custom products",
+        "30 custom orders per month",
+        "Up to 2 print sides",
+        "Quantity discounts",
+        "5 GB storage",
+        "0% commission",
+        "Email and ticket support"
+      ]
+    },
+    {
+      "name": "Advance",
+      "text": "For growing stores with more products and orders.",
+      "monthly": 49.99,
+      "yearly": 479.9,
+      "features": [
+        "100 custom products",
+        "200 orders per month",
+        "Up to 4 print sides",
+        "Inventory control",
+        "Product options",
+        "Quantity discounts",
+        "Design ideas",
+        "Live support"
+      ]
+    },
+    {
+      "name": "Professional",
+      "text": "For high-volume stores that want their own branding.",
+      "monthly": 99.99,
+      "yearly": 959.9,
+      "features": [
+        "2,000 products and orders per month",
+        "Unlimited print sides",
+        "Inventory control",
+        "Product options",
+        "Quantity discounts",
+        "Design ideas",
+        "White label",
+        "Live support"
+      ]
+    },
+    {
+      "name": "Unlimited",
+      "text": "For brands that need no limits at all.",
+      "monthly": 249.99,
+      "yearly": 2399.9,
+      "lead_feature": "Everything in Professional, plus:",
+      "features": [
+        "Unlimited storage, products and orders",
+        "36 months of order access",
+        "Order add-ons: bulk download and Order API",
+        "Inventory control"
+      ]
+    }
+  ],
+  "includes": {
+    "title": "Every plan starts with",
+    "items": [
+      {
+        "icon": "gift",
+        "title": "21-day free trial",
+        "text": "Try every feature of your plan before you pay."
+      },
+      {
+        "icon": "wand",
+        "title": "Live design editor",
+        "text": "Shoppers design and preview products on your store."
+      },
+      {
+        "icon": "file",
+        "title": "Print-ready files",
+        "text": "Get PDF, SVG, JPG or PNG files with every order."
+      },
+      {
+        "icon": "tag",
+        "title": "Billing through Shopify",
+        "text": "Charges appear on your Shopify invoice, every 30 days."
+      }
+    ]
+  },
+  "faqs_lead": "Questions about plans and billing.",
+  "faqs": [
+    {
+      "q": "How does billing work?",
+      "a": "InkyBay is billed through Shopify in USD. Recurring charges are added to your Shopify invoice every 30 days, or once a year on yearly billing."
+    },
+    {
+      "q": "Is there a free trial?",
+      "a": "Yes. Every plan includes a 21-day free trial, and you are not charged if you uninstall before it ends."
+    },
+    {
+      "q": "Can I save with yearly billing?",
+      "a": "Yes. Advance, Professional and Unlimited can be billed yearly, which saves 20% compared with paying monthly. Starter is billed monthly."
+    },
+    {
+      "q": "Can I change or cancel my plan?",
+      "a": "Yes. Change plans from the app at any time; Shopify asks you to approve the new charge. To cancel, uninstall InkyBay from your Shopify admin."
+    }
+  ]
+}
