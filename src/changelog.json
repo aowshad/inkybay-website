@@ -28,6 +28,7 @@
     {
       "date": "2026-10-16",
       "title": "A new InkyBay website",
+      "summary": "Feature, industry, pricing and partner pages, plus a blog with practical guides.",
       "types": [
         "announcement"
       ],
@@ -42,6 +43,7 @@
     {
       "date": "2017-08-09",
       "title": "InkyBay launches on the Shopify App Store",
+      "summary": "The InkyBay product personalizer arrives on the Shopify App Store.",
       "types": [
         "announcement"
       ],

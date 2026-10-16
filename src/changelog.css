@@ -22,6 +22,7 @@
 .chl__title { margin-top: var(--s-4); font-size: 28px; line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; text-wrap: balance; }
 .chl__title a { color: inherit; text-decoration: none; }
 .chl__title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 6px; }
+.chl__sub { margin-top: var(--s-2); max-width: 72ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: 1.55; }
 .chl__more { display: inline-flex; align-items: center; gap: .35em; margin-top: var(--s-3); font-weight: 500; color: var(--ink);
   text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px; transition: text-decoration-color .2s ease; }
 .chl__more:hover { text-decoration-color: currentColor; }
@@ -35,7 +36,8 @@
 .chld__meta { display: flex; flex-wrap: wrap; align-items: center; gap: 10px 12px; margin-top: var(--s-6); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
 .chld__sep { width: 1px; height: 12px; background: var(--line); }
 .chld__title { margin-top: var(--s-4); font-size: var(--t-h1-article); line-height: 1.15; letter-spacing: -0.025em; font-weight: 500; text-wrap: balance; }
-.chld__lead { margin-top: var(--s-5); font-size: 19px; line-height: 1.7; color: var(--ink-muted); }
+.chld__sub { margin-top: var(--s-4); font-size: 20px; line-height: 1.5; color: var(--ink-muted); }
+.chld__lead { margin-top: var(--s-6); font-size: 18px; line-height: 1.7; color: var(--ink); }
 .chld__label { margin-top: var(--s-10); font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -0.015em; }
 .chld__items { margin: var(--s-4) 0 0; padding-left: 1.2em; display: grid; gap: var(--s-3); font-size: 18px; line-height: 1.6; }
 .chld__items li::marker { color: var(--brand-600); }
