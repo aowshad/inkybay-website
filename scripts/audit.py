@@ -30,7 +30,7 @@ SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews
                ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .hchip, .porbit__chip, .icardx__label, "
                ".mega__desc, .mega__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
                ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
-               ".bbar__pill, .brel__label, .bcall__title, .bquote p + p, .prtoggle__save, .prcard__note, .prcard__trial, .prcard__label, .prcard__badge, .chl__date, .chl__pill")
+               ".bbar__pill, .brel__label, .bcall__title, .bquote p + p, .prtoggle__save, .prcard__note, .prcard__trial, .prcard__label, .prcard__badge, .chl__date, .chl__pill, .chld__meta, .chld__pnl span")
 SMALL_TEXT_JS = """window.smallText = function () {
   const ALLOW = %s, bad = [];
   for (const e of document.querySelectorAll('body *')) {
@@ -179,7 +179,7 @@ def page_path(slug):
     if slug == "404": return ROOT / "site/404.html"
     if slug == "partners": return ROOT / "site/partners/index.html"
     if slug == "contact": return ROOT / "site/contact/index.html"
-    if slug in ("privacy-policy", "terms-of-service", "pricing", "changelog"): return ROOT / f"site/{slug}/index.html"
+    if slug in ("privacy-policy", "terms-of-service", "pricing", "changelog") or slug.startswith("changelog/"): return ROOT / f"site/{slug}/index.html"
     if slug.startswith("blog"): return ROOT / "site/resources" / (slug.replace("blog", "blog", 1)) / "index.html"
     if slug in industry_slugs(): return ROOT / f"site/industries/{slug}/index.html"
     return ROOT / f"site/features/{slug}/index.html"
@@ -653,12 +653,12 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = (["homepage", "404", "partners", "contact", "pricing", "changelog", "privacy-policy", "terms-of-service"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
+        args = (["homepage", "404", "partners", "contact", "pricing", "changelog", "changelog/a-new-inkybay-website", "privacy-policy", "terms-of-service"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
                 + industry_slugs() + ["blog", "blog/" + blog_flagship(), "blog/category/print-prep", "blog/tag/b2b"])
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in ("404", "partners", "contact", "pricing", "changelog", "privacy-policy", "terms-of-service") or slug.startswith("blog"):
+        if slug in ("404", "partners", "contact", "pricing", "changelog", "privacy-policy", "terms-of-service") or slug.startswith(("blog", "changelog/")):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))

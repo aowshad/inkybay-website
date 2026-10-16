@@ -297,6 +297,8 @@ write(SITE / "partners" / "index.html", build(render_partners.render(), root="..
 write(SITE / "contact" / "index.html", build(render_contact.render("../"), root="../", home="../"))
 write(SITE / "pricing" / "index.html", build(render_pricing.render(), root="../", home="../"))
 write(SITE / "changelog" / "index.html", build(render_changelog.render(), root="../", home="../"))
+for s in render_changelog.slugs():                  # one page per changelog entry
+    write(SITE / "changelog" / s / "index.html", build(render_changelog.render_entry(s), root="../../", home="../../"))
 for s in render_legal.CFG["pages"]:                # Privacy policy and Terms of service (src/legal/<slug>.md)
     write(SITE / s / "index.html", build(render_legal.render(s, (ROOT / "src" / "template.html").read_text()), root="../", home="../"))
 for j in sorted(p for p in (ROOT / "src" / "features").glob("*.json") if not p.name.startswith("_")):   # _index.json is data, not a page

@@ -592,16 +592,21 @@ The navbar's Pricing and the footer's Product > Pricing link here. The audit cov
 
 ## Changelog page
 
-`site/changelog/`, built by `render_changelog.py` from `src/changelog.json` (labels, the four entry types and the
-entries), styles in `src/changelog.css` (plus feature.css for the breadcrumb). Hero: breadcrumb, H1 (56/500), lead.
-Timeline (the full 1248px container, like every page; text runs to 72ch): each entry is a row with the date in a
-240px column on the left (14px), a thin thread with a brand dot, then type
-pills (New, Improved, Fixed, Announcement; New is brand-tinted), the title (28/500, a self-link anchor
-`#<date>-<title>`), the text and optional points; entries sort newest first; a "Missing something?" card with
-"Request a feature" (secondary, to `contact/`). Phones stack the date above the entry. To add a release, add an entry
-`{"date": "YYYY-MM-DD", "title", "types": [...], "text", "items"?}`; the build stops on a bad date or unknown type.
-Seeded with two verified entries only (the new website; the App Store launch on August 9, 2017, from the listing);
-real release notes are yours to add. The footer's Changelog links here.
+`site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
+`src/changelog.json` (labels, the four entry types and the entries), styles in `src/changelog.css` (plus feature.css
+for the breadcrumb).
+- List: hero (breadcrumb, H1 56/500, lead), then a timeline in the full 1248px container: each row has the date in a
+  240px column (14px), a thin thread with a brand dot, the type pills (New, Improved, Fixed, Announcement; New is
+  brand-tinted), the title linking to the entry's page (28/500) and "Read update" (ink, brand arrow). No details on
+  the list (your call); entries sort newest first.
+- Entry page: breadcrumb Home > Changelog > title, the date and pills (14px), H1 at the article size (44/500), the
+  text as a 19px lead, "In this update" with the points, an optional Markdown `body` (rendered like a blog post), then
+  newer / older cards, "All updates" (back to the list); the article measure is 760px.
+- Both end with a "Missing something?" card with "Request a feature" (secondary, to `contact/`).
+- To add a release, add an entry `{"date": "YYYY-MM-DD", "title", "types": [...], "text", "items"?, "body"?,
+  "slug"?}`; the slug defaults to the title; the build stops on a bad date, an unknown type or a duplicate slug, and
+  the new page joins the sitemap. Seeded with two verified entries only (the new website; the App Store launch on
+  August 9, 2017, from the listing); real release notes are yours to add. The footer's Changelog links to the list.
 
 ## Legal pages (Privacy policy, Terms of service)
 
@@ -728,6 +733,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Changelog detail pages (your call): every entry gets its own page at changelog/<slug>/ (breadcrumb, date and pills, H1, lead, In this update, optional Markdown body, newer / older, All updates); the list now shows only the date, pills, linked title and Read update. The audit covers the list and both entry pages
 - 2026-10-16: Changelog uses the full container (your call; the 960px cap made it look squeezed): the date column is 240px and entry text runs to 72ch
 - 2026-10-16: Pricing: Professional is marked "Most popular" (your call) with a brand badge, a solid brand hairline and a warm wash, and keeps the only primary button; Starter, Advance and Unlimited get secondary buttons (you listed Professional as secondary too, then chose Professional primary when asked). Set per plan with "badge" and "cta" in src/pricing.json
 - 2026-10-16: Legal pages name the company ParseLab, LLC (the developer on the Shopify App Store listing, Newark, DE, matching our US office address) in the opening paragraph and the postal address; both pages' Last updated is now October 16, 2026
