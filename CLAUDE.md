@@ -616,9 +616,10 @@ server logs, browser storage), use, legal bases, sharing (never sold), transfers
 cover the service, eligibility, Shopify billing and trials, your content, acceptable use, our IP, third parties,
 privacy, availability, termination, disclaimers, liability cap (12 months of fees), indemnity, governing law, changes,
 general, contact. The footer legal row, the Contact and Partners consent checkboxes and the sitemap link to them.
-To change the text, edit the Markdown and the `updated` date. Draft for legal review: the legal entity name
-(written as "ParseLab"), the governing law (Delaware, from the US office), and the data practices (no analytics,
-service providers, retention) must be confirmed before launch; this is a standard draft, not legal advice.
+To change the text, edit the Markdown and the `updated` date. The legal entity is ParseLab, LLC (Newark, Delaware), as the
+Shopify App Store listing names the developer. Draft for legal review: the governing law (Delaware) and the data
+practices (no analytics, service providers, retention) must be confirmed before launch; this is a standard draft,
+not legal advice.
 
 ## Industry pages (one template)
 
@@ -724,6 +725,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-16: Legal pages name the company ParseLab, LLC (the developer on the Shopify App Store listing, Newark, DE, matching our US office address) in the opening paragraph and the postal address; both pages' Last updated is now October 16, 2026
 - 2026-10-16: Changelog page (render_changelog.py, src/changelog.json, src/changelog.css, audit): a dated timeline with type pills, self-link anchors and a feature-request card; the footer's Changelog now links to it. Decision: there are no public release notes (the docs site has none and App Store listings carry no changelog), so it is seeded only with entries we can verify, the new website and the App Store launch on August 9, 2017; add real releases to src/changelog.json
 - 2026-10-16: Pricing page (render_pricing.py, src/pricing.json, src/pricing.css, switch JS, audit): plans, prices and features taken from the live App Store listing (Starter $19.99, Advance $49.99, Professional $99.99, Unlimited $249.99; yearly 20% off except Starter; 21-day free trial; billed through Shopify in USD). Monthly / Yearly switch, four plan cards with "Start free trial" to apps.shopify.com/productsdesigner, an "Every plan starts with" band, billing FAQs. The navbar and footer Pricing links now go to pricing/. Decisions: no "most popular" badge and no comparison table, because the listing does not state them and the per-plan lists are not cumulative; found on the listing: the rating is 4.4 (169 reviews), not the 4.6 the homepage shows (left for you)
 - 2026-10-15: Footer: Product lists all nine feature pages plus Pricing (your call; it replaces Live design editor, Features and Product options, since there is no features overview page), Industries lists all eight industry pages without "All industries" (no overview page). Both columns now come from nav.json like Resources and Get help. Pricing stays last under Product, the usual place, still #pricing until a pricing page exists. The Product column is wider (3 of 12; brand 4 to 3) so no name wraps at 1440, and from 961 to 1100px the brand takes its own row

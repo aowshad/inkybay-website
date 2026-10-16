@@ -2,7 +2,7 @@
 title: "Privacy policy"
 slug: privacy-policy
 description: "How InkyBay collects, uses, shares and protects personal information when you visit our website or use the InkyBay app on Shopify."
-updated: 2026-10-15
+updated: 2026-10-16
 effective: 2026-10-15
 summary:
   - "InkyBay is a Shopify app operated by ParseLab. This policy covers our website and the app."
@@ -11,7 +11,7 @@ summary:
   - "You can ask us to access, correct or delete your information at any time by emailing support@inkybay.com."
 ---
 
-This privacy policy explains how ParseLab ("ParseLab", "we", "us" or "our") collects, uses, shares and protects personal information in connection with InkyBay, our product customizer app for Shopify (the "App"), and the website at which this policy is published (the "Website"). Together we call these the "Services".
+This privacy policy explains how ParseLab, LLC ("ParseLab", "we", "us" or "our") collects, uses, shares and protects personal information in connection with InkyBay, our product customizer app for Shopify (the "App"), and the website at which this policy is published (the "Website"). Together we call these the "Services".
 
 By using the Services you acknowledge this policy. If you do not agree with it, please do not use the Services.
 
@@ -138,4 +138,4 @@ We may update this policy from time to time. When we do, we will change the "Las
 If you have questions or concerns about this policy or how we handle personal information, contact us:
 
 - **Email:** [support@inkybay.com](mailto:support@inkybay.com)
-- **Post:** ParseLab, 131 Continental Dr, Suite 305, Newark, Delaware, United States
+- **Post:** ParseLab, LLC, 131 Continental Dr, Suite 305, Newark, Delaware, United States

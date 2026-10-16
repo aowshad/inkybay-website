@@ -2,7 +2,7 @@
 title: "Terms of service"
 slug: terms-of-service
 description: "The terms that apply when you install and use the InkyBay product customizer app for Shopify or visit the InkyBay website."
-updated: 2026-10-15
+updated: 2026-10-16
 effective: 2026-10-15
 summary:
   - "These terms are an agreement between your business and ParseLab, the company behind InkyBay."
@@ -11,7 +11,7 @@ summary:
   - "The app is provided as is, and our liability is limited to the fees you paid in the last 12 months."
 ---
 
-These terms of service (the "Terms") govern your use of InkyBay, our product customizer app for Shopify (the "App"), and the website at which these Terms are published (the "Website"), together the "Services". The Services are provided by ParseLab ("ParseLab", "we", "us" or "our").
+These terms of service (the "Terms") govern your use of InkyBay, our product customizer app for Shopify (the "App"), and the website at which these Terms are published (the "Website"), together the "Services". The Services are provided by ParseLab, LLC ("ParseLab", "we", "us" or "our").
 
 Please read these Terms carefully. By installing the App, creating an account or otherwise using the Services, you agree to them. If you use the Services on behalf of a business, you confirm that you have authority to bind that business, and "you" means that business.
 
@@ -123,4 +123,4 @@ We may update these Terms from time to time. When we do, we will change the "Las
 Questions about these Terms? Contact us:
 
 - **Email:** [support@inkybay.com](mailto:support@inkybay.com)
-- **Post:** ParseLab, 131 Continental Dr, Suite 305, Newark, Delaware, United States
+- **Post:** ParseLab, LLC, 131 Continental Dr, Suite 305, Newark, Delaware, United States
