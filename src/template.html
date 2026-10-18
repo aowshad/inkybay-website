@@ -2577,6 +2577,35 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       document.querySelectorAll('[data-print]').forEach(function (el) { printRo.observe(el.parentNode); });
     }
 
+    /* Video tutorials: category tabs, and a player dialog that loads YouTube's privacy-enhanced player only on play
+       (src/videos.json, render_videos.py). Links are real YouTube links, so without JS (or with a modifier key) they open YouTube. */
+    document.querySelectorAll('.vpage').forEach(function (pg) {
+      var tabs = [].slice.call(pg.querySelectorAll('.vtab')), cards = [].slice.call(pg.querySelectorAll('.vcard'));
+      tabs.forEach(function (tb) {
+        tb.addEventListener('click', function () {
+          var c = tb.getAttribute('data-cat');
+          tabs.forEach(function (x) { x.setAttribute('aria-pressed', String(x === tb)); });
+          cards.forEach(function (k) { k.hidden = c !== 'all' && k.getAttribute('data-cat') !== c; });
+        });
+      });
+      var dlg = pg.querySelector('.vmodal'); if (!dlg || typeof dlg.showModal !== 'function') return;
+      var frame = dlg.querySelector('.vmodal__frame'), title = dlg.querySelector('.vmodal__title'), yt = dlg.querySelector('.vmodal__yt'), opener = null;
+      pg.addEventListener('click', function (e) {
+        var a = e.target.closest('[data-video]');
+        if (!a || e.metaKey || e.ctrlKey || e.shiftKey || e.button > 0) return;
+        e.preventDefault(); opener = a;
+        var id = a.getAttribute('data-video'), f = document.createElement('iframe');
+        f.src = 'https://www.youtube-nocookie.com/embed/' + id + '?autoplay=1&rel=0&modestbranding=1';
+        f.title = a.getAttribute('data-title'); f.allow = 'autoplay; encrypted-media; picture-in-picture; fullscreen'; f.allowFullscreen = true;
+        frame.innerHTML = ''; frame.appendChild(f);
+        title.textContent = a.getAttribute('data-title'); yt.href = 'https://www.youtube.com/watch?v=' + id;
+        dlg.showModal(); dlg.querySelector('.vmodal__close').focus();   /* focus outside the YouTube frame, so Esc closes */
+      });
+      dlg.querySelector('.vmodal__close').addEventListener('click', function () { dlg.close(); });
+      dlg.addEventListener('click', function (e) { if (e.target === dlg) dlg.close(); });       /* a click on the backdrop */
+      dlg.addEventListener('close', function () { frame.innerHTML = ''; if (opener) opener.focus(); });   /* stops the video */
+    });
+
     /* Pricing: the Monthly / Yearly switch shows one price set (src/pricing.json, render_pricing.py) */
     document.querySelectorAll('.prtoggle').forEach(function (g) {
       var plans = document.querySelector('.prplans'), btns = [].slice.call(g.querySelectorAll('[data-period]'));

@@ -53,6 +53,7 @@ render_partners.py        renders site/partners/ from src/partners.json (copy) +
 render_contact.py         renders site/contact/ from src/contact.json (styles in src/contact.css)
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
 render_pricing.py         renders site/pricing/ from src/pricing.json (styles in src/pricing.css)
+render_videos.py          renders site/resources/video-tutorials/ from src/videos.json (styles src/videos.css, thumbnails src/assets/videos/)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -312,8 +313,8 @@ into the shared template. Never hand-write a menu in the template.
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry; no "All industries" link until an overview page exists).
   Industry pages come later, so `industries/...` links 404 until they exist.
-  Resources (groups: Learn, Grow with InkyBay, Get help; internal pages `resources/blog/`, `resources/case-studies/`,
-  `resources/video-tutorials/`, `partners/`, `affiliate/` come later; Help center is external to docs.inkybay.com;
+  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/` and `partners/`
+  exist, `resources/case-studies/` and `affiliate/` come later; Help center is external to docs.inkybay.com;
   promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
   Contact). Contact ("Write to our team.", icon mail) links to `contact/`.
 - Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
@@ -590,6 +591,28 @@ changes.
 4. FAQs [white]: billing, the free trial, yearly billing, changing or cancelling. 5. CTA, crowd marquee, footer.
 The navbar's Pricing and the footer's Product > Pricing link here. The audit covers it (`pricing` in `--all`).
 
+## Video tutorials page
+
+`site/resources/video-tutorials/`, built by `render_videos.py` from `src/videos.json` (videos, categories, every
+string), styles in `src/videos.css`, the tabs and player JS in the template. The videos are InkyBay's own YouTube
+tutorials (channel youtube.com/@productsdesigner, the 13 listed on docs.inkybay.com/spf/en/tutorials); titles are
+rewritten in sentence case, lengths and dates come from YouTube. Thumbnails are self-hosted
+(`src/assets/videos/<id>.webp`, 960x540 from YouTube's maxres frame), so the page loads nothing from YouTube until a
+visitor presses play.
+1. Hero [white]: breadcrumb Home > Resources > Video tutorials, two-tone H1 (56/500), lead, "Subscribe on YouTube"
+   (external link) and the count; then the featured "Start here" video (`featured.id`): a large 16:9 thumbnail (7 cols)
+   and its title (32/500), category and length, a line of text and "Watch video" (primary).
+2. All tutorials [tint]: category tabs with counts (All, Getting started, Products and options, Pricing, Design tool,
+   Storefront; pill style, active inverted, `aria-pressed`) and 3-up cards (2 at 960px, 1 on phones): 16:9 thumbnail
+   with a glass play button and the length, the category (14px) and the title (18/500).
+3. Help card [white]: "Can't find what you need?", the help center (external) and Contact support. 4. CTA and footer.
+- Playing: every thumbnail, title and button is a real YouTube link (with JS off, or with a modifier key, it opens
+  YouTube). With JS, a click opens a `<dialog>` that creates a youtube-nocookie.com embed (privacy-enhanced, autoplay)
+  with the title and "Watch on YouTube"; focus moves to the close button (so Esc works, the YouTube frame would swallow
+  it); Esc, the close button or a backdrop click closes it, removes the iframe (the video stops) and returns focus.
+- To add a video: add `{"id", "title", "category", "seconds", "date"}` and its thumbnail at
+  `src/assets/videos/<id>.webp`; the build stops on an unknown category or a missing thumbnail.
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -734,6 +757,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-18: Video tutorials page (render_videos.py, src/videos.json, src/videos.css, src/assets/videos/, tabs and player JS, audit): the 13 real InkyBay tutorials from the YouTube channel listed on the docs, grouped into five categories, a "Start here" video (Make a custom product from scratch, the newest), category tabs, and a player dialog. Decisions: thumbnails are self-hosted and the YouTube player (privacy-enhanced youtube-nocookie.com) loads only on play, so visiting the page contacts no third party; every play link is a real YouTube link for no-JS visitors; titles rewritten in sentence case ("How to Set Printing Types & Pricing | Inkybay Product Designer" becomes "How to set printing types and pricing")
 - 2026-10-16: Changelog subheadings (your call): every entry has a one-line "summary" shown under its title on the list and under the H1 on its page (it is also the page's meta description); the build stops if one is missing
 - 2026-10-16: Changelog detail pages (your call): every entry gets its own page at changelog/<slug>/ (breadcrumb, date and pills, H1, lead, In this update, optional Markdown body, newer / older, All updates); the list now shows only the date, pills, linked title and Read update. The audit covers the list and both entry pages
 - 2026-10-16: Changelog uses the full container (your call; the 960px cap made it look squeezed): the date column is 240px and entry text runs to 72ch

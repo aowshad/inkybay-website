@@ -1,0 +1,57 @@
+{
+  "meta": {
+    "title": "Video tutorials | InkyBay",
+    "description": "Step-by-step InkyBay video tutorials: set up customizable products, product options, printing prices, quantity discounts and the design tool."
+  },
+  "source": "Videos from the InkyBay YouTube channel (youtube.com/@productsdesigner), listed on docs.inkybay.com/spf/en/tutorials; titles, lengths and dates from YouTube, October 2026",
+  "channel_url": "https://www.youtube.com/@productsdesigner",
+  "help_url": "https://docs.inkybay.com/spf/en",
+  "hero": {
+    "title": ["Video tutorials", "Learn InkyBay step by step."],
+    "lead": "Short walkthroughs from the InkyBay team, from your first custom product to pricing, options and the design tool.",
+    "channel_cta": "Subscribe on YouTube"
+  },
+  "featured": {
+    "id": "WmWO8ULu0wk",
+    "label": "Start here",
+    "text": "Follow along as we build a customizable product in InkyBay from scratch, from a blank product to one shoppers can design.",
+    "cta": "Watch video"
+  },
+  "labels": {
+    "all": "All",
+    "filter": "Filter tutorials",
+    "watch": "Watch",
+    "play": "Play video",
+    "minutes": "min",
+    "close": "Close video",
+    "on_youtube": "Watch on YouTube",
+    "count_one": "{n} video",
+    "count_many": "{n} videos",
+    "help_title": "Can't find what you need?",
+    "help_text": "The help center has written guides for every feature, and our team is happy to help.",
+    "help_cta": "Visit the help center",
+    "contact_cta": "Contact support"
+  },
+  "categories": [
+    { "slug": "getting-started", "name": "Getting started" },
+    { "slug": "products-options", "name": "Products and options" },
+    { "slug": "pricing", "name": "Pricing" },
+    { "slug": "design-tool", "name": "Design tool" },
+    { "slug": "storefront", "name": "Storefront" }
+  ],
+  "videos": [
+    { "id": "WmWO8ULu0wk", "title": "Make a custom product from scratch", "category": "getting-started", "seconds": 188, "date": "2023-03-22" },
+    { "id": "zKutZtxXVmY", "title": "How to navigate the InkyBay app admin in Shopify", "category": "getting-started", "seconds": 124, "date": "2019-11-29" },
+    { "id": "qfZ84xOvAoU", "title": "How to set up a configurable product", "category": "products-options", "seconds": 328, "date": "2019-11-28" },
+    { "id": "OpztcN8VSdE", "title": "How to set product colors", "category": "products-options", "seconds": 429, "date": "2019-11-28" },
+    { "id": "K8UqHkhrwGM", "title": "How to create product options from scratch", "category": "products-options", "seconds": 890, "date": "2019-11-30" },
+    { "id": "f1F8wH166Vs", "title": "How to set printing types and pricing", "category": "pricing", "seconds": 718, "date": "2019-11-28" },
+    { "id": "vt0jifMoDh4", "title": "How to set factor-based additional prices for different products", "category": "pricing", "seconds": 373, "date": "2019-11-30" },
+    { "id": "RAlE-k8ArNg", "title": "How to create a quantity discount set", "category": "pricing", "seconds": 265, "date": "2019-11-30" },
+    { "id": "riueCk0cRZ0", "title": "How to create a design idea template", "category": "design-tool", "seconds": 277, "date": "2019-11-30" },
+    { "id": "8AVtz6b_XTM", "title": "How to set a default font for the design tool", "category": "design-tool", "seconds": 87, "date": "2020-09-15" },
+    { "id": "PJ-uPiG7UGg", "title": "How to configure language and translation", "category": "storefront", "seconds": 100, "date": "2019-11-30" },
+    { "id": "ALyuFsUdYc4", "title": "How to add a Buy blank button", "category": "storefront", "seconds": 71, "date": "2019-12-01" },
+    { "id": "Q41vpE5S21M", "title": "How to improve the Customize it button's loading time", "category": "storefront", "seconds": 180, "date": "2020-09-17" }
+  ]
+}
