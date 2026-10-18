@@ -2,7 +2,7 @@
 title: "Privacy policy"
 slug: privacy-policy
 description: "How InkyBay collects, uses, shares and protects personal information when you visit our website or use the InkyBay app on Shopify."
-updated: 2026-10-16
+updated: 2026-10-18
 effective: 2026-10-15
 summary:
   - "InkyBay is a Shopify app operated by ParseLab. This policy covers our website and the app."
@@ -53,6 +53,7 @@ Shopify processes all payments for the App. We do not receive or store payment c
 ### Information collected automatically
 
 - **Server logs:** our hosting providers record technical information such as IP address, browser type, the pages requested and the time of the request, to deliver and secure the Services.
+- **Video tutorials:** our tutorial videos are hosted on YouTube. A video loads only when you press play, in YouTube's privacy-enhanced mode (youtube-nocookie.com), and YouTube's privacy policy applies to that playback.
 - **Browser storage:** the Website stores small preferences in your browser, such as your chosen blog layout and whether you have already seen the 404 page hint. These stay on your device and are not used to track you.
 
 The Website does not use advertising cookies or third-party analytics. If we add analytics in the future, we will update this policy first.
@@ -127,7 +128,7 @@ The Services are meant for businesses and are not directed to children under 16.
 
 ## 12. Links to other websites
 
-The Services link to other websites and services, such as Shopify and our help center. Their own privacy policies apply to them, and we are not responsible for their practices.
+The Services link to other websites and services, such as Shopify, our help center and our YouTube channel. Their own privacy policies apply to them, and we are not responsible for their practices.
 
 ## 13. Changes to this policy
 
