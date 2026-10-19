@@ -646,8 +646,8 @@ rebuilt in our system. Content: the 15 English customer stories on productsdesig
 one a Shopify store using InkyBay), with images and logos in `src/assets/cases/<slug>/` (WebP, logos trimmed to
 their outline). FOSMX (Spanish) and Print21 (German) are left out until translated.
 1. List hero [white]: breadcrumb Home > Resources > Case studies, two-tone H1, lead.
-2. All case studies [tint]: a filter bar (search brand, Industry and Region selects with only the values in use,
-   "Clear filters" once something is set) and the count ("Showing N of M", 14px), then 3-up cards (2 at 1100px, 1 at
+2. All case studies [tint]: a filter bar (Industry and Region selects side by side on the left, with only the values
+   in use, then "Clear filters" once something is set; search brand on the right; on phones search comes first) and the count ("Showing N of M", 14px), then 3-up cards (2 at 1100px, 1 at
    640px): the logo on a white frame (white in both themes, logos are drawn for white), location with a pin and the
    industry pill (14px), brand (20/500), one line, "Read story" (ink, brand arrow) and "Visit store" (external).
    Filters update as you type, stay in the URL (`?q=&industry=&region=`), and show an empty state with Clear filters.
@@ -808,6 +808,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Case studies filter bar: Industry and Region together on the left, search on the right (first on phones) (your call)
 - 2026-10-19: Case study sidebar: "Visit store" hugs its label instead of filling the card width (your call)
 - 2026-10-19: Case studies, list and story pages (render_cases.py, src/case-studies.json, src/cases.css, src/assets/cases/, filter JS, audit): layout from the Figma case study frames in our design system; content is the 15 real English InkyBay customer stories from productsdesigner.com/clients (the Figma's placeholder cards were not used). Decisions: search plus Industry and Region filters kept in the URL; logos sit on a white frame in both themes; FOSMX and Print21 wait for translation; headings in sentence case and no em dashes
 - 2026-10-19: Affiliate page (render_affiliate.py, src/affiliate.json, src/affiliate.css, calculator JS, audit): Shopify-style structure with audience cards, benefits, the kinds of sellers to refer, real App Store facts, an application form and FAQs. Decisions: no InkyBay affiliate terms exist yet, so the page states no numbers; the earnings calculator is built but renders only once `commission` is set in the JSON; benefits and FAQ answers are marked draft

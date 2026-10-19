@@ -8,9 +8,9 @@
 .cshero__title .h-muted { color: var(--ink-muted); }
 .cshero__lead { max-width: 56ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
 
-/* filter bar: search, two selects, clear; the count below */
+/* filter bar: Industry and Region on the left (then Clear), search on the right; on phones search goes first; the count below */
 .csbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
-.csbar__search { position: relative; flex: 1 1 280px; max-width: 400px; display: flex; align-items: center; }
+.csbar__search { position: relative; flex: 0 1 360px; margin-left: auto; display: flex; align-items: center; }
 .csbar__search svg { position: absolute; left: 16px; width: 20px; height: 20px; color: var(--ink-muted); pointer-events: none; }
 .csbar input, .csbar select { width: 100%; height: 48px; border: 0; border-radius: 12px; font: inherit; font-size: 16px; color: var(--ink);
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .2s ease; }
@@ -108,7 +108,7 @@
 }
 @media (max-width: 640px) {
   .csgrid { grid-template-columns: minmax(0, 1fr); }
-  .csbar__search { max-width: none; flex-basis: 100%; }
+  .csbar__search { order: -1; flex-basis: 100%; margin-left: 0; }
   .csbar__sel { flex: 1 1 140px; }
   .csd__body { font-size: 17px; }
   .csd__body h2 { font-size: 24px; }

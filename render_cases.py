@@ -97,10 +97,10 @@ def render():
     <div class="container">
       <h2 class="sr-only" id="cs-all">{E(L["all"])}</h2>
       <form class="csbar" role="search" data-cs-filter>
-        <label class="csbar__search"><span class="sr-only">{E(L["search"])}</span>{SEARCH}<input type="search" name="q" placeholder="{E(L["search"])}" autocomplete="off"></label>
         <label class="csbar__sel"><span class="sr-only">{E(L["industry"])}</span><select name="industry"><option value="">{E(L["industry_all"])}</option>{opt(used_i, ind)}</select>{CHEV_D}</label>
         <label class="csbar__sel"><span class="sr-only">{E(L["region"])}</span><select name="region"><option value="">{E(L["region_all"])}</option>{opt(used_r, reg)}</select>{CHEV_D}</label>
         <button class="csbar__clear" type="reset" hidden>{E(L["clear"])}</button>
+        <label class="csbar__search"><span class="sr-only">{E(L["search"])}</span>{SEARCH}<input type="search" name="q" placeholder="{E(L["search"])}" autocomplete="off"></label>
       </form>
       <p class="csbar__count" aria-live="polite">{count}</p>
       <ul class="csgrid">
