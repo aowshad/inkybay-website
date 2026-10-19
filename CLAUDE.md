@@ -654,7 +654,7 @@ their outline). FOSMX (Spanish) and Print21 (German) are left out until translat
 3. Story: breadcrumb Home > Case studies > brand, H1 at the article size (44/500), lead (20px muted), then the body
    (8 cols; 18px / 1.7; H2 28/500, H3; checklists with brand check circles; images at their own ratio, radius 16;
    quotes like the blog) beside a sticky sidebar (4 cols; above the body on tablets and phones): logo, brand,
-   Industry, Platform, Location, Products, Customization app, "Visit store" (primary). Then "More case studies"
+   Industry, Platform, Location, Products, Customization app, "Visit store" (primary, hugs its label). Then "More case studies"
    [tint]: three cards, same industry first. 4. CTA and footer.
 - A story: `{"slug", "brand", "store", "country", "region", "industry", "products", "summary", "title", "lead",
   "source", "body": [{"h"} | {"h3"} | {"p"} | {"ul"} | {"img", "alt", "size"} | {"quote", "by"?}]}`; Markdown links
@@ -808,6 +808,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Case study sidebar: "Visit store" hugs its label instead of filling the card width (your call)
 - 2026-10-19: Case studies, list and story pages (render_cases.py, src/case-studies.json, src/cases.css, src/assets/cases/, filter JS, audit): layout from the Figma case study frames in our design system; content is the 15 real English InkyBay customer stories from productsdesigner.com/clients (the Figma's placeholder cards were not used). Decisions: search plus Industry and Region filters kept in the URL; logos sit on a white frame in both themes; FOSMX and Print21 wait for translation; headings in sentence case and no em dashes
 - 2026-10-19: Affiliate page (render_affiliate.py, src/affiliate.json, src/affiliate.css, calculator JS, audit): Shopify-style structure with audience cards, benefits, the kinds of sellers to refer, real App Store facts, an application form and FAQs. Decisions: no InkyBay affiliate terms exist yet, so the page states no numbers; the earnings calculator is built but renders only once `commission` is set in the JSON; benefits and FAQ answers are marked draft
 - 2026-10-18: Privacy policy: says the tutorial videos come from YouTube, load only when a visitor presses play (privacy-enhanced mode) and fall under YouTube's privacy policy; links now mention the YouTube channel; Last updated October 18, 2026

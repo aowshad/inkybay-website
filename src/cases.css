@@ -96,7 +96,7 @@
 .csside__facts dd { margin: 2px 0 0; }
 .csside__facts a { color: var(--ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: 4px; }
 .csside__facts a:hover { text-decoration-color: currentColor; }
-.csside > .btn { margin: 0 var(--s-2); justify-content: center; }
+.csside > .btn { margin: 0 var(--s-2); justify-self: start; }
 
 /* related */
 .csrel__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-4); margin-bottom: var(--head-gap); }
