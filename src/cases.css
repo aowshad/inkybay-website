@@ -62,11 +62,11 @@
 
 /* story */
 .csd { padding-block: calc(var(--nav-h) + var(--s-12)) var(--section-y); }
-.csd__head { display: grid; gap: var(--s-5); justify-items: start; max-width: 860px; margin-bottom: var(--s-12); }
+.csd__head { grid-column: 1 / span 8; grid-row: 1; display: grid; gap: var(--s-5); justify-items: start; margin-bottom: var(--s-12); }
 .csd__title { font-size: var(--t-h1-article); line-height: 1.15; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; }
 .csd__lead { color: var(--ink-muted); font-size: 20px; line-height: 30px; text-wrap: pretty; }
 .csd__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
-.csd__body { grid-column: 1 / span 8; grid-row: 1; min-width: 0; font-size: 18px; line-height: 1.7; }
+.csd__body { grid-column: 1 / span 8; grid-row: 2; min-width: 0; font-size: 18px; line-height: 1.7; }
 .csd__body > * + * { margin-top: 1.1em; }
 .csd__body h2 { margin-top: 2em; font-size: 28px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 500; text-wrap: balance; scroll-margin-top: calc(var(--nav-h) + 24px); }
 .csd__body > h2:first-child { margin-top: 0; }
@@ -85,7 +85,8 @@
 .csd__quote figcaption { margin-top: .6em; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
 
 /* sidebar */
-.csside { grid-column: 9 / span 4; grid-row: 1; position: sticky; top: calc(var(--nav-h) + 24px); display: grid; gap: var(--s-5); padding: var(--s-4) var(--s-4) var(--s-6);
+/* the sidebar starts level with the breadcrumb and runs beside the header and the body */
+.csside { grid-column: 9 / span 4; grid-row: 1 / span 2; position: sticky; top: calc(var(--nav-h) + 24px); display: grid; gap: var(--s-5); padding: var(--s-4) var(--s-4) var(--s-6);
   border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 .csside__logo { display: grid; place-items: center; height: 168px; padding: var(--s-6); border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgba(20, 16, 12, .06); }
 .csside__logo img { max-width: 76%; max-height: 80px; width: auto; height: auto; object-fit: contain; }
@@ -103,7 +104,7 @@
 
 @media (max-width: 1100px) { .csgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 960px) {
-  .csd__body, .csside { grid-column: 1 / -1; grid-row: auto; }
+  .csd__head, .csd__body, .csside { grid-column: 1 / -1; grid-row: auto; }
   .csside { position: static; margin-bottom: var(--s-12); }
 }
 @media (max-width: 640px) {

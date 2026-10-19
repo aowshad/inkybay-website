@@ -147,13 +147,12 @@ def render_case(slug):
     related = "".join(card(x, L, ind, f'../{x["slug"]}/') for x in rel[:3])
     body = f"""<main>
   <article class="csd" aria-labelledby="csd-title">
-    <div class="container">
+    <div class="container csd__grid">
       <header class="csd__head">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">{E(L["home"])}</a>{CHEV_R}<a href="../">{E(L["crumb"])}</a>{CHEV_R}<span aria-current="page">{E(c["brand"])}</span></nav>
         <h1 class="csd__title" id="csd-title">{E(c["title"])}</h1>
         <p class="csd__lead">{E(c["lead"])}</p>
       </header>
-      <div class="csd__grid">
         <aside class="csside" aria-label="{E(L["about"]).replace("{brand}", E(c["brand"]))}">
           <div class="csside__logo"><img src="{{{{IMG:cases/{c["slug"]}/logo.webp}}}}" alt="{E(c["brand"])}" decoding="async"></div>
           <p class="csside__brand">{E(c["brand"])}</p>
@@ -163,7 +162,6 @@ def render_case(slug):
         <div class="csd__body">
           {"".join(block(b) for b in c["body"])}
         </div>
-      </div>
     </div>
   </article>
   <section class="fsec fsec--tint csrel" aria-labelledby="csrel-title">

@@ -653,7 +653,8 @@ their outline). FOSMX (Spanish) and Print21 (German) are left out until translat
    Filters update as you type, stay in the URL (`?q=&industry=&region=`), and show an empty state with Clear filters.
 3. Story: breadcrumb Home > Case studies > brand, H1 at the article size (44/500), lead (20px muted), then the body
    (8 cols; 18px / 1.7; H2 28/500, H3; checklists with brand check circles; images at their own ratio, radius 16;
-   quotes like the blog) beside a sticky sidebar (4 cols; above the body on tablets and phones): logo, brand,
+   quotes like the blog) beside a sticky sidebar (4 cols, starting level with the breadcrumb and running beside the header and body; between
+   the lead and the body on tablets and phones): logo, brand,
    Industry, Platform, Location, Products, Customization app, "Visit store" (primary, hugs its label). Then "More case studies"
    [tint]: three cards, same industry first. 4. CTA and footer.
 - A story: `{"slug", "brand", "store", "country", "region", "industry", "products", "summary", "title", "lead",
@@ -808,6 +809,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Case study sidebar starts level with the breadcrumb instead of below the header (your call); one grid for header, body and sidebar
 - 2026-10-19: Case studies filter bar: Industry and Region together on the left, search on the right (first on phones) (your call)
 - 2026-10-19: Case study sidebar: "Visit store" hugs its label instead of filling the card width (your call)
 - 2026-10-19: Case studies, list and story pages (render_cases.py, src/case-studies.json, src/cases.css, src/assets/cases/, filter JS, audit): layout from the Figma case study frames in our design system; content is the 15 real English InkyBay customer stories from productsdesigner.com/clients (the Figma's placeholder cards were not used). Decisions: search plus Industry and Region filters kept in the URL; logos sit on a white frame in both themes; FOSMX and Print21 wait for translation; headings in sentence case and no em dashes
