@@ -208,7 +208,7 @@ Section sub headings are 18px.
    underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
-10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); each frame has its own nature photo (`photos/why-1..4`) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
+10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
 12. **Crowd marquee** (dark zone, between CTA and footer): "Built for merchants [4 round faces] and shoppers [4 soft-square faces]",
    Geist 120px, 48s loop, edge fades, pauses on hover. Faces sit on colour chips (warm for merchants, cool for shoppers) with a
@@ -809,6 +809,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Homepage Why InkyBay: all four frames use the meadow photo of the last card (your call); why-1..3 removed
 - 2026-10-19: Case study sidebar starts level with the breadcrumb instead of below the header (your call); one grid for header, body and sidebar
 - 2026-10-19: Case studies filter bar: Industry and Region together on the left, search on the right (first on phones) (your call)
 - 2026-10-19: Case study sidebar: "Visit store" hugs its label instead of filling the card width (your call)
