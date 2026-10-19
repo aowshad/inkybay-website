@@ -54,6 +54,7 @@ render_contact.py         renders site/contact/ from src/contact.json (styles in
 render_blog.py            the blog: content model, validation, thumbnails, every blog page, search index, RSS
 render_pricing.py         renders site/pricing/ from src/pricing.json (styles in src/pricing.css)
 render_videos.py          renders site/resources/video-tutorials/ from src/videos.json (styles src/videos.css, thumbnails src/assets/videos/)
+render_affiliate.py       renders site/affiliate/ from src/affiliate.json (styles src/affiliate.css, plus feature/forms/partners.css)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -313,8 +314,8 @@ into the shared template. Never hand-write a menu in the template.
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry; no "All industries" link until an overview page exists).
   Industry pages come later, so `industries/...` links 404 until they exist.
-  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/` and `partners/`
-  exist, `resources/case-studies/` and `affiliate/` come later; Help center is external to docs.inkybay.com;
+  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/`, `partners/`
+  and `affiliate/` exist, `resources/case-studies/` comes later; Help center is external to docs.inkybay.com;
   promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
   Contact). Contact ("Write to our team.", icon mail) links to `contact/`.
 - Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
@@ -613,6 +614,28 @@ visitor presses play.
 - To add a video: add `{"id", "title", "category", "seconds", "date"}` and its thumbnail at
   `src/assets/videos/<id>.webp`; the build stops on an unknown category or a missing thumbnail.
 
+## Affiliate page
+
+`site/affiliate/`, built by `render_affiliate.py` from `src/affiliate.json` (every string), styles in
+`src/affiliate.css`; structure modelled on shopify.com/affiliates. No affiliate terms are published anywhere yet, so the
+page states no rate, payout, cookie window or minimum.
+1. Hero [white, centred]: breadcrumb Home > Resources > Affiliate program, two-tone H1 "Customization for them. /
+   Commissions for you.", lead, "Become an affiliate" (primary) and "How it works" (secondary), both to `#apply`;
+   then four audience cards (Creators, Educators, Agencies and freelancers, Print experts): a product photo on the warm
+   dark stage, title (22/500) and a line in white. 4 up, 2 at 1100px, 1 at 480px.
+2. Benefits [dark]: the optional calculator, then a two-tone heading and four `fben` columns.
+3. Sellers [white]: "Refer every kind of custom seller" as hairline rows (title left, text right), then three facts
+   from the App Store listing (since 2017, 7 languages, any print method).
+4. Apply [tint, `#apply`]: the Partners `pjoin` layout: heading, lead, three steps, a link to the partner program, and
+   the shared form (`form=affiliate`: name, email, website or channel, how you will promote, audience, consent).
+5. FAQs, 6. CTA and footer.
+- Calculator: hidden while `"commission": null`. `{"model": "flat", "amount": 100}` (per paid referral) or
+  `{"model": "percent", "rate": 20, "months": 12, "price": 49.99}` (rate% of price for that many months) renders the
+  "Calculate your earnings" card: a 1 to 100 referrals-per-month slider and the yearly estimate
+  (referrals x 12 x commission per referral), updated by the template JS.
+- Draft (needs confirming before launch): the four benefits and all five FAQ answers (`"draft": true`), including
+  "free to join", "your own referral link", "assets ready to share" and "terms shared when you are approved".
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -757,6 +780,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Affiliate page (render_affiliate.py, src/affiliate.json, src/affiliate.css, calculator JS, audit): Shopify-style structure with audience cards, benefits, the kinds of sellers to refer, real App Store facts, an application form and FAQs. Decisions: no InkyBay affiliate terms exist yet, so the page states no numbers; the earnings calculator is built but renders only once `commission` is set in the JSON; benefits and FAQ answers are marked draft
 - 2026-10-18: Privacy policy: says the tutorial videos come from YouTube, load only when a visitor presses play (privacy-enhanced mode) and fall under YouTube's privacy policy; links now mention the YouTube channel; Last updated October 18, 2026
 - 2026-10-18: Video tutorials page (render_videos.py, src/videos.json, src/videos.css, src/assets/videos/, tabs and player JS, audit): the 13 real InkyBay tutorials from the YouTube channel listed on the docs, grouped into five categories, a "Start here" video (Make a custom product from scratch, the newest), category tabs, and a player dialog. Decisions: thumbnails are self-hosted and the YouTube player (privacy-enhanced youtube-nocookie.com) loads only on play, so visiting the page contacts no third party; every play link is a real YouTube link for no-JS visitors; titles rewritten in sentence case ("How to Set Printing Types & Pricing | Inkybay Product Designer" becomes "How to set printing types and pricing")
 - 2026-10-16: Changelog subheadings (your call): every entry has a one-line "summary" shown under its title on the list and under the H1 on its page (it is also the page's meta description); the build stops if one is missing

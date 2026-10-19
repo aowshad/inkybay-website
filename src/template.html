@@ -2606,6 +2606,13 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       dlg.addEventListener('close', function () { frame.innerHTML = ''; if (opener) opener.focus(); });   /* stops the video */
     });
 
+    /* Affiliate: the earnings calculator (rendered only when src/affiliate.json has a commission) */
+    document.querySelectorAll('.acalc').forEach(function (c) {
+      var per = parseFloat(c.getAttribute('data-per')) || 0, r = c.querySelector('.acalc__range'), n = c.querySelector('.acalc__n'), s = c.querySelector('.acalc__sum');
+      function upd() { n.textContent = r.value; s.textContent = '$' + Math.round(r.value * 12 * per).toLocaleString('en-US'); }
+      r.addEventListener('input', upd); upd();
+    });
+
     /* Pricing: the Monthly / Yearly switch shows one price set (src/pricing.json, render_pricing.py) */
     document.querySelectorAll('.prtoggle').forEach(function (g) {
       var plans = document.querySelector('.prplans'), btns = [].slice.call(g.querySelectorAll('[data-period]'));

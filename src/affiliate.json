@@ -1,0 +1,197 @@
+{
+  "meta": {
+    "title": "Affiliate program | InkyBay",
+    "description": "Join the InkyBay affiliate program: recommend the product customizer for Shopify to merchants who sell custom products, and earn a commission on every paid referral."
+  },
+  "draft": "No affiliate terms are published yet: the commission, payout and cookie window are not stated anywhere on the page. Add \"commission\" below to show the earnings calculator; the benefits and FAQ answers marked draft need your confirmation.",
+  "hero": {
+    "title": [
+      "Customization for them.",
+      "Commissions for you."
+    ],
+    "lead": "Get paid for referring Shopify merchants who sell custom products. The InkyBay affiliate program is built for creators, educators, agencies and print experts.",
+    "primary": "Become an affiliate",
+    "secondary": "How it works"
+  },
+  "audiences": [
+    {
+      "title": "Creators",
+      "text": "Share InkyBay in your videos, posts and newsletters.",
+      "product": "tee"
+    },
+    {
+      "title": "Educators",
+      "text": "Teach custom product selling in courses and workshops.",
+      "product": "notebook"
+    },
+    {
+      "title": "Agencies and freelancers",
+      "text": "Recommend InkyBay to the Shopify stores you build.",
+      "product": "laptop-bag"
+    },
+    {
+      "title": "Print experts",
+      "text": "Point print-on-demand sellers to a proven customizer.",
+      "product": "mug"
+    }
+  ],
+  "commission": null,
+  "commission_doc": "Optional. {\"model\": \"flat\", \"amount\": 100} pays a fixed amount per paid referral; {\"model\": \"percent\", \"rate\": 20, \"months\": 12, \"price\": 49.99} pays rate% of the plan price for that many months. Either one shows the calculator band.",
+  "calculator": {
+    "title": "Calculate your earnings",
+    "referrals": "Referrals per month",
+    "per_year": "Commissions per year",
+    "note": "An estimate based on the published commission. Actual earnings depend on the plans your referrals choose."
+  },
+  "benefits_heading": [
+    "Everything you need",
+    "to recommend InkyBay."
+  ],
+  "benefits": [
+    {
+      "icon": "percent",
+      "title": "Commission on every paid referral",
+      "text": "Earn when a merchant you refer installs InkyBay and starts a paid plan.",
+      "draft": true
+    },
+    {
+      "icon": "hash",
+      "title": "Your own referral link",
+      "text": "One personal link to share in videos, posts, courses and client proposals.",
+      "draft": true
+    },
+    {
+      "icon": "play",
+      "title": "Assets ready to share",
+      "text": "InkyBay logos, product visuals and our step-by-step video tutorials.",
+      "draft": true
+    },
+    {
+      "icon": "chat",
+      "title": "A team behind you",
+      "text": "Ask us for demos, answers and ideas for content that converts.",
+      "draft": true
+    }
+  ],
+  "sellers_heading": "Refer every kind of custom seller",
+  "sellers": [
+    {
+      "title": "Print-on-demand stores",
+      "text": "A live design editor and print-ready PDF, SVG, JPG and PNG files for every order."
+    },
+    {
+      "title": "Apparel and merch brands",
+      "text": "Front, back and sleeve print areas, sizes, colors and any print method."
+    },
+    {
+      "title": "Gift and personalization shops",
+      "text": "Names, photos and messages on mugs, frames, jewelry and more."
+    },
+    {
+      "title": "Print shops and B2B suppliers",
+      "text": "Custom quote requests, quantity discounts and add-on pricing."
+    }
+  ],
+  "facts_title": "Why merchants choose InkyBay",
+  "facts": [
+    {
+      "value": "Since 2017",
+      "label": "on the Shopify App Store"
+    },
+    {
+      "value": "7",
+      "label": "languages in the design editor"
+    },
+    {
+      "value": "Any",
+      "label": "print method: DTG, DTF, screen print, sublimation, embroidery"
+    }
+  ],
+  "apply": {
+    "heading": "Start earning today",
+    "lead": "Apply in a few minutes. We review every application and send you your link when you are approved.",
+    "steps": [
+      "Apply to become an InkyBay affiliate",
+      "Share your referral link",
+      "Earn on every paid referral"
+    ],
+    "partner_note": "Building apps or offering Shopify services? See the",
+    "partner_link": "partner program",
+    "form": {
+      "type": "affiliate",
+      "submit": "Apply now",
+      "fail_email": "support@inkybay.com",
+      "fields": {
+        "name": {
+          "label": "Full name",
+          "placeholder": "Jane Cooper"
+        },
+        "email": {
+          "label": "Email address",
+          "placeholder": "jane@studio.com"
+        },
+        "url": {
+          "label": "Website or channel",
+          "placeholder": "youtube.com/@yourchannel"
+        },
+        "type": {
+          "label": "How will you promote InkyBay?",
+          "placeholder": "Choose one",
+          "options": [
+            "Videos and social media",
+            "Blog or newsletter",
+            "Courses and workshops",
+            "Client work (agency or freelance)",
+            "Print or print-on-demand community",
+            "Something else"
+          ]
+        },
+        "message": {
+          "label": "Tell us about your audience",
+          "placeholder": "Who you reach and how you plan to share InkyBay"
+        },
+        "consent": "I agree to the",
+        "privacy": "privacy policy"
+      },
+      "errors": {
+        "name": "Please enter your name.",
+        "email": "Please enter a valid email address.",
+        "url": "Please enter a link that starts with https://",
+        "type": "Please choose how you will promote InkyBay.",
+        "consent": "Please accept the privacy policy."
+      },
+      "sending": "Sending",
+      "success": "Thanks, your application is in. We review every application and reply by email.",
+      "error": "Something went wrong and your application wasn't sent. Please try again in a moment.",
+      "not_connected": "Form not connected yet. Your application can't be sent from this page for now."
+    }
+  },
+  "faqs_lead": "Questions about the affiliate program.",
+  "faqs": [
+    {
+      "q": "What is the InkyBay affiliate program?",
+      "a": "A way to earn by recommending InkyBay, the product customizer for Shopify, to merchants who sell custom products.",
+      "draft": true
+    },
+    {
+      "q": "Who can join?",
+      "a": "Creators, educators, agencies, freelancers and print experts whose audience includes Shopify merchants or people starting a custom product business.",
+      "draft": true
+    },
+    {
+      "q": "How do I earn a commission?",
+      "a": "You earn when a merchant installs InkyBay through your referral link and starts a paid plan. The commission terms are shared when you are approved.",
+      "draft": true
+    },
+    {
+      "q": "Does it cost anything to join?",
+      "a": "No. Joining the affiliate program is free.",
+      "draft": true
+    },
+    {
+      "q": "What is the difference from the partner program?",
+      "a": "Affiliates earn by referring merchants. Partners are apps, agencies and theme developers listed in our partner directory.",
+      "draft": true
+    }
+  ]
+}
