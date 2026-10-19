@@ -2606,6 +2606,32 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       dlg.addEventListener('close', function () { frame.innerHTML = ''; if (opener) opener.focus(); });   /* stops the video */
     });
 
+    /* Case studies: search, Industry and Region filters, the count and the empty state (kept in the URL) */
+    document.querySelectorAll('[data-cs-filter]').forEach(function (f) {
+      var root = f.closest('.cslib'), cards = [].slice.call(root.querySelectorAll('.cscard')), n = root.querySelector('[data-cs-n]'),
+          empty = root.querySelector('.csempty'), clr = f.querySelector('.csbar__clear');
+      var p = new URLSearchParams(location.search);
+      ['q', 'industry', 'region'].forEach(function (k) { if (p.get(k) && f.elements[k]) f.elements[k].value = p.get(k); });
+      if (f.elements.industry.selectedIndex < 0) f.elements.industry.value = '';
+      if (f.elements.region.selectedIndex < 0) f.elements.region.value = '';
+      function norm(s) { return s.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase().trim(); }
+      function run() {
+        var q = norm(f.elements.q.value), ind = f.elements.industry.value, reg = f.elements.region.value, shown = 0;
+        cards.forEach(function (c) {
+          var ok = (!ind || c.getAttribute('data-industry') === ind) && (!reg || c.getAttribute('data-region') === reg) && (!q || norm(c.getAttribute('data-name')).indexOf(q) > -1);
+          c.hidden = !ok; if (ok) shown++;
+        });
+        n.textContent = shown; empty.hidden = shown > 0; clr.hidden = !(q || ind || reg);
+        var u = new URLSearchParams(); if (q) u.set('q', f.elements.q.value.trim()); if (ind) u.set('industry', ind); if (reg) u.set('region', reg);
+        history.replaceState(null, '', location.pathname + (u.toString() ? '?' + u : ''));
+      }
+      f.addEventListener('input', run); f.addEventListener('change', run);
+      f.addEventListener('submit', function (e) { e.preventDefault(); });
+      f.addEventListener('reset', function () { setTimeout(run, 0); });
+      root.querySelector('[data-cs-clear]').addEventListener('click', function () { f.reset(); f.elements.q.focus(); });
+      run();
+    });
+
     /* Affiliate: the earnings calculator (rendered only when src/affiliate.json has a commission) */
     document.querySelectorAll('.acalc').forEach(function (c) {
       var per = parseFloat(c.getAttribute('data-per')) || 0, r = c.querySelector('.acalc__range'), n = c.querySelector('.acalc__n'), s = c.querySelector('.acalc__sum');

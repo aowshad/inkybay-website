@@ -1,0 +1,2056 @@
+{
+  "meta": {
+    "title": "Case studies | InkyBay",
+    "short": "InkyBay case studies",
+    "description": "See how Shopify merchants in apparel, gifts, signs, sports and more sell custom products with the InkyBay product customizer."
+  },
+  "source": "Customer stories from productsdesigner.com/clients (the same company), collected October 2026; FOSMX (Spanish) and Print21 (German) are left out until translated",
+  "hero": {
+    "title": [
+      "Case studies",
+      "How merchants grow with InkyBay."
+    ],
+    "lead": "See how businesses of all types use product personalization on Shopify to stand out and keep customers coming back."
+  },
+  "labels": {
+    "home": "Home",
+    "resources": "Resources",
+    "crumb": "Case studies",
+    "all": "All case studies",
+    "search": "Search brand",
+    "industry": "Industry",
+    "industry_all": "All industries",
+    "region": "Region",
+    "region_all": "All regions",
+    "clear": "Clear filters",
+    "count": "Showing {n} of {total} case studies",
+    "read": "Read story",
+    "visit": "Visit store",
+    "new_tab": "opens in a new tab",
+    "empty_title": "No case studies match",
+    "empty_text": "Try another industry or region, or clear the filters.",
+    "about": "About {brand}",
+    "f_industry": "Industry",
+    "f_platform": "Platform",
+    "platform": "Shopify",
+    "f_location": "Location",
+    "f_products": "Products",
+    "f_app": "Customization app",
+    "app": "InkyBay product customizer",
+    "related": "More case studies",
+    "all_link": "All case studies"
+  },
+  "industries": [
+    {
+      "slug": "apparel",
+      "name": "Apparel"
+    },
+    {
+      "slug": "gifts",
+      "name": "Gifts and keepsakes"
+    },
+    {
+      "slug": "print",
+      "name": "Print and signs"
+    },
+    {
+      "slug": "hospitality",
+      "name": "Food and hospitality"
+    },
+    {
+      "slug": "sports",
+      "name": "Sporting goods"
+    },
+    {
+      "slug": "accessories",
+      "name": "Accessories"
+    }
+  ],
+  "regions": [
+    {
+      "slug": "americas",
+      "name": "Americas"
+    },
+    {
+      "slug": "europe",
+      "name": "Europe"
+    },
+    {
+      "slug": "asia-pacific",
+      "name": "Asia-Pacific"
+    }
+  ],
+  "cases": [
+    {
+      "slug": "jostens-kinderkraft",
+      "brand": "Jostens Kinderkraft",
+      "store": "https://jostenskinderkraft.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "gifts",
+      "products": [
+        "Graduation caps and gowns",
+        "Diplomas and certificates",
+        "Sashes and tassels",
+        "T-shirts"
+      ],
+      "summary": "Jostens Kinderkraft, a Missouri-based brand, uses InkyBay to let customers personalize kids' graduation caps, gowns, and diplomas on Shopify.",
+      "title": "A memorable graduation day for little graduates",
+      "lead": "Jostens Kinderkraft, a Missouri-based brand, uses InkyBay to let customers personalize kids' graduation caps, gowns, and diplomas on Shopify.",
+      "source": "https://productsdesigner.com/clients/jostens-kinderkraft/",
+      "body": [
+        {
+          "p": "What an amazing feeling it would be for you as parents to attend your little ones' preschool or kindergarten or elementary school graduation ceremony! Certainly, you would love to capture their accomplishments in a photograph in their graduation caps and gowns and preserve this feeling for a lifetime as a parent."
+        },
+        {
+          "img": "cases/jostens-kinderkraft/graduate-package-customizer.webp",
+          "alt": "Graduate Package Customizer",
+          "size": [
+            850,
+            869
+          ]
+        },
+        {
+          "p": "To make these emotionally overwhelming happy occasions memorable and to add a special touch [Jostens Kinderkraft](https://jostenskinderkraft.com/) is providing beautifully custom made graduation caps, gowns, certificates and diplomas and more with sizes no matter if it is for preschool, kindergarten or elementary school kids."
+        },
+        {
+          "h": "Jostens Kinderkraft products"
+        },
+        {
+          "p": "Jostens Kinderkraft is a web-based customized product business from Sedalia, Missouri. For preschool, kindergarten and elementary school graduation ceremonies they provide:"
+        },
+        {
+          "ul": [
+            "Graduate Package",
+            "Scholar Package",
+            "Graduation Caps",
+            "Gowns",
+            "Certificates and Diplomas",
+            "Sashes",
+            "Tassels",
+            "T-shirts",
+            "Graduate wristbands"
+          ]
+        },
+        {
+          "img": "cases/jostens-kinderkraft/learner-package-customizer.webp",
+          "alt": "Learner Package Customizer",
+          "size": [
+            862,
+            863
+          ]
+        },
+        {
+          "h": "Self-customization: a radical change in the business"
+        },
+        {
+          "p": "Enabling self-customization on the Jostens Kinderkraft's online store brought a radical change in the business. It also accelerated the production level unimaginably."
+        },
+        {
+          "p": "But why does customization become necessary?"
+        },
+        {
+          "p": "The product orders differ from one to another. For instance, the colors, styles, sizes, and lengths of the chosen cap, gown, tassel, and sash are always different. Even the colors and frames of the diploma or certificate are coming from different schools and parents. So, the variation in the order requirements will be very normal yet difficult to maintain all manually."
+        },
+        {
+          "img": "cases/jostens-kinderkraft/scholar-package-configurator-with-live-preview.webp",
+          "alt": "Scholar package configurator with live preview",
+          "size": [
+            1084,
+            914
+          ]
+        },
+        {
+          "p": "Through the inclusion of customization, to be more precise self-customization, customers got the ultimate freedom to create their designs and easily place the order without even facing the hassle of face-to-face communication and bargain."
+        },
+        {
+          "h": "Jostens Kinderkraft and InkyBay"
+        },
+        {
+          "p": "[InkyBay](https://apps.shopify.com/productsdesigner) is a web-based ultimate product configuration solution. Through the countless self-configuration options InkyBay offers the customers to configure the Graduate Package from available options like Cap and Gown Color, Tassel Color, Sash Color, Diploma/Certificate, Color of Certificate Frames and Gown Sizes & quantity with live preview of the selected options. Through the live preview option of the outcome of their configured products, they can finalize or go for further improvement if not satisfied and place the order. The merchants finally gets configuration data from the order and goes for production directly without further delay."
+        },
+        {
+          "p": "As the owner of the business gets an amazing option to choose whichever options they need only, Jostens Kinderkraft uses InkyBay in a customized format for the customization options available in their online store. How so?"
+        },
+        {
+          "img": "cases/jostens-kinderkraft/graduate-package-configurator-live-preview.webp",
+          "alt": "Graduate Package Configurator live preview",
+          "size": [
+            1200,
+            938
+          ]
+        },
+        {
+          "p": "The company only needs the Cap and Gown, Sash and Tassel colors selection options. For the Diploma/Certificate, they have enabled the preschool, kindergarten and elementary schools' names, and quantity and color of the frames as an option. Also, they have added Gown sizes with quantity as another option to give customers the utmost flexibility to order multiple sizes and quantity at the same time. And this configuration option selection for personalization became only possible after the successful inclusion of [InkyBay](https://apps.shopify.com/productsdesigner)."
+        },
+        {
+          "h": "Final thoughts"
+        },
+        {
+          "p": "[Jostens Kinderkraft](https://jostenskinderkraft.com/) is doing an amazing job by providing products loaded with deep emotions. For parents watching their kids grow up, attending their graduation ceremonies no matter if it is preschool, kindergarten or elementary, the entire process is like a treasure for a lifetime. The company took an amazing idea of producing customized caps and gowns, diplomas and certificates and other accessories and rooted its place in the world of customized product business."
+        },
+        {
+          "p": "Jostens Kinderkraft does not sell anything but heartfelt emotions…"
+        }
+      ]
+    },
+    {
+      "slug": "bar-blades",
+      "brand": "Bar Blades",
+      "store": "https://www.barblades.com/",
+      "country": "United Kingdom",
+      "region": "europe",
+      "industry": "hospitality",
+      "products": [
+        "Bar blades",
+        "Cocktail kits",
+        "Bar tools"
+      ],
+      "summary": "Bar Blades, a UK bartending brand, uses InkyBay's engraving personalizer to let customers design custom bar blades on Shopify.",
+      "title": "Custom engraved bar blades for bartenders",
+      "lead": "Bar Blades, a UK bartending brand, uses InkyBay's engraving personalizer to let customers design custom bar blades on Shopify.",
+      "source": "https://productsdesigner.com/clients/bar-blades/",
+      "body": [
+        {
+          "p": "A bar blade is usually a bottle opener that is used to open the crown bottle top. It is also known as a speed opener."
+        },
+        {
+          "p": "Now think of a customized, uniquely designed bar blade that entirely changes the feel and style of your bartending experience. This is the point where [Bar Blades](https://barblades.com/) takes the stage."
+        },
+        {
+          "h": "Bar blades: a modern style for bartenders"
+        },
+        {
+          "p": "The idea of bar blades struck Jonny Moate throughout the experience of his bartending life which eventually led him to create his own customized, uniquely designed, and stylish bar blades."
+        },
+        {
+          "img": "cases/bar-blades/personalized-hand-jive-bar-blade-inverted-web-pattern.webp",
+          "alt": "Black Widow Hand Jive Bar Blade Inverted Web Pattern",
+          "size": [
+            934,
+            679
+          ]
+        },
+        {
+          "quote": "I originally started purchasing bar blades from America, which I started selling on eBay. Sales were buoyant, and I started getting interested in countries as far as Australia. After numerous exports and hours of queuing in the post office, it dawned on me that there was a demand and a massive hole in the market. It was then that BarBlades was born.",
+          "by": "Jonny Moate, the founder and owner of Bar Blades"
+        },
+        {
+          "p": "The company doesn't only provide bar blades but also started producing bar equipment as well. They elevated the trends along with distinguishable style and design to an artistic level. There are hardly two people who share similar tastes. Bar Blade is giving its customers a chance to customize and design their bar blades according to their very own choices and tastes which is certainly a breakthrough in the business."
+        },
+        {
+          "h": "Why web-based bar product personaliser was introduced in the bar blade business?"
+        },
+        {
+          "p": "When it's a matter of choice it really is difficult to find two people with similar tastes. For a business like Bar Blades, it is supposed to be a tiresome, costly and lengthy process to design mock-ups especially when it is engraving a product like a bar blade until the customer is satisfied."
+        },
+        {
+          "img": "cases/bar-blades/graffiti-wrapic-credit-card-bottle-opener-customizer.webp",
+          "alt": "Graffiti Wrapic Credit Card Bottle Opener Customizer",
+          "size": [
+            932,
+            626
+          ]
+        },
+        {
+          "p": "To make the design, visualize, live price quoting and finally get the engraving ready vector (SVG/PDF) output file, Bar Blade decided to introduce a web-based product designer tool to their online store through the installation of [InkyBay](https://apps.shopify.com/productsdesigner)."
+        },
+        {
+          "h3": "And the positive impact started in the ordering process"
+        },
+        {
+          "p": "Through the integration of the customization options, customers themselves got the opportunity to create the design of their own bar blades, hand jives, bar wrenches, credit card openers, etc. based on their tastes and requirements. Now they are capable of choosing the colors, or quantity of the product, adding graphics and texts, and even uploading a custom logo of their company. They can easily place an order or request a quote, as well as instantly get the chance to visually preview the ultimate result (how it looks after engraving) of their own creation before ordering."
+        },
+        {
+          "p": "On the other end, BarBlades gets the engraving-ready vector (SVG/PDF) output file right after the order is placed, which reduces their in-house designer cost, smooth order processing, and finally the production time and cost."
+        },
+        {
+          "p": "Now think about yourself being a customized product business owner. what kind of relief it would be for you if you find solutions for all your problems in one place!! Wouldn't that be a feeling like cloud nine?"
+        },
+        {
+          "img": "cases/bar-blades/customise-your-own-cocktail-kit.webp",
+          "alt": "Customise your own cocktail kit",
+          "size": [
+            1000,
+            597
+          ]
+        },
+        {
+          "h": "Bar Blades with InkyBay"
+        },
+        {
+          "p": "Bar Blades, now has turned into a place where you find bar blades, mixing tins/cocktail shakers, muddlers, strainers, jiggers, and other bar equipment. And the journey along with the [InkyBay, as a Bar Blade Customizer](https://apps.shopify.com/productsdesigner), the complete automation has succeeded in adding a personalized tone to every customer's product."
+        },
+        {
+          "img": "cases/bar-blades/bar-blade-using-inkybay-engraving-personalizer.webp",
+          "alt": "Bar Blade using InkyBay Engraving Personalizer",
+          "size": [
+            1000,
+            600
+          ]
+        },
+        {
+          "quote": "Looked for a long time to find an app that did everything we needed. We came across this app and it did most of the requirements. However once installed the developers were always on hand for questions and small changes that worked better for us. Really helpful staff and app now do everything we need it to. Amazing. Thanks Guys",
+          "by": "Bar Blades review from Shopify app store"
+        },
+        {
+          "p": "In the personalization interface Bar Blades has enabled the option to engrave bar blades along with text and graphics. The engraved text will be one color here resembling the actual color of the chosen product. For instance, if you have chosen Copper Shadow Hand Jive Bar Blade to engrave a text on it, the engraved text output color will be copper."
+        },
+        {
+          "p": "Not only engraving bar blades but InkyBay Product Configurator has surprisingly encompassed the ultimate design solution for all kinds of products from toothpicks, board pins, socks, tshirt to luxury automobiles or even home interior."
+        },
+        {
+          "p": "In 2009, **Jonny Moate** and his Commercial Director Mannie Sehmar attended a Bar Show. One of their customers said, \"You guys smashed it\". They had to go through a vigorously active day and replenish their supplies twice in one day."
+        },
+        {
+          "p": "This is the successful business story of the Bar Blades… & the journey continues..."
+        }
+      ]
+    },
+    {
+      "slug": "robert-mark-golf",
+      "brand": "Robert Mark Golf",
+      "store": "https://www.robertmarkgolf.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "sports",
+      "products": [
+        "Golf headcovers",
+        "Putter covers",
+        "Caps"
+      ],
+      "summary": "See how Robert Mark Golf elevated handcrafted golf accessories with InkyBay's personalization tool on Shopify.",
+      "title": "Handcrafted golf headcovers, designed by the golfer",
+      "lead": "See how Robert Mark Golf elevated handcrafted golf accessories with InkyBay's personalization tool on Shopify.",
+      "source": "https://productsdesigner.com/clients/robert-mark-golf-2/",
+      "body": [
+        {
+          "p": "**Robert Mark Golf** is a business that has brought a new dawn in the fashion of the golf industry. This amazing business idea was launched by Robert Touchette in 2012. They manufacture stunning made-to-order and customized golf accessories for golf lovers."
+        },
+        {
+          "p": "Robert Touchette is a passionate golfer himself and he nurtures an affection and dedication towards the art of handcrafted golf accessories like leather headcovers, putter covers, scorecard holders, stick covers, hat, valuables bags, golf gift cards, leather cash covers, etc."
+        },
+        {
+          "img": "cases/robert-mark-golf/design-your-own-skull-bones-camo-headcover.webp",
+          "alt": "Design Your Own Skull & Bones Camo Headcover",
+          "size": [
+            1200,
+            620
+          ]
+        },
+        {
+          "quote": "We provide our customers with the highest quality designs. PGA professionals, celebrities, tournaments, colleges, companies and discerning golfers worldwide look to us to provide something truly cutting edge and unique.",
+          "by": "Robert Touchette, founder of Robert Mark Golf (RMG)"
+        },
+        {
+          "h": "Creating an art: overwhelming dedication"
+        },
+        {
+          "p": "RMG has endeavored to create and add something unique to the golf industry and succeeded. They have mastered the craftsmanship in the process of the leather from the beginning to stitching and finishing. All the products are handmade and created with utmost perfection which has given Robert Mark Golf undeniably a true brand reputation."
+        },
+        {
+          "p": "The heirloom quality, durability, and functionality are highly prioritized in the process of handcrafting leather headcovers, putter covers and scorecard holders along with other golf accessories. The master seamstresses have perfected the designs as well as crafting the luxury items; surprisingly all the designs are hand-cut and sewn with such smallest details which are certainly noteworthy."
+        },
+        {
+          "p": "The best leather of the United States and Europe is used in the manufacturing of the products by RMG. Headcover linings are high quality 100% nylon fleece. The strong elastic, magnetic and Velcro closures that are integrated with each design of the headcovers function and fit safely for protecting the clubs."
+        },
+        {
+          "h": "The integration of self-customization in the business"
+        },
+        {
+          "img": "cases/robert-mark-golf/create-your-own-signature-camo-headcover.webp",
+          "alt": "CREATE YOUR OWN SIGNATURE CAMO HEADCOVER",
+          "size": [
+            1200,
+            687
+          ]
+        },
+        {
+          "p": "Customization is now a widely accepted trend in the eCommerce industry, especially in the customized product businesses. RMG also decided to embrace the idea of self customization and handcraft the designs that are created by the customers."
+        },
+        {
+          "p": "To introduce new ideas of design in the business and to elevate the level of the art of their product customization RMG successfully integrated a web-based product designer software [InkyBay](https://apps.shopify.com/productsdesigner)."
+        },
+        {
+          "h": "How InkyBay worked out for Robert Mark Golf"
+        },
+        {
+          "p": "InkyBay stepped in the business of customizing golf accessories like magic. If you carefully look at the user interface you can see that the colors of both sides of a blank cover-head can be selected easily. Also, names, graphics, club logos, initials, and quotes can be added as well. Besides, customers can add a note or request for a quote. After the customization is done, they can preview the result of their work and decide if further improvement is needed or not before the order. InkyBay is also letting the business obtain print-ready vector files SVG/PDF for the production."
+        },
+        {
+          "img": "cases/robert-mark-golf/bones-camo-headcover-configurator.webp",
+          "alt": "Robert Mark Golf on InkyBay",
+          "size": [
+            1200,
+            681
+          ]
+        },
+        {
+          "h": "Final thoughts"
+        },
+        {
+          "p": "Robert Mark Golf spends many hours and many steps are followed to create uniquely designed handcrafted golf accessories for golf lovers and enthusiasts. All the products are delicately hand-cut and sewn with utmost perfection by the master seamstresses. RMG's dedication towards the perfection of handcrafted products along with the self-customization option has elevated the business to a respected and well-recognized position amongst many other eCommerce custom product businesses."
+        },
+        {
+          "quote": "I have tried other custom apps and they were never truly what we needed. I was waiting for an app that suited our needs to come along. We needed a few tweaks. Works great and customer service is awesome and fast!!",
+          "by": "Robert Mark Golf review from Shopify app store"
+        }
+      ]
+    },
+    {
+      "slug": "t-shirt-printing-uk",
+      "brand": "T-Shirt Printing UK",
+      "store": "https://tshirtprintinguk.co.uk/",
+      "country": "United Kingdom",
+      "region": "europe",
+      "industry": "apparel",
+      "products": [
+        "T-shirts",
+        "Hoodies",
+        "Polo shirts",
+        "Sweatshirts"
+      ],
+      "summary": "T-Shirt Printing UK uses InkyBay on Shopify to make custom apparel simple, fast, and customer-friendly.",
+      "title": "Custom apparel made simple, with bulk discounts built in",
+      "lead": "T-Shirt Printing UK uses InkyBay on Shopify to make custom apparel simple, fast, and customer-friendly.",
+      "source": "https://productsdesigner.com/clients/t-shirt-printing-uk/",
+      "body": [
+        {
+          "img": "cases/t-shirt-printing-uk/t-shirt-prinitng-uk.webp",
+          "alt": "T-Shirt Printing UK using product personalizer",
+          "size": [
+            1000,
+            400
+          ]
+        },
+        {
+          "p": "The market for eCommerce custom-printed t-shirts is expanding dramatically. From companies to individuals, people are becoming interested in personalized or customized apparel to wear, and t-shirts are one of them."
+        },
+        {
+          "p": "Focusing on the demand, traditional t-shirt businesses are converting into customized ones. **According to Designhill, the customized T-shirt printing sector will be worth more than $10 billion worldwide by 2025.** The eCommerce customized T-shirt business is lucrative, but it is also difficult."
+        },
+        {
+          "p": "There are some top brands in eCommerce that sell customized apparel and T-shirts and allow their customers to design them on their own. T-shirt printing in the U.K. is one of them."
+        },
+        {
+          "p": "In this section, we'll discuss how [\"T-shirt Printing UK\"](https://tshirtprintinguk.co.uk/collections/t-shirts/products/fruit-of-the-loom-lady-fit-value-v-neck-t-shirt) operates its customized business, the challenges it faced, and how it overcame those challenges. First of all, let's see what T-shirt printing actually sells."
+        },
+        {
+          "h": "T-Shirt Printing UK: a destination for customized apparel lovers"
+        },
+        {
+          "p": "In addition to t-shirts, T-shirt printing UK sells various other apparel items. It has different segments of products. Such as:"
+        },
+        {
+          "ul": [
+            "Shop by product",
+            "Shop by brands",
+            "Men",
+            "Women",
+            "Kids and babies"
+          ]
+        },
+        {
+          "p": "\"T-shirt printing UK\" just opened the door for every type of eCommerce custom apparel customer. It provides the facility for customization for all segments. So, it has been able to attract a wide range of customers, and the fact that consumers can customize their own products makes the business more reliable."
+        },
+        {
+          "p": "T-shirt printing UK is a booming business now, but it had to overcome the **typical challenges and troubles** that a web-to-print shop usually faces."
+        },
+        {
+          "h": "What are the business troubles that T-Shirt Printing UK had to deal with?"
+        },
+        {
+          "p": "A store with a hundred different products is great for traditional business. Still, in e-commerce, customers prefer to buy from shops that allow them to customize based on their preferences. Moreover, when shops provide product customization services, customers count them as unique stores. For T-shirt printing in the UK, the main challenges were:"
+        },
+        {
+          "ul": [
+            "Establishing a Versatile store",
+            "Matching customer preferences",
+            "Offering extensive product customization with discount"
+          ]
+        },
+        {
+          "h3": "Challenge 1: establishing a versatile store"
+        },
+        {
+          "p": "[\"T-shirt Printing UK\"](https://tshirtprintinguk.co.uk/collections/t-shirts/products/babybugz-baby-t-shirt) was always a unique store that was well aware of the market for product customization. But because the market for customized products was growing, it tried to make its store flexible by giving it styling options and ways to customize. So, it looked for a solution that would last and make them better than its competitors."
+        },
+        {
+          "h3": "Challenge 2: meeting every customer's need"
+        },
+        {
+          "p": "Offering a product with a specific personalization option is much more challenging to grab a specific market's attention. In such cases, customization is a good choice."
+        },
+        {
+          "p": "When it comes to customization, it is easy to meet the needs of all target audiences than personalization. Whenever \"T-shirt Printing UK\" understood the fact it become concerned about offering a broad amount of customization, printing types and customization pricing issues."
+        },
+        {
+          "p": "To cope with these problems it was looking for a solution."
+        },
+        {
+          "h3": "Challenge 3: offering extensive product customization with discount"
+        },
+        {
+          "p": "As people are interested in customized products nowadays. As a result, some of the clients were requested \"T-shirt Printing UK\" to add text, QR codes, upload files, or clipart on their apparel products. Additionally, some of the customers want to get a discount on bulk buys as well."
+        },
+        {
+          "p": "So, \"T-shirt Printing UK\" was looking for an app that would help them meet all of their customers' needs."
+        },
+        {
+          "p": "Finally, \"T-shirt Printing UK\" found InkyBay as a quick fix for their print-on-demand business challenges."
+        },
+        {
+          "h": "InkyBay, a tool for extensive product customization"
+        },
+        {
+          "p": "InkyBay is a versatile product customization tool and a smart problem solver for any type of Print-on-demand business, especially in web-to-print business."
+        },
+        {
+          "p": "With the [InkyBay](https://apps.shopify.com/productsdesigner), store owners can add unlimited conditional options to sell configurable products with additional options such as **price and upcharge**. On the other hand, InkyBay offers **bulk discounts for personalized products**. As a result, merchants can offer discounts without any 3rd-party apps."
+        },
+        {
+          "p": "Moreover, InkyBay allows customers to create and apply a **custom tier-based discount** on the quantity of a product. Discounts on bulk purchases are applicable for three types:"
+        },
+        {
+          "ul": [
+            "Base product price",
+            "Pricing for Design and Personalization",
+            "Option Price"
+          ]
+        },
+        {
+          "p": "Here, \"T-shirt Printing Uk\" is applying a discount on the **base product price** only:"
+        },
+        {
+          "img": "cases/t-shirt-printing-uk/t-shirt-printing-uk-applies-bulk-discount.webp",
+          "alt": "T-shirt printing UK using base product price discount",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "Look at the discount overview with **extensive customization** of \"T-Shirt Printing UK\". It is offering a **discount per item** with available product colours. Moreover, it is offering both customize buttons and a blank buy."
+        },
+        {
+          "img": "cases/t-shirt-printing-uk/inkybay-offers-self-customization-button.webp",
+          "alt": "InkyBay-product customization offers a self-customization button",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "When the consumer will click the customise button, **extensive personalization** options will be available. A wide variety of personalization choices are indicated through the arrow area, such as adding text, clipart, uploading images, width, height and rotation. Which are reflecting unique customization."
+        },
+        {
+          "img": "cases/t-shirt-printing-uk/inkybay-offers-extensive-design-1.webp",
+          "alt": "InkyBay offers extensive product customization",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "InkyBay-Product Personalized solved the business challenges of T-shirt Printing UK and it has been using InkyBay for almost 4 years now. Here is an appreciative review of T-shirt Printing UK towards InkyBay:"
+        },
+        {
+          "quote": "Absolutely fantastic! Could not ask for a better app so suited for our store. Integration was easy and the support on a few technical things was sorted out the same day by the support team. In my eyes deserves more than 5 stars!"
+        },
+        {
+          "p": "\"T-shirt Printing UK\" is satisfied with InkyBay and if you have a web-to-print business, then InkyBay-Product customization can be your easy fix. Get the [app](https://apps.shopify.com/productsdesigner) now for your apparel business. Read more to know about the eCommerce t-shirt business as well."
+        },
+        {
+          "h": "Bottom line"
+        },
+        {
+          "p": "The tagline of \"T-shirt Printing UK\" is \"**you design-we print\",** there is no doubt that it is just strict to its business motto. It is just running their web to print apparel business very smoothly in the field of product customization by facing all of its business challenges."
+        }
+      ]
+    },
+    {
+      "slug": "pick-on-us",
+      "brand": "Pick On Us",
+      "store": "https://www.pickonus.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "hospitality",
+      "products": [
+        "Bamboo toothpicks",
+        "Skewers",
+        "Drink stirrers"
+      ],
+      "summary": "Pick On Us, a US eco-friendly tableware brand, uses InkyBay to offer custom engraving on sustainable picks and skewers on Shopify.",
+      "title": "Custom engraved, eco-friendly picks and skewers",
+      "lead": "Pick On Us, a US eco-friendly tableware brand, uses InkyBay to offer custom engraving on sustainable picks and skewers on Shopify.",
+      "source": "https://productsdesigner.com/clients/pick-on-us/",
+      "body": [
+        {
+          "h": "A wow-ish culinary art"
+        },
+        {
+          "p": "We are usually not bothered about the use of toothpicks in daily life. Surprisingly, the use of Pick is vast and if you have ever noticed your burger or sandwich right before taking a bite, you would have seen how the pick is holding the parts together. Or just take a look at your cocktail toothpick."
+        },
+        {
+          "img": "cases/pick-on-us/pot-leaf-marker-pick-on-us.webp",
+          "alt": "Pot leaf marker customizer pick on us",
+          "size": [
+            1224,
+            716
+          ]
+        },
+        {
+          "p": "What if suddenly you see that the Pick or skewer has a written text or a nice massage, or a company logo or even a name printed or engraved on it, or the pick you are holding has a Halloween or Christmas theme head that would surely strike your mind isn't it?"
+        },
+        {
+          "p": "[Pick On Us](https://www.pickonus.com/) has picked an idea and elevated it to a quintessential personalized form of art. Their eco-friendly picks along with delicate tableware combining eye-soothing elegant designs and styles for the top Chefs and Bartenders surely have succeeded in putting a milestone in this business."
+        },
+        {
+          "h": "Pick On Us is on a journey to save the Earth's ecosystem"
+        },
+        {
+          "p": "A piece of heartbreaking sad news is that every year we are dumping 2.12 billion tons of wastes. This unimaginable massive waste has already destroyed 60% of the earth's ecosystem. As a result, we are facing and suffering a drastic intolerable change in the earth's climate."
+        },
+        {
+          "img": "cases/pick-on-us/custom-wooden-forks.webp",
+          "alt": "Custom Wooden Forks",
+          "size": [
+            1000,
+            549
+          ]
+        },
+        {
+          "quote": "We help chefs find eco-friendly serving solutions that we create for them which help them improve the guest experience,",
+          "by": "Aaron Motola, President of Pick On Us"
+        },
+        {
+          "p": "Pick On Us is producing eco-friendly and easily disposable toothpicks, skewers, or tableware like utensils, plates, bowls, straws, serving cups, take-out containers, food cones, etc made of bamboo, paper, and palm leaves."
+        },
+        {
+          "h3": "Serves customer with ultimate sophistication: all the businesses have a reputation to maintain"
+        },
+        {
+          "p": "For over 30 years Pick On Us is serving its customers that include over 7000 commercial kitchens in North America, along with other hospitality sectors as well as the chefs of luxury resorts, restaurants, casinos and clubs, airlines, cruise ships, and caterers. It's a long time, isn't it? Yet, they are still in business and thriving, which indicates how sophisticatedly the customers' orders and choices are taken care of."
+        },
+        {
+          "img": "cases/pick-on-us/custom-collapsible-to-go-boxes.webp",
+          "alt": "Custom Collapsible TO-GO Boxes",
+          "size": [
+            1000,
+            440
+          ]
+        },
+        {
+          "quote": "If you're not completely satisfied with your Pick On Us experience or our eco-friendly tableware, picks, and skewers, let us know, and we will gladly replace your product or refund your money. SIMPLE AS THAT.",
+          "by": "A bold yet honest statement by Aaron Motola, President of Pick On Us showcases the commitment to their customers"
+        },
+        {
+          "h": "Pick On Us: journey and success"
+        },
+        {
+          "p": "The Company was started by Francine Ridgeway in 1987 and her first product was a customized toothpick. In 1987, the journey of Pick On Us started with customized toothpick packets."
+        },
+        {
+          "p": "50 new items were added to the company's production list in 2010. In the year 2013 Pick On Us moved from their 3000 to 6000 square foot warehouse in Vista, California. In 2014, within 4 years 300 items were available in the company's production bucket."
+        },
+        {
+          "h": "Pick On Us and customization"
+        },
+        {
+          "p": "Creating a sample customized pick every time until it meets the client's needs is not an easy task and at the same time not cost-effective. So, what if customers get the option to customize their pick or skewer or tableware according to their tastes and requirements?"
+        },
+        {
+          "img": "cases/pick-on-us/cheese-boards-personalization-app.webp",
+          "alt": "Cheese Boards Personalization App",
+          "size": [
+            1000,
+            569
+          ]
+        },
+        {
+          "p": "Yes, Pick On Us is offering its customers a chance to design their pick by choosing the size, colors, put a logo, font, or company name and even create a theme for their picks regarding any occasion through the customization options on their website. In this case, the web-based [Product Customiser](https://apps.shopify.com/productsdesigner) tool became the life savior with its vast self customization options in their business."
+        },
+        {
+          "h": "The magic of InkyBay"
+        },
+        {
+          "p": "InkyBay has turned into an ultimate solution for Pick On US by helping them in their endeavors to save the earth by producing eco-friendly products. Through the successful integration of InkyBay, Pick On Us has opened the door of millions of possibilities for their customers and given them the utmost freedom to personalize their products whatever way they desire."
+        },
+        {
+          "p": "Pick On Us is producing organically sustainable, eco-friendly and biodegradable products like fancy, sandwich, colorful breaded, sports, bamboo knot, cocktail and decorative party toothpicks, bamboo knotted and paddle, boat oar, flat, food and cocktail skewers, bamboo Stirrers, etc. They also manufacture tableware like bamboo utensils, disposable plates and bowls, bamboo plates, palm leaf plates, napkins, food boats and cones, serving cups, takeout containers, paper and bamboo Straws, etc. The most amazing and astounding thing is that InkyBay is helping the company customizing all these products all alone and taking part in a great journey of saving the earth."
+        },
+        {
+          "quote": "I love this app. It has all I need in terms of customization for products in my new Store, it looks amazing and with almost no effort. You can create stunning User experiences that will amaze your customers and also it will make your products super easy to customize. Customer service went above and beyond to help me, I could not be more happy with the help assistance I got from the customer service team, They are super friendly and professional, every single question, concern, and request I had was solved and explain promptly and satisfactorily. 100% recommended, Stop looking around for product customizer apps, I tried many different ones and I can say with confidence that InkyBay is 10 times better than any other one I tried.",
+          "by": "Pick On Us review from Shopify app store"
+        },
+        {
+          "p": "On the store of Pick On Us, customers can choose the pick or skewer or the tableware's size, color, font, create a logo or theme, choose making material whether it will be bamboo made or palm leaves, place an order or make a quote and eventually download a print-ready vector (SVG) file without hassle. In the end, they can preview the outcome of their personalized pick or skewer."
+        },
+        {
+          "p": "Not only pick or skewer, but InkyBay Product Configurator is also an astonishing tool capable of designing all kinds of products from a simple toothpick to a luxurious car or even interior house design."
+        },
+        {
+          "h3": "The journey continues..."
+        },
+        {
+          "p": "It's been 32 years Pick On Us has been serving its customers uninterrupted and successfully sustained their growth. And over the past few years, the company has turned into a fine eCommerce business. But still, the same enthusiasm, dedication along industrious minds are working behind the curtain to produce the best custom Picks for the people they are serving."
+        }
+      ]
+    },
+    {
+      "slug": "gubbacci",
+      "brand": "Gubbacci",
+      "store": "https://www.gubbacci.com/",
+      "country": "India",
+      "region": "asia-pacific",
+      "industry": "apparel",
+      "products": [
+        "T-shirts",
+        "Polo shirts",
+        "Hoodies",
+        "Uniforms"
+      ],
+      "summary": "Gubbacci uses InkyBay to manage complex apparel customization and boost conversions with ease.",
+      "title": "A design studio for custom apparel and uniforms",
+      "lead": "Gubbacci uses InkyBay to manage complex apparel customization and boost conversions with ease.",
+      "source": "https://productsdesigner.com/clients/gubbacci/",
+      "body": [
+        {
+          "img": "cases/gubbacci/gubacci.webp",
+          "alt": "Gubbacci using InkyBay",
+          "size": [
+            1100,
+            450
+          ]
+        },
+        {
+          "p": "Branding is important for all businesses. Most companies want to become well-known brands but don't know how. The problem is that most new businesses don't have the money to market their products creatively. **Branded custom clothing is a cheap and effective way to get a company's name out there.**"
+        },
+        {
+          "p": "Not only branding but also wearing something with a unique design, like a t-shirt with one's name or a design, can make an individual feel good and happy."
+        },
+        {
+          "p": "There are bunches of eCommerce stores available on the market, and Gubbacci is one of them. It is a clothing store that sells both pre-customized and consumer-customized apparel."
+        },
+        {
+          "p": "As the market for customized appeal is very competitive, Gubbacci has had to face many business challenges and has also learned new things about how to make customers happy and satisfied through services and products."
+        },
+        {
+          "p": "In this article, we will see **what products Gubbacci sells, what its business motto is, what its business challenges were, and what solutions it found**. Let's start with their business overview."
+        },
+        {
+          "h": "Let's go to Gubbacci's shop"
+        },
+        {
+          "p": "Gubbacci provides a wide variety of options for personalized clothing in the field of web-to-print, such as t-shirts, school uniforms, blazers, sweatshirts, hoodies, caps, and more. Customers can choose from various options, like sleeve length, neckline, wicking material, and organic cotton, to get the perfect clothes."
+        },
+        {
+          "p": "Gubbacci is committed to providing customers with the highest-quality product possible. Its manufacturing partners have been in operation for years, and it is working with well-known brands both internationally and in India."
+        },
+        {
+          "p": "From the initial inquiry to design, production, and timely delivery, its team works closely with the customer at every step of the customization."
+        },
+        {
+          "p": "Gubbacci has different clothing sections in their stores, and they are:"
+        },
+        {
+          "ul": [
+            "Design Studio (customized products)",
+            "Custom Apparel (Men, Women, Kid, Cricket Jersey, Shirts)",
+            "Gubbacci Collection",
+            "Artist's Collection",
+            "Bulk Orders",
+            "Uniforms (MBA suits, college uniforms, school uniforms)"
+          ]
+        },
+        {
+          "p": "Gubbacci provides its service in several areas of India, including Bengaluru, Chennai, Delhi, Mumbai, Hyderabad, Kolkata, and Kochi. As it has different clients from several places, **Gubbacci has made two particular sections named \"Design Studio\" and \"custom apparel\" for customers who like customized apparel.**"
+        },
+        {
+          "p": "What do you think? Why did Gubbacci just create sections like this? Let's find out about the need for and significance of the Design Studio and custom apparel sections."
+        },
+        {
+          "h": "Design Studio and Custom Apparel: two useful sections for customized clothing lovers"
+        },
+        {
+          "p": "The idea of customized apparel is now appreciated by all classes of people because of its reasonable cost and availability. Moreover, people have figured out how important customized clothing is for building a brand."
+        },
+        {
+          "p": "The design studio mainly lets Gubbacci customers design their own clothes with creative design elements. Gubbacci is very concerned about its customers' needs and the growing market for custom clothing, though they have its own designer too."
+        },
+        {
+          "p": "We will find out later which app Gubbacci is using to make customized clothes. For now, let's see why Gubbacci added this section to their shop."
+        },
+        {
+          "h3": "Reason 1: helping customers to present their brands uniquely through customized apparel"
+        },
+        {
+          "p": "The main motivation for adding the **design studio and custom apparel sections** was to cope with existing challenges in the custom clothing industry. Since Gubbacci's main concern was developing brands through custom apparel, it is very obvious that every brand will want to create something new instead of repetition."
+        },
+        {
+          "p": "So, Gubbacci was looking for a solution that would help its customers showcase their brands easily through customized clothing."
+        },
+        {
+          "h3": "Reason 2: minimize the confusion between the manufacturer and the customers"
+        },
+        {
+          "p": "Every company has its own unique method of creativity. The process of describing a brand name or logo concept elaborately to a custom apparel manufacturer often results in misunderstandings on both sides and is time-consuming too."
+        },
+        {
+          "p": "Since Gubbacci is in the same boat, to solve the problem, it has decided to use a special application to get the job done in the right way."
+        },
+        {
+          "h3": "Reason 3: targeting specific customers"
+        },
+        {
+          "p": "Gubbacci sells different apparel products in different parts of India. Because of this, Gubbacci has decided to divide its items into distinct sections for different customer groups. And they created a [design studio](https://www.gubbacci.com/pages/designlab) and [custom apparel](https://www.gubbacci.com/collections/customised-apparel) sections."
+        },
+        {
+          "p": "While working with customers, Gubbacci has found that some of the customers want to design their own products, and this section is for those customers."
+        },
+        {
+          "p": "For this reason, **Gubbacci has decided to add \"Design Studio\" and \"custom apparel\" segments for that particular customer criteria.** So they were looking for a quick fix that would allow them to create such a segment."
+        },
+        {
+          "p": "And finally, they have found an easy solution for their **clothing customization business**. Now, you're probably wondering what software it is using to make custom clothing. Let's [unfold](https://apps.shopify.com/productsdesigner)."
+        },
+        {
+          "h": "InkyBay: the provider of the \"Design Studio and Custom Apparel\" segment for Gubbacci"
+        },
+        {
+          "p": "[InkyBay](https://apps.shopify.com/productsdesigner) is an application that has its own **design lab** and allows customers to add text, motifs, gifs, graphics, color, etc. Moreover, customers can also upload a file of their choice."
+        },
+        {
+          "p": "In the case of Gubbacci, it is allowing customers to choose color, add text, graphics, and upload files. So, initially, InkyBay is helping Gubbacci to achieve its **custom apparel business goal.**"
+        },
+        {
+          "img": "cases/gubbacci/add-text.webp",
+          "alt": "Gubbacci using InkyBay",
+          "size": [
+            1338,
+            711
+          ]
+        },
+        {
+          "p": "InkyBay lets consumers add text and upload files, which solves both the problem of creating brand value and the problem of miscommunication. Which actually works for Gubbacci."
+        },
+        {
+          "p": "Furthermore, by using InkyBay, the Gubbacci customer will be able to see useful buttons such as \"design it,\" and \"preview it\"."
+        },
+        {
+          "img": "cases/gubbacci/preview-it.webp",
+          "alt": "Gubbacci using product personalizer",
+          "size": [
+            1355,
+            746
+          ]
+        },
+        {
+          "p": "And after \"add to cart,\" the customer can send a special quote to the manufacturer about the product."
+        },
+        {
+          "img": "cases/gubbacci/special-quote.webp",
+          "alt": "Special quote for manufacturers in InkyBay",
+          "size": [
+            1290,
+            488
+          ]
+        },
+        {
+          "p": "InkyBay has successfully identified the need for [Gubbacci](https://www.gubbacci.com/pages/designlab/pid-5566608081059?szqty=&InkyBayoption=1669634653418%7C0), and here is the reflection:"
+        },
+        {
+          "quote": "The team reached out to me. They have promised to build the feature as it is necessary for our e-commerce store. They have been prompt on what is being built at this moment.",
+          "by": "Gubbacci review from Shopify app store"
+        },
+        {
+          "p": "If you are an eCommerce customized apparel businessman and want to get the features like Gubbacci, then try [InkyBay](https://apps.shopify.com/productsdesigner). This application would be a real helping hand for your **print-on-demand** business."
+        },
+        {
+          "h": "Bottom line"
+        },
+        {
+          "p": "Gubbacci is successfully running its eCommerce customized clothing business in the field of web-to-print. It will make more progress in the long run because Gubbacci's business model is very flexible and it is focusing on both customer demand and profit."
+        }
+      ]
+    },
+    {
+      "slug": "uk-house-signs",
+      "brand": "UK House Signs",
+      "store": "https://ukhousesigns.com/",
+      "country": "United Kingdom",
+      "region": "europe",
+      "industry": "print",
+      "products": [
+        "House signs",
+        "Business signs",
+        "LED signs"
+      ],
+      "summary": "The Acrylic Master, a UK sign business, leverages InkyBay's sign builder tool to sell custom laser-cut acrylic signs on Shopify.",
+      "title": "Custom acrylic house and business signs, built online",
+      "lead": "The Acrylic Master, a UK sign business, leverages InkyBay's sign builder tool to sell custom laser-cut acrylic signs on Shopify.",
+      "source": "https://productsdesigner.com/clients/uk-house-business-signs/",
+      "body": [
+        {
+          "p": "A 3 years old wants to be a Ninja Near (an Engineer) in the future as his father. So the little one's mother ordered a nameplate for his husband from [UK House & Business Sign](https://ukhousesigns.com/). It was both fun and cute, and the nameplate is now proudly placed on the daddy's workstation."
+        },
+        {
+          "img": "cases/uk-house-signs/uk-house-and-business-signs.webp",
+          "alt": "UK House and Business Signs",
+          "size": [
+            800,
+            400
+          ]
+        },
+        {
+          "h": "UK House and Business Signs: who are they?"
+        },
+        {
+          "p": "UK House and Business Signs is a reputed business that creates stunning high-quality laser-cut and weatherproof acrylic house numbers, nameplates, memorial, business signs and more."
+        },
+        {
+          "img": "cases/uk-house-signs/acrylic-business-sign-churchill-acrylic-2-part-sign.webp",
+          "alt": "Acrylic Business Sign, Churchill Acrylic 2 Part Sign",
+          "size": [
+            685,
+            756
+          ]
+        },
+        {
+          "p": "For over 20 years, a family business centered in England is creating and supplying stunning signs and plaques to a wide range of customers throughout the United Kingdom and many other countries."
+        },
+        {
+          "h": "The era of acrylic signs: a phenomenal product"
+        },
+        {
+          "p": "Acrylic Sign is a phenomenal addition to the era of signage. It is made of a highly functional and handy plastic sheet (also known as Plexiglas) with a smooth finish. Acrylic Sign offers a tech-savvy look with ultimate sophistication, durability, and abundance of colors."
+        },
+        {
+          "img": "cases/uk-house-signs/customized-acrylic-signs.webp",
+          "alt": "Customized Acrylic Signs",
+          "size": [
+            754,
+            752
+          ]
+        },
+        {
+          "p": "Acrylic Signs are usually used by people with unique tastes and personalities these days. They basically want to step aside from the old school and grab the attention of their business customers, friends or even neighbors."
+        },
+        {
+          "h": "UK House and Business Signs: acrylic signs"
+        },
+        {
+          "p": "Using laser and digital print technology Uk House and Business Signs is successfully creating stunning acrylic signs for Industries, Residential and Commercial use. Their industry-leading production team with unique designs is doing a phenomenal job in the field of producing signage."
+        },
+        {
+          "h": "Social work"
+        },
+        {
+          "p": "Acrylic Master is creating a chance of employment for young people with disabilities. A social enterprise is associating and assisting in the production and packaging of the products. Through the process people with social and physical disadvantages are getting chances to experience real-life work which is in future a target for future employment for the company."
+        },
+        {
+          "img": "cases/uk-house-signs/acrylic-master-social-work.webp",
+          "alt": "Acrylic Master Social Work",
+          "size": [
+            962,
+            717
+          ]
+        },
+        {
+          "h": "Why self-customization was introduced in business?"
+        },
+        {
+          "p": "People naturally tend to control everything around them. In a customized product business, it is not a piece of cake to handle people with different tastes and choices."
+        },
+        {
+          "p": "Customers have different requirements like color choice, size, pattern, font, etc. Now, if we talk about designing a business or house sign or nameplate, it is literally unimaginable to create mock-ups to meet the customer's requirement because it would be very costly."
+        },
+        {
+          "p": "So, the UK House and Business Sign introduced its customers with an ultimate web-based product customization tool through the integration of [InkyBay](https://apps.shopify.com/productsdesigner) in their store."
+        },
+        {
+          "h": "How InkyBay eliminated the problems once and for all"
+        },
+        {
+          "p": "UK House & Business Sign integrated the [InkyBay](https://apps.shopify.com/productsdesigner), as a House & Business Sign Configurator on their online store to provide their customers the ultimate freedom and access to create and design their own signs. They enabled customizing options like number/name, text, text font, special request, acrylic choice, image upload, base color, text color, fixing options and many more. Moreover, for each product they have succeeded creating different personalization options based on requirements using the sign builder tool."
+        },
+        {
+          "img": "cases/uk-house-signs/house-business-signs-builder-tool.webp",
+          "alt": "House & Business Signs Builder Tool",
+          "size": [
+            1200,
+            739
+          ]
+        },
+        {
+          "quote": "I have used and had apps built for me over the past 20 years ~ always bugs and non responsive on many platforms. This is the 1st product i have found that does what it says on the tin ! Totally responsive and works on PC/TABLET/MOBILE, Obviously with any new app you need to learn how to use it, but the support i received got me going within 2 days ( responses were quicker than this ! but i needed to train myself ). Early days to see what users think ! but i am very impressed. Don't waste time with anything else.",
+          "by": "Housesignbuilder review from Shopify app store"
+        },
+        {
+          "p": "The best thing about InkyBay is that customers' can preview the outcome of their customized products before making an order or placing a quote so that they will have further options to reconsider their own creation and improve."
+        },
+        {
+          "p": "At the end, when the order is made, the company is getting the option to download a print-ready vector (SVG/PDF) file for production."
+        },
+        {
+          "p": "Not only house and business sign, but InkyBays is astoundingly capable of providing an ultimate design solution to all kinds of products, from a simple toothpick to luxurious car or even home interior."
+        },
+        {
+          "p": "UK House & Business Signs successfully served their customers for over 20 years uninterrupted and still, they are on the track. & The Journey Continues…"
+        }
+      ]
+    },
+    {
+      "slug": "teefever",
+      "brand": "Teefever",
+      "store": "https://teefever.hk/",
+      "country": "Hong Kong",
+      "region": "asia-pacific",
+      "industry": "apparel",
+      "products": [
+        "T-shirts",
+        "Hoodies",
+        "Aprons",
+        "Tote bags"
+      ],
+      "summary": "From boring to bold. InkyBay takes Teefever's personalized tee game to the next level.",
+      "title": "From boring to bold: personalized tees in Hong Kong",
+      "lead": "From boring to bold. InkyBay takes Teefever's personalized tee game to the next level.",
+      "source": "https://productsdesigner.com/clients/teefever/",
+      "body": [
+        {
+          "p": "Wanna take your boring tee to the next level? **Teefever** is doing exactly that."
+        },
+        {
+          "p": "Teefever is making your simple, everyday t-shirt fun and smart. With their amazing flexible personalization features, you can create any design of your choice. Their extensive personalization tools help you express your creativity and design a t-shirt that truly represents you."
+        },
+        {
+          "p": "If you are looking for a trusted personalization brand of t-shirts, check them out."
+        },
+        {
+          "img": "cases/teefever/teefever.webp",
+          "alt": "Teefever on InkyBay",
+          "size": [
+            1237,
+            562
+          ]
+        },
+        {
+          "h": "Teefever insights: get to know them"
+        },
+        {
+          "p": "[Teefever](https://teefever.hk/) is an apparel brand that sells a variety of clothing items, primarily personalized t-shirts. This brand has one goal: to help people express who they are and what their preferences are. Unlike other retailers that sell monotonous pre-designed t-shirts, Teefever has made simple t-shirts trendy and a way of showcasing creativity. They choose to prioritize customer flexibility and choice of expression with their t-shirt customization."
+        },
+        {
+          "p": "Additionally, they sell hoodies, canvas totes, and caps. Their working strategy is pretty simple: you take a base, customize it as you like, and then just place an order. You will receive your dream product within days."
+        },
+        {
+          "h": "Why personalized t-shirts are a game-changer"
+        },
+        {
+          "p": "Personalized products are always the best ones when you want to flourish in an industry. Here are some reasons personalized products are a game-changer for your business:"
+        },
+        {
+          "ul": [
+            "**Unique Brand Value:** Customized products create a unique brand identity that no one can replicate. Although there are many t-shirt brands, Teefever has something unique to offer. It is because of the unique customization and brand identity. Customers love to turn their basic tee into something eye-catching and personalized.",
+            "**Strong Customer Loyalty**: With a personalized business, it is comparatively easy to build customer loyalty. When customers create something unique, they get emotionally attached and stay loyal to the brand. When t-shirt brands include personalization options, they get loyal and repeat customers.",
+            "**Marketing and Promotions:** Personalized products create an opportunity for marketing and promotions. Satisfied customers often showcase their design through social media. It will give you exposure to a broader customer base, and you can benefit from it. As t-shirts are a basic necessity for everyone, it would be great to have something extraordinary instead of a basic, solid tee."
+          ]
+        },
+        {
+          "h": "T-shirt customization with InkyBay in Teefever"
+        },
+        {
+          "p": "Teefever integrates [InkyBay](https://apps.shopify.com/productsdesigner) to let customers design their unique tee. The entire process becomes much easier with this integration. The process is simple, customers choose the t-shirt they like, then head over to the design lab."
+        },
+        {
+          "img": "cases/teefever/teefev1.webp",
+          "alt": "Teefever t-shirt personalization",
+          "size": [
+            1343,
+            610
+          ]
+        },
+        {
+          "p": "Here, they will find a variety of elements to create their unique t-shirt. Teefever has added numerous elements to ensure its customers receive everything they need, and InkyBay offers a smooth design experience."
+        },
+        {
+          "img": "cases/teefever/teefev2.webp",
+          "alt": "Teefever designer",
+          "size": [
+            1200,
+            857
+          ]
+        },
+        {
+          "p": "Teefever has made the best use of the InkyBay clipart library. They offer a vast selection of clipart that is versatile enough to make your t-shirt stand out. Simply select the one you like, and your clip art will be added to the t-shirt."
+        },
+        {
+          "img": "cases/teefever/teefev3.webp",
+          "alt": "Teefever stickers",
+          "size": [
+            700,
+            590
+          ]
+        },
+        {
+          "p": "Teefever also utilizes the advanced options feature from InkyBay. Customers can choose from various colors and select elements to create quick t-shirt designs. With its user-friendly interface, customers can make their personalized t-shirts hassle-free. This is crucial in personalized product businesses for retaining customers and providing top-notch service."
+        },
+        {
+          "h": "Concluding words"
+        },
+        {
+          "p": "In conclusion, it can be said that Teefever is bringing a unique taste to a basic t-shirt. Customers can now express themselves with the basics thanks to Teefever. The smooth and user-friendly structure of their website and design lab is truly appreciable."
+        },
+        {
+          "p": "The versatile scope for personalization is all that a customer needs. Their advanced option and flexible product variations will be admired by many for sure."
+        },
+        {
+          "quote": "This app has all the functions I need and really solves the problems for my custom-made business, also the support team is really helpful and efficient, they are very nice and professional."
+        }
+      ]
+    },
+    {
+      "slug": "z-palette",
+      "brand": "Z Palette",
+      "store": "https://www.zpalette.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "accessories",
+      "products": [
+        "Makeup palettes"
+      ],
+      "summary": "Build your perfect makeup kit with Z Palette's customizable, organized palettes for every lifestyle.",
+      "title": "Custom makeup palettes, built your way",
+      "lead": "Build your perfect makeup kit with Z Palette's customizable, organized palettes for every lifestyle.",
+      "source": "https://productsdesigner.com/clients/z-palette/",
+      "body": [
+        {
+          "img": "cases/z-palette/organize-simplify-create.webp",
+          "alt": "Z Palette Makeup Kit",
+          "size": [
+            925,
+            568
+          ]
+        },
+        {
+          "p": "Whether you're a makeup artist traveling with bulky palettes or a beauty lover who faces difficulties in finding the right shades, it's a hassle. That's where [Z Palette](https://www.zpalette.com/) comes in, a **magnetic**, **refillable palettes** that give you freedom to **customize**, **organize**, and **simplify** your makeup routine faster, easier, and clutter-free."
+        },
+        {
+          "p": "From popular beauty brands to individuals, we love Z palettes not only for their sleek design but also for their unique, customizable palette design feature. So, no more **opening compacts** and **taking off lids**, carry only what you need."
+        },
+        {
+          "h": "Inspiration behind Z Palette creative business"
+        },
+        {
+          "p": "The creative business idea behind Z Palette comes down to a simple question: Why can't makeup be organized the way one wants it? The struggle of massy, impractical makeup palettes became the starting point for something bigger, **Z PALETTE.** What began as a personal solution evolved into a creative business that gives makeup lovers freedom to mix and match their favorite shades in one palette."
+        },
+        {
+          "p": "**Zena Shteysel**, the **CEO of Z Produx Inc.** and the creator of the **Z Palette**, implemented a process called \"depotting,\" removing a makeup product from its original, often bulky, container and transferring it into empty, customizable magnetic palettes. This organizing method extends beyond products to encompass digital beauty experiences. From empty magnetic palettes to [De-Potting tools](https://www.zpalette.com/collections/z-palette-tools), reshape your palettes with different eyeshadow shades, blushes, and others."
+        },
+        {
+          "h": "Why Z Palette is popular in the beauty industry?"
+        },
+        {
+          "p": "The tagline of Z PALETTE is, \"**Custom, Organize, and Simplify** your own beauty kit.\" That grabs the attention of beauty artists and trendy beauty brands. It features an open face, a super-strong magnetic base with no inserts, wells, or dividers, making it a must-have universal palette."
+        },
+        {
+          "img": "cases/z-palette/z-palette-colors.webp",
+          "alt": "Z Palette Color Variation",
+          "size": [
+            900,
+            677
+          ]
+        },
+        {
+          "p": "These palettes' lightweight case and flexible bending system save space so that you can put other makeup items. To cater to diverse buyer personas and their unique needs, the owner offers 8 different palette sizes and shapes, ensuring the perfect fit for every makeup lover. Other key features are:"
+        },
+        {
+          "ul": [
+            "**Open magnetic base:** A divider-free magnetic surface holds any non-metal and metal makeup pan or can.",
+            "**Fold-under lid:** The lid can be folded completely under the base, saving space on a vanity or makeup station, and making it easier to apply makeup.",
+            "**Lightweight and durable design:** Durable and laminate-coated shell is lightweight, perfect to carry with the [Z Palette travel bag](https://www.zpalette.com/collections/z-palette-bag-collection) or your go-to purse.",
+            "**Eco-friendly materials:** It is made from recyclable cardboard and is constructed with a more sustainable approach to beauty products.",
+            "**Clear window:** The Z PALETTE design features a clear window, letting you easily see the colors inside, saving time.",
+            "**Hand-made palettes:** Each Z palette is hand-made to meet your unique needs (size, shape, or brand)."
+          ]
+        },
+        {
+          "h": "What are the different Z Palette product sizes?"
+        },
+        {
+          "img": "cases/z-palette/z-palette2.webp",
+          "alt": "Z Palette Sizes",
+          "size": [
+            924,
+            879
+          ]
+        },
+        {
+          "p": "The customizable magnetic empty makeup palette, **Z Palette,** is available in [8 different sizes and shapes](https://www.zpalette.com/pages/pro-series) for eyeshadows, blush, and powder from any brand. Below is a detailed size chart with approx. Weight and pan capacity:"
+        },
+        {
+          "ul": [
+            "**Extra Large Z Palette:** Inside dimensions (7.38″L x 5.25″W x 0.25″D) & outside dimensions (8.25″L x 6.19″W x 0.56″D). The appx. weight 0.75 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Extra Large Deep Z Palette:** Inside dimensions (7.5″L x 5.38″W x 0.56″D) & outside dimensions (8.19″L x 6.19″W x 0.81″D). The appx. weight 0.75 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Large Z Palette:** Inside dimensions (7.44″L x 4.13″W x 0.25″D) & outside dimensions (8.06″L x 4.94″W x 0.56″D). The appx. weight 0.63 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Large Deep Black Z Palette:** Inside dimensions (7.38\" L x 4.25\" W x 0.56\" D) & outside dimensions (8.25\" L x 5.12\" W x 0.81\" D). The appx. weight 0.63 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Medium Deep Z Palette:** Inside dimensions (5.875″L x 3.25″W x 0.375″D) & outside dimensions (6.68″L x 4.125″W x 0.68″D). The appx. weight 0.50 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Junior Mirror Z Palette:** Inside dimensions (5.125″L x 3.25″W x 0.25″D) & outside dimensions (5.75″L x 3.875″W x 0.625″D). The appx. weight 0.40 pounds and the pan capacity is 20pc magnetic stickers (10pc round & 10pc square).",
+            "**Small Z Palette:** Inside dimensions (3.18″L x 3.18″W x 0.25″D) & outside dimensions (3.8″L x 3.8″W x 0.56″D). The appx. weight 0.31 pounds and the pan capacity is 10pc magnetic stickers (5pc round & 5pc square).",
+            "**Mini Z Palette:** Inside dimensions (3.25″L x 1.33″W x 0.25″D) & outside dimensions (4.06″L x 2.18″W x 0.50″D). The appx. weight 0.125 pounds and the pan capacity is 3 standard-size round or square single or 7 mini round empty makeup pans."
+          ]
+        },
+        {
+          "h": "How do you create your own Z Palette with InkyBay?"
+        },
+        {
+          "p": "Creating your own custom Z palette is simple and fun with [InkyBay's product personalizer](https://apps.shopify.com/productsdesigner) tool. Visit the **Z Palette's site** and select the \"**Create Your Own**\" option. After that, choose your preferred palette size and hit the \"**customize it**\" button, as the picture below:"
+        },
+        {
+          "img": "cases/z-palette/z-palette-customization.webp",
+          "alt": "Z Palette Customization",
+          "size": [
+            1449,
+            826
+          ]
+        },
+        {
+          "p": "There are options from which you can select quantity, add notes, or request a quote. Also, you can upload images, logos, or artwork files to make your palette eye-catching."
+        },
+        {
+          "img": "cases/z-palette/z-palette-custom-design.webp",
+          "alt": "Custom Your Own Palette",
+          "size": [
+            1561,
+            808
+          ]
+        },
+        {
+          "p": "After you finalize the design and place an order, the company receives a print-ready vector file **(SVG/PDF/JPG/PNG)** that facilitates faster production. It also saves in-house design expenses and gives you the fun of expressing your creativity in your kit. With **InkyBay**, the **product customization and personalization** are easy and simple; no prior design experience is required."
+        },
+        {
+          "h": "Final thought"
+        },
+        {
+          "p": "The **Z PALETTE** product customization is a game-changer in the beauty industry, particularly for beauty artists or individuals who travel frequently. The uniqueness of this business lies in its blend of efficiency, which gives individuals the freedom to organize, declutter, and design palettes that match their lifestyle."
+        },
+        {
+          "p": "Together, Z Palette and InkyBay make this customization go even further. Users can design their palette covers with colors, text, artwork, or a branding logo using InkyBay, making Z palettes truly unique."
+        },
+        {
+          "p": "No more heavy kits, no more wasted product, and no more searching for the right shade. Together, Z Palette and InkyBay create not just a beauty product, but an experience where professionals and beauty lovers meet creativity and function, meet style."
+        }
+      ]
+    },
+    {
+      "slug": "miami-sublimation",
+      "brand": "Miami Sublimation",
+      "store": "https://miamisublimation.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "print",
+      "products": [
+        "Photo backdrops",
+        "Table covers",
+        "Photo blankets"
+      ],
+      "summary": "Miami Sublimation, a Florida-based custom apparel manufacturer, boosted product personalization using InkyBay on Shopify.",
+      "title": "Photo-printed sublimation products, designed by the customer",
+      "lead": "Miami Sublimation, a Florida-based custom apparel manufacturer, boosted product personalization using InkyBay on Shopify.",
+      "source": "https://productsdesigner.com/clients/miami-sublimation/",
+      "body": [
+        {
+          "h3": "Thinking about buying a photo printed table cover or blanket?"
+        },
+        {
+          "p": "But tired of choosing from the same old stereotype designs or blocks or prints."
+        },
+        {
+          "p": "Isn't it going to be overwhelming to have your own chosen photo or design printed on the table cover you are purchasing no matter for your personal use or event?"
+        },
+        {
+          "p": "Yes. Miami Sublimation is offering you the chance to obtain your personalized photo printed product that goes perfectly with your tastes."
+        },
+        {
+          "p": "[Miami Sublimation](https://miamisublimation.com/) is a Florida based customized apparel manufacturer. They walked into the business in 1994 and successfully tackled the market ever since."
+        },
+        {
+          "img": "cases/miami-sublimation/photo-printed-custom-blankets.webp",
+          "alt": "Photo Printed custom blankets",
+          "size": [
+            1536,
+            768
+          ]
+        },
+        {
+          "p": "The company manufactures considerably best custom table covers, photo blankets, photography backdrops, event drapes, photo pillow, towel, etc. for seminars, sporting events, and trade shows."
+        },
+        {
+          "h": "Miami Sublimation: the charm of their work is mind-boggling"
+        },
+        {
+          "p": "Look at the product like Fleece Backdrop that Miami Sublimation is manufacturing and watch for yourself how lively and how vigorous nature is in the printed form."
+        },
+        {
+          "p": "Or the photo blanket! Not only it could provide you warmth in the wintery night but also the printed photo of your loved one can warm your heart as well. This is where the charm lies in the work of Miami Sublimation."
+        },
+        {
+          "img": "cases/miami-sublimation/custom-printed-fleece-backdrops.webp",
+          "alt": "Custom printed fleece backdrops",
+          "size": [
+            1536,
+            768
+          ]
+        },
+        {
+          "h": "Why product customization became a must-have in the business?"
+        },
+        {
+          "p": "The major problem in many businesses is that the customers always expect something different to find themselves standing out of the crowd. They come up with various choices and tastes, and knock on your door. Undoubtedly, they prefer the most personalized form of outcome often."
+        },
+        {
+          "p": "In the business like Miami Sublimation it is impossible to provide a design/mockup sample back and forth with a dedicated in-house designer with good amount of cost for the designer until the finalized product sample is capable of satisfying the customer."
+        },
+        {
+          "img": "cases/miami-sublimation/personalized-cloth-with-sublimation-print.webp",
+          "alt": "Personalized Cloth with Sublimation Print",
+          "size": [
+            1536,
+            768
+          ]
+        },
+        {
+          "p": "Miami Sublimation is manufacturing products that are no less than a personalized form of art that fulfill customers' all the requirements. To fulfill the requirements product customization eventually turned into a must-have option in the business."
+        },
+        {
+          "h": "Self-customization: an ultimate cure for the headache"
+        },
+        {
+          "p": "To meet the customer's requirement according to their tastes is not an easy task. So, the only option left here is giving the customer the ultimate freedom to customize their product on their own and make the final order as they have visualized it in their mind."
+        },
+        {
+          "p": "To enable self-customization on the online store, Miami Sublimation integrated with [InkyBay](https://apps.shopify.com/productsdesigner) which is a web-based ultimate solution for the product customization businesses but for them, their **apparel manufacturing business**."
+        },
+        {
+          "h": "The successful inclusion of InkyBay to enable sublimation product customization"
+        },
+        {
+          "p": "The successful inclusion of [InkyBay, as apparel customizer](https://apps.shopify.com/productsdesigner) turned into something completely magical in the business of Miami Sublimation. After adding self-customization features on the online store, customers started to personalize their product before they finally placed the order. This fully automated system unequivocally increased the rate of production and reduced production time and cost by eliminating in-house designer, order processing automation."
+        },
+        {
+          "img": "cases/miami-sublimation/photo-printed-product-personalizer.webp",
+          "alt": "Photo printed product personalizer",
+          "size": [
+            1536,
+            768
+          ]
+        },
+        {
+          "p": "On the customization interface of the online store of Miami Sublimation, customers can directly change product, background color; add design objects like photos, text, clipart or even generate design ideas. The quantity and price options are also available on the interface. Furthermore, the outcome of the personalized product can be showcased by the preview option which lets the customer decide whether to make the order or further improvement is required. After the order is made, the store owner is downloading the print-ready vector (PDF/SVG) file hassle-free and going for production directly."
+        },
+        {
+          "p": "Because of the InkyBay **product configurator,** this overwhelming layout of the interface has become implementable."
+        },
+        {
+          "h3": "The final thought"
+        },
+        {
+          "p": "Miami Sublimation successfully served its customers almost 25 years and still now they are in the market running the business smoothly as well as skillfully. It is undoubtedly a story of success. The custom-made apparel unquestionably has been satisfying the customers' tastes and desires yet enabling self-customization options helped them put a milestone in their business."
+        },
+        {
+          "p": "Miami Sublimation, is a story of motivation."
+        }
+      ]
+    },
+    {
+      "slug": "stick-n-peel-graphics",
+      "brand": "Stick N Peel Graphics",
+      "store": "https://sticknpeelgraphics.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "print",
+      "products": [
+        "Stickers",
+        "Vinyl",
+        "Apparel",
+        "Packaging"
+      ],
+      "summary": "See how InkyBay helps Stick N Peel Graphics fulfill their print products business motto with ease.",
+      "title": "A huge library of custom print products, one designer",
+      "lead": "See how InkyBay helps Stick N Peel Graphics fulfill their print products business motto with ease.",
+      "source": "https://productsdesigner.com/clients/stick-n-peel-print-products-provider/",
+      "body": [
+        {
+          "img": "cases/stick-n-peel-graphics/stick-n-peel-graphics.webp",
+          "alt": "Stick N Peel Graphics logo",
+          "size": [
+            1100,
+            600
+          ]
+        },
+        {
+          "p": "Surprisingly, the customised product business has grown so quickly in the 21st century. Customers are becoming more interested in individualized products these days. It could be because of their tastes or because they want to keep up with the latest trends."
+        },
+        {
+          "p": "Reasons could be anything, but printed products are an excellent option to meet client demand in such situations there is no doubt. For this reason, businesses are moving into the print production industry to benefit from the growing demand for customized products."
+        },
+        {
+          "p": "There are many different kinds of printed products on the market, such as mugs, posters, dresses, gift items, etc. Vinyl stickers, decals, and clothes are all examples of digitally printed products. Several shops on Shopify sell these kinds of goods, and [Stick N Peel Graphics](https://sticknpeelgraphics.com/products/metal-business-cards) is one of them. Today we will talk about Stick n Peel Graphics, a print business on Shopify. The major focus of their business is delivering innovative customised items, but they also sell various printed goods that their clients may personalize product according to their preferences."
+        },
+        {
+          "p": "Hopefully, you've already gotten a general idea of Stick N Peel's business motto, let's dig in deeper."
+        },
+        {
+          "h": "Let's have an expedition to Stick N Peel"
+        },
+        {
+          "p": "Stick N Peel is a collection of customised items, especially stickers. They tried out different inks, printers, cutters, and blades to customize stickers and they found the best way to make high-quality stickers."
+        },
+        {
+          "p": "Their stickers don't get wet and can be used both inside and outside. Additionally, they provide stickers at a preferable price. Not only stickers but also their all items have effectively satisfied their clients because of their free shipping and free digital proof facility."
+        },
+        {
+          "p": "In the field of product customization, Stick N Peel has now established its position strongly, but in the print business, it is difficult to satisfy each consumer, yet they have succeeded. But **how do they become successful? Any idea?** All right, we will talk about it, now have a look at what types of products they are selling."
+        },
+        {
+          "ul": [
+            "Business card",
+            "Clothing",
+            "Decals",
+            "Stickers",
+            "Keychains",
+            "Custom License Plates",
+            "Mylar Bags",
+            "Poster Print",
+            "Sublimated Product"
+          ]
+        },
+        {
+          "p": "As you can see, almost all of Stick N Peel's products can be customized and they take the chances of selling both personalized and customized products. As a result, they were looking for the scope of how to use that chance to make money for their business."
+        },
+        {
+          "p": "But the truth is that, just like other businesses, they also faced business challenges that they eventually overcame. Let's find out what challenges they face and what solutions they have found for their customization business."
+        },
+        {
+          "h": "Business challenges of Stick N Peel Graphics"
+        },
+        {
+          "p": "Meeting each customer's goals, understanding the current design culture, and guessing customer choice are the main challenges of a product customization business."
+        },
+        {
+          "p": "People who are fond of customised products have individual choices, and they are much more focused on their own decisions. As a result, it becomes tricky for the business to fill everyone's demands on time fully. As Stick N Peel is doing product customization, they also faced the same difficulties."
+        },
+        {
+          "h3": "Challenges"
+        },
+        {
+          "p": "Initially, Stick N Peel **was focused on pre-customized products**, but they soon realized that a pre-customized product **can't meet every customer's need**s. For example, when it came to stickers, their customers wanted specific stickers for birthdays or holidays, and some wanted to make their personalised license plates. This need can't be met by products that have already been made."
+        },
+        {
+          "p": "Because of this, their customers were unhappy, which harmed the growth of their business, additionally in Shopify customers can not design their products. So, as a part of the solution, they just point out the area where they need modification. These are things we have added value that they were looking for."
+        },
+        {
+          "h": "What things Stick N Peel was looking for?"
+        },
+        {
+          "img": "cases/stick-n-peel-graphics/customized-product-in-stick-n-peel.webp",
+          "alt": "Product Customized button in Stick N Peel Graphics",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "Stick N Peel Graphics was looking to add:"
+        },
+        {
+          "ul": [
+            "Text",
+            "Graphics",
+            "Logo",
+            "Predefined templets",
+            "Wanted to allow their customers to upload file",
+            "User-friendly mobile version",
+            "Get a Quote button"
+          ]
+        },
+        {
+          "p": "So these are the things that they want to add to their product and they just want to allow their customer to add these things. They are doing business at Shopify so they already know about third-party [product customization applications](https://apps.shopify.com/productsdesigner). But they were confused about the performance of those apps."
+        },
+        {
+          "p": "Finally, they chose **InkyBay** as their business helping hand. And InkyBay helps Stick N Peel to pull off their business by solving their business challenges. **But how InyBay, Product Personalizer helped them?**"
+        },
+        {
+          "h": "InkyBay is a magical tool for product customization"
+        },
+        {
+          "p": "Why are we referring to InkyBay as a magical tool? A product that can fulfill a business's needs is a magical tool indeed."
+        },
+        {
+          "p": "InkyBay is a third-party application for all types of print businesses. It allows its users to add their design to a particular product by adding text, logo, graphics, and colour, which is the primary use of Stick N Peel."
+        },
+        {
+          "p": "An interesting fact is that InkyBay has a **clipart and font library** that lets customers use a variety of cliparts/motifs, fonts, and designs. One plus point is that the whole process of customization will be performed online through a [design lab](https://InkyBay.myshopify.com/pages/designlab). As a result, the customer or the user will not face any hassle."
+        },
+        {
+          "p": "Therefore, after completing the design and saving the design, the customer will be free to leave. Because the file link will be sent to his email, and after placing an order, the design file will be saved in 4 formats, which are PDF, SVG, PNG, and JPG. That is easy-going for both parties."
+        },
+        {
+          "img": "cases/stick-n-peel-graphics/saving-file-through-email.webp",
+          "alt": "File saving process of designed file in InkBay",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "Additionally, InkyBay is made with advanced **HTML5/JS technology** that **doesn't use Flash and works on any device and all modern browsers. The Mobile UI makes it easy to pick**. So again, InkyBay can solve the other problem of Stick N Peel."
+        },
+        {
+          "p": "Then, by using InkyBay, any store owner can set a predefined template and allow their **customers to upload files**. As a result, the store owner can get ideas from traditional design culture and predefined templates, saving customers time and effort. This is another need for Stick N Peel."
+        },
+        {
+          "p": "And lastly, after placing an order, the user can see a \"get a quote\" button, which was the other business challenge for Stick N Peel graphics. By using the button, a customer can send any important message or requirement to the store owner, which can gain customer trust in the business and the owner can also get a chance to make the customer fully satisfied."
+        },
+        {
+          "img": "cases/stick-n-peel-graphics/get-a-quote-button.webp",
+          "alt": "\"Get a quote\" button in InkyBay",
+          "size": [
+            1024,
+            768
+          ]
+        },
+        {
+          "p": "So, we can see InkyBay has successfully solved all the difficulties of Stick N Peel, so what do you think? Is Stick N Peel Graphics becoming satisfied? Okay, take a look at this valuable review by the owner of Stick N Peel Graphics about InkyBay."
+        },
+        {
+          "quote": "Best product designer on Shopify. I've tried dozens of other apps. The support is great, everything works as it should. My only gripe is the limitation on products for the different categories. Changing sizes of the stage is only able to be done with a new product, so you can run up those numbers quickly, but the app is worth every dollar. It saves me tons of time and is insanely customizable. THANK YOU"
+        },
+        {
+          "h": "Which products does Stick N Peel personalize using InkyBay?"
+        },
+        {
+          "ul": [
+            "Aluminum Business Cards",
+            "Black and White Thermal Printed Labels (Roll) 1\" x 2.125\" White Labels",
+            "Business Cards, 14pt Gloss Covered",
+            "Circle Stickers",
+            "Custom Motorcycle License Plate",
+            "Custom Poster Print 20\" x 30\"",
+            "Custom Sweatshirt Quote",
+            "Custom T-Shirt Quote",
+            "Custom White T-Shirt",
+            "Flight Tag Fabric Key Chains Custom Print",
+            "Mylar Bags, 4\" x 6\" (1/4 Ounce) Stand up, Resealable, Smell-proof Bags",
+            "Square Stickers",
+            "Sticker Sheets",
+            "Vinyl Banners 5x3ft",
+            "Wristlet Keychain Wrist Lanyard Custom Printed"
+          ]
+        },
+        {
+          "p": "Here, you can see that Stick N Peel Graphics has a lot of products in their store that are using InkyBay. So, if you sell these kinds of products and need help with customization from an app, you should try InkyBay, [Product Customizer](https://apps.shopify.com/productsdesigner) to deal with business challenges."
+        },
+        {
+          "h": "Final thought"
+        },
+        {
+          "p": "We must say Stick N Peel Graphics is a good strategist in the field of print product providers. Because the competition for Shopify product customization is relatively high. Stick n Peel graphics made a proper plan to beat their competitors along with gaining a high profit."
+        }
+      ]
+    },
+    {
+      "slug": "the-photographers-toolbox",
+      "brand": "The Photographer's Toolbox",
+      "store": "https://www.thephotographerstoolbox.com/",
+      "country": "Australia",
+      "region": "asia-pacific",
+      "industry": "gifts",
+      "products": [
+        "Photo albums",
+        "Box sets",
+        "Framing mounts"
+      ],
+      "summary": "The Photographers Toolbox uses InkyBay to simplify customization, reduce confusion, and turn orders into satisfaction.",
+      "title": "Personalized photo albums without the back-and-forth",
+      "lead": "The Photographers Toolbox uses InkyBay to simplify customization, reduce confusion, and turn orders into satisfaction.",
+      "source": "https://productsdesigner.com/clients/the-photographers-toolbox/",
+      "body": [
+        {
+          "img": "cases/the-photographers-toolbox/photographers-toolbox.webp",
+          "alt": "Photographers toolbox using InkyBay",
+          "size": [
+            1364,
+            531
+          ]
+        },
+        {
+          "p": "Did you flip through family photo albums when you were home for the holidays? Alternatively, have you ever viewed a photo of a distant cousin for the first time who was clicked in a funny pose?"
+        },
+        {
+          "p": "To ensure priceless family memories, a photo album plays a significant role. But things have changed, and more people than ever are interested in getting a photo album that is uniquely customized or personalized."
+        },
+        {
+          "p": "Options for the personalization of photographic goods go well beyond simple albums today. [The Photographer's Toolbox](https://www.thephotographerstoolbox.com/collections/all-products/products/wafer-usbs-credit-card-size-4gb-8gb-16gb-32gb) sells various **photo accessories** that may be customized through software. Let's have a look at what their business is about."
+        },
+        {
+          "h": "Have a glance at The Photographer's Toolbox"
+        },
+        {
+          "p": "Australian-based The Photographer's Toolbox is a family business. They provide personalized USBs, matboard frames, photo albums, photo boxes, and many more. Such as:"
+        },
+        {
+          "ul": [
+            "Box sets",
+            "Dry mount photo album",
+            "Peel and stick photo album",
+            "Gift section",
+            "Personalized USBs",
+            "Photo album matted shipping",
+            "Photo boxes",
+            "Photo display frames",
+            "Photo frames",
+            "Photo mount",
+            "Pocket Photo album",
+            "Self-adhesive photo album",
+            "Studio",
+            "Traditional photo album",
+            "USB presentation box"
+          ]
+        },
+        {
+          "p": "As they sell a variety of **personalized photo products**, it is very typical that they have different types of customers. And it can be challenging to meet every customer's choice. And this is one of the significant challenges for their personalized photography product business."
+        },
+        {
+          "h": "Challenges that The Photographer's Toolbox faced earlier"
+        },
+        {
+          "p": "Business challenges are part of every business, and in product personalization, business challenges are also widespread. As a photo product personalization business, the photographer's toolbox faces many challenges. Let's see some of the business challenges that the photographer's toolbox faced:"
+        },
+        {
+          "ul": [
+            "**Maintain Profitability**"
+          ]
+        },
+        {
+          "p": "If you're running a company that sells personalized products, you may need help to balance new expenses along with boosting business growth, as **the average gross margin for the product personalization industry is only about 22%**, as reported by StarterStory. But you can read this to learn more about boosting product personalization growth."
+        },
+        {
+          "p": "**Real-time pricing problems, shopping cart abandonment, and customer dissatisfaction all play a role in the case of low profitability.** when a company is unable to meet the needs of a specific client. Typically, they lost interest and no longer wanted to make a purchase."
+        },
+        {
+          "p": "The Photographer's Toolbox is a store that sells personalized photography products and faces challenges regarding customized business profitability."
+        },
+        {
+          "ul": [
+            "**Adding Predefined Template**"
+          ]
+        },
+        {
+          "p": "The photographer's toolbox knows their newbie customer because they have met some customers asking about basic design ideas."
+        },
+        {
+          "p": "Again, they felt the necessity of client communication. As a result, they were looking for a solution that would help their new customer get a minimal idea from pre-uploaded basic designs."
+        },
+        {
+          "p": "Then they started researching a suitable, versatile application for their customized photography accessories store, which will **help their customer's design products by themselves and reduce the necessity of client communication while designing**."
+        },
+        {
+          "p": "They discovered [InkyBay](https://apps.shopify.com/productsdesigner), after conducting extensive research. Let's explore whether InkyBay can solve its business challenges or not."
+        },
+        {
+          "ul": [
+            "**Building Communication With Customers**"
+          ]
+        },
+        {
+          "p": "Communicating with customers is essential in a marketplace. However, unlike conventional product personalization businesses, maintaining constant client contact might be difficult for an online business. This also happened with the photographer's toolbox."
+        },
+        {
+          "p": "**The photographer's toolbox wanted to help their clients without repetitive communication.** They looked for software to let their customers create unique personalized photo products and other photography accessories with minimal effort."
+        },
+        {
+          "h": "InkyBay: a multitasker product personalization application"
+        },
+        {
+          "p": "Already we have discovered the business challenges of the photographer's toolbox. It is surprising to know [InkyBay](https://apps.shopify.com/productsdesigner) has all of those solutions."
+        },
+        {
+          "p": "**The first solution:** The **InkyBay, offers real-time pricing during personalization**. As a result, consumers can understand. Imagine that here you can see a product from the photographer's toolbox whose price is $86.00; after adding text, it becomes $98.00. This is an appropriate example of real-time pricing."
+        },
+        {
+          "img": "cases/the-photographers-toolbox/before-the-state-of-real-time-pricing-at-inkybay-product-personalizer.webp",
+          "alt": "Before the state of Real-time pricing at InkyBay",
+          "size": [
+            816,
+            450
+          ]
+        },
+        {
+          "p": "Now, Let's see the \"after effect\" of using real-time pricing at InkyBay. This picture will illustrate a better comparison between before and after:"
+        },
+        {
+          "img": "cases/the-photographers-toolbox/after-the-state-of-real-time-pricing-at-inkybay-product-personalizer.webp",
+          "alt": "After the state of Real-time pricing at InkyBay",
+          "size": [
+            816,
+            450
+          ]
+        },
+        {
+          "p": "Here you can see the before and after effects of using real-time pricing. Real-time pricing decreases pricing confusion, which reduces cart abandonment as well."
+        },
+        {
+          "p": "Because a sudden high price can demotivate a customer to buy the product, which has a harmful impact on company profitability. In such a case, InkyBay, a product customization application, successfully solves the first business challenge of the photographer's toolbox."
+        },
+        {
+          "p": "**The second solution:** Adding a predefined template was the photographer's toolbox's second business challenge. [InkyBay](https://apps.shopify.com/productsdesigner) allows the store owner to add preset templates for their customers to get the basic idea. Here is an example of a pre-defined template:"
+        },
+        {
+          "img": "cases/the-photographers-toolbox/predefined-template-feature-of-inkybay.webp",
+          "alt": "Pre-defined template feature in InkyBay",
+          "size": [
+            1303,
+            741
+          ]
+        },
+        {
+          "p": "Here, **after clicking the \"templates\" option**, a customer can easily choose a template from the given options. This predefined template feature is really helpful for those customers who want to purchase in bulk with the same design."
+        },
+        {
+          "ul": [
+            "**The third solution :** Creating a communication bridge between customers and store owners through an app was the third challenge in the photographer's toolbox."
+          ]
+        },
+        {
+          "p": "InkyBay includes several valuable features that reduce the need for additional communication. Suppose you consider font size, height, width, letter spacing, line height, style, shape, shadow, and many more. So ultimately"
+        },
+        {
+          "p": "Moreover, InkyBay also allows you to add a **\"Get a quote\"** button, which allows customers to send a special message to the store owner. though the photographer's toolbox is not using this button."
+        },
+        {
+          "p": "InkyBay's, Product Personalizer solves all business challenges for the photographer's toolbox, and here is the reflection:"
+        },
+        {
+          "quote": "The team at InkyBay are particularly conscientious and dedicated to making sure our website does exactly what we need it to do. They are fast and reliable and know what they are doing. They also make sure they understand our issues fully before acting on them. Our last provider of a similar service made us feel like an inconvenience, and their answers were short and often unhelpful, but InkyBay is NOT like that at all. They welcome our support questions, and they make us feel like we are in safe hands. And their app is brilliant. It has been carefully developed with a deep understanding of its customer's diverse, but printing-focused needs. Highly recommended."
+        },
+        {
+          "p": "So, here is the long, satisfactory note from the owner of the photographer's toolbox to InkyBay. If you are new to the product personalization marketplace, try InkyBay."
+        },
+        {
+          "h": "Bottom line"
+        },
+        {
+          "p": "The photographer's toolbox is a unique shop doing very well in the field of product personalization business. As they are selling bunches of customized photo products, hopefully, they will increase their variety according to the demand of their customers."
+        }
+      ]
+    },
+    {
+      "slug": "custom-corporate-gifts",
+      "brand": "Custom Corporate Gifts",
+      "store": "https://corporatecustomgifts.com/",
+      "country": "India",
+      "region": "asia-pacific",
+      "industry": "gifts",
+      "products": [
+        "Pen drives",
+        "Corporate gifts"
+      ],
+      "summary": "CorporateCustomGifts, an India-based pen drive manufacturer, uses InkyBay to offer fully personalized corporate gift designs on Shopify.",
+      "title": "Personalized pen drives for corporate gifting",
+      "lead": "CorporateCustomGifts, an India-based pen drive manufacturer, uses InkyBay to offer fully personalized corporate gift designs on Shopify.",
+      "source": "https://productsdesigner.com/clients/custom-corporate-gifts/",
+      "body": [
+        {
+          "p": "In business, especially at the corporate level, the exchange of gifts is considered a way of showing utmost courtesy. At the same time, it works as indirect marketing of your target service or product. You can easily create an impression on others by providing a gift to the people in a business meeting or conference or even personally."
+        },
+        {
+          "p": "Usually, products like Professional Notebooks, Calendars, Custom Water Bottle, Restaurant Gift Card, Pen, Headphones, Gourmet Food Basket, Coffee Table Book, Custom Golf Balls & Tees, Coffee or Tea Blends, Toiletry Bag, etc are seen to be exchanged as corporate gifts. But have you ever thought about a pen drive as a corporate gift?"
+        },
+        {
+          "img": "cases/custom-corporate-gifts/corporate-custom-gifts-1.webp",
+          "alt": "Corporate Custom Gifts, Customized pen drive",
+          "size": [
+            1318,
+            920
+          ]
+        },
+        {
+          "p": "In this modern era, when all the workplaces are computerized, having a pen drive is a must-have equipment for computer users. CorporateCustomGifts.com took the amazing idea of pen drive as a corporate gift and successfully made it their core business product. They are currently specialized in manufacturing customized pen drives of different shapes and appearances that include classic pen drive, business card pen drive, metal pen drive, classic swivel pen drive, wooden pen drive, Leather pen drive, pen shape pen drive, pill shape pen drive, etc. CorporateCustomGifts.com is an India based customized pen drive manufacturer."
+        },
+        {
+          "img": "cases/custom-corporate-gifts/business-card-pen-drive-personalizer.webp",
+          "alt": "Business card pen drive personalizer",
+          "size": [
+            1112,
+            569
+          ]
+        },
+        {
+          "h": "Why customization/personalization was integrated with the business?"
+        },
+        {
+          "p": "Customers are professionals like photographers, musicians, wedding planners, app developers or corporate business owners; and it's very simple that their choices and requirements will be different based on their works, personalities, and needs."
+        },
+        {
+          "img": "cases/custom-corporate-gifts/metal-pen-drive-personalization-software.webp",
+          "alt": "Metal Pen Drive Personalization Software",
+          "size": [
+            1566,
+            831
+          ]
+        },
+        {
+          "quote": "We proudly offer a wide selection of styles, personal customization and never require a minimum order quantity. You will love the quality of our pen drives. Your clients will love you."
+        },
+        {
+          "p": "In this business, the sole purpose of manufacturing a pen drive is marketing and promotion. The customers' company or product logos, names or business signatures are required to be printed or engraved on the pen drive which they are offering as a gift. They might want to have a Card shape pen drive, Leather pen drive, Metal pen drive, Wooden or evergreen Classic pen drive for trade shows, schools, universities, event promotion or for personal gift-giving."
+        },
+        {
+          "p": "For CorporateCustomGifts, enabling customization/personalization option turned into a must-have feature on their store to provide the ultimate freedom to the customers so that they can create or design a pen drive according to their tastes and requirements. So, they integrated their online store with the [InkyBay](https://apps.shopify.com/productsdesigner), a web-based product personalization tool to secure an ultimate solution for self-customization option and succeeded in their endeavor."
+        },
+        {
+          "h": "InkyBay: just like a sorcerer waved a magic wand"
+        },
+        {
+          "p": "After the successful installation of [InkyBay, as a Pen Drive Customizer](https://apps.shopify.com/productsdesigner) CorporateCustomGifts has provided their customers the freedom to personalize the pen drive completely on their own."
+        },
+        {
+          "img": "cases/custom-corporate-gifts/inkybay-corporate-custom-gifts-personalizer.webp",
+          "alt": "InkyBay Corporate Custom Gifts Personalizer",
+          "size": [
+            1351,
+            909
+          ]
+        },
+        {
+          "p": "In the customization interface, the company successfully enabled the options like, Select Product, Edit Color, design objects like Add Text, Upload File, Names, Add Graphics, Front Side and Back Side. Also, the Quantity and Pricing Options are available in the UI of the customizer."
+        },
+        {
+          "p": "A customer is doing all the work like selecting design and color, choosing the storage capacity and quantity, creating the texts or logos overall finalizing everything. After the order is placed, the company is downloading a print-ready vector (PDF/SVG) file which is making the production level speedier."
+        },
+        {
+          "p": "The best thing about InkyBay is that it gives the customer a chance to preview the final output and let them decide whether to place an order or make a quote or further improvement is needed."
+        },
+        {
+          "img": "cases/custom-corporate-gifts/shopify-product-customizer-with-advanced-options.webp",
+          "alt": "Shopify product customizer with advanced options",
+          "size": [
+            1600,
+            666
+          ]
+        },
+        {
+          "p": "The entire process is just happening with the help of the automated process created by InkyBay in the back. Isn't it a feeling like a sorcerer just waved a magic wand and made it happen?"
+        },
+        {
+          "h3": "The final thought"
+        },
+        {
+          "p": "CorporateCustomGifts.com has been a web-based leading customized pen drive manufacturer for marketing and promotional purposes for over ten years. It's a long time to maintain such a reputation in the long run. But they did it. And the inclusion of self-personalization tools in their store made them take to another level of success."
+        },
+        {
+          "p": "[CorporateCustomGifts](https://corporatecustomgifts.com/) is another story of a successful customized product business..."
+        },
+        {
+          "quote": "It is an excellent app and very supportive team. Always ready for help. I will highly recommend this app.",
+          "by": "Corporate Custom Gift review from Shopify app store"
+        }
+      ]
+    },
+    {
+      "slug": "safety-vest-warehouse",
+      "brand": "Safety Vest Warehouse",
+      "store": "https://safetyvestwarehouse.com/",
+      "country": "United States",
+      "region": "americas",
+      "industry": "apparel",
+      "products": [
+        "Safety vests",
+        "Hi-vis T-shirts",
+        "Safety jackets"
+      ],
+      "summary": "Safety Vest Warehouse offers ANSI-compliant, high-visibility custom safety vests for every workplace need.",
+      "title": "Custom high-visibility safety vests for every workplace",
+      "lead": "Safety Vest Warehouse offers ANSI-compliant, high-visibility custom safety vests for every workplace need.",
+      "source": "https://productsdesigner.com/clients/safety-vest-warehouse/",
+      "body": [
+        {
+          "img": "cases/safety-vest-warehouse/what-is-safety-vest-warehouse.webp",
+          "alt": "Safety Vest Warehouse",
+          "size": [
+            1152,
+            576
+          ]
+        },
+        {
+          "p": "[Safety Vest Warehouse](https://safetyvestwarehouse.com/) is an online store. They sell safety clothes for people who work in risky jobs. That includes construction workers, road crews, warehouse teams, and event staff. These safety vests help them to stay visible and safe."
+        },
+        {
+          "p": "Most of Safety Vest Warehouse's products are bright-colored safety vests. These meet safety rules, so workers are protected. But what makes them different is that they let you add your company name, logo, or message on the vest."
+        },
+        {
+          "p": "You don't have to call or email anyone to make your design. Just go to their website and use the design tool developed by InkyBay. You can pick colors, type in text, move things around, and see what it looks like before you order."
+        },
+        {
+          "h": "Why custom safety gear matters"
+        },
+        {
+          "img": "cases/safety-vest-warehouse/why-custom-safety-gears-matter-1.webp",
+          "alt": "Why Custom Safety Gears Matter",
+          "size": [
+            1152,
+            576
+          ]
+        },
+        {
+          "p": "When everyone on a worksite wears the same custom vest, it's easier to tell who's part of your team. This helps avoid confusion, especially in busy places. You can spot your crew fast, which keeps things under control."
+        },
+        {
+          "p": "Having your logo on a vest also makes your business look more professional. It shows people that your team takes the job seriously."
+        },
+        {
+          "p": "You can also use different colors or labels for jobs, shifts, or roles. One group might wear green. Another wears red. That makes it simple to know who's doing what."
+        },
+        {
+          "p": "Custom shirts work the same way. You can print job titles, safety tips, or event names. It's all about making your vest work better for your team."
+        },
+        {
+          "h": "Safety Vest Warehouse product"
+        },
+        {
+          "img": "cases/safety-vest-warehouse/safety-vest-warehouse-product.webp",
+          "alt": "Safety Vest Warehouse Products",
+          "size": [
+            1152,
+            576
+          ]
+        },
+        {
+          "p": "Safety Vest Warehouse has a simple but solid product lineup. Everything they offer is made to help workers stay safe and stand out on the job."
+        },
+        {
+          "ul": [
+            "**High Visibility Safety Vest:** These are the classic bright-colored vests with reflective tape. Workers in construction, traffic, or warehouse jobs wear these to stay visible. They meet the safety rules and come in different styles for different needs.",
+            "**Hi Vis Safety T-Shirt:** These shirts work like the vests, but they're more comfortable for warmer weather. They're bright, light, and easy to move in. Great for crews who need to wear safety gear all day long.",
+            "**Reflective Safety Jackets:** For cold or rainy weather, Safety Vest Warehouse offers jackets that still keep workers visible. These come with reflective stripes and bright colors, just like the vests, but with more coverage and warmth.",
+            "**Safety Accessories:** They also carry small add-ons like gloves, hats, armbands, and more. These help round out the safety gear and give teams what they need for the job.",
+            "**Customization Tool:** This is where things get more personal. The design tool on their website lets you build your own look. You can upload a logo, add names, choose colors, and see it all before you order.",
+            "**Custom Safety Vest:** Want something more than just a bright vest? You can make your own. Add your company name, department, or role, whatever helps your team stand out and stay organized.",
+            "**Safety Vest Collections:** They offer different sets of vests grouped by style, job type, or safety class. It makes it easier to find the right gear for the work you do."
+          ]
+        },
+        {
+          "h": "How InkyBay changed the safety vest customization"
+        },
+        {
+          "img": "cases/safety-vest-warehouse/how-inkybay-changed-the-safety-vest-customization.webp",
+          "alt": "How InkyBay changed the safety vest customization",
+          "size": [
+            1152,
+            576
+          ]
+        },
+        {
+          "p": "The adoption of InkyBay's online customization app changed how Safety Vest Warehouse presents and sells personalized items. Our Shopify-based app allows customers to actively design their gear directly on the Safety Vest Warehouse website. Users can:"
+        },
+        {
+          "ul": [
+            "**Real-time Preview:** Upload a company logo or choose clip art, add text in different fonts/colors, and move elements around, see a real preview of the vest or shirt update in real-time.",
+            "**Reduce Errors:** The visual interface minimizes mistakes. Customers confirm the design looks correct before placing the order, reducing the chance of misprints or mismatched expectations.",
+            "**Experiment easily:** Trying different color combinations, logo placements, or text sizes is quick and simple, encouraging more creative exploration without commitment.",
+            "**Speed Up Orders:** The design-to-order process is significantly faster. Customers can create, approve, and purchase their custom gear all in one."
+          ]
+        }
+      ]
+    },
+    {
+      "slug": "brand-your-cap",
+      "brand": "Brand Your Cap",
+      "store": "https://www.brandyourcap.de/",
+      "country": "Germany",
+      "region": "europe",
+      "industry": "apparel",
+      "products": [
+        "Caps",
+        "Beanies",
+        "Socks"
+      ],
+      "summary": "Brand Your Cap lets you customize any cap style, from baseball to berets, powered by InkyBay.",
+      "title": "Custom embroidered caps in every style",
+      "lead": "Brand Your Cap lets you customize any cap style, from baseball to berets, powered by InkyBay.",
+      "source": "https://productsdesigner.com/clients/brand-your-cap/",
+      "body": [
+        {
+          "p": "In sports, caps are a symbol of responsibility and reliability, serving as an essential accessory for athletes and enthusiasts alike. Besides, a cap given as a personal gift can become a long-cherished memento, representing meaningful connections and special moments. Additionally, caps have transcended their functional use and emerged as a significant fashion statement, becoming a global trend embraced by all genders."
+        },
+        {
+          "img": "cases/brand-your-cap/store.webp",
+          "alt": "Brand Your Cap customizable products",
+          "size": [
+            800,
+            400
+          ]
+        },
+        {
+          "p": "Brand Your Cap takes this versatile accessory to the next level by offering customized caps tailored to individual preferences. Whether you want to showcase your unique style, commemorate a special occasion, or represent your team, Brand Your Cap provides endless possibilities to create a cap that is truly yours. With their easy-to-use Shopify store, one can design and order personalized cap seamlessly."
+        },
+        {
+          "h3": "Major cap types offered by Brand Your Cap"
+        },
+        {
+          "p": "Brand Your Cap offers a diverse range of customized caps to suit various styles, occasions, and needs. Here are some of the major cap types available:"
+        },
+        {
+          "ul": [
+            "**Snapback Caps:** Snapback caps are a timeless classic, known for their adjustable snap closure at the back. They offer a comfortable fit and are perfect for everyday wear or casual outings. With a flat brim and structured design, snapback caps are a popular choice for those looking to make a bold fashion statement.",
+            "**Flexfit Caps:** Flexfit caps are designed with a stretchable band, offering a snug and comfortable fit without the need for adjustable closures. These caps are perfect for sports and active wear, providing both style and practicality.",
+            "**Baseball Caps:** Baseball caps are a versatile and iconic accessory, originally designed for athletes. They come with a curved brim and an adjustable strap at the back. Baseball caps are suitable for various occasions, from sports events to casual outings.",
+            "**Trucker Hats:** Trucker hats feature a mesh back panel for breathability and a foam front panel for structure. Originally designed for truck drivers, these caps have become a trendy fashion accessory. They are perfect for outdoor activities, providing both style and functionality.",
+            "**Bucket Hats:** Bucket hats are soft hats with a wide, downward-sloping brim. They offer excellent sun protection and are often made from lightweight, breathable materials. Bucket hats have become a popular fashion accessory, adding a casual and trendy touch to any outfit."
+          ]
+        },
+        {
+          "h": "Why is cap customization a trend?"
+        },
+        {
+          "p": "Cap customization has become a popular trend for both men and women because it allows them to express their style and personality in a unique way. Instead of wearing mass-produced caps, people now add embroidery, patches, colors, or even artwork to make them look cool and trendy. Caps are no longer just for sun protection or sports; they've become fashion statements. Social media plays a big role in this trend, as people want to showcase their individuality. That's why a niche brand like Brand Your Cap grew so fast to fill the gap in the customized cap segment."
+        },
+        {
+          "p": "Brand Your Cap offers customization with InkyBay, letting customers design their own caps to match their preferences. The trend is influenced by nostalgia, with vintage designs making a comeback, and practicality, as stylish yet functional caps become essential. Whether casual or sporty, a customized cap adds a personal touch and makes an outfit look more stylish. Overall, the rise of personalized fashion and self-expression has made cap customization a popular and growing trend."
+        },
+        {
+          "h": "Brand Your Cap customization with InkyBay"
+        },
+        {
+          "p": "InkyBay offers an array of extensive options to customize caps. Let's explore how Brand Your Cap is offering Customization in caps with [InkyBay](https://apps.shopify.com/productsdesigner)."
+        },
+        {
+          "h3": "Visual configurator"
+        },
+        {
+          "p": "With visual configurator Brand Your Cap customers can use the visual configurator to design their own caps in real-time. They can choose colors, add text, and select different design elements to create a unique cap."
+        },
+        {
+          "h3": "Dynamic pricing"
+        },
+        {
+          "p": "The app offers dynamic pricing based on the customer's design choices. This means the price will automatically adjust based on the selected colors, sizes, and other customization options."
+        },
+        {
+          "h3": "Advanced product options"
+        },
+        {
+          "p": "Brand Your Cap is offering a wide range of customization options, such as different fonts, clip-art, and custom image uploads. This allows customers to fully personalize their caps to match their style."
+        },
+        {
+          "h": "Conclusion"
+        },
+        {
+          "p": "To conclude, Brand Your Cap sets itself up to be a reliable source for custom caps. Having been configured with the InkyBay, a buyer can customize their Snapback, Basecap, Cap, Trucker Cap, or Beanie cap from the Brand Your Cap. Brand Your Cap doesn't settle with customization only; with InkyBay, they also allow customers to get dynamic pricing for customization. However, if you're looking for a quality product with your personalized touch, Brand Your Cap is just your thing."
+        }
+      ]
+    }
+  ]
+}

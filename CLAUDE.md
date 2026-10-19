@@ -55,6 +55,7 @@ render_blog.py            the blog: content model, validation, thumbnails, every
 render_pricing.py         renders site/pricing/ from src/pricing.json (styles in src/pricing.css)
 render_videos.py          renders site/resources/video-tutorials/ from src/videos.json (styles src/videos.css, thumbnails src/assets/videos/)
 render_affiliate.py       renders site/affiliate/ from src/affiliate.json (styles src/affiliate.css, plus feature/forms/partners.css)
+render_cases.py           renders site/resources/case-studies/ (+ <slug>/) from src/case-studies.json (styles src/cases.css, images src/assets/cases/)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -314,8 +315,8 @@ into the shared template. Never hand-write a menu in the template.
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry; no "All industries" link until an overview page exists).
   Industry pages come later, so `industries/...` links 404 until they exist.
-  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/`, `partners/`
-  and `affiliate/` exist, `resources/case-studies/` comes later; Help center is external to docs.inkybay.com;
+  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/`,
+  `resources/case-studies/`, `partners/` and `affiliate/` exist; Help center is external to docs.inkybay.com;
   promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
   Contact). Contact ("Write to our team.", icon mail) links to `contact/`.
 - Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
@@ -636,6 +637,33 @@ page states no rate, payout, cookie window or minimum.
 - Draft (needs confirming before launch): the four benefits and all five FAQ answers (`"draft": true`), including
   "free to join", "your own referral link", "assets ready to share" and "terms shared when you are approved".
 
+## Case studies
+
+`site/resources/case-studies/` (the list) and `site/resources/case-studies/<slug>/` (one story each), built by
+`render_cases.py` from `src/case-studies.json`, styles in `src/cases.css` (plus feature.css for the breadcrumb), the
+filter JS in the template. Layout from the Figma "Case Studies" frames (Products Designer file, node 3538:13787),
+rebuilt in our system. Content: the 15 English customer stories on productsdesigner.com/clients (same company; every
+one a Shopify store using InkyBay), with images and logos in `src/assets/cases/<slug>/` (WebP, logos trimmed to
+their outline). FOSMX (Spanish) and Print21 (German) are left out until translated.
+1. List hero [white]: breadcrumb Home > Resources > Case studies, two-tone H1, lead.
+2. All case studies [tint]: a filter bar (search brand, Industry and Region selects with only the values in use,
+   "Clear filters" once something is set) and the count ("Showing N of M", 14px), then 3-up cards (2 at 1100px, 1 at
+   640px): the logo on a white frame (white in both themes, logos are drawn for white), location with a pin and the
+   industry pill (14px), brand (20/500), one line, "Read story" (ink, brand arrow) and "Visit store" (external).
+   Filters update as you type, stay in the URL (`?q=&industry=&region=`), and show an empty state with Clear filters.
+3. Story: breadcrumb Home > Case studies > brand, H1 at the article size (44/500), lead (20px muted), then the body
+   (8 cols; 18px / 1.7; H2 28/500, H3; checklists with brand check circles; images at their own ratio, radius 16;
+   quotes like the blog) beside a sticky sidebar (4 cols; above the body on tablets and phones): logo, brand,
+   Industry, Platform, Location, Products, Customization app, "Visit store" (primary). Then "More case studies"
+   [tint]: three cards, same industry first. 4. CTA and footer.
+- A story: `{"slug", "brand", "store", "country", "region", "industry", "products", "summary", "title", "lead",
+  "source", "body": [{"h"} | {"h3"} | {"p"} | {"ul"} | {"img", "alt", "size"} | {"quote", "by"?}]}`; Markdown links
+  and **bold** in text. The build stops on an unknown industry or region, a duplicate slug or a missing image.
+- Editorial choices (yours to change): the H1 headlines, the industry groups (Apparel, Gifts and keepsakes, Print and
+  signs, Food and hospitality, Sporting goods, Accessories) and regions, sentence-case headings, links to
+  productsdesigner.com and the demo store removed, App Store links without tracking, no em dashes. No story claims a
+  measured result; quotes are the merchants' App Store reviews.
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -780,6 +808,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-19: Case studies, list and story pages (render_cases.py, src/case-studies.json, src/cases.css, src/assets/cases/, filter JS, audit): layout from the Figma case study frames in our design system; content is the 15 real English InkyBay customer stories from productsdesigner.com/clients (the Figma's placeholder cards were not used). Decisions: search plus Industry and Region filters kept in the URL; logos sit on a white frame in both themes; FOSMX and Print21 wait for translation; headings in sentence case and no em dashes
 - 2026-10-19: Affiliate page (render_affiliate.py, src/affiliate.json, src/affiliate.css, calculator JS, audit): Shopify-style structure with audience cards, benefits, the kinds of sellers to refer, real App Store facts, an application form and FAQs. Decisions: no InkyBay affiliate terms exist yet, so the page states no numbers; the earnings calculator is built but renders only once `commission` is set in the JSON; benefits and FAQ answers are marked draft
 - 2026-10-18: Privacy policy: says the tutorial videos come from YouTube, load only when a visitor presses play (privacy-enhanced mode) and fall under YouTube's privacy policy; links now mention the YouTube channel; Last updated October 18, 2026
 - 2026-10-18: Video tutorials page (render_videos.py, src/videos.json, src/videos.css, src/assets/videos/, tabs and player JS, audit): the 13 real InkyBay tutorials from the YouTube channel listed on the docs, grouped into five categories, a "Start here" video (Make a custom product from scratch, the newest), category tabs, and a player dialog. Decisions: thumbnails are self-hosted and the YouTube player (privacy-enhanced youtube-nocookie.com) loads only on play, so visiting the page contacts no third party; every play link is a real YouTube link for no-JS visitors; titles rewritten in sentence case ("How to Set Printing Types & Pricing | Inkybay Product Designer" becomes "How to set printing types and pricing")

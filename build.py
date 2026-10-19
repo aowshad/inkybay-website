@@ -21,7 +21,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
-import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate
+import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -298,6 +298,9 @@ write(SITE / "contact" / "index.html", build(render_contact.render("../"), root=
 write(SITE / "pricing" / "index.html", build(render_pricing.render(), root="../", home="../"))
 write(SITE / "affiliate" / "index.html", build(render_affiliate.render(), root="../", home="../"))
 write(SITE / "resources" / "video-tutorials" / "index.html", build(render_videos.render(), root="../../", home="../../"))
+write(SITE / "resources" / "case-studies" / "index.html", build(render_cases.render(), root="../../", home="../../"))
+for s in render_cases.slugs():                      # one page per case study
+    write(SITE / "resources" / "case-studies" / s / "index.html", build(render_cases.render_case(s), root="../../../", home="../../../"))
 write(SITE / "changelog" / "index.html", build(render_changelog.render(), root="../", home="../"))
 for s in render_changelog.slugs():                  # one page per changelog entry
     write(SITE / "changelog" / s / "index.html", build(render_changelog.render_entry(s), root="../../", home="../../"))

@@ -1,0 +1,116 @@
+/* =========================================================
+   CASE STUDIES (render_cases.py, src/case-studies.json)
+   ========================================================= */
+.cshero { padding-block: calc(var(--nav-h) + var(--s-12)) var(--section-y); }
+.cshero__intro { display: grid; gap: var(--s-6); justify-items: start; }
+.cshero__title { font-size: var(--t-h1-inner); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; }
+.cshero__title .h-line { display: block; }
+.cshero__title .h-muted { color: var(--ink-muted); }
+.cshero__lead { max-width: 56ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+
+/* filter bar: search, two selects, clear; the count below */
+.csbar { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-3); }
+.csbar__search { position: relative; flex: 1 1 280px; max-width: 400px; display: flex; align-items: center; }
+.csbar__search svg { position: absolute; left: 16px; width: 20px; height: 20px; color: var(--ink-muted); pointer-events: none; }
+.csbar input, .csbar select { width: 100%; height: 48px; border: 0; border-radius: 12px; font: inherit; font-size: 16px; color: var(--ink);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .2s ease; }
+.csbar input { padding: 0 16px 0 46px; }
+.csbar input::placeholder { color: var(--ink-muted); }
+.csbar__sel { position: relative; flex: 0 1 220px; display: flex; align-items: center; }
+.csbar select { -webkit-appearance: none; appearance: none; padding: 0 44px 0 16px; cursor: pointer; }
+.csbar__sel svg { position: absolute; right: 16px; width: 16px; height: 16px; color: var(--ink-muted); pointer-events: none; }
+.csbar input:hover, .csbar select:hover { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 30%, var(--line)); }
+.csbar input:focus-visible, .csbar select:focus-visible { outline: none; box-shadow: inset 0 0 0 2px var(--brand-500); }
+.csbar__clear, .csempty__btn { height: 48px; padding: 0 16px; border-radius: 12px; font-weight: 500; color: var(--ink);
+  text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: 4px; }
+.csbar__clear:hover, .csempty__btn:hover { text-decoration-color: currentColor; }
+.csbar__clear:focus-visible, .csempty__btn:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 2px; }
+.csbar__clear[hidden] { display: none; }
+.csbar__count { margin: var(--s-5) 0 var(--s-8); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+
+/* cards */
+.csgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+.cscard { display: flex; flex-direction: column; padding: var(--s-4) var(--s-4) var(--s-6); border-radius: 20px; background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .3s ease, transform .5s var(--ease-expo); }
+.cscard[hidden] { display: none; }
+.cscard:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, var(--line)), 0 24px 48px -32px rgba(60, 25, 5, .35); }
+/* logos are drawn for white, so the frame stays white in both themes */
+.cscard__logo { display: grid; place-items: center; height: 184px; padding: var(--s-6); border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgba(20, 16, 12, .06); }
+.cscard__logo img { max-width: 72%; max-height: 88px; width: auto; height: auto; object-fit: contain; }
+.cscard__meta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-2) var(--s-3); margin: var(--s-5) var(--s-2) 0; }
+.cscard__loc { display: inline-flex; align-items: center; gap: 4px; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.cscard__loc svg { width: 16px; height: 16px; color: var(--brand-600); }
+.cscard__ind { padding: 2px 10px; border-radius: 999px; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted);
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.cscard__title { margin: var(--s-3) var(--s-2) 0; font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; }
+.cscard__title a { color: inherit; text-decoration: none; }
+.cscard__title a:hover { text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 4px; }
+.cscard__text { margin: var(--s-2) var(--s-2) 0; color: var(--ink-muted); }
+.cscard__actions { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: var(--s-3); margin: auto var(--s-2) 0; padding-top: var(--s-5); }
+.cscard__more, .cscard__store { display: inline-flex; align-items: center; gap: .35em; font-weight: 500; color: var(--ink);
+  text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 25%, transparent); text-underline-offset: 4px; transition: text-decoration-color .2s ease; }
+.cscard__store { color: var(--ink-muted); }
+.cscard__more:hover, .cscard__store:hover { text-decoration-color: currentColor; }
+.cscard__more svg, .cscard__store svg { width: 16px; height: 16px; color: var(--brand-600); transition: transform .3s var(--ease-expo); }
+.cscard__more:hover svg { transform: translateX(3px); }
+.cscard__store:hover svg { transform: translate(2px, -2px); }
+.csempty { display: grid; justify-items: center; gap: var(--s-2); padding: var(--s-16) var(--s-6); text-align: center; border-radius: 20px;
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
+.csempty[hidden] { display: none; }
+.csempty__title { font-size: 22px; line-height: 1.3; font-weight: 500; letter-spacing: -0.015em; }
+.csempty__text { color: var(--ink-muted); }
+
+/* story */
+.csd { padding-block: calc(var(--nav-h) + var(--s-12)) var(--section-y); }
+.csd__head { display: grid; gap: var(--s-5); justify-items: start; max-width: 860px; margin-bottom: var(--s-12); }
+.csd__title { font-size: var(--t-h1-article); line-height: 1.15; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; }
+.csd__lead { color: var(--ink-muted); font-size: 20px; line-height: 30px; text-wrap: pretty; }
+.csd__grid { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); align-items: start; }
+.csd__body { grid-column: 1 / span 8; grid-row: 1; min-width: 0; font-size: 18px; line-height: 1.7; }
+.csd__body > * + * { margin-top: 1.1em; }
+.csd__body h2 { margin-top: 2em; font-size: 28px; line-height: 1.25; letter-spacing: -0.02em; font-weight: 500; text-wrap: balance; scroll-margin-top: calc(var(--nav-h) + 24px); }
+.csd__body > h2:first-child { margin-top: 0; }
+.csd__body a { color: var(--ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--brand-600) 55%, transparent); text-underline-offset: 3px; }
+.csd__body a:hover { text-decoration-color: var(--brand-600); }
+.csd__fig { margin: 2em 0; }
+.csd__fig img { display: block; width: 100%; height: auto; border-radius: 16px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.cscheck { list-style: none; margin-left: 0; padding: 0; display: grid; gap: var(--s-3); }
+.cscheck li { display: flex; align-items: flex-start; gap: var(--s-3); }
+.cscheck__i { flex: none; display: grid; place-items: center; width: 28px; height: 28px; margin-top: 1px; border-radius: 50%;
+  color: var(--brand-700); background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); }
+.cscheck__i svg { width: 16px; height: 16px; }
+.csd__quote { position: relative; margin: 2em 0; padding-top: var(--s-6); }
+.csd__quote::before { content: "\201C"; position: absolute; left: -4px; top: -18px; font-family: var(--font-head); font-size: 72px; line-height: 1; color: var(--brand-600); opacity: .35; }
+.csd__quote p { font-family: var(--font-head); font-size: 22px; line-height: 32px; letter-spacing: -0.01em; font-weight: 500; }
+.csd__quote figcaption { margin-top: .6em; font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+
+/* sidebar */
+.csside { grid-column: 9 / span 4; grid-row: 1; position: sticky; top: calc(var(--nav-h) + 24px); display: grid; gap: var(--s-5); padding: var(--s-4) var(--s-4) var(--s-6);
+  border-radius: 20px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.csside__logo { display: grid; place-items: center; height: 168px; padding: var(--s-6); border-radius: 12px; background: #fff; box-shadow: inset 0 0 0 1px rgba(20, 16, 12, .06); }
+.csside__logo img { max-width: 76%; max-height: 80px; width: auto; height: auto; object-fit: contain; }
+.csside__brand { margin: 0 var(--s-2); font-family: var(--font-head); font-size: 24px; line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; }
+.csside__facts { margin: 0 var(--s-2); }
+.csside__facts > div { padding: var(--s-3) 0; border-top: 1px solid var(--line); }
+.csside__facts dt { font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.csside__facts dd { margin: 2px 0 0; }
+.csside__facts a { color: var(--ink); text-decoration: underline; text-decoration-color: color-mix(in srgb, var(--ink) 30%, transparent); text-underline-offset: 4px; }
+.csside__facts a:hover { text-decoration-color: currentColor; }
+.csside > .btn { margin: 0 var(--s-2); justify-content: center; }
+
+/* related */
+.csrel__head { display: flex; flex-wrap: wrap; align-items: flex-end; justify-content: space-between; gap: var(--s-4); margin-bottom: var(--head-gap); }
+
+@media (max-width: 1100px) { .csgrid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 960px) {
+  .csd__body, .csside { grid-column: 1 / -1; grid-row: auto; }
+  .csside { position: static; margin-bottom: var(--s-12); }
+}
+@media (max-width: 640px) {
+  .csgrid { grid-template-columns: minmax(0, 1fr); }
+  .csbar__search { max-width: none; flex-basis: 100%; }
+  .csbar__sel { flex: 1 1 140px; }
+  .csd__body { font-size: 17px; }
+  .csd__body h2 { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) { .cscard, .cscard__more svg, .cscard__store svg { transition: none; } .cscard:hover { transform: none; } }
