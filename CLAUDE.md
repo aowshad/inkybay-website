@@ -258,8 +258,9 @@ rendered by `scripts/render_video.py` to `src/assets/video/hero-promo.mp4`, `.we
 build.py copies that folder to `site/assets/video/` (video is never base64-inlined).
 - Story (one master clock, Web Animations API, `window.seek(t)` renders any frame exactly): 0-1.6s "Design it." lands
   letter by letter and a hoodie rises; 1.6-3.6s the editor: a selection box draws round the print area, "Add Text"
-  types on, a swatch rail slides in and the ink wipes orange, navy, dark green; 3.6-6.0s match cuts on the print area
-  (tee, mug, cap, tote, 0.55s each, the design holds still, each product settles from 6deg) with "One design. Every
+  types on, a swatch rail slides in and the ink wipes orange, navy, dark green; 3.6-6.0s cuts between products
+  (tee, mug, cap, tote, 0.55s each, each product's outline fitted into the same 720x700 box and centred in the frame
+  with equal space above and below, the design on each product's own print area, each product settles from 6deg) with "One design. Every
   product."; 6.0-8.2s the tote slides left, the order card rises ("New order #1042", "Custom tote bag", "$24.00") and
   "Print-ready files", "Sent to production" pop with drawn checks; 8.2-10s everything clears through a circle from the
   logo, the InkyBay mark and logotype resolve with "Product customizer for Shopify", and the last 0.6s return to frame 0.
@@ -809,6 +810,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-28: Hero video: the four cut products are fitted to one box and centred in the frame (equal space above and below, text on the left) instead of lining up their print areas, which pushed the tee down (your call); re-rendered
 - 2026-10-19: Homepage Why InkyBay: all four frames use the meadow photo of the last card (your call); why-1..3 removed
 - 2026-10-19: Case study sidebar starts level with the breadcrumb instead of below the header (your call); one grid for header, body and sidebar
 - 2026-10-19: Case studies filter bar: Industry and Region together on the left, search on the right (first on phones) (your call)

@@ -60,7 +60,7 @@
           <svg class="selsvg" id="sel" width="960" height="960"><rect class="box" pathLength="1"/><rect class="h"/><rect class="h"/><rect class="h"/><rect class="h"/></svg>
         </div>
       </div>
-      <!-- every product: placed so its print area's centre is the hoodie's, so the design holds still across the cuts -->
+      <!-- every product: its outline fitted to the same box and centred in the frame; the design sits on each print area -->
       <div class="mover" data-cut="tee"><div class="prod" style="--foot: .91"><img src="../assets/products/tee.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
       <div class="mover" data-cut="mug"><div class="prod" style="--foot: .87"><img src="../assets/products/mug.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
       <div class="mover" data-cut="cap"><div class="prod" style="--foot: .8"><img src="../assets/products/cap.webp" alt=""><div class="prod__shadow"></div><div class="prod__glow"></div><div class="ink" data-ink="#0E5A3A"></div></div></div>
@@ -90,7 +90,9 @@
 (function () {
   var DUR = 10, EXPO = 'cubic-bezier(.16, 1, .3, 1)', INOUT = 'cubic-bezier(.65, 0, .35, 1)', OUT = 'cubic-bezier(.33, 1, .68, 1)';
   var TEXT = 'Add Text';                         // the design: the editor's own default text layer
-  var P = [1049.6, 588], W0 = 210;               // the print centre every cut shares, and the print width of the cut products
+  var C = [1050, 540], FIT = [720, 700];         // every cut product: its outline centred on C (equal space above and below), fitted into FIT
+  // each product's opaque outline in 0-1 image coordinates [x0, y0, x1, y1] (alpha > 20, measured from src/assets/products/*.webp)
+  var BOUNDS = { tee: [.09, .102, .91, .898], mug: [.092, .13, .909, .869], cap: [.09, .2017, .91, .7983], 'tote-bag': [.2667, .09, .7333, .91] };
   var $ = function (s, r) { return (r || document).querySelector(s); }, $$ = function (s, r) { return [].slice.call((r || document).querySelectorAll(s)); };
   var anims = [];
   /* A(el, keyframes, start s, duration s, easing, fill): one paused animation on the master clock.
@@ -102,11 +104,12 @@
   function seek(t) { anims.forEach(function (a) { a.currentTime = t * 1000; }); }
 
   function setup(AREAS) {
-    // products: size each cut product so its print area is W0 wide and centred on P
+    // products: fit each cut product's outline into FIT and centre it on C, so every product sits in the same place
+    // (the design follows each product's own print area)
     $$('[data-cut]').forEach(function (mv) {
-      var ar = AREAS[mv.getAttribute('data-cut')], q = ar.quad;
-      var w = q[1][0] - q[0][0], cx = (q[0][0] + q[1][0]) / 2, cy = (q[0][1] + q[3][1]) / 2, s = W0 / w;
-      mv.style.left = (P[0] - cx * s) + 'px'; mv.style.top = (P[1] - cy * s) + 'px';
+      var b = BOUNDS[mv.getAttribute('data-cut')], bw = b[2] - b[0], bh = b[3] - b[1];
+      var cx = (b[0] + b[2]) / 2, cy = (b[1] + b[3]) / 2, s = Math.min(FIT[0] / bw, FIT[1] / bh);
+      mv.style.left = (C[0] - cx * s) + 'px'; mv.style.top = (C[1] - cy * s) + 'px';
       var pr = $('.prod', mv); pr.style.setProperty('--s', s + 'px'); pr.style.transformOrigin = (cx * 100) + '% ' + (cy * 100) + '%';
       mv._s = s;
     });
@@ -165,7 +168,7 @@
     });
     A(hm, [{ opacity: 1 }, { opacity: 0 }], 3.6, .12, OUT, 'forwards');
 
-    // EVERY PRODUCT 3.6-6.0: match cuts on the print area; each product settles from 6deg
+    // EVERY PRODUCT 3.6-6.0: cuts between products centred in the same place; each product settles from 6deg
     var cuts = $$('[data-cut]');
     cuts.forEach(function (mv, k) {
       var t0 = 3.6 + k * .55, pr = $('.prod', mv);
