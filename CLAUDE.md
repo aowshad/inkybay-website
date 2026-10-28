@@ -607,7 +607,8 @@ visitor presses play.
    and its title (32/500), category and length, a line of text and "Watch video" (primary).
 2. All tutorials [tint]: category tabs with counts (All, Getting started, Products and options, Pricing, Design tool,
    Storefront; pill style, active inverted, `aria-pressed`) and 3-up cards (2 at 960px, 1 on phones): 16:9 thumbnail
-   with a glass play button and the length, the category (14px) and the title (18/500).
+   with a dark frosted-glass play button (white arrow drawn at its optical centre, 3:1 or more over any
+   thumbnail) and the length, the category (14px) and the title (18/500).
 3. Help card [white]: "Can't find what you need?", the help center (external) and Contact support. 4. CTA and footer.
 - Playing: every thumbnail, title and button is a real YouTube link (with JS off, or with a modifier key, it opens
   YouTube). With JS, a click opens a `<dialog>` that creates a youtube-nocookie.com embed (privacy-enhanced, autoplay)
@@ -810,6 +811,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-10-28: Video tutorials play button: the arrow was about 5px right of centre (path drawn right of its box plus a 3px nudge); it is redrawn at its optical centre. The button is now dark frosted glass (50% warm black, blur 14px, white hairline) with a white arrow (your call on glass); the weakest arrow contrast over the 14 thumbnails is 3.7:1, where white glass with an orange arrow could not reach 3:1
 - 2026-10-28: Hero video: the four cut products are fitted to one box and centred in the frame (equal space above and below, text on the left) instead of lining up their print areas, which pushed the tee down (your call); re-rendered
 - 2026-10-19: Homepage Why InkyBay: all four frames use the meadow photo of the last card (your call); why-1..3 removed
 - 2026-10-19: Case study sidebar starts level with the breadcrumb instead of below the header (your call); one grid for header, body and sidebar

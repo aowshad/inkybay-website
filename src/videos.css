@@ -20,14 +20,17 @@
 .vcard__thumb img, .vfeat__thumb img { width: 100%; height: 100%; object-fit: cover; transition: transform .6s var(--ease-expo); }
 .vcard__thumb:hover img, .vfeat__thumb:hover img, .vcard__thumb:focus-visible img { transform: scale(1.03); }
 .vcard__thumb::after, .vfeat__thumb::after { content: ""; position: absolute; inset: 0; background: linear-gradient(180deg, transparent 55%, rgba(10, 8, 6, .35)); pointer-events: none; }
+/* dark frosted glass: white arrow stays at 3:1 or more even over a white thumbnail; the arrow sits at the triangle's
+   optical centre (between its box centre and its centroid), so no margin nudge */
 .vcard__play { position: absolute; z-index: 2; left: 50%; top: 50%; width: 56px; height: 56px; margin: -28px 0 0 -28px; border-radius: 50%;
-  display: grid; place-items: center; color: var(--brand-600); background: rgba(255, 255, 255, .9);
-  -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); box-shadow: 0 12px 30px -10px rgba(10, 8, 6, .5);
+  display: grid; place-items: center; color: #fff; background: rgba(16, 12, 10, .5);
+  -webkit-backdrop-filter: blur(14px) saturate(160%); backdrop-filter: blur(14px) saturate(160%);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .28), inset 0 1px 0 rgba(255, 255, 255, .22), 0 12px 30px -10px rgba(10, 8, 6, .55);
   transition: transform .4s var(--ease-expo), background .2s ease; }
-.vcard__play svg { width: 24px; height: 24px; margin-left: 3px; }
+.vcard__play svg { width: 24px; height: 24px; filter: drop-shadow(0 1px 2px rgba(0, 0, 0, .3)); }
 .vcard__play--lg { width: 72px; height: 72px; margin: -36px 0 0 -36px; }
 .vcard__play--lg svg { width: 30px; height: 30px; }
-.vcard__thumb:hover .vcard__play, .vfeat__thumb:hover .vcard__play { transform: scale(1.08); background: #fff; }
+.vcard__thumb:hover .vcard__play, .vfeat__thumb:hover .vcard__play { transform: scale(1.08); background: rgba(16, 12, 10, .62); }
 .vcard__dur { position: absolute; z-index: 2; right: 10px; bottom: 10px; padding: 2px 8px; border-radius: 8px; font-size: var(--t-small); line-height: var(--t-small-lh);
   font-weight: 500; color: #fff; background: rgba(10, 8, 6, .72); font-variant-numeric: tabular-nums; }
 .vcard__thumb:focus-visible, .vfeat__thumb:focus-visible { outline: 2px solid var(--brand-600); outline-offset: 3px; }

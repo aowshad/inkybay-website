@@ -9,7 +9,7 @@ video, the library on tint (category tabs with counts, 3-up cards), a help card,
 import json, re, sys
 from render_feature import ROOT, E, CHEV_R
 
-PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M8.5 5.9v12.2c0 .8.9 1.3 1.6.8l9.1-6.1c.6-.4.6-1.3 0-1.7l-9.1-6.1c-.7-.4-1.6 0-1.6.9z" fill="currentColor"/></svg>'
+PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7.35 5.9v12.2c0 .8.9 1.3 1.6.8l9.1-6.1c.6-.4.6-1.3 0-1.7l-9.1-6.1c-.7-.4-1.6 0-1.6.9z" fill="currentColor"/></svg>'
 CLOSE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
 EXT = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4h6v6M12 4l-7.5 7.5"/></svg>'
 
