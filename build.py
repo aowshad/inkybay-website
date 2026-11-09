@@ -327,3 +327,6 @@ urls = [u.lstrip("/") for u in urls if "/search/" not in "/" + u]
 sm = "".join(f"<url><loc>{html.escape(SITE_URL + u)}</loc>" + (f"<lastmod>{lastmod[u]}</lastmod>" if lastmod.get(u) else "") + "</url>" for u in urls)
 (SITE / "sitemap.xml").write_text('<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">' + sm + "</urlset>\n")
 print(f"ok -> sitemap.xml ({len(urls)} URLs)")
+# robots.txt: allow everything and point at the sitemap. Crawlers read it only at a domain's root, so it takes effect
+# once the site has its own domain (SITE_BASE=/); under /inkybay-website/ it is harmless
+(SITE / "robots.txt").write_text(f"User-agent: *\nAllow: /\n\nSitemap: {SITE_URL}sitemap.xml\n")

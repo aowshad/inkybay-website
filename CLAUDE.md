@@ -107,6 +107,8 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
   button can render `href="#"` again. Every one of these outside links opens in a new tab (build.py adds
   target="_blank" rel="noopener"). The hero proof pill jumps to the reviews section where a page has one and to
   the App Store reviews elsewhere. `{{ROOT}}` is a page's way back to the site root.
+- `site/robots.txt` (build.py, after the sitemap): allows everything and names `<SITE_URL>sitemap.xml`. Crawlers only
+  read it at a domain's root, so it starts to count once the site has its own domain (`SITE_BASE=/`, `SITE_URL=...`).
 - build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
   preloads the hero poster on the homepage only (`{{HERO_PRELOAD}}`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
@@ -846,6 +848,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: robots.txt (build.py): allow all, point at the sitemap; takes effect on a custom domain
 - 2026-11-09: Overview pages for Features, Industries and Resources (render_hubs.py, src/hubs.json, src/hubs.css, audit): the breadcrumbs that pointed at # (Features on feature pages, Industries on industry pages, Resources on Partners) and the plain-text Resources crumbs (Affiliate, Video tutorials, Case studies) now link to them, "Browse industries" goes to industries/, the footer gains "All features" and "All industries", and product wall cards link to their industry page instead of #. Decisions: cards are built from the menu data so nothing is listed twice; industries 4 up so eight cards make two even rows
 - 2026-11-09: Real merchant quotes: the homepage case study and the nine feature-page quotes ("Store name (draft)" with invented lines) now show real App Store reviews from the case study merchants, one merchant per page, matched to the feature where the review fits (Bar Blades on quote requests, The Photographer's Toolbox on printing methods, Stick N Peel on product options), and every "See full case study" opens that merchant's story. Decision: whole sentences of their own words, no invented lines
 - 2026-11-09: Case studies: two story links pointed at product pages the stores have since removed (T-Shirt Printing UK, Stick N Peel Graphics, both 404); they now link to each store's homepage
