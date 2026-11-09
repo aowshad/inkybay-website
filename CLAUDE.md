@@ -99,6 +99,13 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
   theirs; blog listings get the card as their image. The audit checks one of each tag on every page.
 - Favicon: `src/assets/brand/favicon.svg` (the brand mark), `favicon-32.png` and `apple-touch-icon.png` (180px, square:
   iOS rounds the corners), linked from every page head with a theme colour per scheme (#FFFFFF / #0F1013).
+- Outside links live in one place, `src/site.json` "links" (App Store listing, its reviews, the demo store
+  https://inkybay.myshopify.com/, the five social profiles); templates and JSON write `{{LINK:<key>}}`. Start free
+  trial and Install on Shopify go to the App Store listing, Try live demo to the demo store, See all reviews to the
+  listing's reviews. A button always needs a link (`{{BTN_PRIMARY:label|href}}`); the label-only form is gone so no
+  button can render `href="#"` again. Every one of these outside links opens in a new tab (build.py adds
+  target="_blank" rel="noopener"). The hero proof pill jumps to the reviews section where a page has one and to
+  the App Store reviews elsewhere. `{{ROOT}}` is a page's way back to the site root.
 - build.py copies `src/assets/video/` to `site/assets/video/` (the hero video is served as files, never inlined) and
   preloads the hero poster on the homepage only (`{{HERO_PRELOAD}}`).
 - Repo Settings > Pages > Source must be **GitHub Actions** (not "Deploy from a branch"). There is no root
@@ -235,13 +242,10 @@ Section sub headings are 18px.
 ## Open items (not blocking the lock)
 
 - Draft content to replace: case study quote and store, five reviews marked "Draft review", FAQ answers (verify feature claims).
-- Social links are text; drop in official icons from each platform's brand kit.
+- Social links (LinkedIn, YouTube, X, Instagram, Facebook) are text links to the real profiles; drop in official icons
+  from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
-- Links still `#` until their URLs exist: Start free trial and Install on Shopify (App Store), Try live demo (demo
-  store), See all reviews, See full case study, the footer's social profiles. The App Store
-  listing is https://apps.shopify.com/productsdesigner (the Pricing page's buttons use it); it shows a 4.4 rating
-  from 169 reviews, while the homepage says 4.6. `{{ROOT}}` is a page's way back to the site root.
 
 ## Suggested next steps
 
@@ -736,8 +740,9 @@ Every `product`, `image` and `preview` is a key in `src/products.json`.
 
 **Products**: cards show the product image and name only (no tags); the CTA under them links to the demo store.
 **Merchants**: store preview window, store name and country, quote, "Visit store"; no avatar, no category. Two per row
-(one on phones); the rest behind "Show more stores". Store names marked "Store name (draft)" and the `#demo-store` link
-are placeholders until real ones are supplied.
+(one on phones); the rest behind "Show more stores". Store names marked "Store name (draft)" are placeholders until
+real ones are supplied; a merchant without a real `url` shows no "Visit store" link. The products CTA links to the demo
+store (`{{LINK:demo_store}}`).
 
 **Industry hero: the customizing deck** (`docs/industry-hero-spec.md`, data in `hero.stage`): 3-5 product cards
 (4:5, radius 24, white in both themes) stacked so each back card is 14px higher and 4% narrower; back cards show only
@@ -811,6 +816,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: Real outside links (your URLs): Start free trial and Install on Shopify to the App Store listing, Try live demo and the industry products CTA to the demo store inkybay.myshopify.com, See all reviews to the listing's reviews, the footer's five social profiles (new tab). All kept in src/site.json "links" ({{LINK:key}}); buttons without a link can no longer be built. The proof pill on pages without a reviews section (feature pages, Partners) now goes to the App Store reviews instead of a missing anchor; draft merchants hide "Visit store" until they have a real store
 - 2026-10-28: Video tutorials play button: the arrow was about 5px right of centre (path drawn right of its box plus a 3px nudge); it is redrawn at its optical centre. The button is now dark frosted glass (50% warm black, blur 14px, white hairline) with a white arrow (your call on glass); the weakest arrow contrast over the 14 thumbnails is 3.7:1, where white glass with an orange arrow could not reach 3:1
 - 2026-10-28: Hero video: the four cut products are fitted to one box and centred in the frame (equal space above and below, text on the left) instead of lining up their print areas, which pushed the tee down (your call); re-rendered
 - 2026-10-19: Homepage Why InkyBay: all four frames use the meadow photo of the last card (your call); why-1..3 removed

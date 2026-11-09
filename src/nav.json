@@ -10,7 +10,7 @@
         "title": "See the editor in action",
         "text": "Try InkyBay the way your shoppers will, right in the browser.",
         "cta": "Try live demo",
-        "href": "#",
+        "href": "{{LINK:demo_store}}",
         "image": "mega-promo.webp"
       },
       "footer": [

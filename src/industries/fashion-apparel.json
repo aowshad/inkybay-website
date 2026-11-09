@@ -104,7 +104,7 @@
   "products_cta": {
     "text": "See every product in action in our demo store.",
     "label": "Explore the demo store",
-    "href": "#demo-store"
+    "href": "{{LINK:demo_store}}"
   },
   "stats_heading": [
     "Trusted worldwide.",

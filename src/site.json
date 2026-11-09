@@ -8,5 +8,16 @@
     "image_alt": "InkyBay, the product customizer for Shopify",
     "headline": "Sell personalized products with a live design editor",
     "line": "Product customizer for Shopify"
+  },
+  "links": {
+    "_note": "Every outside URL the site links to; templates and JSON use {{LINK:<key>}}",
+    "app_store": "https://apps.shopify.com/productsdesigner",
+    "reviews": "https://apps.shopify.com/productsdesigner/reviews",
+    "demo_store": "https://inkybay.myshopify.com/",
+    "linkedin": "https://www.linkedin.com/company/30220653/",
+    "youtube": "https://www.youtube.com/@productsdesigner",
+    "x": "https://x.com/inkybay",
+    "instagram": "https://www.instagram.com/inkybayproductscustomizer",
+    "facebook": "https://www.facebook.com/inkybay/"
   }
 }

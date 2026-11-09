@@ -162,7 +162,7 @@ def render(slug):
         <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Features</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
         <h1 class="fhero__title" id="f-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
-        <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}}}}}</div>
+        <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|{{{{LINK:app_store}}}}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|{{{{LINK:demo_store}}}}}}}}</div>
         {proof}
       </div>
       <div class="fhero__vis">
@@ -206,7 +206,7 @@ def render(slug):
     <div class="container fprod">
       <div class="fprod__text">
         <div class="fsec__head">{heading(d["products_heading"], id_="f-prod")}<p class="fsec__lead">{E(d["products_lead"])}</p></div>
-        {{{{BTN_SECONDARY:Browse industries}}}}
+        {{{{BTN_SECONDARY:Browse industries|index.html#industries}}}}
       </div>
       <div class="vwall" aria-label="Products">{vwall}</div>
     </div>

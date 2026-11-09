@@ -63,7 +63,8 @@ def render(slug):
                 f'<div class="imwin__lines"><b></b><s></s><s></s><u></u></div></div></div></div>'
                 f'<div class="imcard__body"><div class="imcard__head"><span class="imcard__name">{E(m["name"])}</span><span class="imcard__where">{E(m["country"])}</span></div>'
                 f'<p class="imcard__quote">{E(m["quote"])}</p>'
-                f'<a class="story__link" href="{E(m["url"])}">Visit store {ARROW}</a></div></li>')
+                + (f'<a class="story__link" href="{E(m["url"])}" target="_blank" rel="noopener">Visit store {ARROW}</a>' if m.get("url", "").startswith("http") else "")   # draft merchants have no store yet
+                + '</div></li>')
 
     more = (f'<div class="imer__more"><button class="btn btn--secondary" type="button" data-show-more aria-controls="imer-grid">Show more stores</button></div>'
             if len(d["merchants"]) > shown else "")
@@ -81,7 +82,7 @@ def render(slug):
         <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Industries</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
         <h1 class="fhero__title" id="i-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
-        <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}}}}}</div>
+        <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|{{{{LINK:app_store}}}}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|{{{{LINK:demo_store}}}}}}}}</div>
         {proof}
       </div>
       <div class="fhero__vis">{deck(h["stage"])}</div>

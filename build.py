@@ -40,12 +40,6 @@ CHEV = '<svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 7.5L
 def label(txt):
     e = html.escape(txt, quote=True)
     return f'<span class="btn__label" aria-hidden="true"><span data-text="{e}">{e}</span></span>'
-def primary(m):
-    e = html.escape(m.group(1), quote=True)
-    return f'<a class="btn btn--primary" href="#" aria-label="{e}">{label(m.group(1))}<span class="btn__icon" aria-hidden="true">{ARROW}{ARROW}</span></a>'
-def secondary(m):
-    e = html.escape(m.group(1), quote=True)
-    return f'<a class="btn btn--secondary" href="#" aria-label="{e}">{label(m.group(1))}</a>'
 USED_ASSETS = set()                     # every image a page references; copied to site/assets/ once all pages are built
 def asset(path, root):
     """An image under src/assets/ as a file URL relative to the page (served and cached, never base64-inlined), with a
@@ -86,7 +80,7 @@ def link(item, base, root):
     if item.get("external"):
         return item["href"], ' target="_blank" rel="noopener"'
     href = item["href"] if "href" in item else f'{base}{item["slug"]}/'   # an empty href is the page root
-    if href.startswith(("#", "http", "mailto:")): return href, ""
+    if href.startswith(("#", "http", "mailto:", "{{LINK:")): return href, ""
     return root + href, ""
 
 def nav_item(item, base, root, current):
@@ -153,6 +147,9 @@ def foot_cols(mid, root):
             lis.append(f'<li><a href="{href}"{extra}{act}>{html.escape(i["title"])}{EXT if i.get("external") else ""}</a></li>')
         cols.append(f'<div class="foot__col{" foot__col--wide" if c.get("wide") else ""}"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
     return "\n          ".join(cols)
+
+SITE_JSON = json.loads((ROOT / "src" / "site.json").read_text())
+LINKS = {k: v for k, v in SITE_JSON["links"].items() if not k.startswith("_")}
 
 INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]
 WHEEL_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
@@ -224,12 +221,13 @@ def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
+    t = re.sub(r"\{\{LINK:(.*?)\}\}", lambda m: html.escape(LINKS[m.group(1)], quote=True), t)   # outside URLs (src/site.json "links")
+    if 'id="reviews-title"' not in t:                     # the proof pill jumps to the reviews; pages without them link to the App Store reviews
+        t = t.replace('href="#reviews-title"', 'href="' + html.escape(LINKS["reviews"], quote=True) + '"')
     t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
     t = t.replace("{{FEATURE_RAIL}}", feature_rail(root))
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\|(.*?)\}\}", lambda m: primary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_PRIMARY:label|href}}
-    t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\}\}", primary, t)
     t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\|(.*?)\}\}", lambda m: secondary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_SECONDARY:label|href}}
-    t = re.sub(r"\{\{BTN_SECONDARY:(.*?)\}\}", secondary, t)
     t = t.replace("{{FORM_ENDPOINT}}", html.escape(FORM_ENDPOINT, quote=True)).replace("{{NEWSLETTER_ENDPOINT}}", html.escape(NEWSLETTER_ENDPOINT, quote=True))
     t = t.replace("{{CHEVRON}}", CHEV)
     t = t.replace("{{ROOT}}", root)   # the page's way back to the site root ("" on the homepage)
@@ -245,9 +243,10 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{IMG:(.*?)\}\}", lambda m: asset(m.group(1), root), t)
     left = re.findall(r"\{\{.*?\}\}", t)
     assert not left, f"unresolved tokens: {left}"
+    urls = "|".join(re.escape(html.escape(u, quote=True)) for u in LINKS.values())   # outside links open in a new tab
+    t = re.sub(r'<a ((?:(?!target=)[^>])*?)href="(%s)"((?:(?!target=)[^>])*)>' % urls, r'<a \1href="\2" target="_blank" rel="noopener"\3>', t)
     return t
 
-SITE_JSON = json.loads((ROOT / "src" / "site.json").read_text())
 
 
 def seo(path, t):
