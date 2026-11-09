@@ -118,10 +118,11 @@
     }
   ],
   "quote": {
-    "text": "Teams and companies order in bulk now because they see the price drop right on the product page.",
-    "name": "Store name (draft)",
-    "location": "City, Country",
-    "initials": "SN"
+    "text": "This is the 1st product I have found that does what it says on the tin! Totally responsive and works on PC/TABLET/MOBILE.",
+    "name": "UK House Signs",
+    "location": "United Kingdom",
+    "initials": "UH",
+    "case": "uk-house-signs"
   },
   "capabilities_heading": [
     "Everything for bulk orders.",

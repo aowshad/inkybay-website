@@ -118,10 +118,11 @@
     }
   ],
   "quote": {
-    "text": "We uploaded our own fonts and logo pack, and every customer design now looks like it came from our studio.",
-    "name": "Store name (draft)",
-    "location": "City, Country",
-    "initials": "SN"
+    "text": "I love this app. It has all I need in terms of customization for products in my new Store, it looks amazing and with almost no effort.",
+    "name": "Pick On Us",
+    "location": "United States",
+    "initials": "PO",
+    "case": "pick-on-us"
   },
   "capabilities_heading": [
     "Everything in your library.",

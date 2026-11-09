@@ -110,10 +110,11 @@
     }
   ],
   "quote": {
-    "text": "Most customers start from a template now. They change the name and date, and the order is ready in minutes.",
-    "name": "Store name (draft)",
-    "location": "City, Country",
-    "initials": "SN"
+    "text": "This app has all the functions I need and really solves the problems for my custom-made business, also the support team is really helpful and efficient, they are very nice and professional.",
+    "name": "Teefever",
+    "location": "Hong Kong",
+    "initials": "TF",
+    "case": "teefever"
   },
   "capabilities_heading": [
     "Everything in templates.",

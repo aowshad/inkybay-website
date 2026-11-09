@@ -45,6 +45,13 @@ ICON = {
 CHEV_R = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 4l4 4-4 4"/></svg>'
 ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 STAR = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.8l2.8 5.8 6.3.9-4.6 4.4 1.1 6.3L12 17.2l-5.6 3 1.1-6.3L2.9 9.5l6.3-.9L12 2.8z"/></svg>'
+def case_slug(d):
+    """The quote is a real merchant's App Store review; it links to that merchant's story in src/case-studies.json."""
+    slug = d["quote"].get("case")
+    known = {c["slug"] for c in json.loads((ROOT / "src" / "case-studies.json").read_text())["cases"]}
+    assert slug in known, f'{d["slug"]}: quote.case "{slug}" is not a story in src/case-studies.json'
+    return slug
+
 PROD = {k: v["label"] for k, v in json.loads((ROOT / "src" / "products.json").read_text()).items()}   # product labels (src/products.json)
 
 
@@ -187,7 +194,7 @@ def render(slug):
         <article class="story">
           {stars5}
           <p class="story__quote">{E(d["quote"]["text"])}</p>
-          <div class="story__foot"><div class="story__who"><span class="story__avatar" aria-hidden="true">{E(d["quote"]["initials"])}</span><div><div class="story__name">{E(d["quote"]["name"])}</div><div class="story__where">{E(d["quote"]["location"])}</div></div></div><a class="story__link" href="#">See full case study {ARROW}</a></div>
+          <div class="story__foot"><div class="story__who"><span class="story__avatar" aria-hidden="true">{E(d["quote"]["initials"])}</span><div><div class="story__name">{E(d["quote"]["name"])}</div><div class="story__where">{E(d["quote"]["location"])}</div></div></div><a class="story__link" href="{{{{ROOT}}}}resources/case-studies/{case_slug(d)}/">See full case study {ARROW}</a></div>
         </article>
       </div>
     </div>

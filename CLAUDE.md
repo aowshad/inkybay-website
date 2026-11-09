@@ -211,8 +211,9 @@ Section sub headings are 18px.
    options (backpack, rows add up, +12 options). Text on products uses the print areas (the notebook cover was added).
    The rail's old mini UIs moved to `src/mini-uis.html` for the feature pages. Phones: card titles are
    min(22px, 5.6vw) so the longest stays on one line at 360px.
-7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The "See full case study"
-   underline draws left to right on hover (0.8s ease-in-out).
+7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The story is T-Shirt
+   Printing UK's App Store review (their words, first three sentences) and "See full case study" opens their story
+   (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
@@ -241,7 +242,7 @@ Section sub headings are 18px.
 
 ## Open items (not blocking the lock)
 
-- Draft content to replace: case study quote and store, five reviews marked "Draft review", FAQ answers (verify feature claims).
+- Draft content to replace: five reviews marked "Draft review", FAQ answers (verify feature claims).
 - Social links (LinkedIn, YouTube, X, Instagram, Facebook) are text links to the real profiles; drop in official icons
   from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
@@ -360,11 +361,16 @@ descriptions and two-line taglines live in `src/features/_index.json` (data only
 | 1 | Hero: breadcrumb, H1, lead, two buttons, proof pill, showcase visual (no comet ring) | `hero`, `hero.visual` | white |
 | 2 | Benefits: 4 open columns, a hairline on top that fills with brand on hover | `benefits` | white |
 | 3 | How it works: two-tone heading (the feature's tagline), 3 zig-zag rows with a hairline checklist | `details_heading`, `details` | dark |
-| 4 | Quote (same dark band) | `quote` | dark |
+| 4 | Quote (same dark band): a real merchant's App Store review linking to their case study | `quote` | dark |
 | 5 | Capabilities: 8 cards (heading one tone on tint) | `capabilities_heading`, `capabilities` | tint |
 | 6 | Works with: text left, vertical product wall right (3 columns, middle runs the other way) | `products_heading`, `products_lead`, `products` | white |
 | 7 | FAQs | `faqs` | tint |
 | 8 | CTA, crowd marquee, footer | from the homepage | dark |
+
+**Quote** (`quote`): `{"text", "name", "location", "initials", "case"}`. The text is a merchant's own words from their
+App Store review (whole sentences, only typos like a lowercase "i" fixed), `case` is the slug of their story in
+`src/case-studies.json` (the build stops on an unknown one) and "See full case study" links to it. Each feature page
+uses a different merchant.
 
 **Hero showcase** (`hero.visual`): `{"layout": "showcase", "image": "<slug>", "ui": "<mini-ui>", "chips": [up to 2]}`
 (a chip is a string or `{"label", "roll"}`, as in the zig-zag). The photo is `src/assets/heroes/<slug>.webp` (1200x1200,
@@ -817,6 +823,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: Real merchant quotes: the homepage case study and the nine feature-page quotes ("Store name (draft)" with invented lines) now show real App Store reviews from the case study merchants, one merchant per page, matched to the feature where the review fits (Bar Blades on quote requests, The Photographer's Toolbox on printing methods, Stick N Peel on product options), and every "See full case study" opens that merchant's story. Decision: whole sentences of their own words, no invented lines
 - 2026-11-09: Case studies: two story links pointed at product pages the stores have since removed (T-Shirt Printing UK, Stick N Peel Graphics, both 404); they now link to each store's homepage
 - 2026-11-09: App Store rating 4.4 everywhere (your call, matches the live listing): the hero proof pill on every page, the homepage reviews summary (stars filled 88%) and the rating stat on the eight industry pages
 - 2026-11-09: Real outside links (your URLs): Start free trial and Install on Shopify to the App Store listing, Try live demo and the industry products CTA to the demo store inkybay.myshopify.com, See all reviews to the listing's reviews, the footer's five social profiles (new tab). All kept in src/site.json "links" ({{LINK:key}}); buttons without a link can no longer be built. The proof pill on pages without a reviews section (feature pages, Partners) now goes to the App Store reviews instead of a missing anchor; draft merchants hide "Visit store" until they have a real store

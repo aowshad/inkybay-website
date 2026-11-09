@@ -118,10 +118,11 @@
     }
   ],
   "quote": {
-    "text": "We print with DTG and embroidery. Now one product offers both, and each method keeps its own price and color limits.",
-    "name": "Store name (draft)",
-    "location": "City, Country",
-    "initials": "SN"
+    "text": "Their app is brilliant. It has been carefully developed with a deep understanding of its customer's diverse, but printing-focused needs. Highly recommended.",
+    "name": "The Photographer's Toolbox",
+    "location": "Australia",
+    "initials": "PT",
+    "case": "the-photographers-toolbox"
   },
   "capabilities_heading": [
     "Everything per print method.",
