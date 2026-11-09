@@ -168,7 +168,7 @@ Section sub headings are 18px.
 
 ## Section order and behaviour
 
-1. **Hero**: proof pill (star icon, 4.6, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, the promo
+1. **Hero**: proof pill (star icon, 4.4, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, the promo
    video (16:9) inside the comet-ring frame with a glass pause/play button (see Hero video). The editor screenshot
    (hero-editor.webp) left the hero; it stays for the Resources mega-menu promo and the feature-page image fallback.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
@@ -245,7 +245,8 @@ Section sub headings are 18px.
 - Social links (LinkedIn, YouTube, X, Instagram, Facebook) are text links to the real profiles; drop in official icons
   from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
-- Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.6 rating must match the live App Store listing.
+- Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.4 rating must match the live App Store listing
+  (4.4 from 169 reviews in November 2026); update the template and the industry JSONs when it changes.
 
 ## Suggested next steps
 
@@ -816,6 +817,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: App Store rating 4.4 everywhere (your call, matches the live listing): the hero proof pill on every page, the homepage reviews summary (stars filled 88%) and the rating stat on the eight industry pages
 - 2026-11-09: Real outside links (your URLs): Start free trial and Install on Shopify to the App Store listing, Try live demo and the industry products CTA to the demo store inkybay.myshopify.com, See all reviews to the listing's reviews, the footer's five social profiles (new tab). All kept in src/site.json "links" ({{LINK:key}}); buttons without a link can no longer be built. The proof pill on pages without a reviews section (feature pages, Partners) now goes to the App Store reviews instead of a missing anchor; draft merchants hide "Visit store" until they have a real store
 - 2026-10-28: Video tutorials play button: the arrow was about 5px right of centre (path drawn right of its box plus a 3px nudge); it is redrawn at its optical centre. The button is now dark frosted glass (50% warm black, blur 14px, white hairline) with a white arrow (your call on glass); the weakest arrow contrast over the 14 thumbnails is 3.7:1, where white glass with an orange arrow could not reach 3:1
 - 2026-10-28: Hero video: the four cut products are fitted to one box and centred in the frame (equal space above and below, text on the left) instead of lining up their print areas, which pushed the tee down (your call); re-rendered
