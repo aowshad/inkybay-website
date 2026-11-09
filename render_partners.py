@@ -67,7 +67,7 @@ def render():
   <section class="fhero phero" aria-labelledby="p-title">
     <div class="container fhero__grid">
       <div class="fhero__text">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Resources</a>{CHEV_R}<span aria-current="page">Partners</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="{{{{ROOT}}}}resources/">Resources</a>{CHEV_R}<span aria-current="page">Partners</span></nav>
         <h1 class="fhero__title" id="p-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|#partner-form}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|#directory}}}}</div>

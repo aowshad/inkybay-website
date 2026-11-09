@@ -51,7 +51,7 @@ def render():
   <section class="ahero" aria-labelledby="a-title">
     <div class="container">
       <div class="ahero__intro">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<span>Resources</span>{CHEV_R}<span aria-current="page">Affiliate program</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="{{{{ROOT}}}}resources/">Resources</a>{CHEV_R}<span aria-current="page">Affiliate program</span></nav>
         <h1 class="ahero__title" id="a-title"><span class="h-line">{E(h["title"][0])}</span> <span class="h-line h-muted">{E(h["title"][1])}</span></h1>
         <p class="ahero__lead">{E(h["lead"])}</p>
         <div class="ahero__actions">{{{{BTN_PRIMARY:{h["primary"]}|#apply}}}}{{{{BTN_SECONDARY:{h["secondary"]}|#apply}}}}</div>

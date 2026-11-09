@@ -48,7 +48,7 @@ def render():
   <section class="vhero" aria-labelledby="v-title">
     <div class="container">
       <div class="vhero__intro">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<span>Resources</span>{CHEV_R}<span aria-current="page">{E(d["hero"]["title"][0])}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="{{{{ROOT}}}}resources/">Resources</a>{CHEV_R}<span aria-current="page">{E(d["hero"]["title"][0])}</span></nav>
         <h1 class="vhero__title" id="v-title"><span class="h-line">{E(d["hero"]["title"][0])}</span> <span class="h-line h-muted">{E(d["hero"]["title"][1])}</span></h1>
         <p class="vhero__lead">{E(d["hero"]["lead"])}</p>
         <div class="vhero__actions"><a class="vlink" href="{d["channel_url"]}" target="_blank" rel="noopener">{E(d["hero"]["channel_cta"])}{EXT}</a><span class="vhero__count">{count(len(vids))}</span></div>

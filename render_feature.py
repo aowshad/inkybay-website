@@ -52,6 +52,7 @@ def case_slug(d):
     assert slug in known, f'{d["slug"]}: quote.case "{slug}" is not a story in src/case-studies.json'
     return slug
 
+PIND = {k: v["industry"] for k, v in json.loads((ROOT / "src" / "products.json").read_text()).items() if v.get("industry")}   # wall cards link to the industry page
 PROD = {k: v["label"] for k, v in json.loads((ROOT / "src" / "products.json").read_text()).items()}   # product labels (src/products.json)
 
 
@@ -152,7 +153,7 @@ def render(slug):
           <div class="frow__vis">{visual(r["visual"], ui)}</div>
         </div>""" for r in d["details"])
     caps = "".join(f'<li class="fcardx"><span class="ficon">{ICON[c["icon"]]}</span><h3>{E(c["title"])}</h3><p>{E(c["text"])}</p></li>' for c in d["capabilities"])
-    card = lambda p: (f'<a class="pcard" href="#"><span class="pcard__img"><img src="{{{{IMG:products/{p}.webp}}}}" alt="" width="440" height="440" loading="lazy"></span>'
+    card = lambda p: (f'<a class="pcard" href="{{{{ROOT}}}}industries/{PIND.get(p, "")}{"/" if PIND.get(p) else ""}"><span class="pcard__img"><img src="{{{{IMG:products/{p}.webp}}}}" alt="" width="440" height="440" loading="lazy"></span>'
                       f'<span class="pcard__name">{E(PROD[p])}{ARROW}</span></a>')
     cols = [d["products"][i::3] for i in range(3)]          # round-robin into three columns
     vwall = "".join(f'<div class="vcol"><div class="vtrack">{"".join(card(p) for p in c)}</div></div>' for c in cols)
@@ -166,7 +167,7 @@ def render(slug):
   <section class="fhero" aria-labelledby="f-title">
     <div class="container fhero__grid">
       <div class="fhero__text">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Features</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="{{{{ROOT}}}}features/">Features</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
         <h1 class="fhero__title" id="f-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|{{{{LINK:app_store}}}}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|{{{{LINK:demo_store}}}}}}}}</div>
@@ -213,7 +214,7 @@ def render(slug):
     <div class="container fprod">
       <div class="fprod__text">
         <div class="fsec__head">{heading(d["products_heading"], id_="f-prod")}<p class="fsec__lead">{E(d["products_lead"])}</p></div>
-        {{{{BTN_SECONDARY:Browse industries|index.html#industries}}}}
+        {{{{BTN_SECONDARY:Browse industries|industries/}}}}
       </div>
       <div class="vwall" aria-label="Products">{vwall}</div>
     </div>

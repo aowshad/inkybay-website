@@ -1,0 +1,72 @@
+/* =========================================================
+   OVERVIEW PAGES: features/, industries/, resources/ (render_hubs.py, src/hubs.json)
+   ========================================================= */
+.hubhero { padding-block: calc(var(--nav-h) + var(--s-12)) var(--section-y); }
+.hubhero__intro { display: grid; gap: var(--s-6); justify-items: start; }
+.hubhero__title { font-size: var(--t-h1-inner); line-height: 1.1; letter-spacing: -0.03em; font-weight: 500; text-wrap: balance; }
+.hubhero__title .h-line { display: block; }
+.hubhero__title .h-muted { color: var(--ink-muted); }
+.hubhero__lead { max-width: 56ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+
+/* cards: the whole card is the link (the title's link stretches over it) */
+.hubgrid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+.hubgrid--4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }   /* industries: 8 cards, two even rows */
+.hubcard { position: relative; display: flex; flex-direction: column; padding: var(--s-4) var(--s-4) var(--s-6); border-radius: 20px; background: var(--bg);
+  box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .3s ease, transform .5s var(--ease-expo); }
+.hubcard:hover, .hubcard:focus-within { transform: translateY(-3px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, var(--line)), 0 24px 48px -32px rgba(60, 25, 5, .35); }
+.hubcard__media { position: relative; display: grid; place-items: center; aspect-ratio: 16 / 10; overflow: hidden; border-radius: 12px;
+  background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+/* features: the hero photo on the warm dark stage (dark in both themes, like the feature heroes) */
+.hubcard--dark .hubcard__media { background: radial-gradient(70% 70% at 20% 10%, rgba(255, 117, 0, .34), transparent 70%),
+  radial-gradient(70% 70% at 25% 100%, rgba(229, 56, 15, .28), transparent 70%), #150E09; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .08); }
+.hubcard__photo { width: 62%; height: auto; filter: drop-shadow(0 18px 24px rgba(0, 0, 0, .45)); transition: transform .6s var(--ease-expo); }
+.hubcard:hover .hubcard__photo { transform: translateY(-4px); }
+/* industries: up to three products, the middle one in front */
+.hubcard__prods { position: relative; display: flex; align-items: center; justify-content: center; width: 100%; height: 100%; }
+.hubcard__prod { width: 46%; height: auto; margin: 0 -9%; filter: drop-shadow(0 14px 18px rgba(60, 25, 5, .22)); transition: transform .6s var(--ease-expo); }
+.hubcard__prods[data-n="3"] .hubcard__prod:nth-child(2) { position: relative; z-index: 1; width: 52%; }
+.hubcard__prods[data-n="3"] .hubcard__prod:not(:nth-child(2)) { width: 38%; }
+.hubcard__prods[data-n="1"] .hubcard__prod { width: 56%; }
+.hubcard:hover .hubcard__prod:nth-child(1) { transform: translateX(-4px) rotate(-3deg); }
+.hubcard:hover .hubcard__prod:nth-child(3), .hubcard:hover .hubcard__prods[data-n="2"] .hubcard__prod:nth-child(2) { transform: translateX(4px) rotate(3deg); }
+.hubcard__body { display: flex; flex-direction: column; flex: 1; padding: var(--s-5) var(--s-2) 0; }
+.hubcard__title { font-size: 22px; line-height: 1.25; font-weight: 500; letter-spacing: -0.015em; }
+.hubcard__title a { color: inherit; text-decoration: none; }
+.hubcard__title a::after { content: ""; position: absolute; inset: 0; border-radius: 20px; }
+.hubcard__title a:focus-visible { outline: none; }
+.hubcard:has(a:focus-visible) { outline: 2px solid var(--brand-600); outline-offset: 3px; }
+.hubcard__text { margin-top: var(--s-2); color: var(--ink-muted); }
+.hubcard__more { display: inline-flex; align-items: center; gap: .35em; margin-top: auto; padding-top: var(--s-5); font-weight: 500; color: var(--ink); }
+.hubcard__more svg { width: 16px; height: 16px; color: var(--brand-600); transition: transform .3s var(--ease-expo); }
+.hubcard:hover .hubcard__more svg { transform: translateX(3px); }
+
+/* resources: one block per menu group */
+.hubgroups { display: grid; gap: var(--s-16); }
+.hubgroup__title { margin-bottom: var(--s-6); font-size: 28px; line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; }
+.hubres__list { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--gutter); }
+.hubres { position: relative; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; column-gap: var(--s-4); row-gap: 4px; align-items: start; align-content: start;
+  padding: var(--s-6); border-radius: 20px; background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .3s ease, transform .5s var(--ease-expo); }
+.hubres:hover, .hubres:focus-within { transform: translateY(-3px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 18%, var(--line)), 0 24px 48px -32px rgba(60, 25, 5, .35); }
+.hubres__icon { grid-row: 1 / span 2; display: grid; place-items: center; width: 48px; height: 48px; border-radius: 12px;
+  color: var(--brand-700); background: color-mix(in srgb, var(--brand-500) 14%, var(--bg)); }
+.hubres__icon svg { width: 24px; height: 24px; }
+.hubres__title { font-size: 20px; line-height: 28px; font-weight: 500; letter-spacing: -0.01em; }
+.hubres__title a { color: inherit; text-decoration: none; }
+.hubres__title a::after { content: ""; position: absolute; inset: 0; border-radius: 20px; }
+.hubres__title a:focus-visible { outline: none; }
+.hubres:has(a:focus-visible) { outline: 2px solid var(--brand-600); outline-offset: 3px; }
+.hubres__text { grid-column: 2; color: var(--ink-muted); }
+.hubres__go { grid-column: 3; grid-row: 1; padding-top: 6px; }
+.hubres__go svg { width: 16px; height: 16px; color: var(--brand-600); transition: transform .3s var(--ease-expo); }
+.hubres:hover .hubres__go svg { transform: translateX(3px); }
+
+@media (max-width: 1100px) { .hubgrid, .hubgrid--4, .hubres__list { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) {
+  .hubgrid, .hubgrid--4, .hubres__list { grid-template-columns: minmax(0, 1fr); }
+  .hubgroups { gap: var(--s-12); }
+  .hubgroup__title { font-size: 24px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .hubcard, .hubres, .hubcard__photo, .hubcard__prod, .hubcard__more svg, .hubres__go svg { transition: none; }
+  .hubcard:hover, .hubcard:focus-within, .hubres:hover, .hubres:focus-within, .hubcard:hover .hubcard__photo, .hubcard:hover .hubcard__prod { transform: none; }
+}

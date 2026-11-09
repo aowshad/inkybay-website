@@ -1,0 +1,36 @@
+{
+  "labels": {
+    "home": "Home",
+    "learn_more": "Learn more",
+    "new_tab": "opens in a new tab"
+  },
+  "features": {
+    "meta": {
+      "title": "Features | InkyBay product customizer for Shopify",
+      "description": "Every InkyBay feature in one place: product setup, quote requests, fonts and clipart, printing methods, add-on pricing, templates, inventory, quantity discounts and product options."
+    },
+    "crumb": "Features",
+    "title": ["Every feature", "for custom products."],
+    "lead": "Everything you need to sell personalized products on Shopify: a live design editor for your shoppers, flexible setup and pricing for you, and print-ready files for every order.",
+    "list_title": "All features"
+  },
+  "industries": {
+    "meta": {
+      "title": "Industries | InkyBay product customizer for Shopify",
+      "description": "InkyBay for every kind of custom store: apparel, jewelry, teamwear, home goods, printing and packaging, gifts, footwear and bags, gadgets and electronics."
+    },
+    "crumb": "Industries",
+    "title": ["Built for", "your kind of store."],
+    "lead": "Whatever you sell, your shoppers can personalize it themselves with a live preview, and your team gets print-ready files for every order.",
+    "list_title": "All industries"
+  },
+  "resources": {
+    "meta": {
+      "title": "Resources | InkyBay product customizer for Shopify",
+      "description": "Guides, video tutorials and customer stories for InkyBay, ways to grow with us as a partner or affiliate, and help when you need it."
+    },
+    "crumb": "Resources",
+    "title": ["Resources", "to learn and grow."],
+    "lead": "Guides, tutorials and customer stories to get more from InkyBay, ways to grow with us, and help whenever you need it."
+  }
+}

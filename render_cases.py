@@ -87,7 +87,7 @@ def render():
   <section class="cshero" aria-labelledby="cs-title">
     <div class="container">
       <div class="cshero__intro">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">{E(L["home"])}</a>{CHEV_R}<span>{E(L["resources"])}</span>{CHEV_R}<span aria-current="page">{E(L["crumb"])}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">{E(L["home"])}</a>{CHEV_R}<a href="{{{{ROOT}}}}resources/">{E(L["resources"])}</a>{CHEV_R}<span aria-current="page">{E(L["crumb"])}</span></nav>
         <h1 class="cshero__title" id="cs-title"><span class="h-line">{E(H["title"][0])}</span> <span class="h-line h-muted">{E(H["title"][1])}</span></h1>
         <p class="cshero__lead">{E(H["lead"])}</p>
       </div>

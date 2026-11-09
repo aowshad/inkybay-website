@@ -79,7 +79,7 @@ def render(slug):
   <section class="fhero ihero" aria-labelledby="i-title">
     <div class="container fhero__grid">
       <div class="fhero__text">
-        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="#">Industries</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
+        <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">Home</a>{CHEV_R}<a href="{{{{ROOT}}}}industries/">Industries</a>{CHEV_R}<span aria-current="page">{E(d["nav_label"])}</span></nav>
         <h1 class="fhero__title" id="i-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions">{{{{BTN_PRIMARY:{h["primary_cta"]}|{{{{LINK:app_store}}}}}}}}{{{{BTN_SECONDARY:{h["secondary_cta"]}|{{{{LINK:demo_store}}}}}}}}</div>

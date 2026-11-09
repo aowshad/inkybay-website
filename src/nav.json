@@ -18,6 +18,10 @@
           "title": "Product",
           "extra": [
             {
+              "title": "All features",
+              "href": "features/"
+            },
+            {
               "title": "Pricing",
               "href": "pricing/"
             }
@@ -42,7 +46,13 @@
       },
       "footer": [
         {
-          "title": "Industries"
+          "title": "Industries",
+          "extra": [
+            {
+              "title": "All industries",
+              "href": "industries/"
+            }
+          ]
         }
       ]
     },

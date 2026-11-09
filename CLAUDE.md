@@ -56,6 +56,7 @@ render_pricing.py         renders site/pricing/ from src/pricing.json (styles in
 render_videos.py          renders site/resources/video-tutorials/ from src/videos.json (styles src/videos.css, thumbnails src/assets/videos/)
 render_affiliate.py       renders site/affiliate/ from src/affiliate.json (styles src/affiliate.css, plus feature/forms/partners.css)
 render_cases.py           renders site/resources/case-studies/ (+ <slug>/) from src/case-studies.json (styles src/cases.css, images src/assets/cases/)
+render_hubs.py            renders the overview pages site/features/, site/industries/, site/resources/ (copy src/hubs.json, styles src/hubs.css)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -313,15 +314,14 @@ into the shared template. Never hand-write a menu in the template.
   `"position"` sets its `object-position` when the subject is not centred in the 16:10 crop) or `"visual": "video"`.
 - Footer: a menu's `"footer"` list renders its footer columns (`{{FOOT_COLS:<id>}}` in the template):
   `{"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?}`. Footer link copy comes from the same data as the menus.
-  Footer columns: Product (all nine feature pages from `_index.json` plus Pricing, `"wide"`: 3 of 12 columns so every
+  Footer columns: Product (all nine feature pages from `_index.json`, then "All features" and Pricing, `"wide"`: 3 of 12 columns so every
   name fits one line at 1440), Industries (all eight industry pages), Resources and Get help; the brand block takes 3
   columns, the others 2. From 961 to 1100px the brand gets its own row and the four columns share it; phones show two
   per row.
 - Menus: Features (grid, `src/features/_index.json`, base `features/`, footer: "Product" with every feature and Pricing,
   which links to `pricing/`, like the navbar's Pricing);
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
-  footer: every industry; no "All industries" link until an overview page exists).
-  Industry pages come later, so `industries/...` links 404 until they exist.
+  footer: every industry, then "All industries" to the overview page `industries/`).
   Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/`,
   `resources/case-studies/`, `partners/` and `affiliate/` exist; Help center is external to docs.inkybay.com;
   promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
@@ -678,6 +678,29 @@ their outline). FOSMX (Spanish) and Print21 (German) are left out until translat
   productsdesigner.com and the demo store removed, App Store links without tracking, no em dashes. No story claims a
   measured result; quotes are the merchants' App Store reviews.
 
+## Overview pages (Features, Industries, Resources)
+
+`site/features/`, `site/industries/` and `site/resources/`, built by `render_hubs.py`. Only the hero copy lives in
+`src/hubs.json`; the cards come from the data the menus use (`src/features/_index.json`, `src/industries/_index.json`
+plus `src/products.json`, the Resources groups in `src/nav.json`), so a new feature, industry or resource shows up
+here with no extra work. Styles in `src/hubs.css`; the shell, CTA and footer come from the homepage.
+- Hero [white]: breadcrumb Home > Features (or Industries, Resources), two-tone H1 (56/500), lead; Features and
+  Industries add Start free trial and Try live demo.
+- Features [tint]: nine cards, 3 up (2 at 1100px, 1 at 640px): the feature's hero photo (`heroes/<slug>.webp`) on the
+  warm dark stage (dark in both themes, like the feature heroes), title (22/500), the `short` line, "Learn more".
+- Industries [tint]: eight cards, 4 up (2 at 1100px, 1 at 640px): up to three of the industry's products from
+  `products.json` on the light surface (the middle one in front), title, `short`, "Learn more". Only industries with
+  a page get a card.
+- Resources [tint]: one block per menu group (Learn, Grow with InkyBay, Get help) with a 28px title and 3-up cards: the
+  menu icon in a brand-tinted tile, title (20/500), `short`, an arrow (arrow-out and a new tab for Help center; Live
+  chat keeps `data-action="live-chat"`).
+- Cards are whole-card links (the title's link stretches over the card), lift on hover or keyboard focus and stay
+  still with reduced motion.
+- What links here: the breadcrumbs of every feature page (Features), industry page (Industries), and the Partners,
+  Affiliate, Video tutorials and Case studies pages (Resources); "Browse industries" on the feature pages; the
+  footer's "All features" and "All industries". The product wall cards on feature pages link to each product's
+  industry page.
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -823,6 +846,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: Overview pages for Features, Industries and Resources (render_hubs.py, src/hubs.json, src/hubs.css, audit): the breadcrumbs that pointed at # (Features on feature pages, Industries on industry pages, Resources on Partners) and the plain-text Resources crumbs (Affiliate, Video tutorials, Case studies) now link to them, "Browse industries" goes to industries/, the footer gains "All features" and "All industries", and product wall cards link to their industry page instead of #. Decisions: cards are built from the menu data so nothing is listed twice; industries 4 up so eight cards make two even rows
 - 2026-11-09: Real merchant quotes: the homepage case study and the nine feature-page quotes ("Store name (draft)" with invented lines) now show real App Store reviews from the case study merchants, one merchant per page, matched to the feature where the review fits (Bar Blades on quote requests, The Photographer's Toolbox on printing methods, Stick N Peel on product options), and every "See full case study" opens that merchant's story. Decision: whole sentences of their own words, no invented lines
 - 2026-11-09: Case studies: two story links pointed at product pages the stores have since removed (T-Shirt Printing UK, Stick N Peel Graphics, both 404); they now link to each store's homepage
 - 2026-11-09: App Store rating 4.4 everywhere (your call, matches the live listing): the hero proof pill on every page, the homepage reviews summary (stars filled 88%) and the rating stat on the eight industry pages

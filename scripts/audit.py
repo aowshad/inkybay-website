@@ -176,6 +176,7 @@ def industry_slugs():
 
 def page_path(slug):
     if slug == "homepage": return ROOT / "site/index.html"
+    if slug in ("features", "industries", "resources"): return ROOT / f"site/{slug}/index.html"   # overview pages
     if slug == "404": return ROOT / "site/404.html"
     if slug == "partners": return ROOT / "site/partners/index.html"
     if slug == "contact": return ROOT / "site/contact/index.html"
@@ -655,12 +656,12 @@ async def check_menus(b, slug, path):
 def main():
     args = sys.argv[1:]
     if args == ["--all"]:
-        args = (["homepage", "404", "partners", "contact", "pricing", "changelog", "changelog/a-new-inkybay-website", "video-tutorials", "case-studies", "case-studies/jostens-kinderkraft", "affiliate", "privacy-policy", "terms-of-service"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
+        args = (["homepage", "404", "features", "industries", "resources", "partners", "contact", "pricing", "changelog", "changelog/a-new-inkybay-website", "video-tutorials", "case-studies", "case-studies/jostens-kinderkraft", "affiliate", "privacy-policy", "terms-of-service"] + sorted(x.stem for x in (ROOT / "src/features").glob("*.json") if not x.name.startswith("_"))
                 + industry_slugs() + ["blog", "blog/" + blog_flagship(), "blog/category/print-prep", "blog/tag/b2b"])
     if not args:
         print(__doc__); sys.exit(1)
     for slug in args:
-        if slug in ("404", "partners", "contact", "pricing", "changelog", "video-tutorials", "affiliate", "privacy-policy", "terms-of-service") or slug.startswith(("blog", "changelog/", "case-studies")):
+        if slug in ("404", "features", "industries", "resources", "partners", "contact", "pricing", "changelog", "video-tutorials", "affiliate", "privacy-policy", "terms-of-service") or slug.startswith(("blog", "changelog/", "case-studies")):
             asyncio.run(check_page(slug, None))
         elif slug in industry_slugs():
             check_industry_json(slug); asyncio.run(check_page(slug, None))
