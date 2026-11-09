@@ -817,6 +817,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-09: Case studies: two story links pointed at product pages the stores have since removed (T-Shirt Printing UK, Stick N Peel Graphics, both 404); they now link to each store's homepage
 - 2026-11-09: App Store rating 4.4 everywhere (your call, matches the live listing): the hero proof pill on every page, the homepage reviews summary (stars filled 88%) and the rating stat on the eight industry pages
 - 2026-11-09: Real outside links (your URLs): Start free trial and Install on Shopify to the App Store listing, Try live demo and the industry products CTA to the demo store inkybay.myshopify.com, See all reviews to the listing's reviews, the footer's five social profiles (new tab). All kept in src/site.json "links" ({{LINK:key}}); buttons without a link can no longer be built. The proof pill on pages without a reviews section (feature pages, Partners) now goes to the App Store reviews instead of a missing anchor; draft merchants hide "Visit store" until they have a real store
 - 2026-10-28: Video tutorials play button: the arrow was about 5px right of centre (path drawn right of its box plus a 3px nudge); it is redrawn at its optical centre. The button is now dark frosted glass (50% warm black, blur 14px, white hairline) with a white arrow (your call on glass); the weakest arrow contrast over the 14 thumbnails is 3.7:1, where white glass with an orange arrow could not reach 3:1
