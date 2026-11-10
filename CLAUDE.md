@@ -469,11 +469,12 @@ keeps one field per row.
    size, no second line), lead, "Become a partner" (to the form) and "Browse partners" (to the directory); visual: the
    first six partners' logo tiles orbiting the 3D InkyBay logo (`src/assets/brand/inkybay-3d.webp`, 480px, a soft
    drop shadow, no glass tile; your logo) (90s, upright, the core and chips float; static with reduced motion).
-2. Directory [tint]: tabs All / App / Service / Theme / Others with live counts (the blog pill style: 14px, muted on
-   surface, hairline, active inverted), a search on name and description,
+2. Directory [tint]: tabs All plus one per partner type that has partners (App, Service, Theme, Others; a type with no
+   partners gets no tab, so today: All, App providers, Theme providers) with live counts (14px pills on the card fill,
+   white in light mode like the search box, hairline, active inverted), a search on name and description,
    3-up cards (logo tile, name, type badge, 2-line description, "Learn more" external with new tab and noopener); a
-   `featured` partner is listed first but looks like every other card. Every card lifts with a brand edge on hover or
-   keyboard focus. The first 6, then "Show more partners"; an empty state with "Clear filters". Filtering fades and
+   `featured` partner is listed first but looks like every other card. On hover or keyboard focus a card gets a brand
+   stroke and a soft glow only, no movement (your call). The first 6, then "Show more partners"; an empty state with "Clear filters". Filtering fades and
    slides cards in.
 3. Why partner [dark]: four benefit columns (feature-page benefit style) on a dark band, so the page reads white,
    tint, dark, tint, white, dark.
@@ -487,10 +488,14 @@ keeps one field per row.
 - Dark mode: both tint sections (directory and Partner with InkyBay) use the project's warm blacks, not the cool page
   black: cards and the form card #1E150E, fields and step circles #261B13, white 10% hairlines, and the warm accent
   #FFB46B for the How it works label and step numbers (the red brand-700 loses contrast on dark).
-- Logos: `src/assets/partners/logo-NN.webp` (192px), set per partner with `"logo"`; without one a monogram tile shows.
-- Demo and draft: all 12 partners are fictional demo entries (`"demo": true`, links to example.com) wearing the 13
-  supplied partner logos assigned at random, so names and logos do not belong together yet;
-  the benefits and FAQ answers are `"draft": true`. The consent checkbox links to the Privacy policy. The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
+- The directory is the real partner list from productsdesigner.com/partners (the same company), migrated in November
+  2026: 39 partners in the page's order (37 apps, 2 theme makers: Sales Hunter Themes and Omni Themes), each with its
+  own description (em dashes replaced by commas, otherwise their words), its link exactly as published (some are
+  affiliate or referral links, kept) and its logo. The hero orbit shows the first six. To add one, append
+  `{"name", "type", "description", "url", "logo"}` to `src/partners-directory.json`.
+- Logos: `src/assets/partners/<slug>.webp` (192px square WebP; the two wide logos, 17TRACK and Beae, padded with their
+  own background), set per partner with `"logo"`; without one a monogram tile shows.
+- Draft: the benefits and FAQ answers are `"draft": true`. The consent checkbox links to the Privacy policy. The audit checks tabs, search, counts, "Show more", the empty state, blocked empty submits, external links and
   overflow at 390px.
 
 ## Contact page
@@ -848,6 +853,8 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-10: Partners cards and tabs (your call): hover and focus show the brand stroke and glow only, the 4px lift is gone; the filter tabs sit on the white card fill in light mode (like the search box) instead of the grey surface, which was low in contrast on the tint
+- 2026-11-10: Partners: the real directory from productsdesigner.com/partners replaces the 12 fictional demo partners and the 13 unassigned logos: 39 partners (37 apps, 2 theme makers) with their own descriptions, links and logos (192px WebP). Tabs show only types that have partners (All, App providers, Theme providers); the hero chip "Agency" became "Theme provider". Decisions: their wording kept except em dashes (house rule); outbound links kept exactly, including the referral links
 - 2026-11-09: robots.txt (build.py): allow all, point at the sitemap; takes effect on a custom domain
 - 2026-11-09: Overview pages for Features, Industries and Resources (render_hubs.py, src/hubs.json, src/hubs.css, audit): the breadcrumbs that pointed at # (Features on feature pages, Industries on industry pages, Resources on Partners) and the plain-text Resources crumbs (Affiliate, Video tutorials, Case studies) now link to them, "Browse industries" goes to industries/, the footer gains "All features" and "All industries", and product wall cards link to their industry page instead of #. Decisions: cards are built from the menu data so nothing is listed twice; industries 4 up so eight cards make two even rows
 - 2026-11-09: Real merchant quotes: the homepage case study and the nine feature-page quotes ("Store name (draft)" with invented lines) now show real App Store reviews from the case study merchants, one merchant per page, matched to the feature where the review fits (Bar Blades on quote requests, The Photographer's Toolbox on printing methods, Stick N Peel on product options), and every "See full case study" opens that merchant's story. Decision: whole sentences of their own words, no invented lines

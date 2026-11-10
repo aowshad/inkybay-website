@@ -1,112 +1,278 @@
 {
+  "_source": "https://productsdesigner.com/partners/ (the same company's partner list), migrated November 2026; descriptions are each partner's own text, em dashes replaced by commas",
   "partners": [
     {
-      "name": "Northwind Apps",
+      "name": "WowOptions: Custom Product Options App",
       "type": "app",
-      "description": "Order routing and print queue tools that pick up custom orders as soon as they come in.",
-      "url": "https://example.com",
-      "featured": true,
-      "demo": true,
-      "logo": "logo-06.webp"
+      "description": "WowOptions is a no-code Shopify app for custom product options, offering unlimited option sets, conditional logic, and price add-ons.",
+      "url": "https://apps.shopify.com/product-options-app",
+      "logo": "wowoptions.webp"
     },
     {
-      "name": "Lumen Order Tools",
+      "name": "Blockify Fraud Filter & Blocker",
       "type": "app",
-      "description": "Bulk order editing and tagging for stores with many personalized products.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-03.webp"
+      "description": "Block IP address, block country, reduce fraud, filter block bots, fraud orders using a Proxy, Tor & VPN connection by geolocation.",
+      "url": "https://apps.shopify.com/blockify",
+      "logo": "blockify-fraud-filter-blocker.webp"
     },
     {
-      "name": "Brightside Print Sync",
+      "name": "Pixee – Multi Pixel & Meta Ads",
       "type": "app",
-      "description": "Sends finished design files to your print provider and tracks each job.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-07.webp"
+      "description": "Manage Facebook, TikTok & Pinterest pixels, track conversions, and improve CTR with AI-driven Meta Ads recommendations.",
+      "url": "https://apps.shopify.com/pixee-multi-facebook-pixels",
+      "logo": "pixee.webp"
     },
     {
-      "name": "Pixel & Pine Studio",
-      "type": "service",
-      "description": "A small design studio that sets up customizable catalogues for apparel brands.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-01.webp"
+      "name": "Alpha Loyalty",
+      "type": "app",
+      "description": "Simple loyalty programs with points, rewards, and VIP tiers that keep customers coming back.",
+      "url": "https://apps.shopify.com/alpha-loyalty",
+      "logo": "alpha-loyalty.webp"
     },
     {
-      "name": "Harbor Lane Agency",
-      "type": "service",
-      "description": "Shopify agency for gift and merch stores, from store setup to launch.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-02.webp"
+      "name": "Parcel Panel Order Tracking",
+      "type": "app",
+      "description": "The #1 Shopify order tracking app, boost loyalty, drive upsells, and last-mile delivery.",
+      "url": "https://apps.shopify.com/parcelpanel",
+      "logo": "parcel-panel-order-tracking.webp"
     },
     {
-      "name": "Copperleaf Commerce",
-      "type": "service",
-      "description": "Freelance team that migrates stores and configures product options.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-09.webp"
+      "name": "Estimated Delivery Date – ETA",
+      "type": "app",
+      "description": "Reduce delivery-date inquiries and lower cart abandonment with the Estimated Delivery Date app.",
+      "url": "https://apps.shopify.com/estimated-delivery-days",
+      "logo": "estimated-delivery-date.webp"
     },
     {
-      "name": "Juniper Themes",
+      "name": "Uppush - Abandoned Cart Recovery & Email Marketing",
+      "type": "app",
+      "description": "Boost Sales 10x and Save 10x with Abandoned Cart Recovery and Email Marketing. An extremely attractive Pay-as-You-Go pricing model. Built for Shopify.",
+      "url": "https://apps.shopify.com/pushup-notification-marketing",
+      "logo": "uppush.webp"
+    },
+    {
+      "name": "MP Instagram Feed",
+      "type": "app",
+      "description": "Boost trust with shoppable Instagram & TikTok galleries, show real customer photos right on your store.",
+      "url": "https://apps.shopify.com/mageplaza-instagram-feed",
+      "logo": "mp-instagram-feed.webp"
+    },
+    {
+      "name": "Theme Scheduler by Maestro",
+      "type": "app",
+      "description": "Sections & blocks content scheduler, banners & images, or theme publishing, set it and forget it!",
+      "url": "https://apps.shopify.com/maestro-theme-scheduler",
+      "logo": "theme-scheduler-by-maestro.webp"
+    },
+    {
+      "name": "Uploadify - Customer Gallery",
+      "type": "app",
+      "description": "Stunning shoppable UGC gallery: customers upload, tag products, auto-show on product pages, filter by fields, and import from Instagram/TikTok/Judge.me.",
+      "url": "https://apps.shopify.com/customer-gallery-pro",
+      "logo": "uploadify.webp"
+    },
+    {
+      "name": "SS – Social media AI Auto Post",
+      "type": "app",
+      "description": "All-in-one AI social media tool to create and post Reels, Stories & Posts, and showcase your Instagram Feed right on your store.",
+      "url": "https://apps.shopify.com/social-chic",
+      "logo": "ss.webp"
+    },
+    {
+      "name": "Essential Announcement Bar",
+      "type": "app",
+      "description": "Promote offers & flash sales with dynamic scrolling, sticky & rotating announcement bars that convert.",
+      "url": "https://apps.shopify.com/essential-announcement-bar",
+      "logo": "essential-announcement-bar.webp"
+    },
+    {
+      "name": "Lyros",
+      "type": "app",
+      "description": "AI-powered Shopify app that auto-generates product tags, SEO meta, & image alt text, bulk-edit and publish in minutes.",
+      "url": "https://apps.shopify.com/smart-product-tagger",
+      "logo": "lyros.webp"
+    },
+    {
+      "name": "Ⓩ Facebook Pixels TikTok Pixel",
+      "type": "app",
+      "description": "Boost ROAS & retargeting ads via multiple Facebook, Meta, TikTok, Snapchat Pixel with Conversion API & Server Side tracking.",
+      "url": "https://apps.shopify.com/facebook-multiple-pixel",
+      "logo": "facebook-pixels-tiktok-pixel.webp"
+    },
+    {
+      "name": "TrustShop: Product Reviews",
+      "type": "app",
+      "description": "Collect authentic reviews and photos to build trust and boost sales, now smarter with AI.",
+      "url": "https://apps.shopify.com/trustshop",
+      "logo": "trustshop.webp"
+    },
+    {
+      "name": "Rebolt – Bundle Product",
+      "type": "app",
+      "description": "Rebolt Bundle Products boosts sales and AOV with customizable bundles, mix-and-match options, and attractive discounts.",
+      "url": "https://apps.shopify.com/bundle-products-by-thimatic",
+      "logo": "rebolt.webp"
+    },
+    {
+      "name": "Sales Hunter Themes",
       "type": "theme",
-      "description": "Clean Shopify themes with product pages built around a live preview.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-12.webp"
+      "description": "Provides stunning, high-performing Shopify themes that focus on serving scaling, branded stores in specific industries and niches.",
+      "url": "https://saleshunterthemes.com/pages/all-themes",
+      "logo": "sales-hunter-themes.webp"
     },
     {
-      "name": "Quarry & Co Themes",
+      "name": "Transtore: Language & Currency Solution",
+      "type": "app",
+      "description": "Deliver a global shopping experience, AI translations, real-time currency & geolocation conversion for any market.",
+      "url": "https://apps.shopify.com/transtore-language-and-currency",
+      "logo": "transtore.webp"
+    },
+    {
+      "name": "Boostify Sections",
+      "type": "app",
+      "description": "Offer 50+ free, fully customizable Shopify sections with new layouts added weekly, no coding needed.",
+      "url": "https://apps.shopify.com/boostify-section",
+      "logo": "boostify-sections.webp"
+    },
+    {
+      "name": "MaxBundle – Product Bundles",
+      "type": "app",
+      "description": "Boost your sales and maximize your profits with this all-in-one bundling app.",
+      "url": "https://apps.shopify.com/maxbundle-product-bundles",
+      "logo": "maxbundle.webp"
+    },
+    {
+      "name": "Growave: Loyalty & Wishlist",
+      "type": "app",
+      "description": "A flexible, all-in-one retention platform for Shopify brands, combining loyalty programs, referrals, reviews, and more to drive customer engagement and growth.",
+      "url": "https://apps.shopify.com/growave",
+      "logo": "growave.webp"
+    },
+    {
+      "name": "Subi Subscriptions App",
+      "type": "app",
+      "description": "Subscriptions app for recurring payments, memberships, boxes, bundles, and abonnements, without code.",
+      "url": "https://apps.shopify.com/subi-subscriptions-memberships",
+      "logo": "subi-subscriptions-app.webp"
+    },
+    {
+      "name": "Easy Subscriptions App",
+      "type": "app",
+      "description": "A powerful subscription management platform designed to help e-commerce businesses boost customer retention and streamline recurring revenue with ease.",
+      "url": "https://apps.shopify.com/easy-subscription",
+      "logo": "easy-subscriptions-app.webp"
+    },
+    {
+      "name": "Moose: Live Chat WhatsApp, FAQ",
+      "type": "app",
+      "description": "Omnichannel support with Live chat, WhatsApp, FAQ & Order Tracking in one widget. Support customers easier, better, faster!",
+      "url": "https://apps.shopify.com/moosedesk",
+      "logo": "moose.webp"
+    },
+    {
+      "name": "Utterbond Subscriptions",
+      "type": "app",
+      "description": "Easily manage and grow your Shopify subscriptions with Utterbond, flexible plans, 0% fees, and a 30-day free trial.",
+      "url": "https://apps.shopify.com/utterbond-subscriptions",
+      "logo": "utterbond-subscriptions.webp"
+    },
+    {
+      "name": "Slider Revolution & Sections",
+      "type": "app",
+      "description": "Create Shopify sections, sliders, and banners effortlessly using 600+ templates without any coding.",
+      "url": "https://apps.shopify.com/revolution-slider",
+      "logo": "slider-revolution-sections.webp"
+    },
+    {
+      "name": "TrackingMore Order Tracking",
+      "type": "app",
+      "description": "An all-in-one shipment tracking platform that integrates with 1,300+ carriers globally, real-time tracking, automated notifications, and a single dashboard.",
+      "url": "https://affiliate.trackingmore.net/?ref=Z2eaU5cM",
+      "logo": "trackingmore-order-tracking.webp"
+    },
+    {
+      "name": "SEOAnt: AI SEO & Image Optimizer",
+      "type": "app",
+      "description": "All-in-one SEO booster tools to increase traffic and sales, improve site speed and Google rankings.",
+      "url": "https://share.seoant.com/app/1166eb98d90871cX80",
+      "logo": "seoant.webp"
+    },
+    {
+      "name": "Gojiberry Survey & Feedback",
+      "type": "app",
+      "description": "Gojiberry boosts CVR with pre/post-purchase surveys and quizzes.",
+      "url": "https://go.edocode.co.jp/3QpQHZR",
+      "logo": "gojiberry-survey-feedback.webp"
+    },
+    {
+      "name": "Omni Themes",
       "type": "theme",
-      "description": "Bold themes for print shops and custom merch stores.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-05.webp"
+      "description": "Transform your Shopify store in one week with optimized costs! Free theme setup and design consultation!",
+      "url": "https://themes.shopify.com/themes/eurus",
+      "logo": "omni-themes.webp"
     },
     {
-      "name": "Saltmarsh Theme Works",
-      "type": "theme",
-      "description": "Lightweight themes tuned for fast product pages on mobile.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-10.webp"
+      "name": "Doran Product Reviews",
+      "type": "app",
+      "description": "FREE app to collect customer reviews with videos and photos.",
+      "url": "https://apps.shopify.com/doran-reviews-questions",
+      "logo": "doran-product-reviews.webp"
     },
     {
-      "name": "Fernhill Print Supply",
-      "type": "other",
-      "description": "Blank apparel and print supplies for custom product stores.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-08.webp"
+      "name": "DH SEO – All-in-one SEO Booster",
+      "type": "app",
+      "description": "DH SEO helps you optimize your website with the most exhaustive SEO elements to rank higher on Google and gain more organic traffic with one click.",
+      "url": "https://apps.shopify.com/dhseo",
+      "logo": "dh-seo.webp"
     },
     {
-      "name": "Cobalt Fulfilment",
-      "type": "other",
-      "description": "Print-on-demand fulfilment for personalized orders, shipped worldwide.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-13.webp"
+      "name": "Customer Dashboard Pro",
+      "type": "app",
+      "description": "The only app offering seamless support for both the Shopify New Customer Accounts and the Classic Customer Accounts.",
+      "url": "https://apps.shopify.com/customer-dashboard-pro",
+      "logo": "customer-dashboard-pro.webp"
     },
     {
-      "name": "Maple Row Packaging",
-      "type": "other",
-      "description": "Custom boxes and mailers for gift and merch brands.",
-      "url": "https://example.com",
-      "featured": false,
-      "demo": true,
-      "logo": "logo-11.webp"
+      "name": "AI Search, Filter & Discovery",
+      "type": "app",
+      "description": "Boost offers complete solutions for upgrading Site Search, Recommendations, Merchandising, and Navigation using AI.",
+      "url": "https://apps.shopify.com/product-filter-search",
+      "logo": "ai-search-filter-discovery.webp"
+    },
+    {
+      "name": "17TRACK Order, PayPal Tracking",
+      "type": "app",
+      "description": "Global Order Tracking to reduce support requests, improve shopper experience, & upsell new products.",
+      "url": "https://apps.shopify.com/17track",
+      "logo": "17track-order-paypal-tracking.webp"
+    },
+    {
+      "name": "DSers – AliExpress Dropshipping",
+      "type": "app",
+      "description": "AliExpress Dropshipping Solution to place orders, find suppliers and import products at scale.",
+      "url": "https://apps.shopify.com/dsers",
+      "logo": "dsers.webp"
+    },
+    {
+      "name": "Beae Page Builder",
+      "type": "app",
+      "description": "Create pages and build up your stores to grow sales with a powerful drag-and-drop page builder.",
+      "url": "https://apps.shopify.com/beae",
+      "logo": "beae-page-builder.webp"
+    },
+    {
+      "name": "Toastibar Sales Popup & Timers",
+      "type": "app",
+      "description": "Build trust and boost sales by showing Sales, Cart, Online & Recent Visitors, Product Reviews, Order & Cart Summaries, Low Inventory Notifications, and more.",
+      "url": "https://apps.shopify.com/mps-sales-notification",
+      "logo": "toastibar-sales-popup-timers.webp"
+    },
+    {
+      "name": "Ako Loyalty Retargeting CRM",
+      "type": "app",
+      "description": "Increase repeat purchases and conversions with a loyalty program, Shopify store credits, and Instagram automation.",
+      "url": "https://apps.shopify.com/ako-retargeting",
+      "logo": "ako-loyalty-retargeting-crm.webp"
     }
   ]
 }

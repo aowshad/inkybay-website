@@ -487,7 +487,7 @@ async def check_partners(b, path):
         if st["shown"] != total or st["more"]: bad(slug, f"{w}px: 'Show more' does not reveal all {total} partners")
         await pg.click('.pdir__tab[data-type="theme"]'); st = await pg.evaluate(S)
         if st["types"] != ["theme"] or st["shown"] != st["counts"]["theme"]: bad(slug, f"{w}px: the Theme providers tab does not filter the cards ({st})")
-        await pg.click('.pdir__tab[data-type="all"]'); await pg.fill(".pdir__search input", "agency"); st = await pg.evaluate(S)
+        await pg.click('.pdir__tab[data-type="all"]'); await pg.fill(".pdir__search input", "subscription"); st = await pg.evaluate(S)
         if not 0 < st["shown"] < total or st["counts"]["all"] != st["shown"]: bad(slug, f"{w}px: search does not filter cards and counts ({st})")
         await pg.fill(".pdir__search input", "zzzz-no-match"); st = await pg.evaluate(S)
         if st["shown"] or not st["empty"]: bad(slug, f"{w}px: no empty state when nothing matches")

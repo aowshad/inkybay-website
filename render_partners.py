@@ -44,7 +44,8 @@ def render():
     # directory
     tabs = (f'<button class="pdir__tab" type="button" role="tab" aria-selected="true" data-type="all">{E(dr["all"])} <span class="pdir__count">{len(partners)}</span></button>'
             + "".join(f'<button class="pdir__tab" type="button" role="tab" aria-selected="false" data-type="{t["id"]}">{E(t["label"])} '
-                      f'<span class="pdir__count">{sum(p["type"] == t["id"] for p in partners)}</span></button>' for t in c["types"]))
+                      f'<span class="pdir__count">{sum(p["type"] == t["id"] for p in partners)}</span></button>' for t in c["types"]
+                      if any(p["type"] == t["id"] for p in partners)))   # a type with no partners gets no tab
     cards = "".join(
         f'<li class="ptr" data-type="{E(p["type"])}" data-q="{E((p["name"] + " " + p["description"]).lower())}">'
         f'<span class="ptr__logo{logo_cls(p, k)}" aria-hidden="true">{logo(p)}</span>'
