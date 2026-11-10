@@ -171,7 +171,7 @@ Section sub headings are 18px.
 
 ## Section order and behaviour
 
-1. **Hero**: proof pill (star icon, 4.4, 169 reviews; "App Store" hidden under 480px), word-by-word headline landing, the promo
+1. **Hero**: proof pill (star icon, 4.5, 168 reviews; "App Store" hidden under 480px), word-by-word headline landing, the promo
    video (16:9) inside the comet-ring frame with a glass pause/play button (see Hero video). The editor screenshot
    (hero-editor.webp) left the hero; it stays for the Resources mega-menu promo and the feature-page image fallback.
 2. **Logos**: marquee inside the container with edge fades; second set cloned by JS; pauses on hover.
@@ -217,7 +217,9 @@ Section sub headings are 18px.
 7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The story is T-Shirt
    Printing UK's App Store review (their words, first three sentences) and "See full case study" opens their story
    (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
-8. **Reviews**: infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
+8. **Reviews**: six real 5-star App Store reviews (Fancy Fanny, C4 Design Studio, Björnskog, Coastal Cowboys, Candle
+   Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
+   country as on the listing; infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
@@ -245,12 +247,13 @@ Section sub headings are 18px.
 
 ## Open items (not blocking the lock)
 
-- Draft content to replace: five reviews marked "Draft review", FAQ answers (verify feature claims).
+- Draft content to replace: FAQ answers (verify feature claims).
 - Social links (LinkedIn, YouTube, X, Instagram, Facebook) are text links to the real profiles; drop in official icons
   from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
-- Stats (10,000+ merchants, 50,000+ products daily, 169 reviews) and the 4.4 rating must match the live App Store listing
-  (4.4 from 169 reviews in November 2026); update the template and the industry JSONs when it changes.
+- Stats (10,000+ merchants, 50,000+ products daily, 168 reviews) and the 4.5 rating must match the live App Store listing
+  (4.5 from 168 reviews on November 10, 2026); update the template (proof pill, reviews summary, case study stat) and
+  the industry JSONs when it changes.
 
 ## Suggested next steps
 
@@ -853,6 +856,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-10: Reviews checked against the App Store listing: the rating is now 4.5 from 168 reviews (was 4.4 from 169) on the proof pill, the reviews summary (stars 90%), the case study stat and the industry pages; the first review card showed Fancy Fanny's review under C4 Design Studio's name (fixed), and the five draft reviews are replaced by real 5-star reviews from Finland, Australia, the US and Canada (also on the industry pages, which reuse the section)
 - 2026-11-10: Partners cards and tabs (your call): hover and focus show the brand stroke and glow only, the 4px lift is gone; the filter tabs sit on the white card fill in light mode (like the search box) instead of the grey surface, which was low in contrast on the tint
 - 2026-11-10: Partners: the real directory from productsdesigner.com/partners replaces the 12 fictional demo partners and the 13 unassigned logos: 39 partners (37 apps, 2 theme makers) with their own descriptions, links and logos (192px WebP). Tabs show only types that have partners (All, App providers, Theme providers); the hero chip "Agency" became "Theme provider". Decisions: their wording kept except em dashes (house rule); outbound links kept exactly, including the referral links
 - 2026-11-09: robots.txt (build.py): allow all, point at the sitemap; takes effect on a custom domain
