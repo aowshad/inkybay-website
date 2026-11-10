@@ -141,7 +141,7 @@
 
 /* Key takeaways: a soft surface card (no gradient ring). Collapsed: icon, title, "N points · 1 min read", a faded preview
    of the first point and the button. Expanded: numbered points appear one by one. The text is in the HTML from the start. */
-.bsum { position: relative; display: grid; gap: var(--s-3); margin-bottom: var(--s-10); padding: var(--s-5) var(--s-6); border-radius: 20px;
+.bsum { position: relative; display: grid; gap: var(--s-3); margin-bottom: var(--s-10); padding: var(--s-6); border-radius: 20px;
   background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); overflow: hidden; }
 .bsum__head { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: var(--s-4); }
 .bsum__icon { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 12px; color: var(--brand-600); background: color-mix(in srgb, var(--brand-500) 12%, var(--bg)); }

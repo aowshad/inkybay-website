@@ -859,6 +859,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-10: Blog Key takeaways card: even 24px padding on all sides (was 20 top and bottom, 24 left and right; your call); phones keep an even 20
 - 2026-11-10: Blog Key takeaways: a calmer "generate" animation after optionia.com's blog summary (your reference, animation only, our design kept): a breathing glow with "Thinking…" then "Reading…", then the points ease in out of a blur one by one, and every height change glides; replaces the 0.6s shimmer and the fast typing. Reduced motion still shows the points at once; the audit waits 7s for the reveal
 - 2026-11-10: Reviews checked against the App Store listing: the rating is now 4.5 from 168 reviews (was 4.4 from 169) on the proof pill, the reviews summary (stars 90%), the case study stat and the industry pages; the first review card showed Fancy Fanny's review under C4 Design Studio's name (fixed), and the five draft reviews are replaced by real 5-star reviews from Finland, Australia, the US and Canada (also on the industry pages, which reuse the section)
 - 2026-11-10: Partners cards and tabs (your call): hover and focus show the brand stroke and glow only, the 4px lift is gone; the filter tabs sit on the white card fill in light mode (like the search box) instead of the grey surface, which was low in contrast on the tint
