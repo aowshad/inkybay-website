@@ -296,7 +296,7 @@ async def check_blog(b):
             if not want and (r[0] or not r[1]): bad(slug, f"search '{q}' does not show the empty state ({r})")
         # article: summary and TOC
         await pg.goto(B + blog_flagship() + "/"); await pg.wait_for_timeout(400)
-        await pg.click(".bsum__btn"); await pg.wait_for_timeout(4500)
+        await pg.click(".bsum__btn"); await pg.wait_for_timeout(7000)
         s_ = await pg.evaluate("[document.querySelector('.bsum').classList.contains('is-open'), document.querySelector('.bsum__list').getBoundingClientRect().height, document.querySelector('.bsum__btn').getAttribute('aria-expanded')]")
         if not s_[0] or s_[1] < 40 or s_[2] != "true": bad(slug, f"the summary button does not reveal the bullets ({s_})")
         hid = await pg.evaluate("[...document.querySelectorAll('.bbody h2[id]')].map(h=>h.id)")

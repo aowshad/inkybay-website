@@ -3746,28 +3746,38 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         prog(); window.addEventListener('scroll', prog, { passive: true }); window.addEventListener('resize', prog);
       }
 
-      /* "Key takeaways": the points are in the HTML; the button reveals them (a 0.6s shimmer, then the numbered points
-         one by one with a short typing effect); reduced motion shows them at once */
+      /* "Key takeaways": the points are in the HTML; the button "generates" the summary: the card eases open to a breathing
+         glow with "Thinking…" (1.2s) then "Reading…" (1.2s), then the points ease in one by one out of a soft blur. Every
+         height change glides (the card measures itself before and after). Reduced motion shows the points at once */
       document.querySelectorAll('.bsum').forEach(function (box) {
         var btn = box.querySelector('.bsum__btn'), label = btn.querySelector('span'), show = label.textContent, hide = btn.getAttribute('data-hide');
-        var lis = [].slice.call(box.querySelectorAll('.bsum__list li')), texts = lis.map(function (li) { return li.querySelector('.bsum__text').textContent; }), busy = false;
+        var think = box.querySelector('.bsum__think'), status = box.querySelector('.bsum__status'), first = status.textContent, next = status.getAttribute('data-next');
+        var lis = [].slice.call(box.querySelectorAll('.bsum__list li')), busy = false;
         box.classList.add('is-ready');
-        function done() { busy = false; box.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); label.textContent = hide; }
+        function glide(change) {
+          if (reduce) { change(); return; }
+          var h0 = box.offsetHeight; change(); var h1 = box.offsetHeight; if (h0 === h1) return;
+          box.style.height = h0 + 'px'; void box.offsetHeight;
+          box.style.transition = 'height .6s cubic-bezier(.65, 0, .35, 1)'; box.style.height = h1 + 'px';
+          setTimeout(function () { box.style.height = ''; box.style.transition = ''; }, 650);
+        }
+        function done() { busy = false; box.removeAttribute('aria-busy'); box.classList.add('is-open'); btn.setAttribute('aria-expanded', 'true'); label.textContent = hide; }
         btn.addEventListener('click', function () {
           if (busy) return;
-          if (box.classList.contains('is-open')) { box.classList.remove('is-open'); btn.setAttribute('aria-expanded', 'false'); label.textContent = show; return; }
+          if (box.classList.contains('is-open')) { glide(function () { box.classList.remove('is-open'); }); btn.setAttribute('aria-expanded', 'false'); label.textContent = show; return; }
           if (reduce) { done(); return; }
-          busy = true; box.classList.add('is-shimmer');
+          busy = true; box.setAttribute('aria-busy', 'true'); status.textContent = first;
+          glide(function () { box.classList.add('is-thinking'); think.hidden = false; });
+          setTimeout(function () { status.classList.add('is-swap'); setTimeout(function () { status.textContent = next; status.classList.remove('is-swap'); }, 300); }, 1200);
           setTimeout(function () {
-            box.classList.remove('is-shimmer'); box.classList.add('is-open');
-            lis.forEach(function (li) { li.classList.add('is-waiting'); li.classList.remove('is-in'); });
-            (function next(k) {
-              if (k >= lis.length) { done(); return; }
-              var li = lis[k], t = li.querySelector('.bsum__text'), full = texts[k], n = 0, step = Math.max(1, Math.ceil(full.length / 16));
-              t.textContent = ''; li.classList.remove('is-waiting'); li.classList.add('is-in');
-              (function tick() { n = Math.min(full.length, n + step); t.textContent = full.slice(0, n); if (n < full.length) setTimeout(tick, 20); else setTimeout(function () { next(k + 1); }, 80); })();
-            })(0);
-          }, 600);
+            think.classList.add('is-out');
+            setTimeout(function () {
+              lis.forEach(function (li) { li.classList.remove('is-in'); li.classList.add('is-waiting'); });
+              glide(function () { think.hidden = true; think.classList.remove('is-out'); box.classList.remove('is-thinking'); box.classList.add('is-open'); });
+              lis.forEach(function (li, k) { setTimeout(function () { li.classList.remove('is-waiting'); li.classList.add('is-in'); }, 200 + k * 260); });
+              setTimeout(done, 200 + lis.length * 260 + 600);
+            }, 350);
+          }, 2600);
         });
       });
 

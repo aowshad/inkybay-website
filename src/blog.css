@@ -164,12 +164,29 @@
 .bsum.is-ready .bsum__btn { display: inline-flex; }
 .bsum.is-ready:not(.is-open) .bsum__peek { display: block; }
 .bsum.is-ready:not(.is-open) .bsum__list { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
-.bsum.is-shimmer::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
-  background: linear-gradient(100deg, transparent 20%, color-mix(in srgb, var(--brand-500) 18%, transparent) 50%, transparent 80%); background-size: 220% 100%; animation: bshimmer .6s ease-in-out; }
-@keyframes bshimmer { from { background-position: 120% 0; } to { background-position: -120% 0; } }
-.bsum__list li.is-waiting { visibility: hidden; }
-.bsum__list li.is-in { animation: bsum-in .35s var(--ease-expo) both; }
-@keyframes bsum-in { from { opacity: 0; transform: translateY(6px); } }
+/* generating: the card eases open to a breathing brand glow round the sparkle, "Thinking…" then "Reading…" with a soft
+   light sweeping the words, then the points ease in one by one out of a light blur */
+.bsum.is-ready.is-thinking .bsum__peek { display: none; }
+.bsum__think { display: grid; justify-items: center; gap: var(--s-4); padding: var(--s-8) 0 var(--s-6); transition: opacity .35s ease; }
+.bsum__think[hidden] { display: none; }
+.bsum__think.is-out { opacity: 0; }
+.bsum__orb { position: relative; display: grid; place-items: center; width: 56px; height: 56px; border-radius: 50%; color: var(--brand-600);
+  background: radial-gradient(circle, color-mix(in srgb, var(--brand-500) 26%, var(--surface)) 0%, color-mix(in srgb, var(--brand-500) 10%, var(--surface)) 60%, transparent 72%);
+  animation: borb 1.8s ease-in-out infinite; }
+.bsum__orb::before { content: ""; position: absolute; inset: -18px; border-radius: 50%; filter: blur(8px);
+  background: radial-gradient(circle, color-mix(in srgb, var(--brand-500) 24%, transparent), transparent 70%); animation: borb-glow 1.8s ease-in-out infinite; }
+.bsum__orb svg { position: relative; width: 22px; height: 22px; animation: bspark 2.4s ease-in-out infinite; }
+@keyframes borb { 0%, 100% { transform: scale(.94); } 50% { transform: scale(1.06); } }
+@keyframes borb-glow { 0%, 100% { opacity: .5; transform: scale(.88); } 50% { opacity: 1; transform: scale(1.12); } }
+@keyframes bspark { 0%, 100% { transform: rotate(0deg) scale(1); } 50% { transform: rotate(16deg) scale(.88); } }
+.bsum__status { font-size: 16px; line-height: 24px; font-weight: 500; color: transparent; -webkit-background-clip: text; background-clip: text;
+  background-image: linear-gradient(90deg, var(--ink-muted) 0%, var(--ink-muted) 38%, var(--brand-700) 50%, var(--ink-muted) 62%, var(--ink-muted) 100%);
+  background-size: 260% 100%; animation: bstatus 1.8s linear infinite; transition: opacity .3s ease; }
+.bsum__status.is-swap { opacity: 0; }
+@keyframes bstatus { from { background-position: 100% 0; } to { background-position: -160% 0; } }
+.bsum__list li.is-waiting { opacity: 0; }
+.bsum__list li.is-in { animation: bsum-in .8s cubic-bezier(.22, .61, .36, 1) both; }
+@keyframes bsum-in { from { opacity: 0; filter: blur(6px); transform: translateY(8px); } }
 
 .bbody { font-size: 19px; line-height: 1.7; }
 .bbody > * { max-width: 68ch; }
@@ -285,7 +302,7 @@
   .bsum__peek { padding-left: 0; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bcard__img, .bsum.is-shimmer::after, .bsum__list li.is-in, .btoc__ind { transition: none; animation: none; }
+  .bcard__img, .bsum__list li.is-in, .bsum__orb, .bsum__orb::before, .bsum__orb svg, .bsum__status, .btoc__ind { transition: none; animation: none; }
 }
 
 /* Legal pages (render_legal.py): the article layout plus an "In short" card and a questions card */

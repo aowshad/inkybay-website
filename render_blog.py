@@ -465,6 +465,7 @@ def build_all(build, write, site, site_url, home):
             <div class="bsum__intro"><h2 class="bsum__title" id="b-sum">{E(a["summary_title"])}</h2><p class="bsum__meta">{sum_meta}</p></div>
             <button class="bsum__btn" type="button" aria-expanded="false" aria-controls="b-sum-list" data-hide="{E(a["hide"])}"><span>{E(a["summarize"])}</span></button></div>
           <p class="bsum__peek" aria-hidden="true">{E(items[0]["text"])}</p>
+          <div class="bsum__think" aria-hidden="true" hidden><span class="bsum__orb">{SPARKLE}</span><span class="bsum__status" data-next="{E(a["reading"])}">{E(a["thinking"])}</span></div>
           <ol class="bsum__list" id="b-sum-list">{bullets}</ol></section>
         <details class="btoc btoc--inline"><summary>{E(a["toc"])}</summary><nav aria-label="Table of contents">{toc}</nav></details>
         <div class="bbody">{p["html"]}</div>

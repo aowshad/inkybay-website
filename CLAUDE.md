@@ -571,8 +571,11 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   previous / next. No promo cards on the article.
 - Key takeaways: a soft `--surface` card with a 1px `--line` (no gradient ring). Collapsed: a sparkle in a small
   brand-tinted square, "Key takeaways", a muted "N points · 1 min read", the first point as a one-line faded preview,
-  and "Summarize this article". Expanded: a 0.6s shimmer, then numbered points (17px, number in a small circle) appear
-  one by one with a short typing effect; a point with a `section` links to it ("Read section", 14px). The text is in
+  and "Summarize this article". Pressing it "generates" the summary (animation modelled on optionia.com's blog summary,
+  in our own design): the card glides open (height measured before and after, 0.6s) to a breathing brand-orange glow
+  round the sparkle with "Thinking…" (1.2s) then "Reading…" (1.2s), a soft light sweeping the words (strings in
+  blog.json); the status fades out and the numbered points (17px, number in a small circle) ease in one by one out of a
+  light blur (0.8s each, 260ms apart), about 5s in all; "Hide summary" glides it shut; a point with a `section` links to it ("Read section", 14px). The text is in
   the HTML from the start; reduced motion shows it at once; without JS it is simply shown; never labelled AI.
   Front matter: a summary item is a plain string or `{text: "...", section: heading-id}` (the build fails on an
   unknown heading id).
@@ -856,6 +859,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-10: Blog Key takeaways: a calmer "generate" animation after optionia.com's blog summary (your reference, animation only, our design kept): a breathing glow with "Thinking…" then "Reading…", then the points ease in out of a blur one by one, and every height change glides; replaces the 0.6s shimmer and the fast typing. Reduced motion still shows the points at once; the audit waits 7s for the reveal
 - 2026-11-10: Reviews checked against the App Store listing: the rating is now 4.5 from 168 reviews (was 4.4 from 169) on the proof pill, the reviews summary (stars 90%), the case study stat and the industry pages; the first review card showed Fancy Fanny's review under C4 Design Studio's name (fixed), and the five draft reviews are replaced by real 5-star reviews from Finland, Australia, the US and Canada (also on the industry pages, which reuse the section)
 - 2026-11-10: Partners cards and tabs (your call): hover and focus show the brand stroke and glow only, the 4px lift is gone; the filter tabs sit on the white card fill in light mode (like the search box) instead of the grey surface, which was low in contrast on the tint
 - 2026-11-10: Partners: the real directory from productsdesigner.com/partners replaces the 12 fictional demo partners and the 13 unassigned logos: 39 partners (37 apps, 2 theme makers) with their own descriptions, links and logos (192px WebP). Tabs show only types that have partners (All, App providers, Theme providers); the hero chip "Agency" became "Theme provider". Decisions: their wording kept except em dashes (house rule); outbound links kept exactly, including the referral links
