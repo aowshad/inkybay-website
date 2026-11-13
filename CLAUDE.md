@@ -567,8 +567,8 @@ in `src/blog.css`, behaviour in the shared template. Writers' guide: `docs/writi
   high); "Key takeaways"; body at 19px / 1.7 / 68ch (H2 28/500, H3 22/500) with copy-link anchors, scrolling tables,
   callouts (`> [!NOTE]`, a full hairline card), quotes (a large soft quotation mark, 22/500, the source 14px muted
   below; no box and no side border), captioned images and checklists; tags, share links (copy, X, LinkedIn, Facebook,
-  email; plain URLs, no third-party scripts), author box, "Keep reading" (same category first, then shared tags),
-  previous / next. No promo cards on the article.
+  email; plain URLs, no third-party scripts), author box, previous / next (inside the article, right after the author:
+  sequential navigation belongs to the article), then "Keep reading" (same category first, then shared tags). No promo cards on the article.
 - Key takeaways: a soft `--surface` card with a 1px `--line` (no gradient ring). Collapsed: a sparkle in a small
   brand-tinted square, "Key takeaways", a muted "N points · 1 min read", the first point as a one-line faded preview,
   and "Summarize this article". Pressing it "generates" the summary (animation modelled on optionia.com's blog summary,
@@ -859,6 +859,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-13: Blog article: previous / next moves from under the "Keep reading" cards into the article, right after the author box (the usual order: content, tags, share, author, previous / next, related); it was easy to miss at the very bottom (your question)
 - 2026-11-10: Blog Key takeaways card: even 24px padding on all sides (was 20 top and bottom, 24 left and right; your call); phones keep an even 20
 - 2026-11-10: Blog Key takeaways: a calmer "generate" animation after optionia.com's blog summary (your reference, animation only, our design kept): a breathing glow with "Thinking…" then "Reading…", then the points ease in out of a blur one by one, and every height change glides; replaces the 0.6s shimmer and the fast typing. Reduced motion still shows the points at once; the audit waits 7s for the reveal
 - 2026-11-10: Reviews checked against the App Store listing: the rating is now 4.5 from 168 reviews (was 4.4 from 169) on the proof pill, the reviews summary (stars 90%), the case study stat and the industry pages; the first review card showed Fancy Fanny's review under C4 Design Studio's name (fixed), and the five draft reviews are replaced by real 5-star reviews from Finland, Australia, the US and Canada (also on the industry pages, which reuse the section)

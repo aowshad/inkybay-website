@@ -473,6 +473,7 @@ def build_all(build, write, site, site_url, home):
           <div class="bart__tags"><p class="sr-only">{E(a["tags"])}</p><ul class="btags">{"".join(f'<li><a class="btag" href="{root}{BASE}tag/{t}/">{E(D["T"][t]["name"])}</a></li>' for t in p["tags"])}</ul></div>
           <div class="bshare"><p class="bshare__label">{E(a["share"])}</p><div class="bshare__row">{share_html}</div></div>
           <div class="bauthor">{avatar}<div><div class="bauthor__label">{E(a["about_author"])}</div><p class="bauthor__name">{E(au["name"])} <span>· {E(au["role"])}</span></p><p class="bauthor__bio">{E(au["bio"])}</p></div></div>
+          {nav_pn}
         </footer>
       </div>
       <aside class="bart__side" aria-label="On this page">
@@ -484,7 +485,6 @@ def build_all(build, write, site, site_url, home):
     <div class="container">
       <h2 class="fsec__title" id="b-more">{E(a["keep_reading"])}</h2>
       <ul class="bgrid" data-view="3" data-fixed>{"".join(card(q, D, root) for q in related)}</ul>
-      {nav_pn}
     </div>
   </section>"""
         title = p.get("seo_title") or f'{p["title"]} | InkyBay blog'; desc = p.get("seo_description") or p["excerpt"]
