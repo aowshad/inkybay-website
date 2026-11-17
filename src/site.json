@@ -19,7 +19,10 @@
     "x": "https://x.com/inkybay",
     "instagram": "https://www.instagram.com/inkybayproductscustomizer",
     "facebook": "https://www.facebook.com/inkybay/",
-    "bigcommerce_app": "https://bigcommerce.com/inkybay",
-    "wix_app": "https://wix.com/inkybay"
+    "bigcommerce_app": "https://www.bigcommerce.com/apps/product-customizer-by-inkybay/",
+    "wix_app": "https://wix.com/inkybay",
+    "bigcommerce_demo": "https://inkybay.mybigcommerce.com/",
+    "bigcommerce_docs": "https://inkybay.net/bigcommerce/help/",
+    "shopify_docs": "https://docs.inkybay.com/spf/en"
   }
 }

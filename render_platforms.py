@@ -188,12 +188,13 @@ def render(slug):
       <ul class="plinds__list">{pills}</ul>
     </div>
   </section>""")
+    docs = f'{{{{BTN_SECONDARY:{L["docs"]}|{p["docs"]}}}}}' if p.get("docs") else ""   # the platform's help docs (new tab)
     secs.append(f"""  <section class="faq faq--tint" aria-labelledby="faq-title">
     <div class="container faq__grid">
       <div class="faq__intro">
         <h2 class="faq__title" id="faq-title">FAQs</h2>
         <p class="faq__lead">{E(fill(L["faqs_lead"], p))}</p>
-        <div class="faq__help"><p>{E(L["still"])}</p>{{{{BTN_SECONDARY:{L["talk"]}|contact/}}}}</div>
+        <div class="faq__help"><p>{E(L["still"])}</p><div class="plhelp">{{{{BTN_SECONDARY:{L["talk"]}|contact/}}}}{docs}</div></div>
       </div>
       <ul class="faq__list">
 {faqs(p["faqs"])}
@@ -204,7 +205,8 @@ def render(slug):
     shop = "{{BTN_PRIMARY:Install on Shopify|{{LINK:app_store}}}}"      # the shared CTA installs this page's platform
     assert shop in out, "template CTA changed: update render_platforms.render"
     mine = (f'{{{{BTN_PRIMARY:{fill(L["install"], p)}|{p["install"]}}}}}' if live else f'{{{{BTN_PRIMARY:{L["waitlist_cta"]}|#waitlist}}}}')
-    return out.replace(shop, mine)
+    demo = "{{BTN_SECONDARY:Try live demo|{{LINK:demo_store}}}}"           # ... and its Try live demo opens this platform's demo
+    return out.replace(shop, mine).replace(demo, f'{{{{BTN_SECONDARY:{L["demo"]}|{p["demo"]}}}}}')
 
 
 def render_index():

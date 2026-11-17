@@ -43,6 +43,9 @@
   background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); transition: box-shadow .3s ease; }
 .plmini:hover, .plmini:focus-visible { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--line)); }
 
+/* FAQ help: Talk to our team and the platform's help docs side by side */
+.plhelp { display: flex; flex-wrap: wrap; gap: var(--s-3); }
+
 /* overview cards: the logo on the light stage */
 .plcard__media { aspect-ratio: 16 / 10; }
 

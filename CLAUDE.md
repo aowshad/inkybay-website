@@ -758,9 +758,13 @@ live platform without an install link.
   this page's platform. Coming soon (WooCommerce): a Coming soon badge, Join the waitlist (to `#waitlist`), the
   waitlist form [tint] beside "Also available on" links to the live platforms (pills with the logo in a round tile, so the radii match), every feature, FAQs. The form posts
   to FORM_ENDPOINT with `form=waitlist` and `topic=waitlist-woocommerce` (see Forms).
-- Placeholders to replace: the BigCommerce and Wix install links (`bigcommerce_app`, `wix_app` in src/site.json are
-  https://bigcommerce.com/inkybay and https://wix.com/inkybay for now, your call), every `docs` link, the draft steps,
-  requirements and FAQs for BigCommerce and Wix. Try live demo goes to the Shopify demo store on every platform.
+- Links (src/site.json): BigCommerce app https://www.bigcommerce.com/apps/product-customizer-by-inkybay/, demo store
+  https://inkybay.mybigcommerce.com/, help docs https://inkybay.net/bigcommerce/help/ (yours, November 17, 2026);
+  Shopify's help docs are the help center docs.inkybay.com/spf/en. A platform with `docs` shows "Read the help docs"
+  (secondary, new tab) next to "Talk to our team" under its FAQs; Try live demo (hero and CTA) opens the platform's own `demo`.
+- Placeholders to replace: the Wix install link (`wix_app` is https://wix.com/inkybay for now, your call), the Wix demo
+  store and docs (Wix and WooCommerce use the Shopify demo store), the draft steps, requirements and FAQs for BigCommerce
+  and Wix.
 - The audit covers `platforms` and every `platforms/<slug>` in `--all`.
 - Where platforms appear: the Resources mega menu and footer (see Mega menu), the homepage Platforms section (see
   Section order, 6a) and the overview page.
@@ -910,6 +914,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: BigCommerce links (yours): the real app listing, its own demo store and help docs replace the placeholder; platform pages with a docs link show "Read the help docs" beside "Talk to our team" (Shopify's points at the existing help center so both live pages match)
 - 2026-11-17: Reviews slider: clicking the arrows faster than the slide ran past the cloned cards and showed an empty track for a moment (your report); each move now wraps to the matching spot among the real cards first, so it loops forever with no gap, on the homepage and the industry pages. The audit checks it (check_reviews_loop)
 - 2026-11-17: Audit: the mega-menu check waits up to 3s for the lazy promo image before calling it missing; it failed at random on a different page each run
 - 2026-11-17: WooCommerce page: the logo tiles in the "Also available on" pills are round instead of slightly rounded squares, matching the pill radius (your call)

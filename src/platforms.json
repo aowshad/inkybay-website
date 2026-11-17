@@ -26,7 +26,8 @@
     "faqs_lead": "Common questions about InkyBay on {name}.",
     "talk": "Talk to our team",
     "still": "Still have questions?",
-    "other_platforms": "Also available on"
+    "other_platforms": "Also available on",
+    "docs": "Read the help docs"
   },
   "index": {
     "meta": {
@@ -84,7 +85,7 @@
       "short": "Install from the Shopify App Store.",
       "install": "{{LINK:app_store}}",
       "demo": "{{LINK:demo_store}}",
-      "docs": "",
+      "docs": "{{LINK:shopify_docs}}",
       "rating": true,
       "meta": {
         "title": "InkyBay for Shopify | Product customizer app",
@@ -157,8 +158,8 @@
       "color_dark": "#E8E6F0",
       "short": "Add InkyBay to your BigCommerce store.",
       "install": "{{LINK:bigcommerce_app}}",
-      "demo": "{{LINK:demo_store}}",
-      "docs": "",
+      "demo": "{{LINK:bigcommerce_demo}}",
+      "docs": "{{LINK:bigcommerce_docs}}",
       "meta": {
         "title": "InkyBay for BigCommerce | Product customizer app",
         "description": "Add a live product design editor to your BigCommerce store. Shoppers personalize products with a live preview and you get print-ready orders."
