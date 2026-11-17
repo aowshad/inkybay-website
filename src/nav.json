@@ -125,15 +125,12 @@
               "href": "contact/"
             }
           ]
+        },
+        {
+          "title": "Platforms",
+          "items_from": "platforms"
         }
       ],
-      "promo": {
-        "title": "New to InkyBay?",
-        "text": "Set up your first customizable product with short step-by-step videos.",
-        "cta": "Watch tutorials",
-        "href": "resources/video-tutorials/",
-        "visual": "video"
-      },
       "footer": [
         {
           "title": "Resources",
@@ -146,7 +143,19 @@
           "title": "Get help",
           "groups": [
             "Get help"
-          ]
+          ],
+          "below": {
+            "title": "Platforms",
+            "groups": [
+              "Platforms"
+            ],
+            "extra": [
+              {
+                "title": "All platforms",
+                "href": "platforms/"
+              }
+            ]
+          }
         }
       ]
     }

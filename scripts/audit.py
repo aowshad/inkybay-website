@@ -601,7 +601,7 @@ def nav_expected():
     """{menu id: number of links} from src/nav.json (grid items from their index file, or the sum of group items)."""
     out = {}
     for m in json.loads((ROOT / "src/nav.json").read_text())["menus"]:
-        if m["layout"] == "groups": out[m["id"]] = sum(len(g["items"]) for g in m["groups"])
+        if m["layout"] == "groups": out[m["id"]] = sum(len(json.loads((ROOT / "src/platforms.json").read_text())["platforms"]) if g.get("items_from") == "platforms" else len(g["items"]) for g in m["groups"])
         elif "items_from" in m: out[m["id"]] = len(next(v for v in json.loads((ROOT / m["items_from"]).read_text()).values() if isinstance(v, list)))
         else: out[m["id"]] = len(m.get("items", []))
     return out
@@ -624,7 +624,7 @@ async def check_menus(b, slug, path):
             r = await pg.evaluate(f"""(()=>{{const m=document.getElementById('mega-{mid}');
               const open=[...document.querySelectorAll('.mega[data-open="true"]')].map(x=>x.id);
               const cut=[...m.querySelectorAll('.mega__desc')].filter(x=>x.scrollHeight>x.clientHeight+1).map(x=>x.textContent);
-              const imgs=[...m.querySelectorAll('.mega__promo img')], promo=getComputedStyle(m.querySelector('.mega__promo')).display!=='none';
+              const imgs=[...m.querySelectorAll('.mega__promo img')], pe=m.querySelector('.mega__promo'), promo=!!pe&&getComputedStyle(pe).display!=='none';
               return {{open, cut, imgs: imgs.length, loaded: imgs.every(i=>i.complete&&i.naturalWidth>0), promo,
                        expanded: document.getElementById('nav-{mid}').getAttribute('aria-expanded')}}}})()""")
             if r["open"] != [f"mega-{mid}"]: bad(slug, f"{tag}: opening {mid} leaves open {r['open']} (need exactly mega-{mid})")

@@ -23,6 +23,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
+from render_platforms import group_items
 import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs, render_platforms
 
 ROOT = pathlib.Path(__file__).parent
@@ -90,10 +91,11 @@ def nav_item(item, base, root, current):
     cur = ' aria-current="page"' if current and item.get("slug") == current else ""
     act = f' data-action="{html.escape(item["action"])}"' if item.get("action") else ""
     ext = EXT if item.get("external") else ""
+    bdg = f'<span class="mega__badge">{html.escape(item["badge"])}</span>' if item.get("badge") else ""   # e.g. Coming soon
     desk = (f'<li><a class="mega__item" href="{href}"{extra}{act}{cur}><span class="mega__icon">{ICON[item["icon"]]}</span>'
-            f'<span><span class="mega__title">{html.escape(item["title"])}{ext}</span><span class="mega__desc">{html.escape(item["short"])}</span></span></a></li>')
+            f'<span><span class="mega__title">{html.escape(item["title"])}{ext}</span><span class="mega__desc">{bdg}{html.escape(item["short"])}</span></span></a></li>')
     mob = (f'<li><a class="sheet-link" href="{href}"{extra}{act}{cur}><span class="sheet-link__icon">{ICON[item["icon"]]}</span>'
-           f'<span class="sheet-link__title">{html.escape(item["title"])}{ext}</span></a></li>')
+           f'<span class="sheet-link__title">{html.escape(item["title"])}{ext}{bdg}</span></a></li>')
     return desk, mob
 
 def render_nav(root, current):
@@ -106,7 +108,7 @@ def render_nav(root, current):
         if m["layout"] == "groups":
             cols, mob = [], []
             for g in m["groups"]:
-                pairs = [nav_item(i, i.get("base", base), root, cur) for i in g["items"]]
+                pairs = [nav_item(i, i.get("base", base), root, cur) for i in group_items(g)]
                 cols.append(f'<div class="mega__group"><p class="mega__label">{html.escape(g["title"])}</p><ul class="mega__list">{"".join(d for d, _ in pairs)}</ul></div>')
                 mob.append(f'<li class="sheet-group">{html.escape(g["title"])}</li>' + "".join(x for _, x in pairs))
             main = f'<div class="mega__main"><div class="mega__groups">{"".join(cols)}</div></div>'
@@ -114,29 +116,32 @@ def render_nav(root, current):
             pairs = [nav_item(i, base, root, cur) for i in menu_items(m)]
             mob = [x for _, x in pairs]
             main = f'<div class="mega__main">\n        <p class="mega__label">{lab}</p>\n        <ul class="mega__grid">{"".join(d for d, _ in pairs)}</ul>\n      </div>'
-        p = m["promo"]
-        if p.get("visual") == "video":
+        p = m.get("promo")                                 # optional: without one the items take the full width
+        if not p:
+            media = None
+        elif p.get("visual") == "video":
             media = (f'<span class="mega__video"><img class="mega__img" src="{asset("promo/hero-editor.webp", root)}" alt="" width="600" height="492" loading="lazy" decoding="async">'
                      f'<span class="mega__play" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M8 5.5v13l11-6.5z"/></svg></span></span>')
-        else:
+        elif p:
             w, h = webp_size(p["image"])
             pos = f' style="object-position: {html.escape(p["position"])}"' if p.get("position") else ""
             media = f'<img class="mega__img" src="{asset(p["image"], root)}" alt="" width="{w}" height="{h}"{pos} loading="lazy" decoding="async">'
-        phref, _ = link({"href": p["href"]}, "", root)
-        promo = (f'<aside class="mega__promo">\n        {media}\n        <p class="mega__promo-title">{html.escape(p["title"])}</p>\n'
-                 f'        <p class="mega__promo-text">{html.escape(p["text"])}</p>\n        {primary_html(p["cta"], phref)}\n      </aside>')
+        promo = ""
+        if p:
+            phref, _ = link({"href": p["href"]}, "", root)
+            promo = (f'<aside class="mega__promo">\n        {media}\n        <p class="mega__promo-title">{html.escape(p["title"])}</p>\n'
+                     f'        <p class="mega__promo-text">{html.escape(p["text"])}</p>\n        {primary_html(p["cta"], phref)}\n      </aside>')
         triggers.append(f'<li><button class="nav__link nav__link--mega" id="nav-{mid}" aria-expanded="false" aria-controls="mega-{mid}">{lab} {{{{CHEVRON}}}}</button></li>')
         sheet.append(f'<li><button class="nav__link sheet-toggle" aria-expanded="false" aria-controls="sheet-{mid}">{lab} {{{{CHEVRON}}}}</button><ul class="sheet-sub" id="sheet-{mid}">{"".join(mob)}</ul></li>')
-        panels.append(f'<div class="mega mega--{m["layout"]}" id="mega-{mid}" role="region" aria-label="{lab}" data-open="false">\n    <div class="mega__panel">\n      {main}\n      {promo}\n    </div>\n  </div>')
+        panels.append(f'<div class="mega mega--{m["layout"]}" id="mega-{mid}" role="region" aria-label="{lab}" data-open="false">\n    <div class="mega__panel{"" if p else " mega__panel--full"}">\n      {main}\n      {promo}\n    </div>\n  </div>')
     return "\n          ".join(triggers), "\n        ".join(sheet), "\n  ".join(panels)
 
 def foot_cols(mid, root):
     """Footer columns for one menu (its "footer" list in nav.json): {"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?}."""
     m = next(x for x in NAV if x["id"] == mid)
-    cols = []
-    for c in m["footer"]:
+    def col(c):
         if m["layout"] == "groups":
-            items = [dict(i, base=i.get("base", m.get("base", ""))) for g in m["groups"] if g["title"] in c.get("groups", [g["title"]]) for i in g["items"]]
+            items = [dict(i, base=i.get("base", m.get("base", ""))) for g in m["groups"] if g["title"] in c.get("groups", [g["title"]]) for i in group_items(g)]
         else:
             items = [dict(i, base=m.get("base", "")) for i in menu_items(m)]
         items = items[:c["limit"]] if c.get("limit") and len(items) > c["limit"] else items
@@ -147,8 +152,9 @@ def foot_cols(mid, root):
             href, extra = link(i, i["base"], root)
             act = f' data-action="{html.escape(i["action"])}"' if i.get("action") else ""
             lis.append(f'<li><a href="{href}"{extra}{act}>{html.escape(i["title"])}{EXT if i.get("external") else ""}</a></li>')
-        cols.append(f'<div class="foot__col{" foot__col--wide" if c.get("wide") else ""}"><h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul></div>')
-    return "\n          ".join(cols)
+        below = col(c["below"]) if c.get("below") else ""     # a second titled list in the same column
+        return f'<h3>{html.escape(c["title"])}</h3><ul>{"".join(lis)}</ul>' + (f'<h3 class="foot__sub">{below[4:]}' if below else "")
+    return "\n          ".join(f'<div class="foot__col{" foot__col--wide" if c.get("wide") else ""}">{col(c)}</div>' for c in m["footer"])
 
 SITE_JSON = json.loads((ROOT / "src" / "site.json").read_text())
 LINKS = {k: v for k, v in SITE_JSON["links"].items() if not k.startswith("_")}

@@ -93,7 +93,8 @@ def resources():
     groups = []
     for k, g in enumerate(menu["groups"]):
         items = []
-        for i in g["items"]:
+        from render_platforms import group_items           # the Platforms group lists src/platforms.json
+        for i in group_items(g):
             ext = i.get("external")
             href = i["href"] if "href" in i else f'{i["slug"]}/'
             if not href.startswith(("#", "http")): href = "{{ROOT}}" + href

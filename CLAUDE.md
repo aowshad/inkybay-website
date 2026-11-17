@@ -315,11 +315,11 @@ into the shared template. Never hand-write a menu in the template.
 - Menu: `{"id", "label", "layout": "grid" | "groups", "base", "promo", ...}`. A grid takes its items from
   `items_from` (an index file such as `src/features/_index.json`) or `items`; groups take `groups: [{"title", "items"}]`.
 - Item: `{"slug" or "href", "title", "short", "icon", "external": bool}` (+ optional `"action"` for a `data-action`
-  hook). `slug` links to `<base><slug>/`. External links open in a new tab (`rel="noopener"`) with a small arrow-out icon.
-- Promo: `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card; optional
+  hook, `"badge"` for a 14px pill at the start of the description, on the title row in the sheet). `slug` links to `<base><slug>/`. External links open in a new tab (`rel="noopener"`) with a small arrow-out icon.
+- Promo (optional; a menu without one gives its items the full width): `{"title", "text", "cta", "href", "image"}` (an `src/assets/` WebP, fading into the card; optional
   `"position"` sets its `object-position` when the subject is not centred in the 16:10 crop) or `"visual": "video"`.
 - Footer: a menu's `"footer"` list renders its footer columns (`{{FOOT_COLS:<id>}}` in the template):
-  `{"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?}`. Footer link copy comes from the same data as the menus.
+  `{"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?, "below"?}` (`below`: another column spec shown under it in the same column). Footer link copy comes from the same data as the menus.
   Footer columns: Product (all nine feature pages from `_index.json`, then "All features" and Pricing, `"wide"`: 3 of 12 columns so every
   name fits one line at 1440), Industries (all eight industry pages), Resources and Get help; the brand block takes 3
   columns, the others 2. From 961 to 1100px the brand gets its own row and the four columns share it; phones show two
@@ -328,10 +328,14 @@ into the shared template. Never hand-write a menu in the template.
   which links to `pricing/`, like the navbar's Pricing);
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry, then "All industries" to the overview page `industries/`).
-  Resources (groups: Learn, Grow with InkyBay, Get help; `resources/blog/`, `resources/video-tutorials/`,
-  `resources/case-studies/`, `partners/` and `affiliate/` exist; Help center is external to docs.inkybay.com;
-  promo is the video visual; footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat,
-  Contact). Contact ("Write to our team.", icon mail) links to `contact/`.
+  Resources (groups: Learn, Grow with InkyBay, Get help, Platforms; `resources/blog/`, `resources/video-tutorials/`,
+  `resources/case-studies/`, `partners/` and `affiliate/` exist; Help center is external to docs.inkybay.com; the
+  Platforms group is `{"title": "Platforms", "items_from": "platforms"}`, built from src/platforms.json (logo icons,
+  `platforms/<slug>/`, a "Coming soon" pill at the start of WooCommerce's line); no promo, so the four groups take the
+  full width (`.mega__panel--full`; your call, the video tutorials card was dropped and Video tutorials stays under Learn);
+  footer: "Resources" = Learn + Grow, "Get help" = the Get help group: Help center, Live chat, Contact, with "Platforms"
+  (the four platforms and "All platforms") as a second list in the same column via `"below"`, because the 12-column
+  footer row is full). Contact ("Write to our team.", icon mail) links to `contact/`.
 - Groups layout: one column per group (`.mega__groups`, `grid-auto-columns: minmax(0, 1fr)`), each with a 14px muted
   title and a vertical list of items. Columns share the width evenly, so adding an item or a group needs no CSS change.
 - Video promo (`"visual": "video"`): `hero-editor.webp` as a full-bleed thumbnail (anchored to the top) under a light
@@ -885,6 +889,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Platforms in the Resources menu and footer (your call: inside Resources rather than a fifth navbar menu, which would not fit the 940px compact pill): a fourth Platforms group with the platform logos as one-colour icons replaces the video tutorials promo card; the footer's Get help column gains a Platforms list and All platforms; the Resources overview page lists the platforms too. The mobile sub-list cap goes from 720 to 1000px so the longer Resources list opens fully
 - 2026-11-17: Platform pages (render_platforms.py, src/platforms.json, src/platforms.css, src/assets/platforms/, audit): platforms/ plus one page each for Shopify, BigCommerce, Wix (live) and WooCommerce (coming soon, with a waitlist form). Decisions (yours): the Install popover from the brief is not built for now and the homepage stays as it is; WooCommerce is coming soon; the BigCommerce and Wix install links are placeholders. Mine: logos are one-colour SVGs on white tiles so they hold up in dark mode; on these pages the shared CTA installs the page's platform
 - 2026-11-13: Blog article: previous / next moves from under the "Keep reading" cards into the article, right after the author box (the usual order: content, tags, share, author, previous / next, related); it was easy to miss at the very bottom (your question)
 - 2026-11-10: Blog Key takeaways card: even 24px padding on all sides (was 20 top and bottom, 24 left and right; your call); phones keep an even 20

@@ -9,11 +9,6 @@
 .pltile--lg { --s: 112px; border-radius: 24px; }
 .plogo--wix, .plogo--woocommerce { width: 74%; }            /* wordmarks: wider, not taller */
 .pltile .plogo--wix, .pltile .plogo--woocommerce { width: 74%; height: auto; }
-.mega__icon .plogo, .sheet-link__icon .plogo { width: 20px; height: 20px; }
-.mega__icon .plogo--wix, .mega__icon .plogo--woocommerce { width: 28px; height: auto; }
-.sheet-link__icon .plogo--wix, .sheet-link__icon .plogo--woocommerce { width: 24px; height: auto; }
-.mega__badge { display: inline-block; margin-left: var(--s-2); padding: 0 8px; border-radius: 999px; vertical-align: 2px;
-  font-size: var(--t-small); line-height: 20px; font-weight: 500; color: var(--ink-muted); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 
 /* hero: InkyBay mark, a short brand thread, the platform's tile */
 .pllock { display: flex; align-items: center; gap: var(--s-3); }

@@ -1476,6 +1476,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 @media (max-width: 1100px) and (min-width: 961px) {   /* tablets: the brand gets its own row, the four columns share it evenly */
   .foot__brand { grid-column: 1 / -1; } .foot__col, .foot__col--wide { grid-column: span 3; }
 }
+.foot__col .foot__sub { margin-top: var(--s-8); }   /* a second list in the same column (Get help, then Platforms) */
 .foot__col h3 { font-family: var(--font-body); font-size: var(--t-body); font-weight: 600; color: var(--ink); margin-bottom: var(--s-4); }
 .foot__col ul { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-3); }
 .foot__col a { color: var(--ink-muted); transition: color .2s ease; }
@@ -1713,6 +1714,14 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .mega__promo-title { font-family: var(--font-head); font-weight: 500; font-size: 22px; line-height: 28px; letter-spacing: -0.01em; }
 .mega__promo-text { color: rgba(255, 255, 255, .7); }
 .mega__promo .btn { align-self: stretch; justify-content: space-between; padding-left: var(--s-4); margin-top: var(--s-2); }
+.mega__panel--full { grid-template-columns: minmax(0, 1fr); }   /* a menu without a promo (Resources) */
+.sheet-link__title .mega__badge { margin: 0 0 0 var(--s-2); }
+/* platform logos as menu icons (src/assets/platforms/, one colour like the other icons; wordmarks wider, not taller) */
+.mega__icon .plogo, .sheet-link__icon .plogo, .hubres__icon .plogo { width: 20px; height: 20px; }
+.mega__icon .plogo--wix, .mega__icon .plogo--woocommerce, .hubres__icon .plogo--wix, .hubres__icon .plogo--woocommerce { width: 28px; height: auto; }
+.sheet-link__icon .plogo--wix, .sheet-link__icon .plogo--woocommerce { width: 24px; height: auto; }
+.mega__badge { display: inline-block; margin-right: var(--s-2); padding: 0 8px; border-radius: 999px; vertical-align: 1px;
+  font-size: var(--t-small); line-height: 20px; font-weight: 500; color: var(--ink-muted); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
 .mega__groups { display: grid; grid-auto-flow: column; grid-auto-columns: minmax(0, 1fr); gap: var(--s-4); }   /* one column per group, any number */
 .mega__list { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-2); align-content: start; }
 .mega__ext { display: inline-block; width: 12px; height: 12px; margin-left: 6px; vertical-align: 0; color: var(--ink-muted); }
@@ -1736,7 +1745,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .nav__link--mega[aria-expanded="true"] svg, .sheet-toggle[aria-expanded="true"] svg { transform: rotate(180deg); }
 .nav__link--mega[aria-expanded="true"] { background: rgba(13, 18, 28, .05); }
 .sheet-sub { list-style: none; margin: 0; padding: 0; overflow: hidden; max-height: 0; transition: max-height .45s var(--ease-expo); }
-.sheet-toggle[aria-expanded="true"] + .sheet-sub { max-height: 720px; }
+.sheet-toggle[aria-expanded="true"] + .sheet-sub { max-height: 1000px; }   /* above the tallest sub-list (Resources: 12 items in 4 groups) */
 .sheet-sub > li:last-child { padding-bottom: var(--s-3); }
 /* mobile sheet rows: icon tile + title, 48px touch targets, aligned with the section labels above */
 .sheet-link { display: flex; align-items: center; gap: var(--s-3); min-height: 48px; padding: var(--s-1) var(--s-3); border-radius: var(--r-md);
