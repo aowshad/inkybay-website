@@ -756,7 +756,7 @@ live platform without an install link.
   Shopify only, the homepage hero video in the comet ring); four steps [tint]; every feature as overview cards [white];
   What you need [dark]; industries as pill links [white]; FAQs [tint]; CTA and footer, whose primary button installs
   this page's platform. Coming soon (WooCommerce): a Coming soon badge, Join the waitlist (to `#waitlist`), the
-  waitlist form [tint] beside "Also available on" links to the live platforms, every feature, FAQs. The form posts
+  waitlist form [tint] beside "Also available on" links to the live platforms (pills with the logo in a round tile, so the radii match), every feature, FAQs. The form posts
   to FORM_ENDPOINT with `form=waitlist` and `topic=waitlist-woocommerce` (see Forms).
 - Placeholders to replace: the BigCommerce and Wix install links (`bigcommerce_app`, `wix_app` in src/site.json are
   https://bigcommerce.com/inkybay and https://wix.com/inkybay for now, your call), every `docs` link, the draft steps,
@@ -910,6 +910,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: WooCommerce page: the logo tiles in the "Also available on" pills are round instead of slightly rounded squares, matching the pill radius (your call)
 - 2026-11-17: Homepage: the Platforms section moves up, after the feature rail and above the case study ("Merchants growing with InkyBay"; your call)
 - 2026-11-17: Platforms bridge: WooCommerce wires in like the other platforms, solid and in its own colour with its logo in colour (your call); the Coming soon chip is what sets it apart
 - 2026-11-17: Platforms bridge fixes (yours): the wires stop at the hub's outer ring instead of running inside it to the white core; WooCommerce's line is a plain solid grey line instead of dashed
