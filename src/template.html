@@ -3010,8 +3010,21 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
           d.setAttribute('aria-current', on ? 'true' : 'false');
         });
       }
-      function go(i) {
-        if (moving && Math.abs(i - idx) > 1) { idx = ((idx % N) + N) % N; place(false); }
+      function pos() {   /* where the track is right now (mid-slide too), as a fractional slide index */
+        var m = new DOMMatrixReadOnly(getComputedStyle(track).transform);
+        return stepPx ? -m.m41 / stepPx - v : idx;
+      }
+      function go(i) {   /* never runs past the clones: the target and the track's current spot are shifted together by
+                            0 or N (the same cards sit there) so both stay inside the cards that exist (-v..N), preferring a
+                            target among the originals; fast clicks in either direction loop forever without a gap */
+        var p = pos(), lo = -v, hi = N, ok = function (x) { return x >= lo && x <= hi; }, k = null;
+        [0, N, -N].forEach(function (s) { if (k === null && i + s >= 0 && i + s < N && ok(p + s)) k = s; });
+        [0, N, -N].forEach(function (s) { if (k === null && ok(i + s) && ok(p + s)) k = s; });
+        if (k === null) { k = i >= N ? -N : i < 0 ? N : 0; p = Math.min(hi, Math.max(lo, p + k)) - k; }   /* last resort: a small jump, never a blank */
+        i += k; p += k;
+        track.style.transition = 'none';
+        track.style.transform = 'translate3d(' + (-(p + v) * stepPx) + 'px,0,0)';
+        void track.offsetWidth;
         idx = i; moving = true; place(true); paint();
       }
       track.addEventListener('transitionend', function (e) {

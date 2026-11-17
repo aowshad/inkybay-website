@@ -239,7 +239,7 @@ Section sub headings are 18px.
    (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: six real 5-star App Store reviews (Fancy Fanny, C4 Design Studio, Björnskog, Coastal Cowboys, Candle
    Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
-   country as on the listing; infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
+   country as on the listing; infinite loop with clones (every move first shifts a target outside the originals, and the track's current spot, by N, so fast arrow clicks never run past the clones into a blank track; the audit clicks fast both ways), autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
@@ -910,6 +910,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Reviews slider: clicking the arrows faster than the slide ran past the cloned cards and showed an empty track for a moment (your report); each move now wraps to the matching spot among the real cards first, so it loops forever with no gap, on the homepage and the industry pages. The audit checks it (check_reviews_loop)
 - 2026-11-17: Audit: the mega-menu check waits up to 3s for the lazy promo image before calling it missing; it failed at random on a different page each run
 - 2026-11-17: WooCommerce page: the logo tiles in the "Also available on" pills are round instead of slightly rounded squares, matching the pill radius (your call)
 - 2026-11-17: Homepage: the Platforms section moves up, after the feature rail and above the case study ("Merchants growing with InkyBay"; your call)

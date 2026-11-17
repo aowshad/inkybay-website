@@ -160,7 +160,7 @@ async def check_page(slug, d):
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "homepage": await check_hero_video(b, path)
-        if slug == "homepage": await check_home_visuals(b, path); await check_bridge(b, path)
+        if slug == "homepage": await check_home_visuals(b, path); await check_bridge(b, path); await check_reviews_loop(b, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
@@ -399,6 +399,22 @@ HOME_VIS_JS = """async () => {
   }
   return { links, out };
 }"""
+
+
+async def check_reviews_loop(b, path):
+    """Reviews slider: fast arrow clicks (faster than the slide) must never run past the clones into a blank track."""
+    js = """()=>{const v=document.querySelector('.rslider').getBoundingClientRect();
+      return [...document.querySelectorAll('.rtrack > *')].filter(c=>{const r=c.getBoundingClientRect();return r.right>v.left+20&&r.left<v.right-20}).length}"""
+    for w in (1440, 390):
+        pg = await b.new_page(viewport={"width": w, "height": 900})
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(400)
+        await pg.evaluate("document.querySelector('.reviews').scrollIntoView({block:'center'})"); await pg.wait_for_timeout(500)
+        worst = 99
+        for sel in [".rctl__next"] * 14 + [".rctl__prev"] * 18:
+            await pg.click(sel); await pg.wait_for_timeout(60)
+            worst = min(worst, await pg.evaluate(js))
+        if worst < 1: bad("homepage", f"reviews {w}px: fast arrow clicks leave the slider blank")
+        await pg.close()
 
 
 async def check_bridge(b, path):
