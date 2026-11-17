@@ -215,14 +215,8 @@ Section sub headings are 18px.
    options (backpack, rows add up, +12 options). Text on products uses the print areas (the notebook cover was added).
    The rail's old mini UIs moved to `src/mini-uis.html` for the feature pages. Phones: card titles are
    min(22px, 5.6vw) so the longest stays on one line at 360px.
-7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The story is T-Shirt
-   Printing UK's App Store review (their words, first three sentences) and "See full case study" opens their story
-   (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
-8. **Reviews**: six real 5-star App Store reviews (Fancy Fanny, C4 Design Studio, Björnskog, Coastal Cowboys, Candle
-   Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
-   country as on the listing; infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
-9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
-9a. **Platforms** (white, between How it works and Why InkyBay; your call, the only homepage change for the platforms):
+6a. **Platforms** (white, after the feature rail and above the case study "Merchants growing with InkyBay"; your call,
+   the only homepage change for the platforms):
    centred two-tone H2 "One customizer, / every platform.", lead and "See all platforms" (secondary, to `platforms/`);
    copy in src/platforms.json "home", tiles rendered by `render_platforms.bridge()` (`{{PLATFORMS_SECTION}}` and
    `{{INTEGRATIONS}}`), animation after motion-brew's Brand Bridge (your reference, motion only, our design). The
@@ -240,6 +234,13 @@ Section sub headings are 18px.
    field and magnetic wires (heavy for four tiles) and press-to-toggle (tiles are links). The audit checks tiles and
    links against platforms.json, one wire each, every platform connected after 5s, tiles on screen at 1440
    and 390px, and reduced motion.
+7. **Case study** (tint band shared with Reviews): story card plus three stats that count up once. The story is T-Shirt
+   Printing UK's App Store review (their words, first three sentences) and "See full case study" opens their story
+   (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
+8. **Reviews**: six real 5-star App Store reviews (Fancy Fanny, C4 Design Studio, Björnskog, Coastal Cowboys, Candle
+   Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
+   country as on the listing; infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
+9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
 12. **Crowd marquee** (dark zone, between CTA and footer): "Built for merchants [4 round faces] and shoppers [4 soft-square faces]",
@@ -762,7 +763,7 @@ live platform without an install link.
   requirements and FAQs for BigCommerce and Wix. Try live demo goes to the Shopify demo store on every platform.
 - The audit covers `platforms` and every `platforms/<slug>` in `--all`.
 - Where platforms appear: the Resources mega menu and footer (see Mega menu), the homepage Platforms section (see
-  Section order, 9a) and the overview page.
+  Section order, 6a) and the overview page.
 
 ## Changelog page
 
@@ -909,6 +910,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Homepage: the Platforms section moves up, after the feature rail and above the case study ("Merchants growing with InkyBay"; your call)
 - 2026-11-17: Platforms bridge: WooCommerce wires in like the other platforms, solid and in its own colour with its logo in colour (your call); the Coming soon chip is what sets it apart
 - 2026-11-17: Platforms bridge fixes (yours): the wires stop at the hub's outer ring instead of running inside it to the white core; WooCommerce's line is a plain solid grey line instead of dashed
 - 2026-11-17: Homepage: Platforms section between How it works and Why InkyBay (your request; nothing else on the homepage changed): the platform tiles wire into the InkyBay hub one by one with comets and a turning ring, after motion-brew's Brand Bridge animation; tiles link to the platform pages, WooCommerce stays dashed with Coming soon. Decisions: no particle field, magnetic wires or toggling; on phones the tiles shrink to 60px so the row fits 360px; the audit checks it (check_bridge)

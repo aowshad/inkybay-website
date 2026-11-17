@@ -266,7 +266,7 @@ def bridge(root):
 
 def home_section():
     h = D["home"]
-    return f"""<!-- ===== SECTION 08a · PLATFORMS (src/platforms.json, render_platforms.bridge) ===== -->
+    return f"""<!-- ===== SECTION 06a · PLATFORMS (src/platforms.json, render_platforms.bridge) ===== -->
   <section class="integ" aria-labelledby="integ-title">
     <div class="container">
       <div class="integ__head">
