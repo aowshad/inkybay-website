@@ -9,6 +9,7 @@
                            site/sitemap.xml                  (every page but the 404 and search)
                            site/industries/<slug>/index.html (one per industry in _index.json with src/industries/<slug>.json)
                            site/features/, site/industries/, site/resources/  (render_hubs.py: the overview pages)
+                           site/platforms/ (+ <slug>/)         (render_platforms.py, src/platforms.json)
 
 site/ is build output and is not in git. Internal links are relative to each page's folder (the site is served
 under /inkybay-website/, so never start a link with "/"): every link is <root><path>, where <root> is "" on the
@@ -22,7 +23,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
-import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs
+import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs, render_platforms
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -298,6 +299,9 @@ write(SITE / "contact" / "index.html", build(render_contact.render("../"), root=
 write(SITE / "features" / "index.html", build(render_hubs.features(), root="../", home="../"))      # overview pages
 write(SITE / "industries" / "index.html", build(render_hubs.industries(), root="../", home="../"))
 write(SITE / "resources" / "index.html", build(render_hubs.resources(), root="../", home="../"))
+write(SITE / "platforms" / "index.html", build(render_platforms.render_index(), root="../", home="../"))
+for p in render_platforms.PLATFORMS:                # one page per platform (src/platforms.json)
+    write(SITE / "platforms" / p["slug"] / "index.html", build(render_platforms.render(p["slug"]), root="../../", home="../../"))
 write(SITE / "pricing" / "index.html", build(render_pricing.render(), root="../", home="../"))
 write(SITE / "affiliate" / "index.html", build(render_affiliate.render(), root="../", home="../"))
 write(SITE / "resources" / "video-tutorials" / "index.html", build(render_videos.render(), root="../../", home="../../"))

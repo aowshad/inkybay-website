@@ -1,0 +1,60 @@
+/* =========================================================
+   PLATFORMS: platforms/ and platforms/<slug>/ (render_platforms.py, src/platforms.json)
+   ========================================================= */
+/* a platform logo on a white tile, in its brand colour (white in both themes, the logos are drawn for white) */
+.pltile { --s: 56px; flex: none; display: grid; place-items: center; width: var(--s); height: var(--s); border-radius: var(--r-lg);
+  background: #fff; color: var(--pc, #111); box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .08), 0 10px 24px -14px rgba(60, 25, 5, .35); }
+.pltile .plogo { width: 62%; height: 62%; }
+.pltile--sm { --s: 32px; border-radius: var(--r-sm); box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .1); }
+.pltile--lg { --s: 112px; border-radius: 24px; }
+.plogo--wix, .plogo--woocommerce { width: 74%; }            /* wordmarks: wider, not taller */
+.pltile .plogo--wix, .pltile .plogo--woocommerce { width: 74%; height: auto; }
+.mega__icon .plogo, .sheet-link__icon .plogo { width: 20px; height: 20px; }
+.mega__icon .plogo--wix, .mega__icon .plogo--woocommerce { width: 28px; height: auto; }
+.sheet-link__icon .plogo--wix, .sheet-link__icon .plogo--woocommerce { width: 24px; height: auto; }
+.mega__badge { display: inline-block; margin-left: var(--s-2); padding: 0 8px; border-radius: 999px; vertical-align: 2px;
+  font-size: var(--t-small); line-height: 20px; font-weight: 500; color: var(--ink-muted); background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+
+/* hero: InkyBay mark, a short brand thread, the platform's tile */
+.pllock { display: flex; align-items: center; gap: var(--s-3); }
+.pllock__mark { display: block; width: 56px; height: 56px; }
+.pllock__mark svg { width: 100%; height: 100%; }
+.pllock__link { width: 32px; height: 2px; border-radius: 2px; background: repeating-linear-gradient(90deg, var(--brand-500) 0 6px, transparent 6px 10px); opacity: .8; }
+.plbadge { display: inline-flex; align-items: center; padding: 2px 10px; border-radius: 999px; vertical-align: middle;
+  font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; color: var(--brand-700);
+  background: color-mix(in srgb, var(--brand-500) 12%, var(--bg)); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 30%, transparent); }
+.hubcard__title .plbadge { margin-left: var(--s-2); }
+.plhero .hero__media { width: 100%; }
+
+/* steps: the feature-page capability card with a step number */
+.plsteps .fcardx { position: relative; }
+.plstep__num { position: absolute; top: var(--s-6); right: var(--s-6); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); font-variant-numeric: tabular-nums; }
+.plreq { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+
+/* industries strip: pill links */
+.plinds__title { font-size: 28px; line-height: 1.25; font-weight: 500; letter-spacing: -0.02em; margin-bottom: var(--s-6); }
+.plinds__list { list-style: none; margin: 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.plind { display: inline-flex; align-items: center; gap: var(--s-2); min-height: 48px; padding: 0 var(--s-5) 0 var(--s-3); border-radius: 999px;
+  color: var(--ink); background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); transition: box-shadow .3s ease, color .2s ease; }
+.plind:hover, .plind:focus-visible { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--line)), 0 10px 24px -16px rgba(229, 56, 15, .45); }
+.plind__icon { display: grid; place-items: center; width: 32px; height: 32px; border-radius: 50%; color: var(--brand-600); background: color-mix(in srgb, var(--brand-500) 12%, var(--bg)); }
+.plind__icon svg { width: 18px; height: 18px; }
+
+/* coming soon: the other platforms beside the waitlist form */
+.plothers__label { margin-top: var(--s-6); font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.plothers { list-style: none; margin: var(--s-3) 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: var(--s-3); }
+.plmini { display: inline-flex; align-items: center; gap: var(--s-2); padding: 6px var(--s-4) 6px 6px; border-radius: 999px; color: var(--ink);
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); transition: box-shadow .3s ease; }
+.plmini:hover, .plmini:focus-visible { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--line)); }
+
+/* overview cards: the logo on the light stage */
+.plcard__media { aspect-ratio: 16 / 10; }
+
+@media (max-width: 960px) { .plreq { grid-template-columns: minmax(0, 1fr); } }
+@media (max-width: 640px) { .pllock__mark { width: 48px; height: 48px; } .pltile:not(.pltile--sm):not(.pltile--lg) { --s: 48px; } .pltile--lg { --s: 96px; } }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .plbadge { color: #FFB46B; }
+  :root:not([data-theme="light"]) .fsec--tint .plmini { background: #1E150E; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+}
+:root[data-theme="dark"] .plbadge { color: #FFB46B; }
+@media (prefers-reduced-motion: reduce) { .plind, .plmini { transition: none; } }

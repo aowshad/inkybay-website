@@ -57,6 +57,7 @@ render_videos.py          renders site/resources/video-tutorials/ from src/video
 render_affiliate.py       renders site/affiliate/ from src/affiliate.json (styles src/affiliate.css, plus feature/forms/partners.css)
 render_cases.py           renders site/resources/case-studies/ (+ <slug>/) from src/case-studies.json (styles src/cases.css, images src/assets/cases/)
 render_hubs.py            renders the overview pages site/features/, site/industries/, site/resources/ (copy src/hubs.json, styles src/hubs.css)
+render_platforms.py       renders site/platforms/ and site/platforms/<slug>/ from src/platforms.json (styles src/platforms.css, logos src/assets/platforms/)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -101,7 +102,7 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
 - Favicon: `src/assets/brand/favicon.svg` (the brand mark), `favicon-32.png` and `apple-touch-icon.png` (180px, square:
   iOS rounds the corners), linked from every page head with a theme colour per scheme (#FFFFFF / #0F1013).
 - Outside links live in one place, `src/site.json` "links" (App Store listing, its reviews, the demo store
-  https://inkybay.myshopify.com/, the five social profiles); templates and JSON write `{{LINK:<key>}}`. Start free
+  https://inkybay.myshopify.com/, the five social profiles, the BigCommerce and Wix app listings); templates and JSON write `{{LINK:<key>}}`. Start free
   trial and Install on Shopify go to the App Store listing, Try live demo to the demo store, See all reviews to the
   listing's reviews. A button always needs a link (`{{BTN_PRIMARY:label|href}}`); the label-only form is gone so no
   button can render `href="#"` again. Every one of these outside links opens in a new tab (build.py adds
@@ -714,6 +715,31 @@ here with no extra work. Styles in `src/hubs.css`; the shell, CTA and footer com
   footer's "All features" and "All industries". The product wall cards on feature pages link to each product's
   industry page.
 
+## Platforms
+
+InkyBay runs on Shopify, BigCommerce and Wix; WooCommerce is coming soon. One data file, `src/platforms.json`
+(labels, the overview copy, the waitlist form and one entry per platform in display order: `slug`, `name`, `status`
+live | coming-soon, `product_word`, `color` (brand colour on white), `color_dark`, `short` (menu copy, about 40
+characters), `install` and `demo` (`{{LINK:<key>}}`, the URLs live in src/site.json), `docs`, `rating` (Shopify only),
+`meta`, `lead`, `steps`, `requirements`, `faqs`; items with `"draft": true` need confirming). The build stops on a
+live platform without an install link.
+- Logos: `src/assets/platforms/<slug>.svg`, one colour (`fill="currentColor"`), cleaned from your files (BigCommerce
+  logomark, Wix and Woo wordmarks; Shopify's bag from its official mark). Inlined, so they take the platform colour on a
+  white tile (`.pltile`, white in both themes) and the ink colour as menu icons (`ICON["pl-<slug>"]`).
+- `platforms/` (render_platforms.render_index): the overview hero and four cards (logo tile, name, Coming soon badge,
+  short line, Learn more; 4 up like the industries overview).
+- `platforms/<slug>/`: hero [white] (breadcrumb Home > Platforms > name, the InkyBay mark joined to the platform tile by
+  a dashed brand thread, H1 "Product customizer for <name>", lead, Install on <name> + Try live demo, the proof pill on
+  Shopify only, the homepage hero video in the comet ring); four steps [tint]; every feature as overview cards [white];
+  What you need [dark]; industries as pill links [white]; FAQs [tint]; CTA and footer, whose primary button installs
+  this page's platform. Coming soon (WooCommerce): a Coming soon badge, Join the waitlist (to `#waitlist`), the
+  waitlist form [tint] beside "Also available on" links to the live platforms, every feature, FAQs. The form posts
+  to FORM_ENDPOINT with `form=waitlist` and `topic=waitlist-woocommerce` (see Forms).
+- Placeholders to replace: the BigCommerce and Wix install links (`bigcommerce_app`, `wix_app` in src/site.json are
+  https://bigcommerce.com/inkybay and https://wix.com/inkybay for now, your call), every `docs` link, the draft steps,
+  requirements and FAQs for BigCommerce and Wix. Try live demo goes to the Shopify demo store on every platform.
+- The audit covers `platforms` and every `platforms/<slug>` in `--all`.
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -859,6 +885,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Platform pages (render_platforms.py, src/platforms.json, src/platforms.css, src/assets/platforms/, audit): platforms/ plus one page each for Shopify, BigCommerce, Wix (live) and WooCommerce (coming soon, with a waitlist form). Decisions (yours): the Install popover from the brief is not built for now and the homepage stays as it is; WooCommerce is coming soon; the BigCommerce and Wix install links are placeholders. Mine: logos are one-colour SVGs on white tiles so they hold up in dark mode; on these pages the shared CTA installs the page's platform
 - 2026-11-13: Blog article: previous / next moves from under the "Keep reading" cards into the article, right after the author box (the usual order: content, tags, share, author, previous / next, related); it was easy to miss at the very bottom (your question)
 - 2026-11-10: Blog Key takeaways card: even 24px padding on all sides (was 20 top and bottom, 24 left and right; your call); phones keep an even 20
 - 2026-11-10: Blog Key takeaways: a calmer "generate" animation after optionia.com's blog summary (your reference, animation only, our design kept): a breathing glow with "Thinking…" then "Reading…", then the points ease in out of a blur one by one, and every height change glides; replaces the 0.6s shimmer and the fast typing. Reduced motion still shows the points at once; the audit waits 7s for the reveal

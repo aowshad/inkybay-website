@@ -1,0 +1,172 @@
+{
+  "_note": "Every platform InkyBay runs on (navbar Resources > Platforms, footer, homepage integrations, platforms/<slug>/). status: live | coming-soon. Install links are {{LINK:<key>}} keys in src/site.json. Items marked draft need confirming.",
+  "labels": {
+    "home": "Home",
+    "crumb": "Platforms",
+    "coming_soon": "Coming soon",
+    "live": "Available",
+    "install": "Install on {name}",
+    "demo": "Try live demo",
+    "waitlist_cta": "Join the waitlist",
+    "learn_more": "Learn more",
+    "steps_heading": ["Go live on {name}", "in four simple steps."],
+    "features_heading": ["Every InkyBay feature", "on {name}."],
+    "features_lead": "The same live design editor, setup and print-ready files on every platform.",
+    "req_heading": ["What you need", "to get started."],
+    "industries_heading": "Built for every kind of custom store",
+    "faqs_lead": "Common questions about InkyBay on {name}.",
+    "talk": "Talk to our team",
+    "still": "Still have questions?",
+    "other_platforms": "Also available on"
+  },
+  "index": {
+    "meta": {
+      "title": "Platforms | InkyBay product customizer",
+      "description": "InkyBay runs on Shopify, BigCommerce and Wix, with a WooCommerce plugin coming soon. Pick your platform to see how to install it."
+    },
+    "title": ["One product customizer", "for every platform."],
+    "lead": "Add the InkyBay design editor to the store you already run. Pick your platform to see how it works and how to install it."
+  },
+  "waitlist": {
+    "heading": "Join the waitlist",
+    "lead": "Leave your email and we will let you know as soon as the WooCommerce plugin is ready.",
+    "topic": "waitlist-woocommerce",
+    "fields": {
+      "name": {"label": "Full name", "placeholder": "Jane Cooper", "error": "Please enter your name."},
+      "email": {"label": "Email address", "placeholder": "jane@studio.com", "error": "Please enter a valid email address."},
+      "store": {"label": "Store URL", "placeholder": "yourstore.com", "error": "Please enter a valid URL."},
+      "consent": {"label": "I agree to receive emails about the WooCommerce plugin and accept the", "link": "Privacy policy", "error": "Please accept to continue."}
+    },
+    "optional": "optional",
+    "submit": "Join the waitlist",
+    "sending": "Sending…",
+    "success": "You are on the list. We will email you when the plugin is ready.",
+    "error": "Something went wrong. Please try again or write to",
+    "fail_email": "support@inkybay.com",
+    "not_connected": "This form is not connected yet."
+  },
+  "platforms": [
+    {
+      "slug": "shopify",
+      "name": "Shopify",
+      "status": "live",
+      "product_word": "App",
+      "color": "#5E8E3E",
+      "color_dark": "#95BF47",
+      "short": "Install from the Shopify App Store.",
+      "install": "{{LINK:app_store}}",
+      "demo": "{{LINK:demo_store}}",
+      "docs": "",
+      "rating": true,
+      "meta": {
+        "title": "InkyBay for Shopify | Product customizer app",
+        "description": "Add a live product design editor to your Shopify store. Install InkyBay from the Shopify App Store, set up products and get print-ready orders."
+      },
+      "lead": "Let shoppers personalize text, images and artwork on any product with a live preview. Install from the Shopify App Store and go live without code.",
+      "steps": [
+        {"title": "Install", "text": "Add InkyBay from the Shopify App Store in a couple of clicks.", "icon": "box"},
+        {"title": "Embed", "text": "Turn on the app embed in your theme editor. No code needed.", "icon": "layers"},
+        {"title": "Product setup", "text": "Pick products, draw print areas and choose what shoppers can customize.", "icon": "sliders"},
+        {"title": "Start selling", "text": "Shoppers design their products and you get print-ready orders.", "icon": "file"}
+      ],
+      "requirements": [
+        {"title": "A Shopify store", "text": "InkyBay installs from the Shopify App Store on your store.", "icon": "bag", "draft": true},
+        {"title": "A theme with app embeds", "text": "Turn the editor on from the theme editor, no code changes.", "icon": "template", "draft": true},
+        {"title": "Billing through Shopify", "text": "Plans are billed on your Shopify invoice, with a 21-day free trial.", "icon": "percent"}
+      ],
+      "faqs": [
+        {"q": "How do I install InkyBay on Shopify?", "a": "Open the InkyBay listing on the Shopify App Store, press Install and approve the app. Then turn on the app embed in your theme editor."},
+        {"q": "Does it work with my theme?", "a": "InkyBay adds its editor through a theme app embed, so it works with your current theme without code changes.", "draft": true},
+        {"q": "How is billing handled?", "a": "Plans are billed through Shopify in USD with your Shopify invoice, and every plan starts with a 21-day free trial."}
+      ]
+    },
+    {
+      "slug": "bigcommerce",
+      "name": "BigCommerce",
+      "status": "live",
+      "product_word": "App",
+      "color": "#34313F",
+      "color_dark": "#E8E6F0",
+      "short": "Add InkyBay to your BigCommerce store.",
+      "install": "{{LINK:bigcommerce_app}}",
+      "demo": "{{LINK:demo_store}}",
+      "docs": "",
+      "meta": {
+        "title": "InkyBay for BigCommerce | Product customizer app",
+        "description": "Add a live product design editor to your BigCommerce store. Shoppers personalize products with a live preview and you get print-ready orders."
+      },
+      "lead": "Let shoppers personalize text, images and artwork on any product with a live preview. Add InkyBay to your BigCommerce store and go live without code.",
+      "steps": [
+        {"title": "Install", "text": "Add InkyBay to your store from the BigCommerce app marketplace.", "icon": "box", "draft": true},
+        {"title": "Connect", "text": "Turn the editor on for your storefront. No code needed.", "icon": "layers", "draft": true},
+        {"title": "Product setup", "text": "Pick products, draw print areas and choose what shoppers can customize.", "icon": "sliders"},
+        {"title": "Start selling", "text": "Shoppers design their products and you get print-ready orders.", "icon": "file"}
+      ],
+      "requirements": [
+        {"title": "A BigCommerce store", "text": "InkyBay installs as an app on your BigCommerce store.", "icon": "bag", "draft": true},
+        {"title": "Store owner access", "text": "You need permission to install apps on the store.", "icon": "sliders", "draft": true},
+        {"title": "No coding", "text": "Setup happens in the InkyBay dashboard, not in your theme files.", "icon": "wand", "draft": true}
+      ],
+      "faqs": [
+        {"q": "How do I install InkyBay on BigCommerce?", "a": "Open the InkyBay listing for BigCommerce, press Install and approve the app, then turn the editor on for your storefront.", "draft": true},
+        {"q": "Are the features the same as on Shopify?", "a": "The design editor, product setup and print-ready files are the same. Ask our team about a specific feature before you start.", "draft": true},
+        {"q": "How is billing handled?", "a": "Pricing for BigCommerce is shown on the app listing. Talk to our team if you have questions about plans.", "draft": true}
+      ]
+    },
+    {
+      "slug": "wix",
+      "name": "Wix",
+      "status": "live",
+      "product_word": "App",
+      "color": "#000000",
+      "color_dark": "#FFFFFF",
+      "short": "Add InkyBay to your Wix store.",
+      "install": "{{LINK:wix_app}}",
+      "demo": "{{LINK:demo_store}}",
+      "docs": "",
+      "meta": {
+        "title": "InkyBay for Wix | Product customizer app",
+        "description": "Add a live product design editor to your Wix store. Shoppers personalize products with a live preview and you get print-ready orders."
+      },
+      "lead": "Let shoppers personalize text, images and artwork on any product with a live preview. Add InkyBay to your Wix store and go live without code.",
+      "steps": [
+        {"title": "Install", "text": "Add InkyBay to your site from the Wix App Market.", "icon": "box", "draft": true},
+        {"title": "Connect", "text": "Turn the editor on for your store pages. No code needed.", "icon": "layers", "draft": true},
+        {"title": "Product setup", "text": "Pick products, draw print areas and choose what shoppers can customize.", "icon": "sliders"},
+        {"title": "Start selling", "text": "Shoppers design their products and you get print-ready orders.", "icon": "file"}
+      ],
+      "requirements": [
+        {"title": "A Wix store", "text": "A Wix site with Wix Stores turned on.", "icon": "bag", "draft": true},
+        {"title": "A plan that sells", "text": "Your Wix plan needs to accept online payments.", "icon": "percent", "draft": true},
+        {"title": "No coding", "text": "Setup happens in the InkyBay dashboard, not in your site code.", "icon": "wand", "draft": true}
+      ],
+      "faqs": [
+        {"q": "How do I install InkyBay on Wix?", "a": "Open the InkyBay listing in the Wix App Market, add it to your site and turn the editor on for your store pages.", "draft": true},
+        {"q": "Are the features the same as on Shopify?", "a": "The design editor, product setup and print-ready files are the same. Ask our team about a specific feature before you start.", "draft": true},
+        {"q": "How is billing handled?", "a": "Pricing for Wix is shown on the app listing. Talk to our team if you have questions about plans.", "draft": true}
+      ]
+    },
+    {
+      "slug": "woocommerce",
+      "name": "WooCommerce",
+      "status": "coming-soon",
+      "product_word": "Plugin",
+      "color": "#873EFF",
+      "color_dark": "#A97BFF",
+      "short": "A plugin for WordPress stores.",
+      "install": "",
+      "demo": "{{LINK:demo_store}}",
+      "docs": "",
+      "meta": {
+        "title": "InkyBay for WooCommerce | Coming soon",
+        "description": "The InkyBay product customizer is coming to WooCommerce as a WordPress plugin. Join the waitlist to hear as soon as it is ready."
+      },
+      "lead": "The InkyBay design editor is coming to WordPress stores as a WooCommerce plugin. Join the waitlist and we will let you know the day it is ready.",
+      "faqs": [
+        {"q": "When will the WooCommerce plugin be ready?", "a": "We are building it now. Join the waitlist and we will email you as soon as it is available."},
+        {"q": "Can I use InkyBay today?", "a": "Yes. InkyBay is available now on Shopify, BigCommerce and Wix."},
+        {"q": "Will it have the same features?", "a": "The plan is the same design editor, product setup and print-ready files. We will share the details at launch.", "draft": true}
+      ]
+    }
+  ]
+}
