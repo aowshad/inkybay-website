@@ -235,3 +235,45 @@ def render_index():
   </section>
 </main>"""
     return page(body, x["meta"])
+
+
+def bridge(root):
+    """The homepage integrations section ({{INTEGRATIONS}}): the platforms on white tiles either side of the InkyBay
+    hub, each joined to it by a wire in its own colour (template.html: .bridge CSS and JS). Every tile links to its
+    platform page. The markup is the final state (wires drawn, logos in colour); the JS arms it and connects the live
+    platforms one by one. A coming-soon platform keeps a dashed wire and a Coming soon chip."""
+    h = D["home"]
+    half = (len(PLATFORMS) + 1) // 2
+    def tile(p):
+        soon = p["status"] != "live"
+        state = L["coming_soon"] if soon else L["live"]
+        chip = f'<span class="bridge__soon">{E(L["coming_soon"])}</span>' if soon else ""
+        return (f'<li><a class="bridge__tile" href="{root}platforms/{p["slug"]}/" data-slug="{p["slug"]}" data-status="{p["status"]}" '
+                f'style="--pc:{p["color"]};--pcd:{p["color_dark"]}"><span class="bridge__box">{logo(p["slug"])}</span>'
+                f'<span class="bridge__name">{E(p["name"])}<span class="sr-only">, {E(state.lower())}</span></span>{chip}</a></li>')
+    grads = "".join(f'<linearGradient id="bw-{p["slug"]}" gradientUnits="userSpaceOnUse"><stop offset="0" class="bridge__s0" style="--pc:{p["color"]};--pcd:{p["color_dark"]}"/>'
+                    f'<stop offset="1" class="bridge__s1"/></linearGradient>' for p in PLATFORMS)
+    wires = "".join(f'<g class="bridge__g" data-slug="{p["slug"]}" data-status="{p["status"]}" style="--pc:{p["color"]};--pcd:{p["color_dark"]}">'
+                    f'<path class="bridge__base"/><path class="bridge__wire" pathLength="1" stroke="url(#bw-{p["slug"]})"/>'
+                    f'<path class="bridge__comet" pathLength="1" stroke="url(#bw-{p["slug"]})" filter="url(#bridge-glow)"/></g>' for p in PLATFORMS)
+    return f"""<div class="bridge" data-bridge>
+        <svg class="bridge__wires" aria-hidden="true" focusable="false"><defs>{grads}<filter id="bridge-glow" x="-50%" y="-50%" width="200%" height="200%"><feGaussianBlur stdDeviation="2.5" result="b"/><feMerge><feMergeNode in="b"/><feMergeNode in="SourceGraphic"/></feMerge></filter></defs>{wires}</svg>
+        <ul class="bridge__side">{"".join(tile(p) for p in PLATFORMS[:half])}</ul>
+        <div class="bridge__hub" aria-hidden="true"><span class="bridge__ring"></span><span class="bridge__pulse"></span><span class="bridge__core">{{{{LOGO_MARK}}}}</span></div>
+        <ul class="bridge__side bridge__side--r">{"".join(tile(p) for p in PLATFORMS[half:])}</ul>
+      </div>"""
+
+
+def home_section():
+    h = D["home"]
+    return f"""<!-- ===== SECTION 08a · PLATFORMS (src/platforms.json, render_platforms.bridge) ===== -->
+  <section class="integ" aria-labelledby="integ-title">
+    <div class="container">
+      <div class="integ__head">
+        <h2 class="integ__title" id="integ-title"><span class="h-line h-inline">{E(h["title"][0])}</span> <span class="h-line h-inline h-muted">{E(h["title"][1])}</span></h2>
+        <p class="integ__lead">{E(h["lead"])}</p>
+      </div>
+      {{{{INTEGRATIONS}}}}
+      <div class="integ__foot">{{{{BTN_SECONDARY:{h["cta"]}|platforms/}}}}</div>
+    </div>
+  </section>"""

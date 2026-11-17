@@ -1680,6 +1680,85 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 @media (max-width: 600px) { .stats { grid-template-columns: minmax(0, 1fr); } }
 
 /* =========================================================
+   PLATFORMS (homepage): the bridge. Platform tiles either side of the InkyBay hub, wires in each platform's colour.
+   The base styles are the final state (connected, in colour); .is-armed (JS) starts them disconnected.
+   ========================================================= */
+.integ { padding-block: var(--section-y); }
+.integ__head { display: grid; justify-items: center; gap: var(--s-4); margin-bottom: var(--head-gap); text-align: center; }
+.integ__title { font-size: var(--t-h2); line-height: var(--t-h2-lh); letter-spacing: -0.025em; text-wrap: balance; }
+.integ__lead { max-width: 52ch; color: var(--ink-muted); font-size: var(--t-lead); line-height: var(--t-lead-lh); }
+.integ__foot { display: flex; justify-content: center; margin-top: var(--head-gap); }
+.bridge { --tile: 96px; position: relative; max-width: 880px; margin-inline: auto; display: grid; align-items: center;
+  grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); column-gap: clamp(56px, 12vw, 200px); }
+.bridge__wires { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.bridge__side { list-style: none; margin: 0; padding: 0; display: grid; gap: var(--s-10); justify-items: start; }
+.bridge__side--r { justify-items: end; }
+.bridge__tile { position: relative; z-index: 1; display: grid; justify-items: center; gap: var(--s-3); width: calc(var(--tile) + 56px); color: var(--ink);   /* one width, so every box lines up */
+  transition: transform .5s var(--ease-expo), opacity .4s ease; }
+.bridge__box { display: grid; place-items: center; width: var(--tile); height: var(--tile); border-radius: 24px; background: #fff;
+  color: var(--pc); box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .08), 0 18px 36px -22px rgba(60, 25, 5, .45);
+  transition: color .7s ease, box-shadow .4s ease; }
+.bridge__box svg { width: 50%; height: 50%; }
+.bridge__box .plogo--wix, .bridge__box .plogo--woocommerce { width: 66%; height: auto; }
+.bridge__name { font-weight: 500; }
+.bridge__soon { position: absolute; top: calc(var(--tile) - 14px); left: 50%; transform: translateX(-50%); white-space: nowrap; padding: 2px 10px; border-radius: 999px;
+  font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; color: var(--ink-muted); background: var(--bg); box-shadow: inset 0 0 0 1px var(--line); }
+.bridge__tile[data-status="coming-soon"] .bridge__box { color: #9A9CA3; }
+.bridge__tile:hover, .bridge__tile:focus-visible { transform: translateY(-4px); }
+.bridge__tile:hover .bridge__box, .bridge__tile:focus-visible .bridge__box { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--pc) 45%, transparent), 0 24px 44px -22px rgba(60, 25, 5, .55); }
+.bridge__tile:focus-visible { outline: none; }
+.bridge__tile:focus-visible .bridge__box { outline: 2px solid var(--brand-600); outline-offset: 3px; }
+.bridge:has(.bridge__tile:hover) .bridge__tile:not(:hover) { opacity: .5; }
+/* the hub: the InkyBay mark on a white core inside a slowly turning ring of the connected platforms' colours */
+@property --bridge-a { syntax: "<angle>"; inherits: false; initial-value: 0deg; }
+.bridge__hub { position: relative; z-index: 1; display: grid; place-items: center; width: 132px; height: 132px; }
+.bridge__ring { position: absolute; inset: 0; border-radius: 36px; padding: 2px; background: conic-gradient(from var(--bridge-a), var(--ring, #FF7500, #E5380F, #FF7500));
+  -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0);
+  animation: bridge-turn 8s linear infinite paused; }
+.bridge.is-live .bridge__ring { animation-play-state: running; }
+@keyframes bridge-turn { to { --bridge-a: 360deg; } }
+.bridge__core { position: relative; display: grid; place-items: center; width: 112px; height: 112px; border-radius: 30px; background: #fff;
+  box-shadow: 0 24px 48px -24px rgba(229, 56, 15, .45); }
+.bridge__core svg { width: 64px; height: 64px; }
+.bridge__pulse { position: absolute; inset: 0; border-radius: 36px; box-shadow: 0 0 0 2px var(--brand-500); opacity: 0; }
+.bridge__pulse.is-on { animation: bridge-pulse .9s var(--ease-expo); }
+@keyframes bridge-pulse { from { opacity: .7; transform: scale(1); } to { opacity: 0; transform: scale(1.35); } }
+/* wires: a faint track, the coloured wire (drawn in with pathLength), a comet that runs it now and then */
+.bridge__base { fill: none; stroke: var(--line); stroke-width: 1.5; }
+.bridge__wire { fill: none; stroke-width: 2; stroke-linecap: round; stroke-dasharray: 1; stroke-dashoffset: 0;
+  transition: stroke-dashoffset 1.1s var(--ease-expo), stroke-width .3s ease; }
+.bridge__comet { fill: none; stroke-width: 3; stroke-linecap: round; stroke-dasharray: .14 2; stroke-dashoffset: .14; opacity: 0; }
+.bridge__g.is-hot .bridge__wire { stroke-width: 3.5; }
+.bridge__g[data-status="coming-soon"] .bridge__base { stroke: #9A9CA3; stroke-dasharray: 3 6; opacity: .6; transition: opacity .3s ease; }
+.bridge__g[data-status="coming-soon"].is-hot .bridge__base { opacity: 1; }
+.bridge__g[data-status="coming-soon"] .bridge__wire, .bridge__g[data-status="coming-soon"] .bridge__comet { display: none; }
+.bridge__s0 { stop-color: var(--pc); }
+.bridge__s1 { stop-color: #FF7500; }
+/* armed by JS: everything starts disconnected and grey, then connects one by one (.is-on) */
+.bridge.is-armed .bridge__g:not(.is-on) .bridge__wire { stroke-dashoffset: 1; }
+.bridge.is-armed .bridge__tile:not(.is-on) .bridge__box { color: #9A9CA3; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) .bridge__s0 { stop-color: var(--pcd); }
+  :root:not([data-theme="light"]) .bridge__core { box-shadow: 0 24px 48px -20px rgba(255, 117, 0, .35); }
+}
+:root[data-theme="dark"] .bridge__s0 { stop-color: var(--pcd); }
+@media (max-width: 640px) {
+  .bridge { --tile: 60px; column-gap: 10px; }   /* 2 x 100 + 80 + 20 = 300px: fits a 360px phone */
+  .bridge__tile { width: calc(var(--tile) + 40px); }
+  .bridge__box { border-radius: 16px; }
+  .bridge__side { gap: var(--s-8); }
+  .bridge__hub { width: 80px; height: 80px; }
+  .bridge__ring, .bridge__pulse { border-radius: 23px; }
+  .bridge__core { width: 68px; height: 68px; border-radius: 19px; }
+  .bridge__core svg { width: 40px; height: 40px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bridge__ring { animation: none; }
+  .bridge__tile, .bridge__box, .bridge__wire { transition: none; }
+  .bridge__tile:hover, .bridge__tile:focus-visible { transform: none; }
+}
+
+/* =========================================================
    MEGA MENU — opens on click from "Features"; content from src/features/_index.json
    ========================================================= */
 .mega { position: absolute; left: 0; right: 0; top: 100%; padding-top: var(--s-2); pointer-events: none; }
@@ -2342,6 +2421,7 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       </ol>
     </div>
   </section>
+  {{PLATFORMS_SECTION}}
   <!-- ===== SECTION 08b · WHY INKYBAY ===== -->
   <section class="why" aria-labelledby="why-title">
     <div class="container">
@@ -3873,6 +3953,76 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
       }
       layout();
       window.addEventListener('resize', layout);
+    });
+
+    /* ---------- Platforms bridge (homepage): wires follow the layout; live platforms connect one by one, comets run now and then ---------- */
+    document.querySelectorAll('[data-bridge]').forEach(function (br) {
+      var svg = br.querySelector('.bridge__wires'), core = br.querySelector('.bridge__core'), pulse = br.querySelector('.bridge__pulse');
+      var tiles = [].slice.call(br.querySelectorAll('.bridge__tile'));
+      var g = {}; [].forEach.call(br.querySelectorAll('.bridge__g'), function (x) { g[x.dataset.slug] = x; });
+      var reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, dark = matchMedia('(prefers-color-scheme: dark)');
+      var live = false, hover = false, started = false, timer = 0;
+      function layout() {
+        var r = br.getBoundingClientRect(), h = core.getBoundingClientRect();
+        svg.setAttribute('viewBox', '0 0 ' + r.width + ' ' + r.height);
+        tiles.forEach(function (t) {
+          var b = t.querySelector('.bridge__box').getBoundingClientRect(), left = b.left < h.left;
+          var x1 = (left ? b.right : b.left) - r.left, y1 = b.top + b.height / 2 - r.top;
+          var x2 = (left ? h.left : h.right) - r.left, y2 = h.top + h.height / 2 - r.top, dx = (x2 - x1) * .55;
+          var d = 'M' + x1 + ' ' + y1 + ' C' + (x1 + dx) + ' ' + y1 + ' ' + (x2 - dx) + ' ' + y2 + ' ' + x2 + ' ' + y2;
+          var w = g[t.dataset.slug]; [].forEach.call(w.querySelectorAll('path'), function (p) { p.setAttribute('d', d); });
+          var gr = svg.querySelector('#bw-' + t.dataset.slug);
+          gr.setAttribute('x1', x1); gr.setAttribute('y1', y1); gr.setAttribute('x2', x2); gr.setAttribute('y2', y2);
+        });
+      }
+      layout();
+      if ('ResizeObserver' in window) new ResizeObserver(layout).observe(br); else addEventListener('resize', layout);
+      function ring() {   /* the hub's ring turns in the connected platforms' colours */
+        var c = tiles.filter(function (t) { return t.classList.contains('is-on'); }).map(function (t) { return getComputedStyle(t).getPropertyValue(dark.matches ? '--pcd' : '--pc').trim(); });
+        br.style.setProperty('--ring', c.length ? c.concat('#FF7500', c[0]).join(', ') : '#FF7500, #E5380F, #FF7500');
+      }
+      function comet(slug, fast) {
+        var c = g[slug].querySelector('.bridge__comet');
+        if (reduce || !c.animate) return;
+        c.style.opacity = 1;
+        var a = c.animate([{ strokeDashoffset: .14 }, { strokeDashoffset: -1 }], { duration: fast ? 900 : 1600, easing: 'cubic-bezier(.45,0,.25,1)' });
+        a.onfinish = function () { c.style.opacity = 0; land(); };
+      }
+      function land() { pulse.classList.remove('is-on'); void pulse.offsetWidth; pulse.classList.add('is-on'); }
+      var liveSlugs = tiles.filter(function (t) { return t.dataset.status === 'live'; }).map(function (t) { return t.dataset.slug; });
+      function connect(slug) {
+        g[slug].classList.add('is-on'); br.querySelector('.bridge__tile[data-slug="' + slug + '"]').classList.add('is-on');
+        ring(); setTimeout(land, 650);
+      }
+      function start() {   /* the live platforms wire in one at a time, in a random order with an uneven rhythm */
+        started = true;
+        var order = liveSlugs.slice().sort(function () { return Math.random() - .5; }), t = 300;
+        order.forEach(function (s) { setTimeout(function () { connect(s); }, t); t += 700 + Math.random() * 600; });
+        setTimeout(loop, t + 800);
+      }
+      function loop() {   /* now and then a comet runs a connected wire; paused off screen and on hover */
+        clearTimeout(timer);
+        timer = setTimeout(function () {
+          if (live && !hover && !document.hidden) comet(liveSlugs[Math.floor(Math.random() * liveSlugs.length)]);
+          loop();
+        }, 1800 + Math.random() * 1800);
+      }
+      if (reduce) { ring(); return; }
+      br.classList.add('is-armed');
+      if (dark.addEventListener) dark.addEventListener('change', ring);
+      tiles.forEach(function (t) {
+        var w = g[t.dataset.slug];
+        function on() { hover = true; w.classList.add('is-hot'); if (t.classList.contains('is-on')) comet(t.dataset.slug, true); }
+        function off() { hover = false; w.classList.remove('is-hot'); }
+        t.addEventListener('mouseenter', on); t.addEventListener('mouseleave', off);
+        t.addEventListener('focus', function () { if (t.matches(':focus-visible')) on(); }); t.addEventListener('blur', off);
+      });
+      if ('IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          live = es[0].isIntersecting; br.classList.toggle('is-live', live);
+          if (live && !started) start();
+        }, { threshold: .35 }).observe(br);
+      } else { live = true; br.classList.add('is-live'); start(); }
     });
 
     /* Mobile menu */

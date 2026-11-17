@@ -222,6 +222,23 @@ Section sub headings are 18px.
    Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
    country as on the listing; infinite loop with clones, autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
+9a. **Platforms** (white, between How it works and Why InkyBay; your call, the only homepage change for the platforms):
+   centred two-tone H2 "One customizer, / every platform.", lead and "See all platforms" (secondary, to `platforms/`);
+   copy in src/platforms.json "home", tiles rendered by `render_platforms.bridge()` (`{{PLATFORMS_SECTION}}` and
+   `{{INTEGRATIONS}}`), animation after motion-brew's Brand Bridge (your reference, motion only, our design). The
+   bridge: the platforms on white tiles (96px, 60px on phones; one tile width so the boxes line up), half on each side
+   of the hub (the InkyBay mark on a white core inside a 2px ring that turns in the connected platforms' colours, 8s,
+   only while on screen); an SVG wire from each tile to the hub (a cubic curve recomputed from the layout on resize,
+   gradient from the platform's colour to brand orange; the dark-mode colour in dark mode). Base styles are the final
+   state; JS arms it (`.is-armed`: wires undrawn, logos grey) and, once 35% is on screen, connects the live platforms one
+   at a time in a random order (0.7-1.3s apart; the wire draws in, the logo takes its colour, the hub pulses); then a
+   comet (a short glowing dash) runs a random connected wire every 1.8-3.6s, paused off screen, on hover and in a
+   hidden tab. Hover or keyboard focus: the tile lifts, its wire thickens, a comet runs it, the other tiles dim.
+   WooCommerce (coming soon) keeps a dashed grey wire, a grey logo and a 14px "Coming soon" chip. Every tile links to
+   its platform page. Reduced motion: shown connected and still. Left out of the reference on purpose: the particle
+   field and magnetic wires (heavy for four tiles) and press-to-toggle (tiles are links). The audit checks tiles and
+   links against platforms.json, one wire each, only the live platforms connected after 5s, tiles on screen at 1440
+   and 390px, and reduced motion.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
 12. **Crowd marquee** (dark zone, between CTA and footer): "Built for merchants [4 round faces] and shoppers [4 soft-square faces]",
@@ -743,6 +760,8 @@ live platform without an install link.
   https://bigcommerce.com/inkybay and https://wix.com/inkybay for now, your call), every `docs` link, the draft steps,
   requirements and FAQs for BigCommerce and Wix. Try live demo goes to the Shopify demo store on every platform.
 - The audit covers `platforms` and every `platforms/<slug>` in `--all`.
+- Where platforms appear: the Resources mega menu and footer (see Mega menu), the homepage Platforms section (see
+  Section order, 9a) and the overview page.
 
 ## Changelog page
 
@@ -889,6 +908,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Homepage: Platforms section between How it works and Why InkyBay (your request; nothing else on the homepage changed): the platform tiles wire into the InkyBay hub one by one with comets and a turning ring, after motion-brew's Brand Bridge animation; tiles link to the platform pages, WooCommerce stays dashed with Coming soon. Decisions: no particle field, magnetic wires or toggling; on phones the tiles shrink to 60px so the row fits 360px; the audit checks it (check_bridge)
 - 2026-11-17: Platforms in the Resources menu and footer (your call: inside Resources rather than a fifth navbar menu, which would not fit the 940px compact pill): a fourth Platforms group with the platform logos as one-colour icons replaces the video tutorials promo card; the footer's Get help column gains a Platforms list and All platforms; the Resources overview page lists the platforms too. The mobile sub-list cap goes from 720 to 1000px so the longer Resources list opens fully
 - 2026-11-17: Platform pages (render_platforms.py, src/platforms.json, src/platforms.css, src/assets/platforms/, audit): platforms/ plus one page each for Shopify, BigCommerce, Wix (live) and WooCommerce (coming soon, with a waitlist form). Decisions (yours): the Install popover from the brief is not built for now and the homepage stays as it is; WooCommerce is coming soon; the BigCommerce and Wix install links are placeholders. Mine: logos are one-colour SVGs on white tiles so they hold up in dark mode; on these pages the shared CTA installs the page's platform
 - 2026-11-13: Blog article: previous / next moves from under the "Keep reading" cards into the article, right after the author box (the usual order: content, tags, share, author, previous / next, related); it was easy to miss at the very bottom (your question)

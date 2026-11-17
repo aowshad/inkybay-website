@@ -23,7 +23,7 @@ footer, CSS and JS (see render_feature.py), so every page stays in sync with the
 import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
-from render_platforms import group_items
+from render_platforms import group_items, home_section, bridge
 import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs, render_platforms
 
 ROOT = pathlib.Path(__file__).parent
@@ -232,6 +232,7 @@ def build(t, root="", home="#", current=None):
     t = re.sub(r"\{\{LINK:(.*?)\}\}", lambda m: html.escape(LINKS[m.group(1)], quote=True), t)   # outside URLs (src/site.json "links")
     if 'id="reviews-title"' not in t:                     # the proof pill jumps to the reviews; pages without them link to the App Store reviews
         t = t.replace('href="#reviews-title"', 'href="' + html.escape(LINKS["reviews"], quote=True) + '"')
+    t = t.replace("{{PLATFORMS_SECTION}}", home_section()).replace("{{INTEGRATIONS}}", bridge(root))   # homepage platforms (src/platforms.json)
     t = t.replace("{{INDUSTRY_WHEEL}}", wheel(root))
     t = t.replace("{{FEATURE_RAIL}}", feature_rail(root))
     t = re.sub(r"\{\{BTN_PRIMARY:(.*?)\|(.*?)\}\}", lambda m: primary_html(m.group(1), link({"href": m.group(2)}, "", root)[0]), t)   # {{BTN_PRIMARY:label|href}}

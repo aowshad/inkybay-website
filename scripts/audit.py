@@ -28,7 +28,7 @@ def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 # chips, which keep 14px. The allowlist is the token users plus these components.
 SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
                ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .hchip, .porbit__chip, .icardx__label, "
-               ".mega__desc, .mega__label, .mega__badge, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
+               ".mega__desc, .mega__label, .mega__badge, .bridge__soon, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
                ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
                ".bbar__pill, .brel__label, .bcall__title, .bquote p + p, .prtoggle__save, .prcard__note, .prcard__trial, .prcard__label, .prcard__badge, .chl__date, .chl__pill, .chld__meta, .chld__pnl span, .vhero__count, .vcard__dur, .vfeat__label, .vfeat__meta, .vtab, .vcard__cat, .acalc__note, .cscard__loc, .cscard__ind, .csbar__count, .csside__facts dt, .csd__quote figcaption")
 SMALL_TEXT_JS = """window.smallText = function () {
@@ -160,7 +160,7 @@ async def check_page(slug, d):
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "homepage": await check_hero_video(b, path)
-        if slug == "homepage": await check_home_visuals(b, path)
+        if slug == "homepage": await check_home_visuals(b, path); await check_bridge(b, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
@@ -399,6 +399,34 @@ HOME_VIS_JS = """async () => {
   }
   return { links, out };
 }"""
+
+
+async def check_bridge(b, path):
+    """Homepage platforms bridge: one tile per platform in src/platforms.json linking to platforms/<slug>/, a wire per
+    tile, the live platforms connected a few seconds after it comes into view, nothing connected-looking for a
+    coming-soon platform, every box in the stage at 1440 and 390px, and with reduced motion it is shown final and still."""
+    plats = json.loads((ROOT / "src/platforms.json").read_text())["platforms"]
+    live = sum(p["status"] == "live" for p in plats)
+    for w in (1440, 390):
+        pg = await b.new_page(viewport={"width": w, "height": 900})
+        await pg.goto(url_of(path)); await pg.wait_for_timeout(400)
+        await pg.evaluate("document.querySelector('.bridge').scrollIntoView({block:'center'})"); await pg.wait_for_timeout(5000)
+        r = await pg.evaluate("""(()=>{const br=document.querySelector('.bridge'), R=br.getBoundingClientRect();
+          const t=[...br.querySelectorAll('.bridge__tile')];
+          return {tiles: t.map(x=>[x.dataset.slug, x.getAttribute('href')]), wires: br.querySelectorAll('.bridge__g path.bridge__wire[d]').length,
+                  on: br.querySelectorAll('.bridge__g.is-on').length, soonOn: br.querySelectorAll('.bridge__g.is-on[data-status="coming-soon"]').length,
+                  out: [...br.querySelectorAll('.bridge__box')].filter(x=>{const q=x.getBoundingClientRect(); return q.left<0||q.right>innerWidth}).length}})()""")
+        tag = f"bridge {w}px"
+        if [s for s, _ in r["tiles"]] != [p["slug"] for p in plats]: bad("homepage", f"{tag}: tiles {r['tiles']} do not match src/platforms.json")
+        if any(not h.endswith(f"platforms/{s}/") for s, h in r["tiles"]): bad("homepage", f"{tag}: a tile does not link to its platform page {r['tiles']}")
+        if r["wires"] != len(plats): bad("homepage", f"{tag}: {r['wires']} wires drawn for {len(plats)} platforms")
+        if r["on"] != live or r["soonOn"]: bad("homepage", f"{tag}: {r['on']} wires connected, expected the {live} live platforms")
+        if r["out"]: bad("homepage", f"{tag}: {r['out']} platform tiles outside the screen")
+        await pg.close()
+    ctx = await b.new_context(reduced_motion="reduce"); pg = await ctx.new_page()
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(400)
+    if await pg.evaluate("document.querySelector('.bridge').classList.contains('is-armed')"): bad("homepage", "bridge: reduced motion still animates (is-armed)")
+    await ctx.close()
 
 
 async def check_home_visuals(b, path):
