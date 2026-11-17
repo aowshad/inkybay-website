@@ -910,6 +910,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Audit: the mega-menu check waits up to 3s for the lazy promo image before calling it missing; it failed at random on a different page each run
 - 2026-11-17: WooCommerce page: the logo tiles in the "Also available on" pills are round instead of slightly rounded squares, matching the pill radius (your call)
 - 2026-11-17: Homepage: the Platforms section moves up, after the feature rail and above the case study ("Merchants growing with InkyBay"; your call)
 - 2026-11-17: Platforms bridge: WooCommerce wires in like the other platforms, solid and in its own colour with its logo in colour (your call); the Coming soon chip is what sets it apart

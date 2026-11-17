@@ -648,6 +648,9 @@ async def check_menus(b, slug, path):
             if not await t.count(): bad(slug, f"{tag}: no trigger #nav-{mid}"); continue
             if await t.get_attribute("aria-controls") != f"mega-{mid}": bad(slug, f"{tag}: #nav-{mid} has no aria-controls=mega-{mid}")
             await t.click(); await pg.wait_for_timeout(450)    # opens directly, even while another menu is open
+            try:   # the promo image is lazy: give it up to 3s to arrive before judging it
+                await pg.wait_for_function(f"[...document.querySelectorAll('#mega-{mid} .mega__promo img')].every(i=>i.complete&&i.naturalWidth>0)", timeout=3000)
+            except Exception: pass
             r = await pg.evaluate(f"""(()=>{{const m=document.getElementById('mega-{mid}');
               const open=[...document.querySelectorAll('.mega[data-open="true"]')].map(x=>x.id);
               const cut=[...m.querySelectorAll('.mega__desc')].filter(x=>x.scrollHeight>x.clientHeight+1).map(x=>x.textContent);
