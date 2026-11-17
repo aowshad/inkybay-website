@@ -403,10 +403,9 @@ HOME_VIS_JS = """async () => {
 
 async def check_bridge(b, path):
     """Homepage platforms bridge: one tile per platform in src/platforms.json linking to platforms/<slug>/, a wire per
-    tile, the live platforms connected a few seconds after it comes into view, nothing connected-looking for a
-    coming-soon platform, every box in the stage at 1440 and 390px, and with reduced motion it is shown final and still."""
+    tile, every platform connected a few seconds after it comes into view, every box in the stage at 1440 and 390px, and with reduced motion it is shown final and still."""
     plats = json.loads((ROOT / "src/platforms.json").read_text())["platforms"]
-    live = sum(p["status"] == "live" for p in plats)
+    live = len(plats)                                   # every platform wires in (coming soon is shown by its chip)
     for w in (1440, 390):
         pg = await b.new_page(viewport={"width": w, "height": 900})
         await pg.goto(url_of(path)); await pg.wait_for_timeout(400)
@@ -420,7 +419,7 @@ async def check_bridge(b, path):
         if [s for s, _ in r["tiles"]] != [p["slug"] for p in plats]: bad("homepage", f"{tag}: tiles {r['tiles']} do not match src/platforms.json")
         if any(not h.endswith(f"platforms/{s}/") for s, h in r["tiles"]): bad("homepage", f"{tag}: a tile does not link to its platform page {r['tiles']}")
         if r["wires"] != len(plats): bad("homepage", f"{tag}: {r['wires']} wires drawn for {len(plats)} platforms")
-        if r["on"] != live or r["soonOn"]: bad("homepage", f"{tag}: {r['on']} wires connected, expected the {live} live platforms")
+        if r["on"] != live: bad("homepage", f"{tag}: {r['on']} wires connected, expected all {live} platforms")
         if r["out"]: bad("homepage", f"{tag}: {r['out']} platform tiles outside the screen")
         await pg.close()
     ctx = await b.new_context(reduced_motion="reduce"); pg = await ctx.new_page()

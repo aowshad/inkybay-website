@@ -230,14 +230,15 @@ Section sub headings are 18px.
    of the hub (the InkyBay mark on a white core inside a 2px ring that turns in the connected platforms' colours, 8s,
    only while on screen); an SVG wire from each tile to the hub's outer ring, never inside it (a cubic curve recomputed from the layout on resize,
    gradient from the platform's colour to brand orange; the dark-mode colour in dark mode). Base styles are the final
-   state; JS arms it (`.is-armed`: wires undrawn, logos grey) and, once 35% is on screen, connects the live platforms one
+   state; JS arms it (`.is-armed`: wires undrawn, logos grey) and, once 35% is on screen, connects every platform one
    at a time in a random order (0.7-1.3s apart; the wire draws in, the logo takes its colour, the hub pulses); then a
    comet (a short glowing dash) runs a random connected wire every 1.8-3.6s, paused off screen, on hover and in a
    hidden tab. Hover or keyboard focus: the tile lifts, its wire thickens, a comet runs it, the other tiles dim.
-   WooCommerce (coming soon) keeps a plain solid grey line (no dashes, your call), a grey logo and a 14px "Coming soon" chip. Every tile links to
+   WooCommerce (coming soon) wires in like the others (your call: solid and in its colour) and is set apart only by a
+   14px "Coming soon" chip. Every tile links to
    its platform page. Reduced motion: shown connected and still. Left out of the reference on purpose: the particle
    field and magnetic wires (heavy for four tiles) and press-to-toggle (tiles are links). The audit checks tiles and
-   links against platforms.json, one wire each, only the live platforms connected after 5s, tiles on screen at 1440
+   links against platforms.json, one wire each, every platform connected after 5s, tiles on screen at 1440
    and 390px, and reduced motion.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
@@ -908,6 +909,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-17: Platforms bridge: WooCommerce wires in like the other platforms, solid and in its own colour with its logo in colour (your call); the Coming soon chip is what sets it apart
 - 2026-11-17: Platforms bridge fixes (yours): the wires stop at the hub's outer ring instead of running inside it to the white core; WooCommerce's line is a plain solid grey line instead of dashed
 - 2026-11-17: Homepage: Platforms section between How it works and Why InkyBay (your request; nothing else on the homepage changed): the platform tiles wire into the InkyBay hub one by one with comets and a turning ring, after motion-brew's Brand Bridge animation; tiles link to the platform pages, WooCommerce stays dashed with Coming soon. Decisions: no particle field, magnetic wires or toggling; on phones the tiles shrink to 60px so the row fits 360px; the audit checks it (check_bridge)
 - 2026-11-17: Platforms in the Resources menu and footer (your call: inside Resources rather than a fifth navbar menu, which would not fit the 940px compact pill): a fourth Platforms group with the platform logos as one-colour icons replaces the video tutorials promo card; the footer's Get help column gains a Platforms list and All platforms; the Resources overview page lists the platforms too. The mobile sub-list cap goes from 720 to 1000px so the longer Resources list opens fully
