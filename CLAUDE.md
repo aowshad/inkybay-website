@@ -58,6 +58,7 @@ render_affiliate.py       renders site/affiliate/ from src/affiliate.json (style
 render_cases.py           renders site/resources/case-studies/ (+ <slug>/) from src/case-studies.json (styles src/cases.css, images src/assets/cases/)
 render_hubs.py            renders the overview pages site/features/, site/industries/, site/resources/ (copy src/hubs.json, styles src/hubs.css)
 render_platforms.py       renders site/platforms/ and site/platforms/<slug>/ from src/platforms.json (styles src/platforms.css, logos src/assets/platforms/)
+render_brand.py           renders site/brand-assets/ from src/brand-assets.json (styles src/brand.css, files src/assets/brand-kit/)
 render_changelog.py       renders site/changelog/ from src/changelog.json (styles in src/changelog.css)
 render_legal.py           renders site/privacy-policy/ and site/terms-of-service/ from src/legal/<slug>.md (labels in legal.json)
 src/blog/                 posts/<slug>.md, categories.json, tags.json, authors.json, blog.json (page copy)
@@ -93,7 +94,9 @@ src/assets/video/         hero-promo.mp4, hero-promo.webm and hero-promo.webp (p
 - Fonts are self-hosted (`src/assets/fonts/`, OFL): one variable woff2 per family and subset (Geist and Inter,
   latin and latin-ext) covers every weight. `src/fonts.css` holds the @font-face rules (font-display: swap,
   unicode-range), inlined into every page head; the two latin files are preloaded. No request leaves the site for
-  fonts (the hero video and style-frame pages, render tools only, still use Google Fonts).
+  fonts (the hero video and style-frame pages, render tools only, still use Google Fonts). Poppins, the InkyBay brand
+  typeface, is self-hosted too (`poppins-<400|500|600|700>-latin.woff2`) and loaded only on the Brand assets page for
+  its specimen; the site itself never uses it.
 - SEO tags (build.py `seo()`, applied when each page is written): every page gets a meta description (the homepage's
   from `src/site.json`), a canonical URL and og:url from `SITE_URL` (not on noindex pages: the 404 and search), and
   Open Graph and Twitter tags with the social card `src/assets/brand/og-card.jpg` (1200x630, made by
@@ -348,7 +351,7 @@ into the shared template. Never hand-write a menu in the template.
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
   footer: every industry, then "All industries" to the overview page `industries/`).
   Resources (groups: Learn, Grow with InkyBay, Get help, Platforms; `resources/blog/`, `resources/video-tutorials/`,
-  `resources/case-studies/`, `partners/` and `affiliate/` exist; Help center is external to docs.inkybay.com; the
+  `resources/case-studies/`, `partners/`, `affiliate/` and `brand-assets/` exist (Brand assets sits under Grow with InkyBay); Help center is external to docs.inkybay.com; the
   Platforms group is `{"title": "Platforms", "items_from": "platforms"}`, built from src/platforms.json (logo icons,
   `platforms/<slug>/`, a "Coming soon" pill at the start of WooCommerce's line); no promo, so the four groups take the
   full width (`.mega__panel--full`; your call, the video tutorials card was dropped and Video tutorials stays under Learn);
@@ -769,6 +772,37 @@ live platform without an install link.
 - Where platforms appear: the Resources mega menu and footer (see Mega menu), the homepage Platforms section (see
   Section order, 6a) and the overview page.
 
+## Brand assets page
+
+`site/brand-assets/`, built by `render_brand.py` from `src/brand-assets.json` (every string), styles in `src/brand.css`
+(plus feature.css). For partners, affiliates and press; structure after shopify.com/brand-assets (your reference, with
+wix.com and woocommerce.com), in our design system. Content from the ParseLab brand site
+(parselab-brand.vercel.app/inkybay, updated October 2, 2026): three logos, the palette and Poppins. Linked from the
+Resources menu (Grow with InkyBay > Brand assets, icon `palette`) and so from the footer's Resources column and the
+Resources overview.
+1. Hero [white]: breadcrumb Home > Resources > Brand assets, two-tone H1 "Brand assets / for partners and
+   affiliates.", lead, "Download brand kit" (primary, the ZIP) and "Read the guidelines" (to `#usage`), a 14px kit
+   size and the agreement note; a preview card with both full logos (white half, warm dark half) and the palette dots;
+   an "On this page" pill row (Logos, Colors, Typography, Usage guidelines).
+2. Logos [tint]: three cards (Full logo on light, on dark, Icon) with each logo on its own stage, a usage line and SVG
+   and PNG (2048px) downloads; "Download all logos (ZIP)".
+3. Colors [white]: the ink gradient as a wide card, then Red #D42427 (primary), Orange #F58220 (accent), Charcoal
+   #353535 (wordmark and text), White; each card shows hex and RGB and copies its hex on click (the contact page's
+   `.cch__copy` script, "Copied" for 2s; the gradient copies its CSS); colors.css and colors.json downloads.
+4. Typography [tint]: a Poppins specimen (gradient "Aa", the alphabet, the four weights, "Get Poppins" to Google
+   Fonts) beside the type scale (Display 48/56 Bold to Small 14/20; the samples are `aria-hidden` specimens).
+5. Usage guidelines [white, `#usage`], one row each (rule left, example right): Clear space (X = half the icon's
+   height, drawn with a dashed box and X markers), Minimum size (full logo 120px / 30mm, icon 24px / 6mm, shown at
+   that size), Pick the right version (light, dark, the icon on a photo), Don't (8 examples drawn with CSS on the real
+   logo: stretched, rotated, recoloured, effects, busy background, low contrast, wordmark alone, crowded), Writing our
+   name (InkyBay correct; Inkybay, Inky Bay, INKYBAY, inkybay struck through), Trademark use (5 rules after
+   Shopify's), then "Need another format?" (brand@parselab.com, as on the brand site, and Contact us).
+- Files: `src/assets/brand-kit/` holds copies of the brand site's files (the three SVGs, their 2048px PNGs,
+  inkybay-brand-kit.zip, colors.css, colors.json), served through `{{IMG:}}` with `download` names. When the brand
+  site changes, replace these files with the same names.
+- Draft (ours, to confirm): the clear-space and minimum-size values and the trademark rules (`"draft": true`); the
+  brand site's own usage guidelines say "Coming soon". The audit covers the page (`brand-assets` in `--all`).
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -914,6 +948,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-18: Brand assets page (render_brand.py, src/brand-assets.json, src/brand.css, src/assets/brand-kit/, Poppins woff2, audit) for partners and affiliates: logos with SVG and PNG downloads, the palette with click-to-copy, the Poppins specimen and type scale, and Shopify-style usage guidelines (clear space, minimum size, versions, eight don'ts, writing our name, trademark use); linked from Resources > Grow with InkyBay. Decisions: the files are copied from the ParseLab brand site so downloads never depend on another host; Poppins is self-hosted and used only for the specimen, so the site keeps Geist and Inter; clear space, minimum sizes and the trademark rules are our proposals (the brand site's guidelines are not published yet)
 - 2026-11-17: BigCommerce links (yours): the real app listing, its own demo store and help docs replace the placeholder; platform pages with a docs link show "Read the help docs" beside "Talk to our team" (Shopify's points at the existing help center so both live pages match)
 - 2026-11-17: Reviews slider: clicking the arrows faster than the slide ran past the cloned cards and showed an empty track for a moment (your report); each move now wraps to the matching spot among the real cards first, so it loops forever with no gap, on the homepage and the industry pages. The audit checks it (check_reviews_loop)
 - 2026-11-17: Audit: the mega-menu check waits up to 3s for the lazy promo image before calling it missing; it failed at random on a different page each run

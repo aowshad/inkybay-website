@@ -24,7 +24,7 @@ import base64, hashlib, re, html, pathlib, os, shutil
 import json
 from render_feature import render, ICON
 from render_platforms import group_items, home_section, bridge
-import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs, render_platforms
+import render_industry, render_404, render_partners, render_contact, render_blog, render_legal, render_pricing, render_changelog, render_videos, render_affiliate, render_cases, render_hubs, render_platforms, render_brand
 
 ROOT = pathlib.Path(__file__).parent
 # where the site is served from: "/inkybay-website/" on GitHub Pages, "/" on a custom domain (SITE_BASE=/ python3 build.py).
@@ -309,6 +309,7 @@ write(SITE / "resources" / "index.html", build(render_hubs.resources(), root="..
 write(SITE / "platforms" / "index.html", build(render_platforms.render_index(), root="../", home="../"))
 for p in render_platforms.PLATFORMS:                # one page per platform (src/platforms.json)
     write(SITE / "platforms" / p["slug"] / "index.html", build(render_platforms.render(p["slug"]), root="../../", home="../../"))
+write(SITE / "brand-assets" / "index.html", build(render_brand.render(), root="../", home="../"))   # src/brand-assets.json
 write(SITE / "pricing" / "index.html", build(render_pricing.render(), root="../", home="../"))
 write(SITE / "affiliate" / "index.html", build(render_affiliate.render(), root="../", home="../"))
 write(SITE / "resources" / "video-tutorials" / "index.html", build(render_videos.render(), root="../../", home="../../"))

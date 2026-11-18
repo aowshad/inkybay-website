@@ -1,0 +1,9 @@
+/* InkyBay brand colors. Generated from content/brands/inkybay/brand.json */
+:root {
+  /* Main palette */
+  --inkybay-ink-gradient: linear-gradient(45deg, #F58220 0%, #D42427 58%); /* App icon */
+  --inkybay-red: #D42427; /* Primary */
+  --inkybay-orange: #F58220; /* Accent */
+  --inkybay-charcoal: #353535; /* Wordmark & text */
+  --inkybay-white: #FFFFFF; /* Backgrounds */
+}

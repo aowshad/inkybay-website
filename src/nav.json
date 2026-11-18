@@ -98,6 +98,12 @@
               "short": "Earn by recommending InkyBay.",
               "icon": "percent",
               "href": "affiliate/"
+            },
+            {
+              "title": "Brand assets",
+              "short": "Logos, colors and usage guidelines.",
+              "icon": "palette",
+              "href": "brand-assets/"
             }
           ]
         },

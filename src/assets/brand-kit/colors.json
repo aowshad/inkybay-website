@@ -1,0 +1,66 @@
+{
+  "brand": "InkyBay",
+  "slug": "inkybay",
+  "updatedAt": "2026-10-02",
+  "palettes": [
+    {
+      "name": "Main palette",
+      "colors": [
+        {
+          "name": "Ink gradient",
+          "role": "App icon",
+          "type": "gradient",
+          "css": "linear-gradient(45deg, #F58220 0%, #D42427 58%)",
+          "angle": 45,
+          "stops": [
+            {
+              "at": 0,
+              "hex": "#F58220",
+              "rgb": "rgb(245, 130, 32)",
+              "hsl": "hsl(28, 91%, 54%)"
+            },
+            {
+              "at": 58,
+              "hex": "#D42427",
+              "rgb": "rgb(212, 36, 39)",
+              "hsl": "hsl(359, 71%, 49%)"
+            }
+          ],
+          "cssVar": "--inkybay-ink-gradient"
+        },
+        {
+          "name": "Red",
+          "role": "Primary",
+          "hex": "#D42427",
+          "rgb": "rgb(212, 36, 39)",
+          "hsl": "hsl(359, 71%, 49%)",
+          "cssVar": "--inkybay-red"
+        },
+        {
+          "name": "Orange",
+          "role": "Accent",
+          "hex": "#F58220",
+          "rgb": "rgb(245, 130, 32)",
+          "hsl": "hsl(28, 91%, 54%)",
+          "cssVar": "--inkybay-orange"
+        },
+        {
+          "name": "Charcoal",
+          "role": "Wordmark & text",
+          "hex": "#353535",
+          "rgb": "rgb(53, 53, 53)",
+          "hsl": "hsl(0, 0%, 21%)",
+          "cssVar": "--inkybay-charcoal"
+        },
+        {
+          "name": "White",
+          "role": "Backgrounds",
+          "hex": "#FFFFFF",
+          "rgb": "rgb(255, 255, 255)",
+          "hsl": "hsl(0, 0%, 100%)",
+          "cssVar": "--inkybay-white"
+        }
+      ]
+    }
+  ]
+}
