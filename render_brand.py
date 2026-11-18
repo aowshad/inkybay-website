@@ -50,7 +50,7 @@ def render():
     <div class="container fhero__grid">
       <div class="fhero__text">
         <nav class="crumbs" aria-label="Breadcrumb"><a href="{{{{HOME}}}}">{E(D["crumbs"][0])}</a>{CHEV_R}<a href="{{{{ROOT}}}}resources/">{E(D["crumbs"][1])}</a>{CHEV_R}<span aria-current="page">{E(D["crumbs"][2])}</span></nav>
-        <h1 class="fhero__title" id="b-title"><span class="h-line">{E(h["title"][0])}</span> <span class="h-line h-muted">{E(h["title"][1])}</span></h1>
+        <h1 class="fhero__title" id="b-title">{E(h["title"])}</h1>
         <p class="fhero__lead">{E(h["lead"])}</p>
         <div class="fhero__actions"><a class="btn btn--primary" href="{{{{IMG:{h["kit"]}}}}}" download="inkybay-brand-kit.zip" aria-label="{E(h["primary"])}"><span class="btn__label" aria-hidden="true"><span data-text="{E(h["primary"])}">{E(h["primary"])}</span></span><span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span></a>{{{{BTN_SECONDARY:{h["secondary"]}|#usage}}}}</div>
         <p class="bhero__meta">{E(h["kit_meta"])}</p>

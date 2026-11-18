@@ -780,8 +780,8 @@ wix.com and woocommerce.com), in our design system. Content from the ParseLab br
 (parselab-brand.vercel.app/inkybay, updated October 2, 2026): three logos, the palette and Poppins. Linked from the
 Resources menu (Grow with InkyBay > Brand assets, icon `palette`) and so from the footer's Resources column and the
 Resources overview.
-1. Hero [white]: breadcrumb Home > Resources > Brand assets, two-tone H1 "Brand assets / for partners and
-   affiliates.", lead, "Download brand kit" (primary, the ZIP) and "Read the guidelines" (to `#usage`), a 14px kit
+1. Hero [white]: breadcrumb Home > Resources > Brand assets, one-tone H1 "InkyBay Brand Assets" (your wording, title case
+   by your call; the rest of the site uses sentence case), lead, "Download brand kit" (primary, the ZIP) and "Read the guidelines" (to `#usage`), a 14px kit
    size and the agreement note; a preview card with both full logos (white half, warm dark half) and the palette dots;
    an "On this page" pill row (Logos, Colors, Typography, Usage guidelines).
 2. Logos [tint]: three cards (Full logo on light, on dark, Icon) with each logo on its own stage, a usage line and SVG
@@ -948,6 +948,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-18: Brand assets hero heading is "InkyBay Brand Assets" in one tone (your wording and capitals), replacing "Brand assets / for partners and affiliates."
 - 2026-11-18: Brand assets page (render_brand.py, src/brand-assets.json, src/brand.css, src/assets/brand-kit/, Poppins woff2, audit) for partners and affiliates: logos with SVG and PNG downloads, the palette with click-to-copy, the Poppins specimen and type scale, and Shopify-style usage guidelines (clear space, minimum size, versions, eight don'ts, writing our name, trademark use); linked from Resources > Grow with InkyBay. Decisions: the files are copied from the ParseLab brand site so downloads never depend on another host; Poppins is self-hosted and used only for the specimen, so the site keeps Geist and Inter; clear space, minimum sizes and the trademark rules are our proposals (the brand site's guidelines are not published yet)
 - 2026-11-17: BigCommerce links (yours): the real app listing, its own demo store and help docs replace the placeholder; platform pages with a docs link show "Read the help docs" beside "Talk to our team" (Shopify's points at the existing help center so both live pages match)
 - 2026-11-17: Reviews slider: clicking the arrows faster than the slide ran past the cloned cards and showed an empty track for a moment (your report); each move now wraps to the matching spot among the real cards first, so it loops forever with no gap, on the homepage and the industry pages. The audit checks it (check_reviews_loop)
