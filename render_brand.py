@@ -76,9 +76,8 @@ def render():
         </li>""" for l in lg["items"])
     logos = f"""  <section class="fsec fsec--tint" id="logos" aria-labelledby="b-logos">
     <div class="container">
-      <div class="fsec__head bhead">{heading(lg["title"], "b-logos")}<p class="fsec__lead">{E(lg["lead"])}</p></div>
+      <div class="bhead-row"><div class="fsec__head bhead">{heading(lg["title"], "b-logos")}<p class="fsec__lead">{E(lg["lead"])}</p></div>{dl(h["kit"], lg["all"] + " (ZIP)", "inkybay-brand-kit.zip")}</div>
       <ul class="blogos">{cards}</ul>
-      <div class="bmore">{dl(h["kit"], lg["all"] + " (ZIP)", "inkybay-brand-kit.zip")}</div>
     </div>
   </section>"""
 

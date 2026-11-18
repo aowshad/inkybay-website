@@ -784,10 +784,11 @@ Resources overview.
    by your call; the rest of the site uses sentence case), lead, "Download brand kit" (primary, the ZIP) and "Read the guidelines" (to `#usage`), a 14px kit
    size and the agreement note; a preview card with both full logos (white half, warm dark half) and the palette dots;
    an "On this page" pill row (Logos, Colors, Typography, Usage guidelines).
-2. Logos [tint]: four cards, 4 up (2 at 1100px, 1 on phones): Full logo on light, on dark, Icon rounded (corners
+2. Logos [tint]: "Download all logos (ZIP)" sits right of the heading and lead (`.bhead-row`; under them on phones);
+   four cards, 2 up so the logos read large (1 on phones): Full logo on light, on dark, Icon rounded (corners
    built in, for places that show it as is) and Icon square (full bleed, no radius, for app stores, avatars and
    favicons that apply their own mask; your call), each on its own stage with a usage line and SVG and PNG (2048px)
-   downloads; "Download all logos (ZIP)".
+   downloads.
 3. Colors [white]: the ink gradient as a wide card, then Red #D42427 (primary), Orange #F58220 (accent), Charcoal
    #353535 (wordmark and text), White; each card shows hex and RGB and copies its hex on click (the contact page's
    `.cch__copy` script, "Copied" for 2s; the gradient copies its CSS); colors.css and colors.json downloads.
@@ -953,6 +954,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-18: Brand assets logos (your call): two cards per row instead of four, so the logos and cards are larger; "Download all logos" moves from under the cards to the right of the Logos heading
 - 2026-11-18: Brand assets: a square app icon (full bleed, no rounded corners) beside the rounded one, as SVG and PNG and in the kit ZIP (your call): app stores, avatars and favicons apply their own corner mask, and a pre-rounded icon gets rounded twice. Logos are now 4 up
 - 2026-11-18: Brand assets hero heading is "InkyBay Brand Assets" in one tone (your wording and capitals), replacing "Brand assets / for partners and affiliates."
 - 2026-11-18: Brand assets page (render_brand.py, src/brand-assets.json, src/brand.css, src/assets/brand-kit/, Poppins woff2, audit) for partners and affiliates: logos with SVG and PNG downloads, the palette with click-to-copy, the Poppins specimen and type scale, and Shopify-style usage guidelines (clear space, minimum size, versions, eight don'ts, writing our name, trademark use); linked from Resources > Grow with InkyBay. Decisions: the files are copied from the ParseLab brand site so downloads never depend on another host; Poppins is self-hosted and used only for the specimen, so the site keeps Geist and Inter; clear space, minimum sizes and the trademark rules are our proposals (the brand site's guidelines are not published yet)
