@@ -784,8 +784,10 @@ Resources overview.
    by your call; the rest of the site uses sentence case), lead, "Download brand kit" (primary, the ZIP) and "Read the guidelines" (to `#usage`), a 14px kit
    size and the agreement note; a preview card with both full logos (white half, warm dark half) and the palette dots;
    an "On this page" pill row (Logos, Colors, Typography, Usage guidelines).
-2. Logos [tint]: three cards (Full logo on light, on dark, Icon) with each logo on its own stage, a usage line and SVG
-   and PNG (2048px) downloads; "Download all logos (ZIP)".
+2. Logos [tint]: four cards, 4 up (2 at 1100px, 1 on phones): Full logo on light, on dark, Icon rounded (corners
+   built in, for places that show it as is) and Icon square (full bleed, no radius, for app stores, avatars and
+   favicons that apply their own mask; your call), each on its own stage with a usage line and SVG and PNG (2048px)
+   downloads; "Download all logos (ZIP)".
 3. Colors [white]: the ink gradient as a wide card, then Red #D42427 (primary), Orange #F58220 (accent), Charcoal
    #353535 (wordmark and text), White; each card shows hex and RGB and copies its hex on click (the contact page's
    `.cch__copy` script, "Copied" for 2s; the gradient copies its CSS); colors.css and colors.json downloads.
@@ -799,7 +801,10 @@ Resources overview.
    Shopify's), then "Need another format?" (brand@parselab.com, as on the brand site, and Contact us).
 - Files: `src/assets/brand-kit/` holds copies of the brand site's files (the three SVGs, their 2048px PNGs,
   inkybay-brand-kit.zip, colors.css, colors.json), served through `{{IMG:}}` with `download` names. When the brand
-  site changes, replace these files with the same names.
+  site changes, replace these files with the same names. Ours, not on the brand site: `inkybay-icon-square.svg` (the
+  icon SVG without its `rx="6"`) and its PNGs at 512, 1024, 2048 and 4096 (rendered in Chromium, reduced to 256 colours
+  without dithering, no visible banding), also added to the kit ZIP (svg/ and png/<size>/, 2.2 MB in all). Worth
+  adding to the brand site too.
 - Draft (ours, to confirm): the clear-space and minimum-size values and the trademark rules (`"draft": true`); the
   brand site's own usage guidelines say "Coming soon". The audit covers the page (`brand-assets` in `--all`).
 
@@ -948,6 +953,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-18: Brand assets: a square app icon (full bleed, no rounded corners) beside the rounded one, as SVG and PNG and in the kit ZIP (your call): app stores, avatars and favicons apply their own corner mask, and a pre-rounded icon gets rounded twice. Logos are now 4 up
 - 2026-11-18: Brand assets hero heading is "InkyBay Brand Assets" in one tone (your wording and capitals), replacing "Brand assets / for partners and affiliates."
 - 2026-11-18: Brand assets page (render_brand.py, src/brand-assets.json, src/brand.css, src/assets/brand-kit/, Poppins woff2, audit) for partners and affiliates: logos with SVG and PNG downloads, the palette with click-to-copy, the Poppins specimen and type scale, and Shopify-style usage guidelines (clear space, minimum size, versions, eight don'ts, writing our name, trademark use); linked from Resources > Grow with InkyBay. Decisions: the files are copied from the ParseLab brand site so downloads never depend on another host; Poppins is self-hosted and used only for the specimen, so the site keeps Geist and Inter; clear space, minimum sizes and the trademark rules are our proposals (the brand site's guidelines are not published yet)
 - 2026-11-17: BigCommerce links (yours): the real app listing, its own demo store and help docs replace the placeholder; platform pages with a docs link show "Read the help docs" beside "Talk to our team" (Shopify's points at the existing help center so both live pages match)

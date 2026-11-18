@@ -4,46 +4,133 @@
     "title": "Brand assets | InkyBay",
     "description": "Download the InkyBay logo, colors and typeface, and read the usage guidelines for partners, affiliates and press."
   },
-  "crumbs": ["Home", "Resources", "Brand assets"],
+  "crumbs": [
+    "Home",
+    "Resources",
+    "Brand assets"
+  ],
   "hero": {
     "title": "InkyBay Brand Assets",
     "lead": "Logos, colors and type for writing about InkyBay, listing it in your directory or promoting it to your audience. Follow the guidelines below so the brand looks right wherever it appears.",
     "primary": "Download brand kit",
     "kit": "brand-kit/inkybay-brand-kit.zip",
-    "kit_meta": "ZIP · 1.3 MB · SVG and PNG",
+    "kit_meta": "ZIP · 2.2 MB · SVG and PNG",
     "secondary": "Read the guidelines",
     "note": "By downloading or using these assets you agree to the usage guidelines on this page.",
     "toc_label": "On this page",
-    "toc": [["logos", "Logos"], ["colors", "Colors"], ["typography", "Typography"], ["usage", "Usage guidelines"]]
+    "toc": [
+      [
+        "logos",
+        "Logos"
+      ],
+      [
+        "colors",
+        "Colors"
+      ],
+      [
+        "typography",
+        "Typography"
+      ],
+      [
+        "usage",
+        "Usage guidelines"
+      ]
+    ]
   },
   "logos": {
     "title": "Logos",
-    "lead": "Every logo comes as SVG and as a transparent 2048px PNG.",
+    "lead": "Every logo comes as SVG and as a 2048px PNG. The icon comes rounded and square: use the square one wherever the platform applies its own corner mask.",
     "svg": "SVG",
     "png": "PNG",
     "all": "Download all logos",
     "items": [
-      {"name": "Full logo", "variant": "On light", "file": "inkybay-full-light-bg", "stage": "light", "w": 149, "h": 40,
-       "text": "The icon, wordmark and tagline. The default logo for white and light backgrounds."},
-      {"name": "Full logo", "variant": "On dark", "file": "inkybay-full-dark-bg", "stage": "dark", "w": 149, "h": 40,
-       "text": "The same lockup with a white tagline, for dark backgrounds, dark interfaces and video."},
-      {"name": "Icon", "variant": "App icon", "file": "inkybay-icon-brand", "stage": "surface", "w": 40, "h": 40,
-       "text": "For app listings, avatars and favicons, and anywhere the brand needs a square tile."}
+      {
+        "name": "Full logo",
+        "variant": "On light",
+        "file": "inkybay-full-light-bg",
+        "stage": "light",
+        "w": 149,
+        "h": 40,
+        "text": "The icon, wordmark and tagline. The default logo for white and light backgrounds."
+      },
+      {
+        "name": "Full logo",
+        "variant": "On dark",
+        "file": "inkybay-full-dark-bg",
+        "stage": "dark",
+        "w": 149,
+        "h": 40,
+        "text": "The same lockup with a white tagline, for dark backgrounds, dark interfaces and video."
+      },
+      {
+        "name": "Icon",
+        "variant": "Rounded",
+        "file": "inkybay-icon-brand",
+        "stage": "surface",
+        "w": 40,
+        "h": 40,
+        "text": "Corners already rounded. For places that show the icon exactly as it is, like a website, slides or print."
+      },
+      {
+        "name": "Icon",
+        "variant": "Square",
+        "file": "inkybay-icon-square",
+        "stage": "surface",
+        "w": 40,
+        "h": 40,
+        "text": "Full bleed with no rounded corners. For app stores, avatars and favicons, which round or crop the icon themselves."
+      }
     ]
   },
   "colors": {
-    "title": ["Colors", "from the ink."],
+    "title": [
+      "Colors",
+      "from the ink."
+    ],
     "lead": "Red and orange come from the app icon's ink gradient. Use them for the logo and accents, and charcoal for text on white. Select a color to copy its hex.",
     "copied": "Copied",
     "copy": "Copy",
-    "gradient": {"name": "Ink gradient", "role": "App icon", "css": "linear-gradient(45deg, #F58220 0%, #D42427 58%)", "stops": ["#F58220", "#D42427"]},
+    "gradient": {
+      "name": "Ink gradient",
+      "role": "App icon",
+      "css": "linear-gradient(45deg, #F58220 0%, #D42427 58%)",
+      "stops": [
+        "#F58220",
+        "#D42427"
+      ]
+    },
     "items": [
-      {"name": "Red", "role": "Primary", "hex": "#D42427"},
-      {"name": "Orange", "role": "Accent", "hex": "#F58220"},
-      {"name": "Charcoal", "role": "Wordmark and text", "hex": "#353535"},
-      {"name": "White", "role": "Backgrounds", "hex": "#FFFFFF"}
+      {
+        "name": "Red",
+        "role": "Primary",
+        "hex": "#D42427"
+      },
+      {
+        "name": "Orange",
+        "role": "Accent",
+        "hex": "#F58220"
+      },
+      {
+        "name": "Charcoal",
+        "role": "Wordmark and text",
+        "hex": "#353535"
+      },
+      {
+        "name": "White",
+        "role": "Backgrounds",
+        "hex": "#FFFFFF"
+      }
     ],
-    "downloads": [["brand-kit/colors.css", "colors.css"], ["brand-kit/colors.json", "colors.json"]],
+    "downloads": [
+      [
+        "brand-kit/colors.css",
+        "colors.css"
+      ],
+      [
+        "brand-kit/colors.json",
+        "colors.json"
+      ]
+    ],
     "downloads_label": "Download the palette"
   },
   "type": {
@@ -52,20 +139,70 @@
     "family": "Poppins",
     "role": "Headings and body",
     "sample": "ABCDEFGHIJKLMNOPQRSTUVWXYZ abcdefghijklmnopqrstuvwxyz 0123456789",
-    "weights": [["Regular", 400], ["Medium", 500], ["SemiBold", 600], ["Bold", 700]],
+    "weights": [
+      [
+        "Regular",
+        400
+      ],
+      [
+        "Medium",
+        500
+      ],
+      [
+        "SemiBold",
+        600
+      ],
+      [
+        "Bold",
+        700
+      ]
+    ],
     "get": "Get Poppins",
     "get_href": "https://fonts.google.com/specimen/Poppins",
     "scale_label": "Type scale",
     "scale": [
-      {"name": "Display", "size": 48, "lh": 56, "weight": 700, "sample": "InkyBay"},
-      {"name": "Heading 1", "size": 36, "lh": 44, "weight": 700, "sample": "Clear, confident headlines"},
-      {"name": "Heading 2", "size": 24, "lh": 32, "weight": 600, "sample": "Section headings stay short"},
-      {"name": "Body", "size": 16, "lh": 24, "weight": 400, "sample": "Body text carries the detail, so it stays easy to read at any length."},
-      {"name": "Small", "size": 14, "lh": 20, "weight": 400, "sample": "Labels, helper text and secondary details."}
+      {
+        "name": "Display",
+        "size": 48,
+        "lh": 56,
+        "weight": 700,
+        "sample": "InkyBay"
+      },
+      {
+        "name": "Heading 1",
+        "size": 36,
+        "lh": 44,
+        "weight": 700,
+        "sample": "Clear, confident headlines"
+      },
+      {
+        "name": "Heading 2",
+        "size": 24,
+        "lh": 32,
+        "weight": 600,
+        "sample": "Section headings stay short"
+      },
+      {
+        "name": "Body",
+        "size": 16,
+        "lh": 24,
+        "weight": 400,
+        "sample": "Body text carries the detail, so it stays easy to read at any length."
+      },
+      {
+        "name": "Small",
+        "size": 14,
+        "lh": 20,
+        "weight": 400,
+        "sample": "Labels, helper text and secondary details."
+      }
     ]
   },
   "usage": {
-    "title": ["Usage guidelines", "keep the brand recognizable."],
+    "title": [
+      "Usage guidelines",
+      "keep the brand recognizable."
+    ],
     "lead": "A few simple rules keep the InkyBay logo clear and consistent, wherever it appears.",
     "clear": {
       "title": "Clear space",
@@ -76,8 +213,20 @@
       "title": "Minimum size",
       "text": "Below these sizes the tagline and the icon's details stop reading clearly.",
       "items": [
-        {"name": "Full logo", "file": "inkybay-full-light-bg", "digital": "120 px wide", "print": "30 mm wide", "px": 120},
-        {"name": "Icon", "file": "inkybay-icon-brand", "digital": "24 px", "print": "6 mm", "px": 24}
+        {
+          "name": "Full logo",
+          "file": "inkybay-full-light-bg",
+          "digital": "120 px wide",
+          "print": "30 mm wide",
+          "px": 120
+        },
+        {
+          "name": "Icon",
+          "file": "inkybay-icon-brand",
+          "digital": "24 px",
+          "print": "6 mm",
+          "px": 24
+        }
       ],
       "digital": "Digital",
       "print": "Print",
@@ -86,23 +235,62 @@
     "versions": {
       "title": "Pick the right version",
       "items": [
-        {"title": "Light backgrounds", "text": "Use the full logo on light.", "file": "inkybay-full-light-bg", "stage": "light"},
-        {"title": "Dark backgrounds", "text": "Use the full logo on dark.", "file": "inkybay-full-dark-bg", "stage": "dark"},
-        {"title": "Square or small spaces", "text": "Use the icon on its own.", "file": "inkybay-icon-brand", "stage": "photo"}
+        {
+          "title": "Light backgrounds",
+          "text": "Use the full logo on light.",
+          "file": "inkybay-full-light-bg",
+          "stage": "light"
+        },
+        {
+          "title": "Dark backgrounds",
+          "text": "Use the full logo on dark.",
+          "file": "inkybay-full-dark-bg",
+          "stage": "dark"
+        },
+        {
+          "title": "Square or small spaces",
+          "text": "Use the icon on its own.",
+          "file": "inkybay-icon-brand",
+          "stage": "photo"
+        }
       ]
     },
     "donts": {
       "title": "Don't",
       "label": "Don't",
       "items": [
-        {"fx": "stretch", "text": "Stretch or squeeze the logo."},
-        {"fx": "rotate", "text": "Rotate the logo."},
-        {"fx": "recolor", "text": "Change the logo's colors."},
-        {"fx": "effects", "text": "Add shadows, outlines or other effects."},
-        {"fx": "busy", "text": "Place the logo on a busy background."},
-        {"fx": "contrast", "text": "Use a version with too little contrast."},
-        {"fx": "wordmark", "text": "Use the wordmark without the icon."},
-        {"fx": "crowd", "text": "Crowd the logo inside its clear space."}
+        {
+          "fx": "stretch",
+          "text": "Stretch or squeeze the logo."
+        },
+        {
+          "fx": "rotate",
+          "text": "Rotate the logo."
+        },
+        {
+          "fx": "recolor",
+          "text": "Change the logo's colors."
+        },
+        {
+          "fx": "effects",
+          "text": "Add shadows, outlines or other effects."
+        },
+        {
+          "fx": "busy",
+          "text": "Place the logo on a busy background."
+        },
+        {
+          "fx": "contrast",
+          "text": "Use a version with too little contrast."
+        },
+        {
+          "fx": "wordmark",
+          "text": "Use the wordmark without the icon."
+        },
+        {
+          "fx": "crowd",
+          "text": "Crowd the logo inside its clear space."
+        }
       ]
     },
     "name": {
@@ -110,8 +298,15 @@
       "text": "InkyBay is one word with a capital I and a capital B. Never change it, translate it or use it as a verb.",
       "right_label": "Correct",
       "wrong_label": "Incorrect",
-      "right": ["InkyBay"],
-      "wrong": ["Inkybay", "Inky Bay", "INKYBAY", "inkybay"]
+      "right": [
+        "InkyBay"
+      ],
+      "wrong": [
+        "Inkybay",
+        "Inky Bay",
+        "INKYBAY",
+        "inkybay"
+      ]
     },
     "rules": {
       "title": "Trademark use",
