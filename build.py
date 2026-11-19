@@ -176,7 +176,7 @@ def foot_news():
             f'<div class="field fnews__field"><div class="fnews__row"><label class="fnews__label"><span class="sr-only">{e(n["email"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" '
             f'placeholder="{e(n["email"])}" required data-err="{e(n["error"])}" aria-describedby="fnews-title fnews-err"></label>'
             f'<button class="btn btn--primary form__submit" type="submit" data-sending="{e(n["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{e(n["button"])}">{e(n["button"])}</span></span>'
-            f'<span class="sr-only">{e(n["button"])}</span></button></div>'
+            f'<span class="btn__icon" aria-hidden="true">{{{{BTN_ARROWS}}}}</span><span class="sr-only">{e(n["button"])}</span></button></div>'
             f'<span class="field__err" id="fnews-err" aria-live="polite"></span></div>'
             f'<div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>'
             f'<p class="fnews__consent">{e(n["consent"])} <a href="{{{{ROOT}}}}privacy-policy/">{e(n["privacy"])}</a>.</p>'

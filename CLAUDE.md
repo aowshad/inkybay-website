@@ -253,9 +253,10 @@ Section sub headings are 18px.
    The footer brand block: logo, tagline, the social links as one-colour icons (`src/assets/social/<key>.svg` from Simple
    Icons, 20px in 40px round hit areas, muted, white with a faint fill on hover; each has an aria-label and opens in a new
    tab; `{{FOOT_SOCIAL}}`), then the newsletter sign-up (`{{FOOT_NEWS}}`, after your Elementor reference in our design):
-   a 16px line "Get product updates and tips for custom stores.", the email field and a primary "Subscribe" (no arrow)
-   sharing one box (white 6% fill, 14% hairline, brighter on focus, coral when invalid), the inline error, a 14px consent
-   line linking to the Privacy policy, and the status line; max 420px wide. Copy and the network list live in
+   a 16px line "Get product updates and tips for custom stores.", the email field (48px, white 6% fill, 14% hairline,
+   brighter on focus, coral when invalid), then a full-width primary "Subscribe" with the arrow under it (your call; side
+   by side felt cramped), the inline error, a 14px consent line linking to the Privacy policy, and the status line; max
+   420px wide. The honeypot's hide rule (`.form__hp`) lives in the template so it stays hidden on pages without forms.css. Copy and the network list live in
    src/site.json "footer". It posts to `NEWSLETTER_ENDPOINT` through the shared form handler (see Forms).
 
 ## Rules that must survive the rebuild
@@ -347,10 +348,11 @@ into the shared template. Never hand-write a menu in the template.
   `"position"` sets its `object-position` when the subject is not centred in the 16:10 crop) or `"visual": "video"`.
 - Footer: a menu's `"footer"` list renders its footer columns (`{{FOOT_COLS:<id>}}` in the template):
   `{"title", "groups"?, "limit"?, "more"?, "extra"?, "wide"?, "below"?}` (`below`: another column spec shown under it in the same column). Footer link copy comes from the same data as the menus.
-  Footer columns: Product (all nine feature pages from `_index.json`, then "All features" and Pricing, `"wide"`: 3 of 12 columns so every
-  name fits one line at 1440), Industries (all eight industry pages), Resources and Get help; the brand block takes 3
-  columns, the others 2. From 961 to 1100px the brand gets its own row and the four columns share it; phones show two
-  per row.
+  Footer columns: Product (all nine feature pages from `_index.json`, then "All features" and Pricing), Industries (all
+  eight industry pages), Resources and Get help. Above 1100px the brand block is 240-300px and each column is as wide as
+  its longest link, with equal space between all five (`justify-content: space-between`; your call, the old 12-column
+  spans left a wide gap after Product). From 961 to 1100px the brand gets its own row and the four columns share it;
+  phones show two per row.
 - Menus: Features (grid, `src/features/_index.json`, base `features/`, footer: "Product" with every feature and Pricing,
   which links to `pricing/`, like the navbar's Pricing);
   Industries (grid, `src/industries/_index.json`, base `industries/`, promo `cta-products.webp` anchored to the top,
@@ -962,6 +964,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-19: Footer fixes (yours): the newsletter's hidden spam trap showed "Leave this empty" on pages without forms.css (its hide rule now lives in the template); Subscribe moves under the email field, full width with the arrow; on desktop the columns are as wide as their links with equal gaps, instead of 12-column spans that left a big gap after Product
 - 2026-11-19: Footer: the five social links become icons (Simple Icons, one colour, labelled, new tab) and a newsletter sign-up joins the brand block (your request, Elementor's footer as reference): email and Subscribe in one box, consent with the Privacy policy link, the shared form handler posting to NEWSLETTER_ENDPOINT (still empty, so it says it is not connected yet). Copy in site.json "footer". Fixes found on the way: the error message has to sit inside the field wrapper for the handler to find it, and the footer input needs higher specificity than forms.css on pages that load it. Closes the open item about social icons
 - 2026-11-19: Platforms overview cards: the top-right arrow is gone (your call); "Learn more" already has one
 - 2026-11-19: Platforms overview cards in your reference layout: everything inside one card, a 64px logo tile top-left, an arrow top-right, name, a new two-line `summary` per platform and Learn more at the bottom (replaces the logo-on-a-stage cards)
