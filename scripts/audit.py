@@ -28,7 +28,7 @@ def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 # chips, which keep 14px. The allowlist is the token users plus these components.
 SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
                ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .hchip, .porbit__chip, .icardx__label, "
-               ".mega__desc, .mega__label, .mega__badge, .bhero__meta, .bhero__note, .btoc__label, .bweight, .bscale__label, .bscale__meta, .cch__copied, .bridge__soon, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
+               ".mega__desc, .mega__label, .mega__badge, .fnews__consent, .bhero__meta, .bhero__note, .btoc__label, .bweight, .bscale__label, .bscale__meta, .cch__copied, .bridge__soon, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
                ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
                ".bbar__pill, .brel__label, .bcall__title, .bquote p + p, .prtoggle__save, .prcard__note, .prcard__trial, .prcard__label, .prcard__badge, .chl__date, .chl__pill, .chld__meta, .chld__pnl span, .vhero__count, .vcard__dur, .vfeat__label, .vfeat__meta, .vtab, .vcard__cat, .acalc__note, .cscard__loc, .cscard__ind, .csbar__count, .csside__facts dt, .csd__quote figcaption")
 SMALL_TEXT_JS = """window.smallText = function () {

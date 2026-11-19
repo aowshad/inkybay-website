@@ -1465,12 +1465,29 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
 .foot__top { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); column-gap: var(--gutter); row-gap: var(--s-10); }
 .foot__brand { grid-column: 1 / span 3; display: grid; gap: var(--s-4); align-content: start; justify-items: start; }
 .foot__brand p { color: var(--ink-muted); max-width: 30ch; }
-.foot__social { display: flex; flex-wrap: wrap; gap: var(--s-2) var(--s-4); margin-top: var(--s-2); }
-.foot__social a {
-  color: var(--ink-muted); text-decoration: underline; text-decoration-color: transparent; text-underline-offset: 4px;
-  transition: color .2s ease, text-decoration-color .2s ease;
-}
-.foot__social a:hover { color: #fff; text-decoration-color: var(--brand-500); }
+/* social: one-colour icons (src/assets/social/) in 40px round hit areas */
+.foot__social { display: flex; flex-wrap: wrap; gap: var(--s-2); margin: var(--s-1) 0 0 calc(var(--s-2) * -1); }
+.foot__social a { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; color: var(--ink-muted);
+  transition: color .2s ease, background-color .2s ease; }
+.foot__social a svg { width: 20px; height: 20px; }
+.foot__social a:hover, .foot__social a:focus-visible { color: #fff; background: rgba(255, 255, 255, .08); }
+/* newsletter: the email field and Subscribe share one box */
+.fnews { display: grid; gap: var(--s-3); width: 100%; max-width: 420px; margin-top: var(--s-4); }
+.fnews__title { color: var(--ink); font-weight: 500; }
+.fnews__row { display: flex; align-items: center; gap: var(--s-1); padding: 4px; border-radius: var(--r-lg); background: rgba(255, 255, 255, .06);
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .14); transition: box-shadow .2s ease; }
+.fnews__row:focus-within { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .4); }
+.fnews__field { display: grid; gap: var(--s-2); }
+.fnews__label { flex: 1; min-width: 0; }
+.fnews .fnews__field .fnews__row input[name="email"] { width: 100%; height: 44px; min-height: 0; padding: 0 var(--s-3); border: 0; border-radius: 8px; outline: 0; background: transparent; color: #fff; font: inherit; font-size: 16px; box-shadow: none; }   /* beats the shared .field input styles where forms.css loads */
+.fnews__field.is-invalid .fnews__row, .fnews__row:has(input[aria-invalid="true"]) { box-shadow: inset 0 0 0 1px #FF8A73; }
+.fnews .fnews__field .fnews__row input[name="email"]::placeholder { color: rgba(255, 255, 255, .5); font-size: var(--t-small); }
+.fnews__row .btn { flex: none; padding-inline: var(--s-4); }
+.fnews__consent { font-size: var(--t-small); line-height: var(--t-small-lh); color: var(--ink-muted); }
+.fnews__consent a { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
+.fnews .field__err, .fnews .form__status { font-size: var(--t-small); line-height: var(--t-small-lh); color: #FFB4A6; }
+.fnews .form__status:empty, .fnews .field__err:empty { display: none; }
+.fnews .form__status.is-ok { color: #4BD39B; }
 .foot__col { grid-column: span 2; }
 .foot__col--wide { grid-column: span 3; }   /* Product: the nine feature names fit on one line at 1440 */
 @media (max-width: 1100px) and (min-width: 961px) {   /* tablets: the brand gets its own row, the four columns share it evenly */
@@ -2532,7 +2549,8 @@ main { padding-top: calc(var(--nav-h) + env(safe-area-inset-top, 0px)); }
         <div class="foot__brand">
           <a class="logo" href="{{HOME}}" aria-label="InkyBay home">{{LOGO_MARK}}{{LOGO_TYPE}}</a>
           <p>Effortless, powerful product personalization for Shopify stores.</p>
-          <div class="foot__social" aria-label="InkyBay on social media"><a href="{{LINK:linkedin}}">LinkedIn</a><a href="{{LINK:youtube}}">YouTube</a><a href="{{LINK:x}}">X</a><a href="{{LINK:instagram}}">Instagram</a><a href="{{LINK:facebook}}">Facebook</a></div>
+          {{FOOT_SOCIAL}}
+          {{FOOT_NEWS}}
         </div>
           {{FOOT_COLS:features}}
           {{FOOT_COLS:industries}}

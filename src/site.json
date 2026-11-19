@@ -24,5 +24,43 @@
     "bigcommerce_demo": "https://inkybay.mybigcommerce.com/",
     "bigcommerce_docs": "https://inkybay.net/bigcommerce/help/",
     "shopify_docs": "https://docs.inkybay.com/spf/en"
+  },
+  "footer": {
+    "_note": "Footer social icons and newsletter (build.py {{FOOT_SOCIAL}} and {{FOOT_NEWS}}); icons are src/assets/social/<key>.svg",
+    "social_label": "InkyBay on social media",
+    "social": [
+      [
+        "linkedin",
+        "LinkedIn"
+      ],
+      [
+        "youtube",
+        "YouTube"
+      ],
+      [
+        "x",
+        "X"
+      ],
+      [
+        "instagram",
+        "Instagram"
+      ],
+      [
+        "facebook",
+        "Facebook"
+      ]
+    ],
+    "news": {
+      "title": "Get product updates and tips for custom stores.",
+      "email": "Your email address",
+      "button": "Subscribe",
+      "sending": "Subscribing",
+      "error": "Enter a valid email address.",
+      "consent": "By subscribing you agree to receive emails from InkyBay and to our",
+      "privacy": "Privacy policy",
+      "success": "You're subscribed. Watch your inbox for the next update.",
+      "fail": "Something went wrong. Please try again.",
+      "not_connected": "The newsletter is not connected yet."
+    }
   }
 }

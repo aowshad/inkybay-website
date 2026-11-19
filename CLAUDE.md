@@ -250,6 +250,13 @@ Section sub headings are 18px.
    Geist 120px, 48s loop, edge fades, pauses on hover. Faces sit on colour chips (warm for merchants, cool for shoppers) with a
    dark stroke so stacked avatars separate; crops are centred on the detected head; the star separator has equal word-sized space each side; a hovered face lifts. JS repeats the set until it overfills, then duplicates it for a gap-free -50% loop.
 13. **CTA + footer** (one dark zone): static product collage above the ring; footer wordmark from Figma with a cursor spotlight (auto sweep on touch).
+   The footer brand block: logo, tagline, the social links as one-colour icons (`src/assets/social/<key>.svg` from Simple
+   Icons, 20px in 40px round hit areas, muted, white with a faint fill on hover; each has an aria-label and opens in a new
+   tab; `{{FOOT_SOCIAL}}`), then the newsletter sign-up (`{{FOOT_NEWS}}`, after your Elementor reference in our design):
+   a 16px line "Get product updates and tips for custom stores.", the email field and a primary "Subscribe" (no arrow)
+   sharing one box (white 6% fill, 14% hairline, brighter on focus, coral when invalid), the inline error, a 14px consent
+   line linking to the Privacy policy, and the status line; max 420px wide. Copy and the network list live in
+   src/site.json "footer". It posts to `NEWSLETTER_ENDPOINT` through the shared form handler (see Forms).
 
 ## Rules that must survive the rebuild
 
@@ -271,8 +278,6 @@ Section sub headings are 18px.
 ## Open items (not blocking the lock)
 
 - Draft content to replace: FAQ answers (verify feature claims).
-- Social links (LinkedIn, YouTube, X, Instagram, Facebook) are text links to the real profiles; drop in official icons
-  from each platform's brand kit.
 - Live chat links carry `data-action="live-chat"`; hook the chat widget to them when it is chosen.
 - Stats (10,000+ merchants, 50,000+ products daily, 168 reviews) and the 4.5 rating must match the live App Store listing
   (4.5 from 168 reviews on November 10, 2026); update the template (proof pill, reviews summary, case study stat) and
@@ -479,7 +484,7 @@ chevron with room on the right; checkboxes are a custom 22px box with a check ma
 buttons with the arrow (`{{BTN_ARROWS}}` inside the `<button>`). `.form__row` puts two fields side by side, `.form__one`
 keeps one field per row.
 - Endpoints come from the build config in build.py: `FORM_ENDPOINT` (Partners, Contact) and `NEWSLETTER_ENDPOINT`
-  (newsletter), e.g. a Formspree or Basin URL, set with `FORM_ENDPOINT=... python3 build.py` (and the same in the
+  (the blog newsletter and the footer sign-up on every page), e.g. a Formspree or Basin URL, set with `FORM_ENDPOINT=... python3 build.py` (and the same in the
   Pages workflow when chosen). Both are empty for now. The "Form not connected yet" note (`.form__note`) is hidden
   for now (your call); a submit without an endpoint still says so in the status line and never pretends to send. No
   service has been picked.
@@ -957,6 +962,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-19: Footer: the five social links become icons (Simple Icons, one colour, labelled, new tab) and a newsletter sign-up joins the brand block (your request, Elementor's footer as reference): email and Subscribe in one box, consent with the Privacy policy link, the shared form handler posting to NEWSLETTER_ENDPOINT (still empty, so it says it is not connected yet). Copy in site.json "footer". Fixes found on the way: the error message has to sit inside the field wrapper for the handler to find it, and the footer input needs higher specificity than forms.css on pages that load it. Closes the open item about social icons
 - 2026-11-19: Platforms overview cards: the top-right arrow is gone (your call); "Learn more" already has one
 - 2026-11-19: Platforms overview cards in your reference layout: everything inside one card, a 64px logo tile top-left, an arrow top-right, name, a new two-line `summary` per platform and Learn more at the bottom (replaces the logo-on-a-stage cards)
 - 2026-11-18: Brand assets logos (your call): two cards per row instead of four, so the logos and cards are larger; "Download all logos" moves from under the cards to the right of the Logos heading

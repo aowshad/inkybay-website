@@ -159,6 +159,29 @@ def foot_cols(mid, root):
 SITE_JSON = json.loads((ROOT / "src" / "site.json").read_text())
 LINKS = {k: v for k, v in SITE_JSON["links"].items() if not k.startswith("_")}
 
+FOOT = SITE_JSON["footer"]
+
+def foot_social():
+    """Footer social links as icon buttons (src/assets/social/<key>.svg, one colour), each labelled with the network."""
+    def icon(k):
+        return (ASSETS / "social" / f"{k}.svg").read_text().strip().replace("<svg ", '<svg aria-hidden="true" focusable="false" ', 1)
+    links = "".join(f'<a href="{{{{LINK:{k}}}}}" aria-label="{html.escape(n)}" title="{html.escape(n)}">{icon(k)}</a>' for k, n in FOOT["social"])
+    return f'<div class="foot__social" aria-label="{html.escape(FOOT["social_label"])}">{links}</div>'
+
+def foot_news():
+    """The footer newsletter sign-up: the shared form handler, posting to NEWSLETTER_ENDPOINT like the blog's."""
+    n, e = FOOT["news"], lambda x: html.escape(x, quote=True)
+    return (f'<form class="form fnews" data-form="newsletter" data-endpoint="{{{{NEWSLETTER_ENDPOINT}}}}" method="post" novalidate>'
+            f'<p class="fnews__title" id="fnews-title">{e(n["title"])}</p>'
+            f'<div class="field fnews__field"><div class="fnews__row"><label class="fnews__label"><span class="sr-only">{e(n["email"])}</span><input name="email" type="email" inputmode="email" autocomplete="email" '
+            f'placeholder="{e(n["email"])}" required data-err="{e(n["error"])}" aria-describedby="fnews-title fnews-err"></label>'
+            f'<button class="btn btn--primary form__submit" type="submit" data-sending="{e(n["sending"])}"><span class="btn__label" aria-hidden="true"><span data-text="{e(n["button"])}">{e(n["button"])}</span></span>'
+            f'<span class="sr-only">{e(n["button"])}</span></button></div>'
+            f'<span class="field__err" id="fnews-err" aria-live="polite"></span></div>'
+            f'<div class="form__hp" aria-hidden="true"><label>Leave this empty<input name="_gotcha" type="text" tabindex="-1" autocomplete="off"></label></div>'
+            f'<p class="fnews__consent">{e(n["consent"])} <a href="{{{{ROOT}}}}privacy-policy/">{e(n["privacy"])}</a>.</p>'
+            f'<p class="form__status" role="status" aria-live="polite" data-ok="{e(n["success"])}" data-fail="{e(n["fail"])}" data-off="{e(n["not_connected"])}"></p></form>')
+
 INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]
 WHEEL_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
@@ -229,6 +252,7 @@ def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
+    t = t.replace("{{FOOT_SOCIAL}}", foot_social()).replace("{{FOOT_NEWS}}", foot_news())   # footer icons and newsletter (site.json "footer")
     t = re.sub(r"\{\{LINK:(.*?)\}\}", lambda m: html.escape(LINKS[m.group(1)], quote=True), t)   # outside URLs (src/site.json "links")
     if 'id="reviews-title"' not in t:                     # the proof pill jumps to the reviews; pages without them link to the App Store reviews
         t = t.replace('href="#reviews-title"', 'href="' + html.escape(LINKS["reviews"], quote=True) + '"')
