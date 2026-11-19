@@ -753,8 +753,8 @@ live platform without an install link.
   logomark, Wix and Woo wordmarks; Shopify's bag from its official mark). Inlined, so they take the platform colour on a
   white tile (`.pltile`, white in both themes) and the ink colour as menu icons (`ICON["pl-<slug>"]`).
 - `platforms/` (render_platforms.render_index): the overview hero and four cards, 4 up (2 at 1100px, 1 on phones), with
-  everything inside the card (your reference): a 64px white logo tile top-left, an arrow circle top-right (fills brand
-  and nudges up-right on hover), the name (24/500) with the Coming soon badge, the platform's `summary` (two or three
+  everything inside the card (your reference): a 64px white logo tile top-left (no top-right arrow, since Learn more
+  carries one; your call), the name (24/500) with the Coming soon badge, the platform's `summary` (two or three
   lines) and "Learn more" pinned to the bottom; the whole card is the link; hover or focus gives a brand hairline and
   glow, no lift; warm #1E150E in dark mode.
 - `platforms/<slug>/`: hero [white] (breadcrumb Home > Platforms > name, the InkyBay mark joined to the platform tile by
@@ -957,6 +957,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-19: Platforms overview cards: the top-right arrow is gone (your call); "Learn more" already has one
 - 2026-11-19: Platforms overview cards in your reference layout: everything inside one card, a 64px logo tile top-left, an arrow top-right, name, a new two-line `summary` per platform and Learn more at the bottom (replaces the logo-on-a-stage cards)
 - 2026-11-18: Brand assets logos (your call): two cards per row instead of four, so the logos and cards are larger; "Download all logos" moves from under the cards to the right of the Logos heading
 - 2026-11-18: Brand assets: a square app icon (full bleed, no rounded corners) beside the rounded one, as SVG and PNG and in the kit ZIP (your call): app stores, avatars and favicons apply their own corner mask, and a pre-rounded icon gets rounded twice. Logos are now 4 up

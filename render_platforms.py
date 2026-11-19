@@ -211,10 +211,8 @@ def render(slug):
 
 def render_index():
     x = D["index"]
-    go = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" '
-          'aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>')
     cards = "".join(f"""<li class="plc">
-          <div class="plc__top">{tile(p, " pltile--card")}<span class="plc__go" aria-hidden="true">{go}</span></div>
+          <div class="plc__top">{tile(p, " pltile--card")}</div>
           <h3 class="plc__name"><a href="{p["slug"]}/">{E(p["name"])}</a>{badge(p)}</h3>
           <p class="plc__text">{E(p["summary"])}</p>
           <span class="plc__more" aria-hidden="true">{E(L["learn_more"])}{ARROW}</span>
