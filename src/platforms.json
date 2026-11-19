@@ -147,7 +147,8 @@
           "q": "How is billing handled?",
           "a": "Plans are billed through Shopify in USD with your Shopify invoice, and every plan starts with a 21-day free trial."
         }
-      ]
+      ],
+      "summary": "Install from the Shopify App Store and let shoppers design their products with a live preview."
     },
     {
       "slug": "bigcommerce",
@@ -225,7 +226,8 @@
           "a": "Pricing for BigCommerce is shown on the app listing. Talk to our team if you have questions about plans.",
           "draft": true
         }
-      ]
+      ],
+      "summary": "Add the InkyBay app to your BigCommerce store and sell personalized products with a live preview."
     },
     {
       "slug": "wix",
@@ -303,7 +305,8 @@
           "a": "Pricing for Wix is shown on the app listing. Talk to our team if you have questions about plans.",
           "draft": true
         }
-      ]
+      ],
+      "summary": "Bring the InkyBay design editor to your Wix store so shoppers can personalize products themselves."
     },
     {
       "slug": "woocommerce",
@@ -335,7 +338,8 @@
           "a": "The plan is the same design editor, product setup and print-ready files. We will share the details at launch.",
           "draft": true
         }
-      ]
+      ],
+      "summary": "A WordPress plugin for WooCommerce stores is on the way. Join the waitlist to hear first."
     }
   ],
   "home": {

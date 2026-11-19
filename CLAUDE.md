@@ -747,13 +747,16 @@ InkyBay runs on Shopify, BigCommerce and Wix; WooCommerce is coming soon. One da
 (labels, the overview copy, the waitlist form and one entry per platform in display order: `slug`, `name`, `status`
 live | coming-soon, `product_word`, `color` (brand colour on white), `color_dark`, `short` (menu copy, about 40
 characters), `install` and `demo` (`{{LINK:<key>}}`, the URLs live in src/site.json), `docs`, `rating` (Shopify only),
-`meta`, `lead`, `steps`, `requirements`, `faqs`; items with `"draft": true` need confirming). The build stops on a
+`summary` (the overview card's text), `meta`, `lead`, `steps`, `requirements`, `faqs`; items with `"draft": true` need confirming). The build stops on a
 live platform without an install link.
 - Logos: `src/assets/platforms/<slug>.svg`, one colour (`fill="currentColor"`), cleaned from your files (BigCommerce
   logomark, Wix and Woo wordmarks; Shopify's bag from its official mark). Inlined, so they take the platform colour on a
   white tile (`.pltile`, white in both themes) and the ink colour as menu icons (`ICON["pl-<slug>"]`).
-- `platforms/` (render_platforms.render_index): the overview hero and four cards (logo tile, name, Coming soon badge,
-  short line, Learn more; 4 up like the industries overview).
+- `platforms/` (render_platforms.render_index): the overview hero and four cards, 4 up (2 at 1100px, 1 on phones), with
+  everything inside the card (your reference): a 64px white logo tile top-left, an arrow circle top-right (fills brand
+  and nudges up-right on hover), the name (24/500) with the Coming soon badge, the platform's `summary` (two or three
+  lines) and "Learn more" pinned to the bottom; the whole card is the link; hover or focus gives a brand hairline and
+  glow, no lift; warm #1E150E in dark mode.
 - `platforms/<slug>/`: hero [white] (breadcrumb Home > Platforms > name, the InkyBay mark joined to the platform tile by
   a dashed brand thread, H1 "Product customizer for <name>", lead, Install on <name> + Try live demo, the proof pill on
   Shopify only, the homepage hero video in the comet ring); four steps [tint]; every feature as overview cards [white];
@@ -954,6 +957,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-19: Platforms overview cards in your reference layout: everything inside one card, a 64px logo tile top-left, an arrow top-right, name, a new two-line `summary` per platform and Learn more at the bottom (replaces the logo-on-a-stage cards)
 - 2026-11-18: Brand assets logos (your call): two cards per row instead of four, so the logos and cards are larger; "Download all logos" moves from under the cards to the right of the Logos heading
 - 2026-11-18: Brand assets: a square app icon (full bleed, no rounded corners) beside the rounded one, as SVG and PNG and in the kit ZIP (your call): app stores, avatars and favicons apply their own corner mask, and a pre-rounded icon gets rounded twice. Logos are now 4 up
 - 2026-11-18: Brand assets hero heading is "InkyBay Brand Assets" in one tone (your wording and capitals), replacing "Brand assets / for partners and affiliates."

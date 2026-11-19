@@ -211,13 +211,13 @@ def render(slug):
 
 def render_index():
     x = D["index"]
-    cards = "".join(f"""<li class="hubcard plcard">
-          <div class="hubcard__media plcard__media" aria-hidden="true">{tile(p, " pltile--lg")}</div>
-          <div class="hubcard__body">
-            <h3 class="hubcard__title"><a href="{p["slug"]}/">{E(p["name"])}</a>{badge(p)}</h3>
-            <p class="hubcard__text">{E(p["short"])}</p>
-            <span class="hubcard__more" aria-hidden="true">{E(L["learn_more"])}{ARROW}</span>
-          </div>
+    go = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" '
+          'aria-hidden="true"><path d="M5 11l6-6M6 5h5v5"/></svg>')
+    cards = "".join(f"""<li class="plc">
+          <div class="plc__top">{tile(p, " pltile--card")}<span class="plc__go" aria-hidden="true">{go}</span></div>
+          <h3 class="plc__name"><a href="{p["slug"]}/">{E(p["name"])}</a>{badge(p)}</h3>
+          <p class="plc__text">{E(p["summary"])}</p>
+          <span class="plc__more" aria-hidden="true">{E(L["learn_more"])}{ARROW}</span>
         </li>""" for p in PLATFORMS)
     body = f"""<main>
   <section class="hubhero" aria-labelledby="hub-title">
@@ -230,7 +230,7 @@ def render_index():
   <section class="fsec fsec--tint" aria-labelledby="hub-list">
     <div class="container">
       <h2 class="sr-only" id="hub-list">{E(L["crumb"])}</h2>
-      <ul class="hubgrid hubgrid--4">
+      <ul class="plcards">
         {cards}
       </ul>
     </div>

@@ -7,7 +7,6 @@
 .pltile .plogo { width: 62%; height: 62%; }
 .pltile--sm { --s: 32px; border-radius: 50%;   /* sits in a pill: round, so the radii match */
   box-shadow: inset 0 0 0 1px rgba(13, 18, 28, .1); }
-.pltile--lg { --s: 112px; border-radius: 24px; }
 .plogo--wix, .plogo--woocommerce { width: 74%; }            /* wordmarks: wider, not taller */
 .pltile .plogo--wix, .pltile .plogo--woocommerce { width: 74%; height: auto; }
 
@@ -46,11 +45,37 @@
 /* FAQ help: Talk to our team and the platform's help docs side by side */
 .plhelp { display: flex; flex-wrap: wrap; gap: var(--s-3); }
 
-/* overview cards: the logo on the light stage */
-.plcard__media { aspect-ratio: 16 / 10; }
+/* overview cards: everything inside one card (your reference): logo tile top-left, arrow top-right, name, text,
+   Learn more at the bottom; the whole card is the link (the name's link stretches over it) */
+.plcards { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: var(--gutter); }
+.plc { position: relative; display: flex; flex-direction: column; min-height: 360px; padding: var(--s-8); border-radius: 20px;
+  background: var(--bg); box-shadow: inset 0 0 0 1px var(--tint-line); transition: box-shadow .3s ease; }
+.plc:hover, .plc:focus-within { box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 45%, var(--line)), 0 24px 48px -30px rgba(229, 56, 15, .45); }
+.plc__top { display: flex; align-items: flex-start; justify-content: space-between; margin-bottom: var(--s-12); }
+.pltile--card { --s: 64px; border-radius: 16px; }
+.pltile--card .plogo { width: 58%; height: 58%; }
+.pltile--card .plogo--wix, .pltile--card .plogo--woocommerce { width: 72%; height: auto; }
+.plc__go { display: grid; place-items: center; width: 40px; height: 40px; border-radius: 50%; color: var(--ink-muted);
+  box-shadow: inset 0 0 0 1px var(--line); transition: color .3s ease, background-color .3s ease, transform .5s var(--ease-expo); }
+.plc__go svg { width: 16px; height: 16px; }
+.plc:hover .plc__go, .plc:focus-within .plc__go { color: #fff; background: var(--brand-600); box-shadow: none; transform: translate(2px, -2px); }
+.plc__name { display: flex; flex-wrap: wrap; align-items: center; gap: var(--s-2); font-size: 24px; line-height: 32px; font-weight: 500; letter-spacing: -0.015em; }
+.plc__name a { color: inherit; text-decoration: none; }
+.plc__name a::after { content: ""; position: absolute; inset: 0; border-radius: 20px; }
+.plc__name a:focus-visible { outline: none; }
+.plc:has(a:focus-visible) { outline: 2px solid var(--brand-600); outline-offset: 3px; }
+.plc__text { margin-top: var(--s-3); color: var(--ink-muted); }
+.plc__more { display: inline-flex; align-items: center; gap: .35em; margin-top: auto; padding-top: var(--s-8); font-weight: 500; color: var(--ink); }
+.plc__more svg { width: 16px; height: 16px; color: var(--brand-600); transition: transform .3s var(--ease-expo); }
+.plc:hover .plc__more svg { transform: translateX(3px); }
+@media (max-width: 1100px) { .plcards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 640px) { .plcards { grid-template-columns: minmax(0, 1fr); } .plc { min-height: 0; padding: var(--s-6); } .plc__top { margin-bottom: var(--s-8); } }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .plc { background: #1E150E; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); } }
+:root[data-theme="dark"] .plc { background: #1E150E; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
+@media (prefers-reduced-motion: reduce) { .plc, .plc__go, .plc__more svg { transition: none; } .plc:hover .plc__go { transform: none; } }
 
 @media (max-width: 960px) { .plreq { grid-template-columns: minmax(0, 1fr); } }
-@media (max-width: 640px) { .pllock__mark { width: 48px; height: 48px; } .pltile:not(.pltile--sm):not(.pltile--lg) { --s: 48px; } .pltile--lg { --s: 96px; } }
+@media (max-width: 640px) { .pllock__mark { width: 48px; height: 48px; } .pltile:not(.pltile--sm):not(.pltile--card) { --s: 48px; } }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) .plbadge { color: #FFB46B; }
   :root:not([data-theme="light"]) .fsec--tint .plmini { background: #1E150E; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .1); }
