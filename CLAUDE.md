@@ -832,12 +832,12 @@ Resources overview.
 The site is written in English; every other language is machine-translated in the visitor's browser by Google
 Translate (your call). `{{LANG_SWITCH}}` (build.py `lang_switch()`, list and strings in src/site.json "languages")
 renders it at the start of the footer bar on every page: a globe icon, the current language's own name and a chevron
-(no region). It opens a dark menu upwards (240px, "Choose a language", the twelve languages with a brand check on the
+(no region). It opens a dark menu upwards (240px, "Choose a language", the languages with a brand check on the
 current one, "Translated by Google"); it is a menu button (`aria-haspopup`, `aria-expanded`, `menuitemradio` options),
 with arrow keys, Home and End, Esc (focus back to the button), Tab and outside clicks closing it.
-- Languages (Google codes; the main Shopify markets outside English, no right-to-left languages because the layout
-  would not mirror): English, Deutsch, Español, Français, Italiano, Nederlands, Português, Svenska, Dansk, Polski, 日本語,
-  简体中文. Add one by adding `{"code", "name"}` to the list.
+- Languages (Google codes): English, 日本語, 简体中文 (your call, November 26, 2026; the other nine of the first twelve,
+  Deutsch, Español, Français, Italiano, Nederlands, Português, Svenska, Dansk and Polski, were removed). No right-to-left
+  languages, because the layout would not mirror. Add one by adding `{"code", "name"}` to the list.
 - How it works (template JS): the choice is Google's own `googtrans` cookie (`/en/<code>`, path /), so it follows the
   visitor to every page; choosing English deletes it. Picking a language sets the cookie and reloads; on load, only if
   the cookie names a language other than English, the page adds a hidden `#gt-el` and loads
@@ -1000,6 +1000,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-26: Language switcher keeps three languages, English, 日本語 and 简体中文 (your call); the other nine are removed. The layout fixes for long translations stay
 - 2026-11-26: Translated pages: chips on illustrations wrap (a Spanish chip ran 62px off a phone screen) and long words in headings break (Danish "Produkttilpasningsværktøj" made the Shopify page title 57px too wide at 390px)
 - 2026-11-26: Homepage at 961-1279px (found by the language sweep, broken in English too): the Features media box was wider than its column (15px sideways scroll at 1024px, up to 158px when translated) and now takes the column's width; the rating card's "See all reviews" was cut to "See all revi" and now drops its arrow there
 - 2026-11-26: Translated pages: button labels may wrap and no longer roll on hover; a longer translation was cut to one line ("Kostenlose Testversion starten" on the pricing cards) and the roll showed the English copy from data-text
