@@ -845,7 +845,10 @@ with arrow keys, Home and End, Esc (focus back to the button), Tab and outside c
   and wrap (`minmax(0, max-content)`), the homepage "Coming soon" chip wraps on phones; checked in nine languages at
   390px with no overflow. The privacy policy says so (Translation, updated November 26, 2026).
   Buttons on a translated page (`html.translated-ltr`): no label roll (its copy is `data-text`, which Google does not
-  translate, so hovering showed English) and labels may wrap to two lines instead of being cut to one.
+  translate, so hovering showed English) and labels may wrap to two lines instead of being cut to one. Chips on illustrations may
+  wrap (max 16em or 60vw) and long words in headings break with hyphens. A sweep of 12 languages (English as baseline)
+  x 6 pages (home, pricing, a feature, an industry, Shopify, contact) x 390 / 1024 / 1440px finds no sideways scroll,
+  no overlapping navbar parts and no cut button text.
 - The audit (check_lang, homepage): one option per language, English checked, focus moves in, Esc closes and returns
   focus, and no request to Google while the page is in English.
 
@@ -994,6 +997,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-26: Translated pages: chips on illustrations wrap (a Spanish chip ran 62px off a phone screen) and long words in headings break (Danish "Produkttilpasningsværktøj" made the Shopify page title 57px too wide at 390px)
 - 2026-11-26: Homepage at 961-1279px (found by the language sweep, broken in English too): the Features media box was wider than its column (15px sideways scroll at 1024px, up to 158px when translated) and now takes the column's width; the rating card's "See all reviews" was cut to "See all revi" and now drops its arrow there
 - 2026-11-26: Translated pages: button labels may wrap and no longer roll on hover; a longer translation was cut to one line ("Kostenlose Testversion starten" on the pricing cards) and the roll showed the English copy from data-text
 - 2026-11-26: Language switcher in the footer bar (your request, on a branch until you confirm): a globe, the current language and a menu of twelve languages (English plus the main Shopify markets), translated in the browser by Google Translate as you suggested; Google's script loads only after a visitor picks a language, so English pages still contact no third party. The privacy policy gains a Translation line. Fixes found while testing nine languages at 390px: the footer columns now shrink and wrap, and the homepage "Coming soon" chip wraps ("Demnächst verfügbar" ran off screen)
