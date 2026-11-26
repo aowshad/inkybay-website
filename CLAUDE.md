@@ -193,6 +193,9 @@ Section sub headings are 18px.
    final state, still. Text on products comes from src/video/print-areas.json via print-text.js (inlined by build.py as
    `{{PRINT_TEXT_JS}}` and `{{PRINT_AREAS}}`); chips are `.hchip` (14px floor). The setup, design and files mini UIs the
    feature pages reuse now live in `src/mini-uis.html`.
+   The media box takes its column's width (`width: 100%`): under 1280px the row is stretched to the list's height and the
+   608:443 ratio alone made it wider than its column (15px of sideways scroll at 1024px); there it is a little taller
+   than the ratio instead.
 4. **Industries** (always dark, "Custom products for every business"): the wheel is built by build.py from
    `src/products.json`: one static card per product that has an `industry`, each product exactly once. Card: the product
    image and its `label` (one line, never wraps, also at 390px; cards 232px with 22px titles, 210px at 960px and below),
@@ -242,7 +245,7 @@ Section sub headings are 18px.
    (`resources/case-studies/t-shirt-printing-uk/`); the underline draws left to right on hover (0.8s ease-in-out).
 8. **Reviews**: six real 5-star App Store reviews (Fancy Fanny, C4 Design Studio, Björnskog, Coastal Cowboys, Candle
    Bliss, River Ink Printing and Signs), each the merchant's own whole sentences with only typos fixed, store name and
-   country as on the listing; infinite loop with clones (every move first shifts a target outside the originals, and the track's current spot, by N, so fast arrow clicks never run past the clones into a blank track; the audit clicks fast both ways), autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
+   country as on the listing (from 961 to 1100px the narrow rating card's "See all reviews" drops its arrow and centres, so it is not cut to "See all revi"); infinite loop with clones (every move first shifts a target outside the originals, and the track's current spot, by N, so fast arrow clicks never run past the clones into a blank track; the audit clicks fast both ways), autoplay 5s driven by a JS clock (not CSS animationend; that skipped under load), dots only, drag/swipe, pauses on hover, keyboard focus, drag or offscreen. All cards equal height.
 9. **How it works**: heading left, CTA right. Each step card has its own flat colour (01 Install #F5F2E8, 02 Embed #F5EAE1, 03 Product setup #E7F1F4, 04 Start selling #F0EEE5) with a matching darker stroke of equal contrast (#E2DABD, #E9D0BC, #C2DCE3, #DBD7C1; 1.25 each), the same in both themes. Hovered step widens (JS-controlled active state so crossing gaps never collapses the row). Scenes scale to the card, centred geometrically before scaling.
 10. **Why InkyBay** (tint): image left, stacked cards right (each tucks 18px under the next); active card gets a glow stroke only (no scaling or widening); every frame uses the same meadow photo (`photos/why-4`, your call; why-1..3 removed) with a frosted-glass mini UI on top (identical in light and dark mode: its text tokens are fixed to the light values) that fills ~79% of the frame with an equal margin on all sides (`--pad: 6cqmin`); its main area (canvas, chart, file list) grows to fill; chart bars are white with the last one brand; the active side tab is solid brand with white text; progress hairline is aligned to the card's edges and centred in its bottom margin; click or 6s auto-advance.
 11. **FAQ** (heading "FAQs", the same H2 as every section): sticky intro left, single-open accordion right; white cards, orange only on the open one.
@@ -991,6 +994,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-26: Homepage at 961-1279px (found by the language sweep, broken in English too): the Features media box was wider than its column (15px sideways scroll at 1024px, up to 158px when translated) and now takes the column's width; the rating card's "See all reviews" was cut to "See all revi" and now drops its arrow there
 - 2026-11-26: Translated pages: button labels may wrap and no longer roll on hover; a longer translation was cut to one line ("Kostenlose Testversion starten" on the pricing cards) and the roll showed the English copy from data-text
 - 2026-11-26: Language switcher in the footer bar (your request, on a branch until you confirm): a globe, the current language and a menu of twelve languages (English plus the main Shopify markets), translated in the browser by Google Translate as you suggested; Google's script loads only after a visitor picks a language, so English pages still contact no third party. The privacy policy gains a Translation line. Fixes found while testing nine languages at 390px: the footer columns now shrink and wrap, and the homepage "Coming soon" chip wraps ("Demnächst verfügbar" ran off screen)
 - 2026-11-19: Footer fixes (yours): the newsletter's hidden spam trap showed "Leave this empty" on pages without forms.css (its hide rule now lives in the template); Subscribe moves under the email field, full width with the arrow; on desktop the columns are as wide as their links with equal gaps, instead of 12-column spans that left a big gap after Product
