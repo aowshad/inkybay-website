@@ -175,6 +175,13 @@ p { margin: 0; }
 .btn:hover .btn__label > span,
 .btn:focus-visible .btn__label > span { transform: translateY(-100%); }
 
+/* Translated pages (Google Translate adds .translated-ltr): the rolling copy comes from data-text, which Google does
+   not translate, and a longer label would be cut to one line; so no roll, and labels may wrap */
+html.translated-ltr .btn__label { height: auto; overflow: visible; white-space: normal; text-align: left; }
+html.translated-ltr .btn__label > span::after { content: none; }
+html.translated-ltr .btn:hover .btn__label > span, html.translated-ltr .btn:focus-visible .btn__label > span { transform: none; }
+html.translated-ltr .btn { height: auto; min-height: 44px; padding-block: 8px; }
+
 /* Arrow: two copies, one leaves right while the other slides in from left */
 .btn__icon {
   position: relative; display: grid; place-items: center; overflow: hidden;

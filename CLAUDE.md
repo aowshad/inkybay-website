@@ -841,6 +841,8 @@ with arrow keys, Home and End, Esc (focus back to the button), Tab and outside c
   flashes in English before it is replaced. Long translations must not break layouts: the desktop footer columns shrink
   and wrap (`minmax(0, max-content)`), the homepage "Coming soon" chip wraps on phones; checked in nine languages at
   390px with no overflow. The privacy policy says so (Translation, updated November 26, 2026).
+  Buttons on a translated page (`html.translated-ltr`): no label roll (its copy is `data-text`, which Google does not
+  translate, so hovering showed English) and labels may wrap to two lines instead of being cut to one.
 - The audit (check_lang, homepage): one option per language, English checked, focus moves in, Esc closes and returns
   focus, and no request to Google while the page is in English.
 
@@ -989,6 +991,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-26: Translated pages: button labels may wrap and no longer roll on hover; a longer translation was cut to one line ("Kostenlose Testversion starten" on the pricing cards) and the roll showed the English copy from data-text
 - 2026-11-26: Language switcher in the footer bar (your request, on a branch until you confirm): a globe, the current language and a menu of twelve languages (English plus the main Shopify markets), translated in the browser by Google Translate as you suggested; Google's script loads only after a visitor picks a language, so English pages still contact no third party. The privacy policy gains a Translation line. Fixes found while testing nine languages at 390px: the footer columns now shrink and wrap, and the homepage "Coming soon" chip wraps ("Demnächst verfügbar" ran off screen)
 - 2026-11-19: Footer fixes (yours): the newsletter's hidden spam trap showed "Leave this empty" on pages without forms.css (its hide rule now lives in the template); Subscribe moves under the email field, full width with the arrow; on desktop the columns are as wide as their links with equal gaps, instead of 12-column spans that left a big gap after Product
 - 2026-11-19: Footer: the five social links become icons (Simple Icons, one colour, labelled, new tab) and a newsletter sign-up joins the brand block (your request, Elementor's footer as reference): email and Subscribe in one box, consent with the Privacy policy link, the shared form handler posting to NEWSLETTER_ENDPOINT (still empty, so it says it is not connected yet). Copy in site.json "footer". Fixes found on the way: the error message has to sit inside the field wrapper for the handler to find it, and the footer input needs higher specificity than forms.css on pages that load it. Closes the open item about social icons
