@@ -182,6 +182,22 @@ def foot_news():
             f'<p class="fnews__consent">{e(n["consent"])} <a href="{{{{ROOT}}}}privacy-policy/">{e(n["privacy"])}</a>.</p>'
             f'<p class="form__status" role="status" aria-live="polite" data-ok="{e(n["success"])}" data-fail="{e(n["fail"])}" data-off="{e(n["not_connected"])}"></p></form>')
 
+GLOBE = ('<svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+         '<circle cx="10" cy="10" r="7.5"/><path d="M2.5 10h15M10 2.5c2 2.1 3 4.6 3 7.5s-1 5.4-3 7.5c-2-2.1-3-4.6-3-7.5s1-5.4 3-7.5z"/></svg>')
+CHECK = '<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3.5 8.3l3 3 6-6.6"/></svg>'
+
+def lang_switch():
+    """The footer language switcher: the page is English; another language is machine-translated in the browser by Google
+    Translate (template JS loads Google's script only once a visitor has picked one). translate="no" keeps it untranslated."""
+    L, e = SITE_JSON["languages"], lambda x: html.escape(x, quote=True)
+    items = "".join(f'<li role="none"><button class="lang__opt" type="button" role="menuitemradio" aria-checked="{"true" if l["code"] == "en" else "false"}" '
+                    f'data-lang-code="{e(l["code"])}" lang="{e(l["code"])}"><span>{e(l["name"])}</span>{CHECK}</button></li>' for l in L["list"])
+    return (f'<div class="lang notranslate" translate="no" data-lang>'
+            f'<button class="lang__btn" type="button" aria-haspopup="true" aria-expanded="false" aria-controls="lang-menu" data-label="{e(L["label"])}" aria-label="{e(L["label"])}: English">'
+            f'{GLOBE}<span class="lang__cur">English</span>{CHEV}</button>'
+            f'<div class="lang__menu" id="lang-menu" role="menu" aria-label="{e(L["choose"])}" hidden><p class="lang__head" aria-hidden="true">{e(L["choose"])}</p>'
+            f'<ul class="lang__list" role="none">{items}</ul><p class="lang__note">{e(L["note"])}</p></div></div>')
+
 INDUSTRIES = json.loads((ROOT / "src" / "industries" / "_index.json").read_text())["industries"]
 WHEEL_ARROW = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>'
 
@@ -252,6 +268,7 @@ def build(t, root="", home="#", current=None):
     triggers, sheet, panels = render_nav(root, current)
     t = t.replace("{{NAV_TRIGGERS}}", triggers).replace("{{SHEET_MENUS}}", sheet).replace("{{MEGA_PANELS}}", panels).replace("{{HOME}}", home)
     t = re.sub(r"\{\{FOOT_COLS:(.*?)\}\}", lambda m: foot_cols(m.group(1), root), t)
+    t = t.replace("{{LANG_SWITCH}}", lang_switch())   # footer language switcher (site.json "languages")
     t = t.replace("{{FOOT_SOCIAL}}", foot_social()).replace("{{FOOT_NEWS}}", foot_news())   # footer icons and newsletter (site.json "footer")
     t = re.sub(r"\{\{LINK:(.*?)\}\}", lambda m: html.escape(LINKS[m.group(1)], quote=True), t)   # outside URLs (src/site.json "links")
     if 'id="reviews-title"' not in t:                     # the proof pill jumps to the reviews; pages without them link to the App Store reviews

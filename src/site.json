@@ -62,5 +62,25 @@
       "fail": "Something went wrong. Please try again.",
       "not_connected": "The newsletter is not connected yet."
     }
+  },
+  "languages": {
+    "_note": "Footer language switcher (build.py {{LANG_SWITCH}}). Pages are written in English; any other language is machine-translated in the browser by Google Translate, whose script loads only after a visitor picks one. code = Google Translate language code.",
+    "label": "Language",
+    "choose": "Choose a language",
+    "note": "Translated by Google",
+    "list": [
+      {
+        "code": "en",
+        "name": "English"
+      },
+      {
+        "code": "ja",
+        "name": "日本語"
+      },
+      {
+        "code": "zh-CN",
+        "name": "简体中文"
+      }
+    ]
   }
 }
