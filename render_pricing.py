@@ -11,6 +11,9 @@ CHECK = ('<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-widt
          'aria-hidden="true"><path d="M3.5 8.5l3 3 6-7"/></svg>')
 
 
+SPARKLES = ('<svg viewBox="0 0 22 22" fill="currentColor" aria-hidden="true"><path d="M10 4.5c.6 3.9 2.6 5.9 6.5 6.5-3.9.6-5.9 2.6-6.5 6.5-.6-3.9-2.6-5.9-6.5-6.5 3.9-.6 5.9-2.6 6.5-6.5z"/>'
+            '<path class="prcard__spark" d="M17.5 1.5c.25 1.6 1.1 2.45 2.7 2.7-1.6.25-2.45 1.1-2.7 2.7-.25-1.6-1.1-2.45-2.7-2.7 1.6-.25 2.45-1.1 2.7-2.7z"/></svg>')
+
 def money(v):
     return f"${v:,.2f}"
 
@@ -28,7 +31,8 @@ def render():
         lead = f'<li class="prcard__lead">{E(p["lead_feature"])}</li>' if p.get("lead_feature") else ""
         feats = "".join(f"<li>{CHECK}<span>{E(f)}</span></li>" for f in p["features"])
         return f"""<li class="prcard{" prcard--featured" if p.get("badge") else ""}" style="--k:{k}">
-          <div class="prcard__top"><h2 class="prcard__name">{E(p["name"])}</h2>{f'<span class="prcard__badge">{E(p["badge"])}</span>' if p.get("badge") else ""}</div>
+          {f'<span class="prcard__badge">{SPARKLES}<span>{E(p["badge"])}</span></span>' if p.get("badge") else ""}
+          <div class="prcard__top"><h2 class="prcard__name">{E(p["name"])}</h2></div>
           <p class="prcard__text">{E(p["text"])}</p>
           <p class="prcard__price"><span class="prcard__amt" data-monthly>{money(p["monthly"])}</span><span class="prcard__amt" data-yearly>{y_month}</span><span class="prcard__per">{E(L["per_month"])}</span></p>
           <p class="prcard__note"><span data-monthly>{E(L["billed_monthly"])}</span><span data-yearly>{E(y_note)}</span></p>
