@@ -649,7 +649,10 @@ changes.
    the prices share a baseline, the price (Geist 44, tabular), a 14px billing note, "Start free trial" (to the App
    Store listing), "21-day free trial", then "What's included" with brand check marks (Unlimited starts with
    "Everything in Professional, plus:"). Professional is the featured plan (your call): a "Most popular" badge (14px,
-   brand gradient), a solid 1.5px brand hairline with a warm wash at the top, and the only primary button; Starter,
+   brand gradient) centred on the card's top edge, half above it, with a sparkles icon before the text (a big and a
+   small four-point star; the small one twinkles) and a soft white light sweeping across it every 3.2s, a 4px ring in the
+   page colour so it sits cleanly on the hairline, still with reduced motion (your call); a solid 1.5px brand hairline
+   with a warm wash at the top, and the only primary button; Starter,
    Advance and Unlimited use secondary buttons (`"badge"` and `"cta"` per plan in the JSON). Cards lift with a brand
    edge on hover or focus.
 3. Every plan starts with [tint]: four columns (icon tile, title, text): the free trial, the live design editor,
@@ -1001,6 +1004,7 @@ Newest first. One line per commit: date, what changed, and any decision behind i
 - 2026-11-26: Homepage at 961-1279px (found by the language sweep, broken in English too): the Features media box was wider than its column (15px sideways scroll at 1024px, up to 158px when translated) and now takes the column's width; the rating card's "See all reviews" was cut to "See all revi" and now drops its arrow there
 - 2026-11-26: Translated pages: button labels may wrap and no longer roll on hover; a longer translation was cut to one line ("Kostenlose Testversion starten" on the pricing cards) and the roll showed the English copy from data-text
 - 2026-11-26: Language switcher in the footer bar (your request, on a branch until you confirm): a globe, the current language and a menu of twelve languages (English plus the main Shopify markets), translated in the browser by Google Translate as you suggested; Google's script loads only after a visitor picks a language, so English pages still contact no third party. The privacy policy gains a Translation line. Fixes found while testing nine languages at 390px: the footer columns now shrink and wrap, and the homepage "Coming soon" chip wraps ("Demnächst verfügbar" ran off screen)
+- 2026-11-26: Pricing "Most popular" badge (your call): moves from beside the plan name to the centre of the card's top edge, half above it, with a sparkles icon and a looping shine (a light sweep every 3.2s and a twinkling small star; still with reduced motion)
 - 2026-11-19: Footer fixes (yours): the newsletter's hidden spam trap showed "Leave this empty" on pages without forms.css (its hide rule now lives in the template); Subscribe moves under the email field, full width with the arrow; on desktop the columns are as wide as their links with equal gaps, instead of 12-column spans that left a big gap after Product
 - 2026-11-19: Footer: the five social links become icons (Simple Icons, one colour, labelled, new tab) and a newsletter sign-up joins the brand block (your request, Elementor's footer as reference): email and Subscribe in one box, consent with the Privacy policy link, the shared form handler posting to NEWSLETTER_ENDPOINT (still empty, so it says it is not connected yet). Copy in site.json "footer". Fixes found on the way: the error message has to sit inside the field wrapper for the handler to find it, and the footer input needs higher specificity than forms.css on pages that load it. Closes the open item about social icons
 - 2026-11-19: Platforms overview cards: the top-right arrow is gone (your call); "Learn more" already has one

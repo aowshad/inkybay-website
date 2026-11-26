@@ -26,8 +26,20 @@
 .prcard:hover, .prcard:focus-within { transform: translateY(-4px);
   box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--brand-500) 55%, var(--line)), 0 30px 60px -30px rgba(229, 56, 15, .28); }
 .prcard__top { display: flex; align-items: center; justify-content: space-between; gap: var(--s-3); }
-.prcard__badge { flex: none; padding: 4px 10px; border-radius: 999px; font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500;
-  color: #fff; background: var(--brand-grad); box-shadow: 0 8px 18px -10px rgba(229, 56, 15, .7); }
+/* "Most popular": centred on the card's top edge, half above it, sparkles before the text and a light that sweeps across
+   it every few seconds (still with reduced motion) */
+.prcard { position: relative; }
+.prcard__badge { position: absolute; top: 0; left: 50%; z-index: 1; transform: translate(-50%, -50%); display: inline-flex; align-items: center; gap: 6px;
+  padding: 5px 14px 5px 11px; border-radius: 999px; overflow: hidden; isolation: isolate; white-space: nowrap;
+  font-size: var(--t-small); line-height: var(--t-small-lh); font-weight: 500; color: #fff; background: var(--brand-grad);
+  box-shadow: 0 0 0 4px var(--bg), 0 10px 22px -10px rgba(229, 56, 15, .8); }
+.prcard__badge svg { flex: none; width: 15px; height: 15px; }
+.prcard__badge::after { content: ""; position: absolute; inset: -2px auto -2px -60%; z-index: -1; width: 45%; transform: skewX(-20deg);
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, .55), transparent); animation: prbadge-shine 3.2s var(--ease-inout) infinite; }
+@keyframes prbadge-shine { 0%, 55% { left: -60%; } 100% { left: 130%; } }
+.prcard__spark { transform-box: fill-box; transform-origin: center; animation: prbadge-twinkle 3.2s ease-in-out infinite; }
+@keyframes prbadge-twinkle { 0%, 60%, 100% { transform: scale(1); opacity: 1; } 75% { transform: scale(.4); opacity: .5; } }
+@media (prefers-reduced-motion: reduce) { .prcard__badge::after, .prcard__spark { animation: none; } .prcard__badge::after { display: none; } }
 /* the featured plan: a solid 1.5px brand hairline (never a gradient ring) and a warm wash at the top */
 .prcard--featured { background: linear-gradient(180deg, color-mix(in srgb, var(--brand-500) 7%, var(--bg)), var(--bg) 40%);
   box-shadow: inset 0 0 0 1.5px var(--brand-500), 0 30px 60px -34px rgba(229, 56, 15, .35); }
