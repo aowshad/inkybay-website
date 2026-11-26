@@ -28,7 +28,7 @@ def bad(slug, msg): problems.append(f"[{slug}] {msg}")
 # chips, which keep 14px. The allowlist is the token users plus these components.
 SMALL_ALLOW = (".t-small, .crumbs, .bcard__meta, .bmeta, .bauthor__label, .bnews__consent, .bres__label, .bsearch__key, .cfile__hint, "
                ".field__err, .cform__count, .coff__badge, .coff__role, .ed__warn, .ed__hint, .ed__size, .chip, .hchip, .porbit__chip, .icardx__label, "
-               ".mega__desc, .mega__label, .mega__badge, .fnews__consent, .bhero__meta, .bhero__note, .btoc__label, .bweight, .bscale__label, .bscale__meta, .cch__copied, .bridge__soon, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
+               ".mega__desc, .mega__label, .mega__badge, .lang__head, .lang__note, .fnews__consent, .bhero__meta, .bhero__note, .btoc__label, .bweight, .bscale__label, .bscale__meta, .cch__copied, .bridge__soon, .plbadge, .plstep__num, .plothers__label, .pdir__count, .pdir__tab, .pjoin__label, .pstep__num, .ptr__badge, .bbar__pill span, .bpn__link span, "
                ".bpill, .btag, .btoc, .bsum__meta, .bsum__go, figcaption, .bfig figcaption, .foot__bar, .bres__count, .bchip, "
                ".bbar__pill, .brel__label, .bcall__title, .bquote p + p, .prtoggle__save, .prcard__note, .prcard__trial, .prcard__label, .prcard__badge, .chl__date, .chl__pill, .chld__meta, .chld__pnl span, .vhero__count, .vcard__dur, .vfeat__label, .vfeat__meta, .vtab, .vcard__cat, .acalc__note, .cscard__loc, .cscard__ind, .csbar__count, .csside__facts dt, .csd__quote figcaption")
 SMALL_TEXT_JS = """window.smallText = function () {
@@ -160,7 +160,7 @@ async def check_page(slug, d):
         await check_menus(b, slug, path)
         if slug in industry_slugs(): await check_industry_hero(b, slug, path)
         if slug == "homepage": await check_hero_video(b, path)
-        if slug == "homepage": await check_home_visuals(b, path); await check_bridge(b, path); await check_reviews_loop(b, path)
+        if slug == "homepage": await check_home_visuals(b, path); await check_bridge(b, path); await check_reviews_loop(b, path); await check_lang(b, path)
         if slug == "404": await check_404(b)
         if slug == "partners": await check_partners(b, path)
         if slug == "contact": await check_contact(b, path)
@@ -416,6 +416,28 @@ async def check_reviews_loop(b, path):
             worst = min(worst, await pg.evaluate(js))
         if worst < 1: bad("homepage", f"reviews {w}px: fast arrow clicks leave the slider blank")
         await pg.close()
+
+
+async def check_lang(b, path):
+    """Footer language switcher: one option per language in src/site.json, English checked, opens and closes with Esc
+    (focus back on the button), and nothing is requested from Google while the page is in English."""
+    langs = json.loads((ROOT / "src/site.json").read_text())["languages"]["list"]
+    pg = await b.new_page(viewport={"width": 1440, "height": 900}); reqs = []
+    pg.on("request", lambda r: reqs.append(r.url) if "google" in r.url else None)
+    await pg.goto(url_of(path)); await pg.wait_for_timeout(600)
+    await pg.evaluate("document.querySelector('.lang__btn').scrollIntoView({block:'center'})"); await pg.wait_for_timeout(300)
+    await pg.click(".lang__btn"); await pg.wait_for_timeout(250)
+    r = await pg.evaluate("""(()=>{const m=document.querySelector('.lang__menu');return {open: !m.hidden, n: m.querySelectorAll('.lang__opt').length,
+      checked: [...m.querySelectorAll('.lang__opt[aria-checked="true"]')].map(o=>o.dataset.langCode), focus: document.activeElement.classList.contains('lang__opt')}})()""")
+    if not r["open"]: bad("homepage", "language switcher: the menu does not open")
+    if r["n"] != len(langs): bad("homepage", f"language switcher: {r['n']} options, site.json lists {len(langs)}")
+    if r["checked"] != ["en"]: bad("homepage", f"language switcher: checked {r['checked']}, expected English")
+    if not r["focus"]: bad("homepage", "language switcher: focus does not move into the menu")
+    await pg.keyboard.press("Escape"); await pg.wait_for_timeout(200)
+    r = await pg.evaluate("[document.querySelector('.lang__menu').hidden, document.activeElement.classList.contains('lang__btn')]")
+    if r != [True, True]: bad("homepage", "language switcher: Esc does not close the menu and return focus")
+    if reqs: bad("homepage", f"language switcher: Google was contacted in English: {reqs[:2]}")
+    await pg.close()
 
 
 async def check_bridge(b, path):

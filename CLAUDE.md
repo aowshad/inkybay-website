@@ -258,6 +258,8 @@ Section sub headings are 18px.
    by side felt cramped), the inline error, a 14px consent line linking to the Privacy policy, and the status line; max
    420px wide. The honeypot's hide rule (`.form__hp`) lives in the template so it stays hidden on pages without forms.css. Copy and the network list live in
    src/site.json "footer". It posts to `NEWSLETTER_ENDPOINT` through the shared form handler (see Forms).
+   The footer bar: the language switcher (see Language switcher) and the copyright on the left, the legal links on the
+   right.
 
 ## Rules that must survive the rebuild
 
@@ -819,6 +821,29 @@ Resources overview.
 - Draft (ours, to confirm): the clear-space and minimum-size values and the trademark rules (`"draft": true`); the
   brand site's own usage guidelines say "Coming soon". The audit covers the page (`brand-assets` in `--all`).
 
+## Language switcher
+
+The site is written in English; every other language is machine-translated in the visitor's browser by Google
+Translate (your call). `{{LANG_SWITCH}}` (build.py `lang_switch()`, list and strings in src/site.json "languages")
+renders it at the start of the footer bar on every page: a globe icon, the current language's own name and a chevron
+(no region). It opens a dark menu upwards (240px, "Choose a language", the twelve languages with a brand check on the
+current one, "Translated by Google"); it is a menu button (`aria-haspopup`, `aria-expanded`, `menuitemradio` options),
+with arrow keys, Home and End, Esc (focus back to the button), Tab and outside clicks closing it.
+- Languages (Google codes; the main Shopify markets outside English, no right-to-left languages because the layout
+  would not mirror): English, Deutsch, Español, Français, Italiano, Nederlands, Português, Svenska, Dansk, Polski, 日本語,
+  简体中文. Add one by adding `{"code", "name"}` to the list.
+- How it works (template JS): the choice is Google's own `googtrans` cookie (`/en/<code>`, path /), so it follows the
+  visitor to every page; choosing English deletes it. Picking a language sets the cookie and reloads; on load, only if
+  the cookie names a language other than English, the page adds a hidden `#gt-el` and loads
+  translate.google.com/translate_a/element.js. In English nothing is requested from Google. Google's toolbar, tooltip,
+  hover highlight and body offset are hidden in CSS; the switcher itself is `translate="no"`.
+- Limits (machine translation): not indexed by search engines (one English URL per page), quality is Google's, text
+  flashes in English before it is replaced. Long translations must not break layouts: the desktop footer columns shrink
+  and wrap (`minmax(0, max-content)`), the homepage "Coming soon" chip wraps on phones; checked in nine languages at
+  390px with no overflow. The privacy policy says so (Translation, updated November 26, 2026).
+- The audit (check_lang, homepage): one option per language, English checked, focus moves in, Esc closes and returns
+  focus, and no request to Google while the page is in English.
+
 ## Changelog page
 
 `site/changelog/` (the list) and `site/changelog/<slug>/` (one page per entry), built by `render_changelog.py` from
@@ -964,6 +989,7 @@ same number of links as `nav.json`. Setup once: `python3 -m pip install --user p
 
 Newest first. One line per commit: date, what changed, and any decision behind it.
 
+- 2026-11-26: Language switcher in the footer bar (your request, on a branch until you confirm): a globe, the current language and a menu of twelve languages (English plus the main Shopify markets), translated in the browser by Google Translate as you suggested; Google's script loads only after a visitor picks a language, so English pages still contact no third party. The privacy policy gains a Translation line. Fixes found while testing nine languages at 390px: the footer columns now shrink and wrap, and the homepage "Coming soon" chip wraps ("Demnächst verfügbar" ran off screen)
 - 2026-11-19: Footer fixes (yours): the newsletter's hidden spam trap showed "Leave this empty" on pages without forms.css (its hide rule now lives in the template); Subscribe moves under the email field, full width with the arrow; on desktop the columns are as wide as their links with equal gaps, instead of 12-column spans that left a big gap after Product
 - 2026-11-19: Footer: the five social links become icons (Simple Icons, one colour, labelled, new tab) and a newsletter sign-up joins the brand block (your request, Elementor's footer as reference): email and Subscribe in one box, consent with the Privacy policy link, the shared form handler posting to NEWSLETTER_ENDPOINT (still empty, so it says it is not connected yet). Copy in site.json "footer". Fixes found on the way: the error message has to sit inside the field wrapper for the handler to find it, and the footer input needs higher specificity than forms.css on pages that load it. Closes the open item about social icons
 - 2026-11-19: Platforms overview cards: the top-right arrow is gone (your call); "Learn more" already has one
